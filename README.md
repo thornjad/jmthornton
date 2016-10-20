@@ -1,8 +1,6 @@
 ##Hello there!
 
-This is the source code for my personal website at [jmthornton.net](http://jmthornton.net).
-This is my own personal website, showcasing work I have done, providing
-easy means of contact, and may eventually host a personal blog.
+This is the source code of [jmthornton.net](http://jmthornton.net), home to Jade Thornton Web Development. This is my own personal website, showcasing work I have done and providing easy means of contact.
 
 ---
 
