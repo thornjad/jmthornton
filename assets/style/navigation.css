@@ -1,0 +1,139 @@
+.navbar {
+    background-color: rgba(229, 233, 236, 0.9);
+    border: none;
+    margin-bottom: 5px;
+    font-size: 17px;
+}
+
+.navbar .container-fluid {
+  max-width: 1000px;
+}
+
+.navbar ul {
+  float: right !important;
+}
+
+.navbar .navbar-brand {
+    color: #1c1c1c;
+}
+
+.navbar .navbar-brand:hover, .navbar .navbar-brand:focus {
+    color: #ffffff;
+}
+
+.navbar .navbar-text {
+    color: #a5aaae;
+}
+
+.navbar .navbar-nav> li> a {
+    color: #1c1c1c;
+}
+
+.navbar .navbar-nav> li> a:hover, .navbar .navbar-nav> li> a:focus {
+    color: #ffffff;
+    background-color: #346E91;
+}
+
+.navbar .navbar-nav> li> .dropdown-menu {
+    background-color: rgba(229, 233, 236, 0.9);
+}
+
+.navbar .navbar-nav> li> .dropdown-menu> li> a {
+    color: #a5aaae;
+}
+
+.navbar .navbar-nav> li> .dropdown-menu> li> a:hover, .navbar .navbar-nav> li> .dropdown-menu> li> a:focus {
+    color: #ffffff;
+    background-color: #346E91;
+}
+
+.navbar .navbar-nav> li> .dropdown-menu> li> .divider {
+    background-color: #346E91;
+}
+
+.navbar .navbar-nav .open .dropdown-menu> .active> a, .navbar .navbar-nav .open .dropdown-menu> .active> a:hover, .navbar .navbar-nav .open .dropdown-menu> .active> a:focus {
+    color: #ffffff;
+    background-color: #346E91;
+}
+
+.navbar .navbar-nav> .active> a, .navbar .navbar-nav> .active> a:hover, .navbar .navbar-nav> .active> a:focus {
+    color: #ffffff;
+    background-color: #346E91;
+}
+
+.navbar .navbar-nav> .open> a, .navbar .navbar-nav> .open> a:hover, .navbar .navbar-nav> .open> a:focus {
+    color: #ffffff;
+    background-color: #346E91;
+}
+
+.navbar .navbar-toggle {
+    border: none;
+}
+
+.navbar .navbar-toggle:hover, .navbar .navbar-toggle:focus {
+    background-color: #346E91;
+}
+
+.navbar .navbar-toggle .icon-bar {
+    background-color: #a5aaae;
+}
+
+.navbar .navbar-collapse, .navbar .navbar-form {
+    border-color: #a5aaae;
+}
+
+.navbar .navbar-link {
+    color: #a5aaae;
+}
+
+.navbar .navbar-link:hover {
+    color: #ffffff;
+}
+
+.navbar-brand img, .navbar-brand span {
+    display: inline-block;
+}
+
+.navbar-brand span {
+    margin-left: 0.5em;
+}
+
+.navbar-brand img {
+    width: 48px;
+    margin-top: -0.5em;
+}
+
+.navbar-nav> li> .active {
+    background-color: #346E91;
+    color: #ffffff !important;
+}
+
+.top-nav {
+  background-color: rgba(229, 233, 236, 0.9);
+    width: 100vw;
+    height: 4.2em;
+    left: 0;
+    position: fixed;
+    z-index: 1000;
+}
+
+.top-nav-btns {
+    text-align: left;
+    margin-left: 20vw;
+}
+
+.top-nav-btns a,
+.top-nav-btns img {
+  margin-left: 0.2vw;
+  margin-right: 0.2vw;
+}
+
+.logo {
+    width: 48px;
+}
+
+@media (max-width: 800px) {
+  .lowp {
+    display: none !important;
+  }
+}
