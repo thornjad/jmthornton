@@ -1,0 +1,19 @@
+.jfloat-right, .jfloat-right-switch {
+    float: right;
+}
+
+.jfloat-left, .jfloat-left-switch {
+    float: left;
+}
+
+.jclear {
+  clear: both;
+  overflow: hidden;
+}
+
+@media (max-width: 800px) {
+  .jfloat-right-switch, .jfloat-left-switch {
+      float: none;
+      clear: both;
+  }
+}
