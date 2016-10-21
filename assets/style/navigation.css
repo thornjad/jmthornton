@@ -1,5 +1,5 @@
 .navbar {
-    background-color: rgba(229, 233, 236, 0.9);
+    background-color: rgba(255, 255, 255, 0.9);
     border: none;
     margin-bottom: 5px;
     font-size: 17px;
@@ -22,7 +22,7 @@
 }
 
 .navbar .navbar-text {
-    color: #a5aaae;
+    color: #3777e5;
 }
 
 .navbar .navbar-nav> li> a {
@@ -31,39 +31,40 @@
 
 .navbar .navbar-nav> li> a:hover, .navbar .navbar-nav> li> a:focus {
     color: #ffffff;
-    background-color: #346E91;
+    background-color: #3777e5;
 }
 
 .navbar .navbar-nav> li> .dropdown-menu {
-    background-color: rgba(229, 233, 236, 0.9);
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 0.5px solid black;
 }
 
 .navbar .navbar-nav> li> .dropdown-menu> li> a {
-    color: #a5aaae;
+    color: #3777e5;
 }
 
 .navbar .navbar-nav> li> .dropdown-menu> li> a:hover, .navbar .navbar-nav> li> .dropdown-menu> li> a:focus {
     color: #ffffff;
-    background-color: #346E91;
+    background-color: #3777e5;
 }
 
 .navbar .navbar-nav> li> .dropdown-menu> li> .divider {
-    background-color: #346E91;
+    background-color: #3777e5;
 }
 
 .navbar .navbar-nav .open .dropdown-menu> .active> a, .navbar .navbar-nav .open .dropdown-menu> .active> a:hover, .navbar .navbar-nav .open .dropdown-menu> .active> a:focus {
     color: #ffffff;
-    background-color: #346E91;
+    background-color: #3777e5;
 }
 
 .navbar .navbar-nav> .active> a, .navbar .navbar-nav> .active> a:hover, .navbar .navbar-nav> .active> a:focus {
     color: #ffffff;
-    background-color: #346E91;
+    background-color: #3777e5;
 }
 
 .navbar .navbar-nav> .open> a, .navbar .navbar-nav> .open> a:hover, .navbar .navbar-nav> .open> a:focus {
     color: #ffffff;
-    background-color: #346E91;
+    background-color: #3777e5;
 }
 
 .navbar .navbar-toggle {
@@ -71,19 +72,19 @@
 }
 
 .navbar .navbar-toggle:hover, .navbar .navbar-toggle:focus {
-    background-color: #346E91;
+    background-color: #3777e5;
 }
 
 .navbar .navbar-toggle .icon-bar {
-    background-color: #a5aaae;
+    background-color: #fff;
 }
 
 .navbar .navbar-collapse, .navbar .navbar-form {
-    border-color: #a5aaae;
+    border-color: #fff;
 }
 
 .navbar .navbar-link {
-    color: #a5aaae;
+    color: #fff;
 }
 
 .navbar .navbar-link:hover {
@@ -104,12 +105,12 @@
 }
 
 .navbar-nav> li> .active {
-    background-color: #346E91;
+    background-color: #3777e5;
     color: #ffffff !important;
 }
 
 .top-nav {
-  background-color: rgba(229, 233, 236, 0.9);
+  background-color: rgba(255, 255, 255, 0.9);
     width: 100vw;
     height: 4.2em;
     left: 0;
