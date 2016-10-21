@@ -1,11 +1,17 @@
 @charset "utf-8";
 
+@viewport {
+    width: device-width;
+    min-zoom: 1;
+    max-zoom: 3;
+}
+
 html {
     font-family: Roboto, sans-serif;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
     margin: 0 auto;
-    background: #E5E9EC;
+    background: #fff;
     position: relative;
     width: 100%;
     font-size: 10px;
@@ -16,7 +22,7 @@ body {
     font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 18px;
     line-height: 1.846;
-    color: #666666;
+    color: #000;
     background-color: #ffffff;
     text-align: center;
     margin: 0;
@@ -81,17 +87,17 @@ a:active, a:hover {
 
 .footer .foot a {
     text-decoration: none;
-    color: #B1ADBB;
+    color: #fff;
 }
 
 .footer .foot a:hover {
-    color: #0C0C0C;
+    color: #333;
 }
 
 .license-text {
     display: inline-block;
     font-size: 0.75em;
-    color: #B1ADBB;
+    color: #fff;
     margin-left: 1em;
 }
 
@@ -99,15 +105,15 @@ a:active, a:hover {
     margin-top: 2vh;
     margin-bottom: 2vh;
     padding: 1vh 1.8vw;
-    border: 2px solid #1c1c1c;
-    color: #1c1c1c;
+    border: 2px solid #fff;
+    color: #fff;
     background-color: inherit;
     font-weight: bold;
 }
 
 .btn-default:hover {
-    background-color: #346E91;
-    color: white;
+    background-color: #3777e5;
+    color: #fff;
 }
 
 .end-btns {

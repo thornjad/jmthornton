@@ -20,34 +20,47 @@
     <style>
         html,
         body {
-            background-color: #346E91;
-            margin: auto;
+            background-color: #fff;
             height: 100%;
+            color: #fff;
         }
 
-        body {
-            background-size: 100%;
+        h4 {
+            color: #fff;
+            font-weight: bold;
         }
 
-        .about {
-            margin: auto;
+        h3 {
+            color: #fff;
+            font-weight: bolder;
         }
 
-        .content {
-            padding-top: 7em;
+        section {
+            margin: 5em auto;
+            background-color: #333;
+            background-size: 110vw;
+            padding: 2em 20vw;
+            overflow: hidden;
         }
 
         .top-buffer {
             margin-top: 20px;
         }
 
-        img {
+        .picture img {
             border-radius: 3%;
+        }
+
+        .picture {
+          display: inline-block;
+          width: 30%;
         }
 
         .summary {
             text-align: left;
             vertical-align: middle;
+            display: inline-block;
+            width: 65%
         }
 
         .summary h3 {
@@ -58,11 +71,13 @@
             position: relative;
             margin: auto;
             margin-top: 1em;
+            color: #fff;
         }
 
         .buttons a {
             margin-top: 0.7em;
             margin-bottom: 0.7em;
+            color: #fff;
         }
 
         .icon-bar {
@@ -72,7 +87,7 @@
         .icon-bar a i {
             font-size: 30px;
             margin: 0.4em;
-            color: #346E91;
+            color: #fff;
         }
 
         .no-left-margin {
@@ -81,13 +96,17 @@
 
         .about-website {
             text-align: left;
-            margin-left: 10%;
-            margin-right: 10%;
+            margin: auto 10%;
+            display: inline-block;
         }
 
-        .well {
-            padding-top: 4em;
-            padding-bottom: 4em;
+        .nc-banner img {
+            margin: auto;
+        }
+
+        .col {
+            max-width: 900px;
+            margin: auto;
         }
     </style>
 </head>
@@ -108,73 +127,52 @@
         </div>
     </nav>
     <div class="content content-container container-fluid">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12">
-                <section class="about">
-                    <div class="well this-well">
-                        <div class="row col-wrap">
-                            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-7">
-                                <div class="picture"> <img src="../assets/images/JadeMichael.jpg" class="img-responsive image" alt="Image of Jade Thornton" /> </div>
-                            </div>
-                            <div class="summary">
-                                <div class="col-lg-1 col-md-7 col-sm-1 col-xs-1">
-                                    <div class="blank-space"></div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
-                                    <h3> Hi, I'm Jade. </h3>
-                                    <h4> <span class="indent"></span>I’m a web developer and software creator. My passion is using technology to bring information to users in an attractive and enjoyable way. I am currently developing software and maintaining websites for the Humphrey School of Public Affairs at the University of Minnesota. </h4>
-                                    <span class="indent"></span><a tabindex="1" class="btn btn-default btn-lg contact-btn" role="button" href="contact.html">Contact Me</a>
-                                    <div class="icon-bar">
-                                        <a tabindex="19" href="https://bitbucket.org/Raindeer44/" class="no-left-margin"><span title="Bitbucket"><i class="fa fa-bitbucket bitbucket-a"></i></span></a>
-                                        <a tabindex="20" href="http://codepen.io/Raindeer44/"><span title="Codepen"><i class="fa fa-codepen"></i></span></a>
-                                        <a tabindex="21" href="https://www.freecodecamp.com/raindeer44"><span title="FreeCodeCamp"><i class="fa fa-fire"></i></span></a>
-                                        <a tabindex="22" href="https://github.com/Raindeer44"><span title="GitHub"><i class="fa fa-github-square"></i></span></a>
-                                        <a tabindex="23" href="https://us.linkedin.com/in/jademichael"><span title="LinkedIn"><i class="fa fa-linkedin-square"></i></span></a>
-                                        <a tabindex="24" href="https://twitter.com/jmthorntonwhat"><span title="Twitter"><i class="fa fa-twitter-square"></i></span></a>
-                                    </div>
-                                </div>
-                            </div>
+        <section class="about">
+            <div class="col">
+                    <div class="picture jfloat-left">
+                        <img src="../assets/images/JadeMichael.jpg" class="img-responsive image" alt="Image of Jade Thornton" /> </div>
+                    <div class="summary jfloat-right">
+                        <div class="blank-space"></div>
+                        <h3> Hi, I'm Jade. </h3>
+                        <h4> <span class="indent"></span>I’m a web developer and software creator. My passion is using technology to bring information to users in an attractive and enjoyable way. I am currently developing software and maintaining websites for the Humphrey School of Public Affairs at the University of Minnesota. </h4>
+                        <span class="indent"></span><a tabindex="1" class="btn btn-default btn-lg contact-btn" role="button" href="contact.html">Contact Me</a>
+                        <div class="icon-bar">
+                            <a tabindex="19" href="https://bitbucket.org/Raindeer44/" class="no-left-margin"><span title="Bitbucket"><i class="fa fa-bitbucket bitbucket-a"></i></span></a>
+                            <a tabindex="20" href="http://codepen.io/Raindeer44/"><span title="Codepen"><i class="fa fa-codepen"></i></span></a>
+                            <a tabindex="21" href="https://www.freecodecamp.com/raindeer44"><span title="FreeCodeCamp"><i class="fa fa-fire"></i></span></a>
+                            <a tabindex="22" href="https://github.com/Raindeer44"><span title="GitHub"><i class="fa fa-github-square"></i></span></a>
+                            <a tabindex="23" href="https://us.linkedin.com/in/jademichael"><span title="LinkedIn"><i class="fa fa-linkedin-square"></i></span></a>
+                            <a tabindex="24" href="https://twitter.com/jmthorntonwhat"><span title="Twitter"><i class="fa fa-twitter-square"></i></span></a>
                         </div>
+                </div>
+            </div>
+        </section>
+        <section class="contact">
+            <div class="techs col">
+                <div class="row buttons">
+                    <div>
+                        <a tabindex="2" class="btn btn-default btn-lg" href="project-examples/bootstrap.html" role="button">Bootstrap</a>
+                        <a tabindex="3" class="btn btn-default btn-lg" href="error/page-access-error.html" role="button" disabled="disabled">CSS3</a>
+                        <a tabindex="4" class="btn btn-default btn-lg" href="error/page-access-error.html" role="button" disabled="disabled">Git</a>
+                        <a tabindex="5" class="btn btn-default btn-lg" href="error/page-access-error.html" role="button" disabled="disabled">HTML5</a>
+                        <a tabindex="6" class="btn btn-default btn-lg" href="error/page-access-error.html" role="button" disabled="disabled">Java</a>
+                        <a tabindex="7" class="btn btn-default btn-lg" href="error/page-access-error.html" role="button" disabled="disabled">JavaScript</a>
+                        <a tabindex="8" class="btn btn-default btn-lg" href="error/page-access-error.html" role="button" disabled="disabled">jQuery</a>
+                        <a tabindex="9" class="btn btn-default btn-lg" href="project-examples/linux.html" role="button">Linux</a>
+                        <a tabindex="10" class="btn btn-default btn-lg" href="error/page-access-error.html" role="button" disabled="disabled">Moodle</a>
+                        <a tabindex="11" class="btn btn-default btn-lg" href="error/page-access-error.html" role="button" disabled="disabled">Multirotor Flight</a>
+                        <a tabindex="12" class="btn btn-default btn-lg" href="error/page-access-error.html" role="button" disabled="disabled">Python</a>
+                        <a tabindex="13" class="btn btn-default btn-lg" href="error/page-access-error.html" role="button" disabled="disabled">Ruby</a>
+                        <a tabindex="14" class="btn btn-default btn-lg" href="project-examples/all-projects.html" role="button">All Projects</a>
                     </div>
-                </section>
-                <section class="contact">
-                    <div class="row top-buffer">
-                        <div class="col-lg-12">
-                            <div class="well">
-                                <div class="techs">
-                                    <div class="row buttons">
-                                        <div>
-                                            <a tabindex="2" class="btn btn-default btn-lg" href="project-examples/bootstrap.html" role="button">Bootstrap</a>
-                                            <a tabindex="3" class="btn btn-default btn-lg" href="error/page-access-error.html" role="button" disabled="disabled">CSS3</a>
-                                            <a tabindex="4" class="btn btn-default btn-lg" href="error/page-access-error.html" role="button" disabled="disabled">Git</a>
-                                            <a tabindex="5" class="btn btn-default btn-lg" href="error/page-access-error.html" role="button" disabled="disabled">HTML5</a>
-                                            <a tabindex="6" class="btn btn-default btn-lg" href="error/page-access-error.html" role="button" disabled="disabled">Java</a>
-                                            <a tabindex="7" class="btn btn-default btn-lg" href="error/page-access-error.html" role="button" disabled="disabled">JavaScript</a>
-                                            <a tabindex="8" class="btn btn-default btn-lg" href="error/page-access-error.html" role="button" disabled="disabled">jQuery</a>
-                                            <a tabindex="9" class="btn btn-default btn-lg" href="project-examples/linux.html" role="button">Linux</a>
-                                            <a tabindex="10" class="btn btn-default btn-lg" href="error/page-access-error.html" role="button" disabled="disabled">Moodle</a>
-                                            <a tabindex="11" class="btn btn-default btn-lg" href="error/page-access-error.html" role="button" disabled="disabled">Multirotor Flight</a>
-                                            <a tabindex="12" class="btn btn-default btn-lg" href="error/page-access-error.html" role="button" disabled="disabled">Python</a>
-                                            <a tabindex="13" class="btn btn-default btn-lg" href="error/page-access-error.html" role="button" disabled="disabled">Ruby</a>
-                                            <a tabindex="14" class="btn btn-default btn-lg" href="project-examples/all-projects.html" role="button">All Projects</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="well">
-                                <div class="about-website">
-                                    <h5> This website is home for my web development career. Here you can easily find <a tabindex="15" href="projects.html">my past and present work</a>, and <a tabindex="16" href="contact.html">get in contact with me</a>. </h5>
-                                    <h5> All pages have been built from scratch using HTML5 and styled using custom CSS based on Bootswatch's Paper flavor of Bootstrap. JMThornton.net is proudly <a tabindex="17" href="https://github.com/Raindeer44/raindeer44.github.io">open source</a> and hosted on GitHub through Cloudflare.</h5>
-                                    <h5><a tabindex="18" href="../LICENSE"> Copyright (C) 2016 Jade Thornton</a> | <a href="sitemap/sitemap.html">Sitemap</a> | v0.6.3</h5>
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                </div>
+            </div>
+        </section>
+        <div class="col">
+            <div class="about-website">
+                <h5> This website is home for my web development career. Here you can easily find <a tabindex="15" href="projects.html">my past and present work</a>, and <a tabindex="16" href="contact.html">get in contact with me</a>. </h5>
+                <h5> All domain pages are styled using custom CSS based on Bootswatch's Paper flavor of Bootstrap. The blog subdomain's style is based on the Radcliffe WordPress theme v1.17 by <a tabindex="17" href="http://www.andersnoren.se/">Anders Norén</a>. JMThornton.net is <a tabindex="18" href="https://github.com/Raindeer44/jmthornton">open source</a>.</h5>
+                <h5><a tabindex="19" href="../LICENSE"> Copyright (C) 2016 Jade Thornton</a> | <a tabindex="20" href="sitemap/sitemap.html">Sitemap</a> | v0.6.4</h5>
             </div>
         </div>
     </div>
