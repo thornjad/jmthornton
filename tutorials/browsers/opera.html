@@ -1,276 +1,338 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
-
 <head>
-    <title>Set up Opera for secure browsing | Jade Thornton Web Development</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="author" content="Jade Thornton" />
-    <meta name="description" content="Simple guide for setting up the Opera browser for safe and secure web browsing" />
-    <meta name="keywords" content="web development, web design, internet programming, internet development, jade thornton, hhh, humphrey school, pachyderm, human resources, university of minnesota, umn, hubert humphrey" />
-    <meta name="robots" content="index, follow" />
-    <meta name="googlebot" content="index, follow" />
-    <meta name="google-site-verification" content="JUM1Dl9n9ic9xPMb03Nzf4NgW_-8PWZrJ4eJGC_PoYM" />
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="../../assets/style/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="../../assets/style/main.css" type="text/css" />
-    <link rel="stylesheet" href="../../assets/style/navigation.css" type="text/css" />
-    <link rel="shortcut icon" href="../../assets/images/favicon.png" />
-    <link rel="apple-itouch-icon" href="../../assets/images/favicon.ico" />
-    <style>
-        body {
-            text-align: left;
-            font-size: 20px;
-        }
-
-        .main {
-            margin-left: 8.33vw;
-            margin-right: 8.33vw;
-        }
-
-        .btn {
-            color: inherit;
-        }
-
-        pre {
-            font-size: 1em;
-        }
-
-        .well {
-            background-color: #DEDEDE;
-            border-radius: 2%;
-        }
-
-        .phantom {
-            height: 9em;
-        }
-
-        footer {
-            text-align: center;
-            margin-bottom: 20em;
-            font-size: 1em;
-        }
-
-        .info-box {
-            background-color: #DEDEDE;
-            color: #0C0C0C;
-            border: none;
-            border-radius: 2%;
-            max-width: 500px;
-            padding: 1em;
-            margin: 2em auto;
-        }
-
-        .browser-logo {
-            max-width: 35vw;
-            margin: 2em auto;
-        }
-
-        @media (min-width: 800px) {
-            .browser-logo {
-              float: right;
-              margin: 0 2vw;
-              max-width: 300px;
-            }
-
-            .info-box {
-                float: left;
-                margin: 3em 2vw;
-            }
-        }
-
-        .info-box div {
-            margin-bottom: 0.1em;
-            margin-top: 0.1em;
-        }
-
-        p,
-        ul,
-        ol {
-            margin: 2em;
-        }
-
-        ol ul {
-            margin: 1em 3em;
-        }
-
-        .fa {
-            margin-right: 0.9em;
-        }
-    </style>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>Set up Opera for secure browsing | Jade Thornton Web Development</title>
+	<meta name="generator" content="LibreOffice 5.2.1.2 (Linux)"/>
+	<meta name="author" content="Jade Thornton"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changedby" content="Jade Thornton"/>
+	<meta name="changed" content="2016-10-21T01:02:50.145047886"/>
+	<meta name="description" content="Simple guide for setting up the Opera browser for safe and secure web browsing"/>
+	<meta name="keywords" content="web development, web design, internet programming, internet development, jade thornton, hhh, humphrey school, pachyderm, human resources, university of minnesota, umn, hubert humphrey"/>
+	<meta name="" content=""/>
+	<meta name="google-site-verification" content="JUM1Dl9n9ic9xPMb03Nzf4NgW_-8PWZrJ4eJGC_PoYM"/>
+	<meta name="googlebot" content="index, follow"/>
+	<meta name="robots" content="index, follow"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<style type="text/css">
+		p { margin-bottom: 0.11in; color: #000000; font-family: "Roboto", "Helvetica Neue", "Helvetica", "Arial", sans-serif; font-size: 15pt; line-height: 184%; text-align: left }
+		h3 { margin-top: 0.24in; margin-bottom: 0.11in; color: #000000; line-height: 184%; text-align: left }
+		h3.western { font-size: 25pt }
+		h3.cjk { font-family: "Droid Sans Fallback"; font-size: 25pt }
+		h3.ctl { font-family: "FreeSans"; font-size: 25pt }
+		h5 { color: #000000; line-height: 184%; text-align: left }
+		h5.western { font-size: 15pt }
+		h5.cjk { font-family: "Droid Sans Fallback"; font-size: 15pt }
+		h5.ctl { font-family: "FreeSans"; font-size: 15pt }
+		h3.article-heading-western { font-size: 25pt }
+		h3.article-heading-cjk { font-family: "Droid Sans Fallback"; font-size: 25pt }
+		h3.article-heading-ctl { font-family: "FreeSans"; font-size: 25pt }
+		a:link { color: #2196f3; background: transparent; text-decoration: none }
+		kbd { font-family: monospace, monospace }
+		a:visited { color: #2196f3; background: transparent; text-decoration: none }
+	</style>
 </head>
+<body lang="en-US" text="#000000" link="#2196f3" vlink="#2196f3" bgcolor="#ffffff" dir="ltr">
+<h3 class="western" style="font-weight: normal; line-height: 150%"><font face="Roboto"><i><span style="background: transparent">A
+guide to setting up the Opera browser for a safe and secure web
+browsing experience</span></i></font></h3>
+<p style="line-height: 150%"><br/>
+<br/>
 
-<body>
-    <nav class="navbar navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a tabindex="29" class="navbar-brand img-responsive" href="../../index.html" id="brand"><img src="https://jmthornton.net/assets/images/icon.svg" /></a>
-            </div>
-            <div>
-                <ul class="nav navbar-nav">
-                    <li><a tabindex="25" href="../../index.html">Home</a></li>
-                    <li><a tabindex="26" href="../../pages/meet.html">Meet</a></li>
-                    <li><a tabindex="27" href="../../pages/features.html">Features</a></li>
-                    <li><a tabindex="28" href="../help.html">Help</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div class="container-fluid">
-        <article class="setup-opera">
-            <header>
-                <div class="phantom"></div>
+</p>
+<p style="line-height: 150%"><br/>
+<br/>
 
-                <h1 id="title">Set up Opera for secure browsing</h2>
-                <h3>A guide to setting up the Opera browser for a safe and secure web browsing experience</h3>
+</p>
+<h5 class="western" align="center" style="margin-bottom: 0in; line-height: 150%">
+<span style="display: inline-block; border: none; padding: 0in"><span style="background: transparent"><font color="#0c0c0c"><i>This
+should</font><font color="#0c0c0c"> take about 10 </font><font color="#0c0c0c">minutes</span></font></span></i></h5>
+<h5 class="western" align="center" style="margin-bottom: 0in; line-height: 150%">
+<span style="display: inline-block; border: none; padding: 0in"><span style="background: transparent"><font color="#0c0c0c"><i>L</font><font color="#0c0c0c">ow
+difficulty</span></font></span></i></h5>
+<h5 class="western" align="center" style="margin-bottom: 0in; line-height: 150%">
+<span style="display: inline-block; border: none; padding: 0in"><i><span style="background: transparent"><font color="#0c0c0c">$0</span></span></i></font></h5>
+<h5 class="western" style="line-height: 150%"><br/>
+<br/>
 
-                <div><img class="browser-logo img-responsive" src="../../assets/images/tutorials/opera-logo.jpg" alt="The Opera browser logo"></div>
-                <div class="info-box">
-                  <h5>
-                      <div><strong><i class="fa fa-clock-o"></i></strong> this will take about 10 mins</div><br>
-                      <div><strong><i class="fa fa-coffee"></i></strong> low difficulty</div><br>
-                      <div><strong><i class="fa fa-money"></i></strong> $0</div><br>
-                  </h5>
-                </div>
+</h5>
+<p style="line-height: 150%"><br/>
+<br/>
 
-            </header>
+</p>
+<p style="line-height: 150%"><span style="background: transparent"><span style="font-variant: small-caps"><b>Opera</b></span>
+is a well designed and highly functioning web browser with hundreds
+of millions of users worldwide, built on the Blink engine from
+Chromium. Many features now common to all web browsers, such as tabs,
+private browsing and pop-up blocking, originated in Opera. The simple
+layout, extensive functionality and built-in VPN service make it a
+great candidate for browsing the web safely and securely. This
+tutorial will help you set up the essentials to help keep your
+personal data under your control.</span></p>
+<h3 class="western" style="line-height: 150%"><a name="tldr"></a><span style="display: inline-block; border: none; padding: 0in"><span style="background: transparent"><font color="#0c0c0c">TL;DR</span></span></font></h3>
+<ol>
+	<li/>
+<p style="margin-bottom: 0in; line-height: 150%"><span style="display: inline-block; border: none; padding: 0in"><span style="background: transparent"><font color="#0c0c0c"><a href="https://www.opera.com/download">Download
+	and install Opera</a> </span></span></font>
+	</p>
+	<li/>
+<p style="margin-bottom: 0in; line-height: 150%"><span style="display: inline-block; border: none; padding: 0in"><span style="background: transparent"><font color="#0c0c0c">Click
+	the </span></font><font color="#0c0c0c"><span style="background: transparent"><em>VPN</span></font></em><span style="background: transparent"><font color="#0c0c0c">
+	icon in the address bar and make sure it's </span></font><font color="#0c0c0c"><span style="background: transparent"><em>on</span></font></em><span style="background: transparent"><font color="#0c0c0c">
+	</span></span></font>
+	</p>
+	<li/>
+<p style="margin-bottom: 0in; line-height: 150%"><span style="display: inline-block; border: none; padding: 0in"><span style="background: transparent"><font color="#0c0c0c">Settings
+	&gt; Privacy and Security: </span></span></font>
+	</p>
+	<ul>
+		<li/>
+<p style="margin-bottom: 0in; line-height: 150%"><span style="display: inline-block; border: none; padding: 0in"><span style="background: transparent"><font color="#0c0c0c">check
+		</span></font><font color="#0c0c0c"><span style="background: transparent"><em>show
+		advanced settings</span></font></em><span style="background: transparent"><font color="#0c0c0c">
+		</span></span></font>
+		</p>
+		<li/>
+<p style="margin-bottom: 0in; line-height: 150%"><span style="display: inline-block; border: none; padding: 0in"><span style="background: transparent"><font color="#0c0c0c">check
+		</span></font><font color="#0c0c0c"><span style="background: transparent"><em>Block
+		ads</span></font></em><span style="background: transparent"><font color="#0c0c0c">
+		and </span></font><font color="#0c0c0c"><span style="background: transparent"><em>Send
+		a ‘Do Not Track’ request with your browsing traffic</span></font></em><span style="background: transparent"><font color="#0c0c0c">
+		</span></span></font>
+		</p>
+		<li/>
+<p style="margin-bottom: 0in; line-height: 150%"><span style="display: inline-block; border: none; padding: 0in"><span style="background: transparent"><font color="#0c0c0c">uncheck
+		</span></font><font color="#0c0c0c"><span style="background: transparent"><em>autofill</span></font></em><span style="background: transparent"><font color="#0c0c0c">
+		and </span></font><font color="#0c0c0c"><span style="background: transparent"><em>save
+		passwords</span></font></em><span style="background: transparent"><font color="#0c0c0c">
+		</span></span></font>
+		</p>
+		<li/>
+<p style="margin-bottom: 0in; line-height: 150%"><span style="display: inline-block; border: none; padding: 0in"><span style="background: transparent"><font color="#0c0c0c">WebRTC
+		&gt; </span></font><font color="#0c0c0c"><span style="background: transparent"><em>Disable
+		non-proxied UDP</span></font></em><span style="background: transparent"><font color="#0c0c0c">
+		</span></span></font>
+		</p>
+	</ul>
+	<li/>
+<p style="margin-bottom: 0in; line-height: 150%"><span style="display: inline-block; border: none; padding: 0in"><span style="background: transparent"><font color="#0c0c0c">Install
+	</span></font><a href="https://addons.opera.com/en/extensions/details/https-everywhere/"><font color="#0c0c0c"><span style="background: transparent"><em>HTTPS
+	Everywhere</span></font></a></em><span style="background: transparent"><font color="#0c0c0c">
+	</span></span></font>
+	</p>
+	<li/>
+<p style="line-height: 150%"><span style="display: inline-block; border: none; padding: 0in"><span style="background: transparent"><font color="#0c0c0c">Install
+	</span></font><a href="https://addons.opera.com/en/extensions/details/privacy-badger/?display=ru"><font color="#0c0c0c"><span style="background: transparent"><em>Privacy
+	Badger</span></font></a></em><span style="background: transparent"><font color="#0c0c0c">
+	</span></span></font>
+	</p>
+</ol>
+<h3 class="article-heading-western" style="line-height: 150%"><a name="getopera"></a>
+<span style="background: transparent">Get Opera</span></h3>
+<hr/>
 
-        <p><b class="head">Opera</b> is a well designed and highly functioning web browser with hundreds of millions of users worldwide, built on the Blink engine from Chromium. Many features now common to all web browsers, such as tabs, private browsing and pop-up blocking,
-            originated in Opera. The simple layout, extensive functionality and built-in VPN service make it a great candidate for browsing the web safely and securely. This tutorial will help you set up the essentials to help keep your personal data
-            under your control.</p>
+<p style="line-height: 150%"><span style="background: transparent">If
+you haven't already, <a href="https://www.opera.com/download">download
+and install Opera</a>. The set up process is very quick, but does
+require agreement to terms and a privacy policy. I recommend taking a
+look at the privacy policy to make sure you really agree.</span></p>
+<p style="line-height: 150%"><span style="background: transparent">To
+move through this guide as fast as possible, open the guide,
+<a href="https://jmthornton.net/tutorials/browsers/opera.html">https://jmthornton.net/tutorials/browsers/opera.html</a>.
+in Opera after you install it. (This will make installing extensions
+faster)</span></p>
+<h3 class="article-heading-western" style="line-height: 150%"><a name="operasettings"></a>
+<span style="background: transparent">Opera Settings</span></h3>
+<hr/>
 
-            <div class="well">
+<p style="line-height: 150%"><span style="background: transparent">The
+settings can be easily accessed in any of the following ways:</span></p>
+<ul>
+	<li/>
+<p style="margin-bottom: 0in; line-height: 150%"><span style="background: transparent">The
+	left-hand navigation bar on Speed Dial </span>
+	</p>
+	<li/>
+<p style="margin-bottom: 0in; line-height: 150%"><span style="background: transparent">The
+	gear icon at the top right in Speed Dial (click </span><em><span style="background: transparent">Go
+	to browser settings</span></em><span style="background: transparent">
+	at the bottom) </span>
+	</p>
+	<li/>
+<p style="margin-bottom: 0in; line-height: 150%"><span style="background: transparent">Menu
+	&gt; settings </span>
+	</p>
+	<li/>
+<p style="line-height: 150%"><kbd><span style="background: transparent">alt
+	+ p</span></kbd><span style="background: transparent"> </span>
+	</p>
+</ul>
+<h5 class="western" style="line-height: 150%"><span style="display: inline-block; border: none; padding: 0in"><span style="background: transparent"><font color="#0c0c0c">Before
+we walk through the settings, go to the </span></font><font color="#0c0c0c"><span style="background: transparent"><em>Privacy
+and security</span></font></em><span style="background: transparent"><font color="#0c0c0c">
+tab, scroll to the bottom and check the option </span></font><font color="#0c0c0c"><span style="background: transparent"><em>Show
+advanced settings</span></span></font></em></h5>
+<h5 class="western" style="line-height: 150%"><a name="browsertab"></a>
+<span style="background: transparent">Browser tab</span></h5>
+<ol>
+	<li/>
+<p style="margin-bottom: 0in; line-height: 150%"><span style="background: transparent">Search
+	settings: switch search engine to DuckDuckGo </span>
+	</p>
+	<li/>
+<p style="margin-bottom: 0in; line-height: 150%"><span style="background: transparent">User
+	interface: check the option </span><em><span style="background: transparent">Show
+	the full URL in combined search and address bar</span></em><span style="background: transparent">.
+	This allows you to always easily see exactly what site you're on. </span>
+	</p>
+	<li/>
+<p style="line-height: 150%"><span style="background: transparent">Battery
+	saver: this one isn't a security issue, but if you're on a laptop,
+	the battery saver is a good idea. </span>
+	</p>
+</ol>
+<h5 class="western" style="line-height: 150%"><a name="websitestab"></a>
+<span style="background: transparent">Websites tab</span></h5>
+<ol>
+	<li/>
+<p style="margin-bottom: 0in; line-height: 150%"><span style="background: transparent">JavaScript:
+	for stricter security, choose </span><em><span style="background: transparent">Do
+	not allow any site to run JavaScript</span></em><span style="background: transparent">.
+	However, this may break many websites. If you would like to have
+	functioning websites more than strict security, leave this option
+	alone. </span>
+	</p>
+	<li/>
+<p style="margin-bottom: 0in; line-height: 150%"><span style="background: transparent">Location:
+	choose the </span><em><span style="background: transparent">ask me
+	...</span></em><span style="background: transparent"> option. </span>
+	</p>
+	<li/>
+<p style="margin-bottom: 0in; line-height: 150%"><span style="background: transparent">Notifications:
+	choose the </span><em><span style="background: transparent">ask me
+	...</span></em><span style="background: transparent"> option. </span>
+	</p>
+	<li/>
+<p style="margin-bottom: 0in; line-height: 150%"><span style="background: transparent">Microphone:
+	choose the </span><em><span style="background: transparent">ask me
+	...</span></em><span style="background: transparent"> option. </span>
+	</p>
+	<li/>
+<p style="margin-bottom: 0in; line-height: 150%"><span style="background: transparent">Camera:
+	choose the </span><em><span style="background: transparent">ask me
+	...</span></em><span style="background: transparent"> option. </span>
+	</p>
+	<li/>
+<p style="line-height: 150%"><span style="background: transparent">MIDI
+	full control: choose the </span><em><span style="background: transparent">ask
+	me ...</span></em><span style="background: transparent"> option. </span>
+	</p>
+</ol>
+<h5 class="western" style="line-height: 150%"><a name="privacyandsecuritytab"></a>
+<span style="background: transparent">Privacy and Security tab</span></h5>
+<ol>
+	<li/>
+<p style="margin-bottom: 0in; line-height: 150%"><span style="background: transparent">Block
+	ads: check the box. (This blocks many malicious ads which track your
+	behavior across websites) </span>
+	</p>
+	<li/>
+<p style="margin-bottom: 0in; line-height: 150%"><span style="background: transparent">Privacy:
+	only </span><em><span style="background: transparent">Protect me
+	from malicious sites</span></em><span style="background: transparent">
+	and </span><em><span style="background: transparent">Send a ‘Do
+	Not Track’ request with your browsing traffic</span></em><span style="background: transparent">
+	should be checked </span>
+	</p>
+	<li/>
+<p style="margin-bottom: 0in; line-height: 150%"><span style="background: transparent">VPN:
+	check the box to enable the VPN.<!--TODO<a href="#">What's a VPN?</a>-->
+	</span>
+	</p>
+	<li/>
+<p style="margin-bottom: 0in; line-height: 150%"><span style="background: transparent">Autofill:
+	uncheck this box. Data used for autofill is stored in the browser
+	where you have little control of it. </span>
+	</p>
+	<li/>
+<p style="margin-bottom: 0in; line-height: 150%"><span style="background: transparent">Passwords:
+	uncheck this box. Instead use an independent password manager like
+	<a href="https://lastpass.com/">LastPass</a> or, even better--but
+	more technical--, <a href="https://www.keepassx.org/">KeePassX</a>. </span>
+	</p>
+	<li/>
+<p style="margin-bottom: 0in; line-height: 150%"><span style="background: transparent">WebRTC:
+	choose </span><em><span style="background: transparent">Disable
+	non-proxied UDP</span></em><span style="background: transparent">.
+	This can stop the built-in VPN from leaking your real IP address. </span>
+	</p>
+	<li/>
+<p style="line-height: 150%"><span style="background: transparent">Cookies:
+	the recommendation here is to choose </span><em><span style="background: transparent">Allow
+	local data to be set</span></em><span style="background: transparent">,
+	and check </span><em><span style="background: transparent">block
+	third-party cookies and site data</span></em><span style="background: transparent">.
+	Don't worry too much about this one, we'll cover cookie-blocking in
+	just a moment. </span>
+	</p>
+</ol>
+<h3 class="article-heading-western" style="line-height: 150%"><a name="addingmoresecuritywithextensions"></a>
+<span style="background: transparent">Adding more security with
+extensions</span></h3>
+<hr/>
 
-        <h3 id="tldr">TL;DR</h3>
+<ol>
+	<li/>
+<p style="margin-bottom: 0in; line-height: 150%"><span style="background: transparent">Get
+	</span><em><a href="https://addons.opera.com/en/extensions/details/https-everywhere/"><span style="background: transparent">HTTPS
+	Everywhere</span></a></em><span style="background: transparent">.
+	This extension forces Opera to get the encrypted version of any
+	website that has one. </span>
+	</p>
+	<li/>
+<p style="line-height: 150%"><span style="background: transparent">Get
+	</span><em><a href="https://addons.opera.com/en/extensions/details/privacy-badger/?display=ru"><span style="background: transparent">Privacy
+	Badger</span></a></em><span style="background: transparent">. Go
+	through the intro page to learn how </span><em><span style="background: transparent">Privacy
+	Badger works</span></em><span style="background: transparent">. This
+	will take care of malicious cookies for you. </span>
+	</p>
+</ol>
+<p style="line-height: 150%"><span style="background: transparent">Now,
+in Opera, go to your extensions manager:</span></p>
+<ul>
+	<li/>
+<p style="margin-bottom: 0in; line-height: 150%"><span style="background: transparent">Menu
+	&gt; Extensions &gt; Manage Extensions </span>
+	</p>
+	<li/>
+<p style="line-height: 150%"><kbd><span style="background: transparent">Ctrl
+	+ Shift + E</span></kbd><span style="background: transparent"> </span>
+	</p>
+</ul>
+<p style="line-height: 150%"><span style="background: transparent">Find
+</span><em><span style="background: transparent">HTTPS Everywhere</span></em><span style="background: transparent">
+and check the box </span><em><span style="background: transparent">Allow
+in private mode</span></em><span style="background: transparent">. Do
+the same for </span><em><span style="background: transparent">Privacy
+Badger</span></em><span style="background: transparent">.</span></p>
+<h3 class="article-heading-western" style="line-height: 150%"><span style="background: transparent">All
+done!</span></h3>
+<hr/>
 
-        <ol>
-            <li><a href="https://www.opera.com/download">Download and install Opera</a></li>
+<p style="line-height: 150%"><span style="background: transparent">Congratulations!
+Your Opera browser is now set up to view the web safely and
+securely.<!--TODO To be any more secure, you'd have to be using Tor -->
+Happy browsing!</span></p>
+<hr/>
 
-            <li>Click the <em>VPN</em> icon in the address bar and make sure it's <em>on</em></li>
+<p style="margin-bottom: 0in; line-height: 150%"><br/>
 
-            <li>Settings > Privacy and Security: <br>
-
-
-        <ul>
-            <li>check <em>show advanced settings</em></li>
-
-            <li>check <em>Block ads</em> and <em>Send a ‘Do Not Track’ request with your browsing traffic</em></li>
-
-            <li>uncheck <em>autofill</em> and <em>save passwords</em></li>
-
-            <li>WebRTC > <em>Disable non-proxied UDP</em></li>
-        </ul></li>
-
-
-            <li>Install <a href="https://addons.opera.com/en/extensions/details/https-everywhere/"><em>HTTPS Everywhere</em></a></li>
-
-            <li>Install <a href="https://addons.opera.com/en/extensions/details/privacy-badger/?display=ru"><em>Privacy Badger</em></a></li>
-        </ol>
-      </div>
-
-
-        <h3 class="article-heading" id="getopera">Get Opera</h3>
-        <hr>
-
-        <p>If you haven't already, <a href="https://www.opera.com/download">download and install Opera</a>. The set up process is very quick, but does require agreement to terms and a privacy policy. I recommend taking a look at the privacy policy to make
-            sure you really agree.</p>
-
-        <p>To move through this guide as fast as possible, open the guide, <a href="https://jmthornton.net/tutorials/browsers/opera.html">https://jmthornton.net/tutorials/browsers/opera.html</a>. in Opera after you install it. (This will make installing extensions faster)</p>
-
-        <h3 class="article-heading" id="operasettings">Opera Settings</h3>
-        <hr>
-
-        <p>The settings can be easily accessed in any of the following ways:</p>
-
-        <ul>
-            <li>The left-hand navigation bar on Speed Dial</li>
-
-            <li>The gear icon at the top right in Speed Dial (click <em>Go to browser settings</em> at the bottom)</li>
-
-            <li>Menu > settings</li>
-
-            <li><kbd>alt + p</kbd></li>
-        </ul>
-
-        <div class="well"><h5>Before we walk through the settings, go to the <em>Privacy and security</em> tab, scroll to the bottom and check the option <em>Show advanced settings</em></h5></div>
-
-        <h5 id="browsertab">Browser tab</h5>
-
-        <ol>
-            <li>Search settings: switch search engine to DuckDuckGo</li>
-
-            <li>User interface: check the option <em>Show the full URL in combined search and address bar</em>. This allows you to always easily see exactly what site you're on.</li>
-
-            <li>Battery saver: this one isn't a security issue, but if you're on a laptop, the battery saver is a good idea.</li>
-        </ol>
-
-        <h5 id="websitestab">Websites tab</h5>
-
-        <ol>
-            <li>JavaScript: for stricter security, choose <em>Do not allow any site to run JavaScript</em>. However, this may break many websites. If you would like to have functioning websites more than strict security, leave this option alone.</li>
-
-            <li>Location: choose the <em>ask me ...</em> option.</li>
-
-            <li>Notifications: choose the <em>ask me ...</em> option.</li>
-
-            <li>Microphone: choose the <em>ask me ...</em> option.</li>
-
-            <li>Camera: choose the <em>ask me ...</em> option.</li>
-
-            <li>MIDI full control: choose the <em>ask me ...</em> option.</li>
-        </ol>
-
-        <h5 id="privacyandsecuritytab">Privacy and Security tab</h5>
-
-        <ol>
-            <li>Block ads: check the box. (This blocks many malicious ads which track your behavior across websites)</li>
-
-            <li>Privacy: only <em>Protect me from malicious sites</em> and <em>Send a ‘Do Not Track’ request with your browsing traffic</em> should be checked</li>
-
-            <li>VPN: check the box to enable the VPN. <!--TODO<a href="#">What's a VPN?</a>--></li>
-
-            <li>Autofill: uncheck this box. Data used for autofill is stored in the browser where you have little control of it.</li>
-
-            <li>Passwords: uncheck this box. Instead use an independent password manager like <a href="https://lastpass.com/">LastPass</a> or, even better--but more technical--, <a href="https://www.keepassx.org/">KeePassX</a>.</li>
-
-            <li>WebRTC: choose <em>Disable non-proxied UDP</em>. This can stop the built-in VPN from leaking your real IP address.</li>
-
-            <li>Cookies: the recommendation here is to choose <em>Allow local data to be set</em>, and check <em>block third-party cookies and site data</em>. Don't worry too much about this one, we'll cover cookie-blocking in just a moment.</li>
-        </ol>
-
-        <h3 class="article-heading" id="addingmoresecuritywithextensions">Adding more security with extensions</h3>
-        <hr>
-
-        <ol>
-            <li>Get <a href="https://addons.opera.com/en/extensions/details/https-everywhere/"><em>HTTPS Everywhere</em></a>. This extension forces Opera to get the encrypted version of any website that has one.</li>
-
-            <li>Get <a href="https://addons.opera.com/en/extensions/details/privacy-badger/?display=ru"><em>Privacy Badger</em></a>. Go through the intro page to learn how <em>Privacy Badger works</em>. This will take care of malicious cookies for you.</li>
-        </ol>
-
-        <p>Now, in Opera, go to your extensions manager:</p>
-              <ul>
-                <li>Menu > Extensions > Manage Extensions</li>
-                <li><kbd>Ctrl + Shift + E</kbd></li>
-              </ul>
-
-           <p>Find <em>HTTPS Everywhere</em> and check the box <em>Allow in private mode</em>. Do the same for <em>Privacy Badger</em>.</p>
-
-        <h3 class="article-heading">All done!</h3>
-        <hr>
-
-        <p>Congratulations! Your Opera browser is now set up to view the web safely and securely. <!--TODO To be any more secure, you'd have to be using Tor --> Happy browsing!</p>
-
-        <hr>
-        <br>
-
-        <div class="end-btns">
-          <a href="../../pages/features.html" role="button" type="button" class="btn lower-btn">More tutorials and guides</a>
-          <a href="../help.html" role="button" type="button" class="btn lower-btn">Found an error or bug?</a>
-        </div>
-
-        <div class="phantom"></div>
-      </article>
-    </div>
+</p>
+<p style="margin-bottom: 0in; line-height: 150%"><span style="background: transparent"><a href="../../pages/features.html">More
+tutorials and guides</a> <a href="../help.html">Found an error or
+bug?</a> </span>
+</p>
 </body>
-
 </html>
