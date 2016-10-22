@@ -20,7 +20,7 @@
 </url>
 <url>
   <loc>https://jmthornton.net/pages/projects.html</loc>
-  <lastmod>2016-10-21T15:27:09+00:00</lastmod>
+  <lastmod>2016-10-21T16:44:23+00:00</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.80</priority>
 </url>
@@ -62,13 +62,13 @@
 </url>
 <url>
   <loc>https://jmthornton.net/pages/sitemap/sitemap.html</loc>
-  <lastmod>2016-10-20T06:18:47+00:00</lastmod>
+  <lastmod>2016-10-21T16:22:13+00:00</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://jmthornton.net/tutorials/pachyderm/pachyman.html</loc>
-  <lastmod>2016-10-21T15:27:17+00:00</lastmod>
+  <loc>https://jmthornton.net/projects/pachyderm/pachyman.html</loc>
+  <lastmod>2016-10-21T16:44:29+00:00</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.64</priority>
 </url>
@@ -97,14 +97,14 @@
   <priority>0.51</priority>
 </url>
 <url>
-  <loc>https://jmthornton.net/tutorials/help.html</loc>
-  <lastmod>2016-10-20T06:19:02+00:00</lastmod>
+  <loc>https://jmthornton.net/projects/help.html</loc>
+  <lastmod>2016-10-22T15:46:55+00:00</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.51</priority>
 </url>
 <url>
-  <loc>https://jmthornton.net/tutorials/browsers/opera.html</loc>
-  <lastmod>2016-10-20T06:19:04+00:00</lastmod>
+  <loc>https://jmthornton.net/projects/pachyderm/pachyfaq.html</loc>
+  <lastmod>2016-10-22T15:46:57+00:00</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.51</priority>
 </url>
