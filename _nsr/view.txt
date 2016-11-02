@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Businez Inc Co Corp Corps LLC</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="copyright" content=" Copyright (C) 2016 Jade Thornton
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, version 3.0.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see http://www.gnu.org/licenses/." />
+    <meta name="author" content="Jade Thornton" />
+    <meta name="description" content="The greatest businez on the planet" />
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Droid+Sans:400,700" rel='stylesheet' type='text/css' />
+    <style>
+        body {
+            font-family: Droid Sans, sans-serif;
+            font-size: 2em;
+            background-color: black;
+        }
+
+        .container {
+            margin-top: 10vh;
+        }
+
+        .nav-pills> li {
+            display: inline-block;
+        }
+
+        .contact-info-row> h5 {
+            text-align: right;
+        }
+
+        .well {
+            margin-top: 3vh;
+            margin-bottom: 3vh;
+        }
+
+        .click-to-see {
+            background-image: url("assets/images/plan.png");
+            text-align: center;
+            padding-top: 8vh;
+            padding-bottom: 8vh;
+            border-radius: 3%;
+        }
+
+        .virus-row {
+            background-image: url("assets/images/hax.png");
+            text-align: center;
+            padding-top: 4vh;
+            padding-bottom: 4vh;
+            border-radius: 3%;
+        }
+
+        #bus-btn {
+            color: white;
+            text-decoration: none;
+            font-size: 2.5em;
+            text-shadow: 10px black;
+        }
+
+        #virus-btn {
+            color: red;
+            font-weight: bolder;
+            text-decoration: none;
+            font-size: 2em;
+            text-shadow: 10px black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row main-row">
+            <div class="nav-col col-lg-1 col-lg-offset-2">
+                <ul class="nav nav-pills">
+                    <li>
+                        <a href="#">Home</a>
+                    </li>
+                    <li>
+                        <a href="pages/give.html">Give</a>
+                    </li>
+                    <li>
+                        <a href="pages/home.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="pages/give.html">Give</a>
+                    </li>
+                    <li>
+                        <a href="pages/contact.html">Contact</a>
+                    </li>
+                    <li>
+                        <a href="view.html" id="source">View</a>
+                    </li>
+                    <li>
+                        <a href="#" id="this">Implode</a>
+                    </li>
+                    <li>
+                        <a href="pages/admin.html">Admin</a>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="content-col col-lg-5 col-lg-offset-1">
+                <div class="row">
+                    <a href="pages/plan.html" id="bus-btn">
+                        <div class="click-to-see">
+                            Click here to see businez plan!!!
+                        </div>
+                    </a>
+                </div>
+                <div class="contact-info-row row well">
+                    <h3>Don't take us seriously, and we won't take you seriously</h3>
+                    <h4><em>That's a promise</em></h4>
+                    <h5>Phone: N/A</h5>
+                    <h5>Address: N/A</h5>
+                    <h5>Email: N/A@gmail.com</h5>
+                </div>
+                <a href="pages/virus.html" id="virus-btn">
+                    <div class="row virus-row">
+                        CLICK HERE FOR FREE VIRUS
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $("#this").click(function() {
+            $("html *").css("display", "none");
+        });
+    </script>
+</body>
+
+</html>
