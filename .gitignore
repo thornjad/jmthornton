@@ -45,7 +45,6 @@ CNAME
 
 # Restricted directories #
 ##########################
-_nsr/
 ncarchive/
 blog/
 
