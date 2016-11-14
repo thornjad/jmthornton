@@ -5,8 +5,30 @@
     max-zoom: 3;
 }
 
+@font-face {
+    font-family: 'La-chata';
+    src: url('../fonts/La-chata-normal.eot');
+    src: local('☺'), url('../fonts/La-chata-normal.woff') format('woff'), url('../fonts/La-chata-normal.ttf') format('truetype'), url('../fonts/La-chata-normal.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LiberationSans';
+    src: url('../fonts/LiberationSans-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LiberationSans';
+    src: url('../fonts/LiberationSans-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
 html {
-    font-family: Roboto, sans-serif;
+    font-family: "LiberationSans", Arial, sans-serif;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
     margin: 0 auto;
@@ -18,7 +40,7 @@ html {
 }
 
 body {
-    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "LiberationSans", Arial, sans-serif;
     font-size: 18px;
     line-height: 1.846;
     color: #333;
