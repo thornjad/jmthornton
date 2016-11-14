@@ -8,7 +8,7 @@ This website was previously hosted with GitHub Pages in the directory [raindeer4
 
 ##### **This is a work in progress**
 
-I am a self-taught web developer in the process of learning and experimenting. This site will grow along with me, and will not be a finished product for some time. So please excuse broken links, poor loading times, missing CSS, etc. If you have any comments, feedback, suggestions or would like to contribute, please shoot me an email at [jade@jmthornton.net](mailto:jade@jmthornton.net).
+I am a self-taught web developer in the process of learning and experimenting. This site will grow along with me, and will not be a finished product for some time. So please excuse broken links, poor loading times, missing CSS, etc. If you have any comments, feedback, suggestions or would like to contribute, please register an issue or shoot me an email at [jade@jmthornton.net](mailto:jade@jmthornton.net).
 
 ---
 
