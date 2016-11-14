@@ -1,16 +1,26 @@
+@font-face {
+    font-family: 'La-chata';
+    src: url('../fonts/La-chata-normal.eot');
+    src: local('☺'), url('../fonts/La-chata-normal.woff') format('woff'), url('../fonts/La-chata-normal.ttf') format('truetype'), url('../fonts/La-chata-normal.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .navbar {
     background-color: rgba(255, 255, 255, 0.9);
+    font-family: "La-chata", inherit;
     border: none;
     margin-bottom: 5px;
     font-size: 17px;
 }
 
 .navbar .container-fluid {
-  max-width: 1000px;
+    max-width: 1000px;
 }
 
 .navbar ul {
-  float: right !important;
+    float: right !important;
+    font-family: "La-chata", inherit;
 }
 
 .navbar .navbar-brand {
@@ -27,6 +37,7 @@
 
 .navbar .navbar-nav> li> a {
     color: #1c1c1c;
+    font-family: "La-chata", sans-serif;
 }
 
 .navbar .navbar-nav> li> a:hover, .navbar .navbar-nav> li> a:focus {
@@ -110,7 +121,7 @@
 }
 
 .top-nav {
-  background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.9);
     width: 100vw;
     height: 4.2em;
     left: 0;
@@ -123,10 +134,9 @@
     margin-left: 20vw;
 }
 
-.top-nav-btns a,
-.top-nav-btns img {
-  margin-left: 0.2vw;
-  margin-right: 0.2vw;
+.top-nav-btns a, .top-nav-btns img {
+    margin-left: 0.2vw;
+    margin-right: 0.2vw;
 }
 
 .logo {
@@ -134,7 +144,7 @@
 }
 
 @media (max-width: 800px) {
-  .lowp {
-    display: none !important;
-  }
+    .lowp {
+        display: none !important;
+    }
 }
