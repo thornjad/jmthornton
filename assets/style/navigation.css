@@ -20,7 +20,7 @@
 
 .navbar ul {
     float: right !important;
-    font-family: "La-chata", inherit;
+    font-family: "Rounded", inherit;
 }
 
 .navbar .navbar-brand {
@@ -37,7 +37,7 @@
 
 .navbar .navbar-nav> li> a {
     color: #1c1c1c;
-    font-family: "La-chata", sans-serif;
+    font-family: "Rounded", sans-serif;
 }
 
 .navbar .navbar-nav> li> a:hover, .navbar .navbar-nav> li> a:focus {
