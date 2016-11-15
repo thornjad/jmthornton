@@ -43,6 +43,10 @@ BingSiteAuth.xml
 #############
 CNAME
 
+# Restricted files #
+####################
+.htaccess
+
 # Restricted directories #
 ##########################
 ncarchive/
