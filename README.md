@@ -12,7 +12,7 @@ I am a self-taught web developer in the process of learning and experimenting. T
 
 ---
 
-Copyright (c) 2016 Jade Thornton
+Copyright (c) 2017 Jade Thornton
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
