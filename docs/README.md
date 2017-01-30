@@ -22,4 +22,4 @@ I had so much fun creating everything, even enjoying setting up DNS and using Cl
 
 The website still isn't perfect by any means. I still have bugs (especially an annoying one on mobile browsers), and there's more to build that I haven't had time for. But that's a perfect reflection of my own path in software development. Despite shortcomings and challenges, bugs and missing features, I love what I do and I'm constantly striving to make myself better.
 
-*--Jade**
+*Jade*
