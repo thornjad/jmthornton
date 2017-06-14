@@ -1,12 +1,13 @@
 ## Hello there!
 
-This is the source code of [jmthornton.net](http://jmthornton.net), home to Jade Thornton Web Development. This is my own personal website, showcasing work I have done, providing easy means of contact and hosting my personal blog [Sudo Brew](https://blog.jmthornton.net).
+This is the source code of [jmthornton.net](http://jmthornton.net), the
+personal website of me, Jade Thornton. It showcases work I have done, provides
+easy means of contact, hosts my blog [Sudo Brew](https://blog.jmthornton.net)
+and serves as a sandbox for my own experiments and growth.
 
 ---
 
-##### **This is a work in progress**
-
-I am a self-taught web developer in the process of learning and experimenting. This site will grow along with me, and will not be a finished product for some time. So please excuse broken links, poor loading times, missing CSS, etc. If you have any comments, feedback, suggestions or would like to contribute, please register an issue at <https://gitlab.com/raindeer/jmthornton/issues>.
+I am a self-taught web developer, perpetually learning and experimenting. This site will grow along with me, and will not be a finished product for some time. Please excuse broken links, poor loading times, missing CSS, etc. If you have any comments, feedback, suggestions or would like to contribute, please register an issue at <https://gitlab.com/raindeer/jmthornton/issues>.
 
 ---
 
