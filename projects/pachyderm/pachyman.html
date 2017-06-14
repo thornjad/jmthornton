@@ -20,6 +20,7 @@
         body {
             text-align: left;
             font-size: 20px;
+            font-family: sans-serif;
         }
 
         dd {
@@ -64,7 +65,7 @@
         }
 
         footer {
-            text-align: center;
+            text-align: left;
             margin-bottom: 20em;
             font-size: 1em;
         }
@@ -153,13 +154,7 @@
                     I do recommend using a text editor rather than just using the text box in Pachyderm, however, for one good reason: syntax highlighting. This means that different HTML elements will have different colors so you can very quickly tell
                     the difference between a tag, some text, a URL, etc.</p>
 
-                <p>If you're on Windows, Notepad will already be installed and works okay for quick editing, but does not have the very helpful syntax highlighting. A wonderful improved version, called Notepad++ (pronounced notepad plus plus), is much better
-                    at HTML. <a href="https://notepad-plus-plus.org/download/v7.html">Download and install it for free</a>.</p>
-
-                <p>If you're on a UNIX or UNIX-like machine (OS X, macOS, Linux, FreeBSD, etc.), VIM comes pre-installed and is a great choice for fast editing. Just type "vim" followed by the file name in the terminal. However, using VIM has a steep learning
-                    curve. If you're not going to be working with it a lot, it's probably not worth the time you'd have to invest.</p>
-
-                <p>For all users, I cannot recommend more highly the free and open-source text editor <a href="https://atom.io/">Atom</a>. It's what I'm using to write this right now, and there is nothing that can beat it. On the other hand, others may disagree
+                <p>For all users (Windows and UNIX), I cannot recommend more highly the free and open-source text editor <a href="https://atom.io/">Atom</a>. It's what I'm using to write this right now, and there is nothing that can beat it. On the other hand, others may disagree
                     on the awesomeness of Atom. If you're one of those people, check out <a href="https://www.eclipse.org/">Eclipse</a>, <a href="https://www.sublimetext.com/">Sublime</a> or <a href="https://kate-editor.org/">Kate</a>.</p>
 
                 <div class="phantom" id="intro"></div>
@@ -312,7 +307,7 @@
 
                 <h3><code>&lt;em&gt;</code></h3>
 
-                <p><strong>Emphasis</strong> -- Emphasizing something in HTML means to make it italicized. Yes, there is an <code>&lt;i&gt;</code> tag, but we don't use it. <a href="help.html#access">Learn why</a></em>.</p>
+                <p><strong>Emphasis</strong> -- Emphasizing something in HTML means to make it italicized. Yes, there is an <code>&lt;i&gt;</code> tag, but we don't use it. <a href="./pachyfaq.html#accessibility">Learn why</a></em>.</p>
 
                 <pre class="well"><code>&lt;em&gt;I am some very stylish italicized text&lt;/em&gt;
 </code></pre>
@@ -420,7 +415,7 @@ Don't listen to that text, I'm not nosy!
 
                 <h3><code>&lt;strong&gt;</code></h3>
 
-                <p><strong>Strong</strong> -- Use this tag to make text bold. Yes, there is a &lt;b&gt; tag, but we don't use it. <a href="help.html#access">Learn why</a>.</p>
+                <p><strong>Strong</strong> -- Use this tag to make text bold. Yes, there is a &lt;b&gt; tag, but we don't use it. <a href="./pachyfaq.html#accessibility">Learn why</a>.</p>
 
                 <pre class="well"><code>&lt;strong&gt;Bold text&lt;/strong&gt;
 </code></pre>
@@ -463,7 +458,7 @@ Don't listen to that text, I'm not nosy!
                 <p>
                     <!-- I'm a happy little comment which likes to hide! --><br></p>
 
-                <p><em>No, I didn't forget to put the code under the code block. It's a comment so it doesn't show up! Take a look at the <a href="https://github.com/Raindeer44/jmthornton/tree/master/projects/pachyderm/pachyman.html">source code</a> to see that there really is a comment there (hint: check line 464).</em></p>
+                <p><em>No, I didn't forget to put the code under the code block. It's a comment so it doesn't show up! Take a look at the <a href="https://github.com/Raindeer44/jmthornton/tree/master/projects/pachyderm/pachyman.html">source code</a> to see that there really is a comment there (hint: check line 459).</em></p>
 
                 <hr />
 
@@ -486,21 +481,15 @@ Don't listen to that text, I'm not nosy!
                     </li>
 
                     <li>
-                        <p>I centered the images via a fun little hack. With credit for the idea to Kate Conners, I took the pre-existing images and photoshopped them into standardized rectangles of 400x300px with the image centered.</p>
-                    </li>
-
-                    <li>
                         <p>I only used images licensed under a Creative Commons license. Knowledge is free, and open-source is the future. Creative Commons images allow me to make changes I want and to use them in any way I want. I highly encourage you to
                             only use images which are also copylefted.</p>
                     </li>
                 </ul>
 
-                <p>If you've already explored the presentations, which you probably have, you'll notice something about what I just said. They're not entirely true. There is at least one exception to every bullet I listed above. The simple reason is, in
-                    those situations, I made a design decision based on the specific situation. You, as the editor and/or maintainer of the presentation have the full power to make your own design decisions. I only ask that you adhere to the following
+                <p>If you've already explored the presentations, which you probably have, you'll notice something about what I just said. They're not entirely true. There is at least one exception to every bullet I listed above. I'm a pragmatic man, and I made design decisions based on specific situations. You, as the editor and/or maintainer of the presentation have the full power to make your own design decisions. I only ask that you adhere to the following
                     design rule:</p>
 
-                <p><strong><em>Don't make the user think</em></strong>. Make features and options obvious; if you have to explain something to the user, it means you need to rethink it yourself. We want the user to enjoy using these presentations, and that
-                    means they shouldn't notice most of it; it should be automatic.</p>
+                <p><strong><em>Don't make the user think</em></strong>. Make features and options obvious; if you have to explain something to the user, it means you need to rethink it yourself (which makes this manual a bit hypocritical, huh?). We want the user to enjoy using these presentations, and that means they shouldn't notice most of it; it should be automatic.</p>
 
                 <hr />
 
@@ -698,13 +687,11 @@ Don't listen to that text, I'm not nosy!
                 <div class="phantom" id="about"></div>
 
                 <footer>
-                    <h5>The Pachyderm Manual (PachyMan) was created in 2016 by Jade Thornton for the Human Resources department of the Humphrey School of Public Affairs at the University of Minnesota, to assist employees in editing an maintaining the new employee orientation presentations. It is maintained here on <a href="https://jmthornton.net">JMThornton.net</a> to keep it easily maintainable and accessible. The original source (in markdown) and PDF of this manual is located on the University of Minnesota shared "Administration" drive in "S:\Finance\Human Resources\Jade\Pachyderm\". If you do not have access to this drive, contact your supervisor and/or Humphrey ITS. This web page is adapted from the source, and is more updated.</h5>
+                    <h5>The Pachyderm Manual (PachyMan) was created in 2016 by Jade Thornton for the Human Resources department of the Humphrey School of Public Affairs at the University of Minnesota, to assist employees in editing an maintaining the new employee orientation presentations. It is hosted here on <a href="https://jmthornton.net">Jade's personal website</a> to keep it easily maintainable and accessible. The original source and PDF of this manual are located on the University of Minnesota shared "Administration" drive in "S:\Finance\Human Resources\Jade\Pachyderm\". If you do not have access to this drive, contact your supervisor and/or Humphrey ITS. This web page is adapted from the source, and is more updated.</h5><br>
 
-                    <h5>If you have noticed a bug, error or would like to make any changes, please visit the <a href="../help.html">help page</a>. Your contributions are appreciated.</h5>
+                    <h5>If you have noticed a bug, error or would like to make any changes, please visit the <a href="../help.html">help page</a>. Your contributions are appreciated.</h5><br>
 
-                    <h5><a href="../../LICENSE">Copyright 2016 Jade Thornton</a></h6>
-
-                      <!-- BEGIN LINK --><a class="banner" href="https:&#x2F;&#x2F;www.namecheap.com&#x2F;?aff=105194"><img src="https:&#x2F;&#x2F;files.namecheap.com&#x2F;graphics&#x2F;linkus&#x2F;468x60-5.gif" width="468" height="60" border="0" alt="Namecheap.com"></a><!-- END LINK -->
+                    <h5><a href="../../LICENSE">Copyright 2017 Jade Thornton</a></h6><br>
                 </footer>
             </div>
         </article>
