@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/raindeer44/jmthornton/issues"
   },
-  "homepage": "https://github.com/raindeer44/jmthornton#readme"
+  "homepage": "https://github.com/raindeer44/jmthornton#readme",
+  "dependencies": {
+    "mini.css": "^2.3.0"
+  }
 }
