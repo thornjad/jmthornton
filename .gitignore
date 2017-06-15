@@ -43,6 +43,10 @@ BingSiteAuth.xml
 #############
 CNAME
 
+# Development files #
+#####################
+*.old
+
 # Restricted files #
 ####################
 .htaccess
