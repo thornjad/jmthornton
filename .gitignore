@@ -47,6 +47,10 @@ CNAME
 #####################
 *.old
 
+# Development Directories #
+###########################
+.sass-cache/
+
 # Restricted files #
 ####################
 .htaccess
