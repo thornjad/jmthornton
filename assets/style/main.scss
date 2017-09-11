@@ -1,14 +1,15 @@
 /*
   Flavor name: Jad
-  Author: raindeer44 (https://github.com/raindeer44)
+  Author: raindeer44 (https:
   Maintainers: raindeer44
-  Based on: Nord for mini.css v2.3.4 by tphecca (https://github.com/tphecca)
-  Color palette based on: Nord (https://github.com/acticicestudio/nord)
+  Based on: Nord for mini.css v2.3.4 by tphecca (https:
+  Color palette based on: Nord (https:
   Inspiration from: bootswatch v3.3.7 by Thomas Park and Twitter, Inc.
 */
+
 $fore-color: #2E3440;
 $back-color: #ECEFF4;
-$base-font-family: '-apple-system, BlinkMacSystemFont,\"Segoe UI\",\"Roboto\", \"Droid Sans\",\"Helvetica Neue\", Helvetica, Arial, sans-serif'; // OS X and iOS system fonts (San Francisco) -> Windows system fonts -> Android system fonts (newer and older) -> Fallback fonts
+$base-font-family: '-apple-system, BlinkMacSystemFont,\"Segoe UI\",\"Roboto\", \"Droid Sans\",\"Helvetica Neue\", Helvetica, Arial, sans-serif';
 $base-root-font-size: 16px;
 $base-font-size: 1em;
 $base-line-height: 1.5;
@@ -71,7 +72,8 @@ $kbd-element-back-color: $fore-color;
 $kbd-element-border-style: 0;
 $kbd-element-border-radius: 2px;
 $kbd-element-box-shadow: 0 1px 2px rgba(0,0,0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.15);
-$include-dfn-fix: true; // fix for Android 4.3 <dfn> bug
+$style-samp-element: false;
+$include-dfn-fix: true;
 $small-font-size: 75%;
 $sup-font-size: 75%;
 $sub-font-size: 75%;
@@ -154,7 +156,7 @@ $button-group-border-style: 1px solid #9e9e9e;
 $button-group-margin: $button-margin;
 $button-group-box-shadow: 0 2px 4px rgba(0,0,0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.15);
 $button-group-mobile-breakpoint: 767px;
-$hide-file-inputs: false;
+$hide-file-inputs: true;
 $button-variant1-name: 'primary';
 $button-variant1-back-color: #5E81AC;
 $button-variant1-back-opacity: 0.9;

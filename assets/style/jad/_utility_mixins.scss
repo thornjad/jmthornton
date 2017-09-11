@@ -37,8 +37,11 @@
 // - $margin-use-four-step-grid : (Optional) Should the legacy four-step grid be used? Defaults to `false`.
 // - $margin-small-breakpoint : (Optional) Small screen breakpoint for the responsive margin, used only if above flag is set to `true`. Defaults to `480px`.
 // - $margin-extra-small-value : (Optional) Responsive margin value for extra small screens, used only if above flag is set to `true`. Defaults to `0`.
-@mixin make-margin-responsive ($margin-name, $margin-small-value, $margin-medium-value, $margin-large-value, $margin-medium-breakpoint : 768px, $margin-large-breakpoint : 1280px, $margin-use-four-step-grid : false, $margin-small-breakpoint : 480px, $margin-extra-small-value : 0) {
-   @if $margin-use-four-step-grid{
+@mixin make-margin-responsive ($margin-name, $margin-small-value,
+  $margin-medium-value, $margin-large-value, $margin-medium-breakpoint : 768px,
+  $margin-large-breakpoint : 1280px, $margin-use-four-step-grid : false,
+  $margin-small-breakpoint : 480px, $margin-extra-small-value : 0) {
+  @if $margin-use-four-step-grid {
     .#{$margin-name} {
       margin: $margin-extra-small-value !important;
     }
@@ -73,8 +76,11 @@
 // - $padding-use-four-step-grid : (Optional) Should the legacy four-step grid be used? Defaults to `false`.
 // - $padding-small-breakpoint : (Optional) Small screen breakpoint for the responsive padding, used only if above flag is set to `true`. Defaults to `480px`.
 // - $padding-extra-small-value : (Optional) Responsive padding value for extra small screens, used only if above flag is set to `true`. Defaults to `0`.
-@mixin make-padding-responsive ($padding-name, $padding-small-value, $padding-medium-value, $padding-large-value, $padding-medium-breakpoint : 768px, $padding-large-breakpoint : 1280px, $padding-use-four-step-grid : false, $padding-small-breakpoint : 480px, $padding-extra-small-value : 0) {
-   @if $padding-use-four-step-grid{
+@mixin make-padding-responsive ($padding-name, $padding-small-value,
+  $padding-medium-value, $padding-large-value, $padding-medium-breakpoint : 768px,
+  $padding-large-breakpoint : 1280px, $padding-use-four-step-grid : false,
+  $padding-small-breakpoint : 480px, $padding-extra-small-value : 0) {
+  @if $padding-use-four-step-grid{
     .#{$padding-name} {
       padding: $padding-extra-small-value !important;
     }
@@ -109,8 +115,11 @@
 // - $hidden-use-four-step-grid : (Optional) Should the legacy four-step grid be used? Defaults to `false`.
 // - $hidden-small-breakpoint : (Optional) Small screen breakpoint for the responsive hiding, used only if the above variable is set to `true`. Defaults to `480px`.
 // - $hidden-extra-small-suffix : (Optional) The extra-small-screen suffix for the name of the class used for the responsive hiding. Used only if the above flag is set to `true`. Defaults to 'xs'.
-@mixin make-hidden-responsive ($hidden-prefix, $hidden-medium-breakpoint : 768px, $hidden-large-breakpoint : 1280px , $hidden-small-suffix : 'sm', $hidden-medium-suffix : 'md', $hidden-large-suffix : 'lg', $hidden-use-four-step-grid : false, $hidden-small-breakpoint : 480px, $hidden-extra-small-suffix : 'xs') {
-   @if $hidden-use-four-step-grid{
+@mixin make-hidden-responsive ($hidden-prefix, $hidden-medium-breakpoint : 768px,
+  $hidden-large-breakpoint : 1280px , $hidden-small-suffix : 'sm', $hidden-medium-suffix : 'md',
+  $hidden-large-suffix : 'lg', $hidden-use-four-step-grid : false,
+  $hidden-small-breakpoint : 480px, $hidden-extra-small-suffix : 'xs') {
+  @if $hidden-use-four-step-grid {
     @media screen and (max-width: #{$hidden-small-breakpoint}-1px) {
       .#{$hidden-prefix}-#{$hidden-extra-small-suffix} {
         display: none !important;
@@ -123,7 +132,7 @@
     }
   }
   @else {
-     @media screen and (max-width: #{$hidden-medium-breakpoint}-1px){
+    @media screen and (max-width: #{$hidden-medium-breakpoint}-1px) {
       .#{$hidden-prefix}-#{$hidden-small-suffix} {
         display: none !important;
       }
@@ -151,8 +160,11 @@
 // - $visually-hidden-use-four-step-grid : (Optional) Should the legacy four-step grid be used? Defaults to `false`.
 // - $visually-hidden-small-breakpoint : (Optional) Small screen breakpoint for the responsive visual hiding, used only if the above variable is set to `true`. Defaults to `480px`.
 // - $visually-hidden-extra-small-suffix : (Optional) The extra-small-screen suffix for the name of the class used for the responsive visual hiding. Used only if the above flag is set to `true`. Defaults to 'xs'.
-@mixin make-visually-hidden-responsive ($visually-hidden-prefix, $visually-hidden-medium-breakpoint : 768px, $visually-hidden-large-breakpoint : 1280px , $visually-hidden-small-suffix : 'sm', $visually-hidden-medium-suffix : 'md', $visually-hidden-large-suffix : 'lg', $visually-hidden-use-four-step-grid : false, $visually-hidden-small-breakpoint : 480px, $visually-hidden-extra-small-suffix : 'xs') {
-   @if $visually-hidden-use-four-step-grid{
+@mixin make-visually-hidden-responsive ($visually-hidden-prefix, $visually-hidden-medium-breakpoint : 768px,
+  $visually-hidden-large-breakpoint : 1280px , $visually-hidden-small-suffix : 'sm', $visually-hidden-medium-suffix : 'md',
+  $visually-hidden-large-suffix : 'lg', $visually-hidden-use-four-step-grid : false,
+  $visually-hidden-small-breakpoint : 480px, $visually-hidden-extra-small-suffix : 'xs') {
+  @if $visually-hidden-use-four-step-grid {
     @media screen and (max-width: #{$visually-hidden-small-breakpoint}-1px) {
       .#{$visually-hidden-prefix}-#{$visually-hidden-extra-small-suffix} {
         position: absolute !important;
@@ -183,7 +195,7 @@
     }
   }
   @else {
-     @media screen and (max-width: #{$visually-hidden-medium-breakpoint}-1px){
+    @media screen and (max-width: #{$visually-hidden-medium-breakpoint}-1px) {
       .#{$visually-hidden-prefix}-#{$visually-hidden-small-suffix} {
         position: absolute !important;
         width: 1px !important;
