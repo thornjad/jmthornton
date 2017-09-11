@@ -6,10 +6,8 @@
   Color palette based on: Nord (https://github.com/acticicestudio/nord)
   Inspiration from: bootswatch v3.3.7 by Thomas Park and Twitter, Inc.
 */
-
 $fore-color: #2E3440;
 $back-color: #ECEFF4;
-
 $base-font-family: '-apple-system, BlinkMacSystemFont,\"Segoe UI\",\"Roboto\", \"Droid Sans\",\"Helvetica Neue\", Helvetica, Arial, sans-serif'; // OS X and iOS system fonts (San Francisco) -> Windows system fonts -> Android system fonts (newer and older) -> Fallback fonts
 $base-root-font-size: 16px;
 $base-font-size: 1em;
@@ -17,7 +15,6 @@ $base-line-height: 1.5;
 $use-fluid-typography: false;
 $body-margin: 0;
 $apply-defaults-to-all: true;
-
 $h1-font-size: 2em;
 $h2-font-size: 1.5em;
 $h3-font-size: 1.25em;
@@ -31,19 +28,15 @@ $heading-smalltext-fore-color: #424242;
 $make-heading-smalltext-block: true;
 $heading-smalltext-b-font-size: 75%;
 $heading-smalltext-b-top-margin: -4px;
-
 $paragraph-margin: 1px 8px;
 $list-margin: 1px 8px 10px;
 $list-left-padding: 28px;
-
 $bold-font-weight: 700;
-
 $horizontal-rule-line-height: 1.25em;
 $horizontal-rule-margin: 8px;
 $horizontal-rule-border-style: 1px solid #757575;
 $horizontal-rule-fancy-style: true;
 $horizontal-rule-fancy-gradient: "to right, #ECEFF4, #D8DEE9, #ECEFF4";
-
 $blockquote-back-color: #D8DEE9;
 $blockquote-fore-color: $fore-color;
 $blockquote-margin: 8px 10px;
@@ -56,7 +49,6 @@ $blockquote-cite-bottom-position: 0;
 $blockquote-border-style: 0;
 $blockquote-border-radius: 0 2px 2px 0;
 $blockquote-box-shadow: 0 1px 3px rgba(0,0,0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.15);
-
 $use-default-code-fonts: true;
 $code-element-padding: 2px 4px;
 $code-element-fore-color: $fore-color;
@@ -64,7 +56,6 @@ $code-element-back-color: #E5E9F0;
 $code-element-border-style: 0;
 $code-element-border-radius: 2px;
 $code-element-box-shadow: 0 1px 2px rgba(0,0,0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.15);
-
 $pre-element-padding: 12px;
 $pre-element-fore-color: $code-element-fore-color;
 $pre-element-back-color: $code-element-back-color;
@@ -74,42 +65,31 @@ $pre-element-margin: 8px 10px;
 $pre-element-box-shadow: 0 1px 3px rgba(0,0,0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.15);
 $add-pre-element-sidebar: true;
 $pre-element-sidebar-style: 3px solid #5E81AC;
-
 $kbd-element-padding: 2px 4px;
 $kbd-element-fore-color: #ECEFF4;
 $kbd-element-back-color: $fore-color;
 $kbd-element-border-style: 0;
 $kbd-element-border-radius: 2px;
 $kbd-element-box-shadow: 0 1px 2px rgba(0,0,0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.15);
-
 $include-dfn-fix: true; // fix for Android 4.3 <dfn> bug
-
 $small-font-size: 75%;
-
 $sup-font-size: 75%;
 $sub-font-size: 75%;
 $sup-top: -8px;
 $sub-bottom: -4px;
-
 $link-fore-color: #88C0D0;
 $link-visited-fore-color: #5E81AC;
 $link-font-weight: 500;
-
 $apply-link-underline: true;
 $apply-link-hover-fade: true;
-
 $figcaption-font-size: 80%;
 $figcaption-fore-color: #424242;
-
 $use-four-step-grid: false;
 $include-parent-layout: true !default;
-
 $grid-container-name: 'container';
 $grid-container-side-padding: 10px;
-
 $grid-row-name: 'row';
 $grid-row-parent-layout-prefix: 'cols';
-
 $grid-column-prefix: 'col';
 $grid-column-offset-suffix: 'offset';
 $grid-order-normal-suffix: 'normal';
@@ -117,13 +97,11 @@ $grid-order-first-suffix: 'first';
 $grid-order-last-suffix: 'last';
 $grid-column-count: 12;
 $grid-column-padding: 0 4px;
-
 $grid-small-prefix: 'sm';
 $grid-medium-breakpoint: 768px;
 $grid-medium-prefix: 'md';
 $grid-large-breakpoint: 1280px;
 $grid-large-prefix: 'lg';
-
 $form-back-color: #ECEFF4;
 $form-fore-color: $fore-color;
 $form-border-style: 1px solid #D8DEE9;
@@ -131,18 +109,15 @@ $form-border-radius: 0;
 $form-margin: 8px;
 $form-padding: 12px 10px 18px;
 $form-box-shadow: 0 2px 4px rgba(0,0,0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.15);
-
 $fieldset-back-color: $form-back-color;
 $fieldset-border-style: 1px solid #D8DEE9;
 $fieldset-border-radius: 2px;
 $fieldset-margin: 2px;
 $fieldset-padding: 6px 8px 8px;
-
 $legend-font-weight: $bold-font-weight;
 $legend-font-size: 0.925em;
 $legend-fore-color: $form-fore-color;
 $legend-padding: 2px 4px;
-
 $label-padding: 4px 8px;
 $input-group-name: 'input-group';
 $include-fluid-input-group: true;
@@ -162,9 +137,7 @@ $input-disabled-opacity: 0.75;
 $input-readonly-back-color: #e0e0e0;
 $input-readonly-border-color: #bdbdbd;
 $input-placeholder-fore-color: #616161;
-
 $select-padding-right: 20px;
-
 $button-back-color: #D8DEE9;
 $button-back-opacity: 0.65;
 $button-hover-back-opacity: 0.8;
@@ -176,39 +149,32 @@ $button-margin: 8px;
 $button-box-shadow: 0 1px 3px rgba(0,0,0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.15);
 $button-disabled-opacity: 0.65;
 $button-class-name: 'button';
-
 $button-group-name: 'button-group';
 $button-group-border-style: 1px solid #9e9e9e;
 $button-group-margin: $button-margin;
 $button-group-box-shadow: 0 2px 4px rgba(0,0,0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.15);
 $button-group-mobile-breakpoint: 767px;
-
 $hide-file-inputs: false;
-
 $button-variant1-name: 'primary';
 $button-variant1-back-color: #5E81AC;
 $button-variant1-back-opacity: 0.9;
 $button-variant1-hover-back-opacity: 1;
 $button-variant1-fore-color: #ECEFF4;
-
 $button-variant2-name: 'secondary';
 $button-variant2-back-color: #BF616A;
 $button-variant2-back-opacity: 0.85;
 $button-variant2-hover-back-opacity: 1;
 $button-variant2-fore-color: #ECEFF4;
-
 $button-variant3-name: 'tertiary';
 $button-variant3-back-color: #A3BE8C;
 $button-variant3-back-opacity: 0.85;
 $button-variant3-hover-back-opacity: 1;
 $button-variant3-fore-color: #ECEFF4;
-
 $button-variant4-name: 'inverse';
 $button-variant4-back-color: $fore-color;
 $button-variant4-back-opacity: 1;
 $button-variant4-hover-back-opacity: 0.9;
 $button-variant4-fore-color: #ECEFF4;
-
 $button-style1-name: 'small';
 $button-style1-border-style: 0;
 $button-style1-border-radius: 1px;
@@ -219,7 +185,6 @@ $button-style2-border-style: 0;
 $button-style2-border-radius: 4px;
 $button-style2-padding: 12px 18px;
 $button-style2-margin: 10px 8px;
-
 $checkbox-size: 16px;
 $checkbox-back-color: $input-back-color;
 $checkbox-fore-color: $input-fore-color;
@@ -230,7 +195,6 @@ $checkbox-focus-border-color: $input-focus-border-color;
 $checkbox-bottom-spacing: 6px;
 $checkbox-disabled-opacity: $input-disabled-opacity;
 $checkbox-box-shadow: 0 1px 3px rgba(0,0,0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.15);
-
 $include-switch: true;
 $switch-name: 'switch';
 $switch-bar-back-color: #D8DEE9;
@@ -513,9 +477,9 @@ $responsive-visually-hidden-prefix: 'visually-hidden';
 $include-floats: false;
 $include-clearfix: false;
 $include-center-block-name: false;
-@import '../mini/core';
-@import '../mini/grid';
-@import '../mini/input_control';
+@import './jad/core';
+@import './jad/grid';
+@import './jad/input_control';
 /*
   Custom elements for forms and input elements.
 */
@@ -525,9 +489,9 @@ $include-center-block-name: false;
 @include make-button-alt-color ($button-variant4-name, $button-variant4-back-color, $button-variant4-back-opacity, $button-variant4-hover-back-opacity, $button-variant4-fore-color);
 @include make-button-alt-style ($button-style1-name, $button-style1-border-style, $button-style1-border-radius, $button-style1-padding, $button-style1-margin);
 @include make-button-alt-style ($button-style2-name, $button-style2-border-style, $button-style2-border-radius, $button-style2-padding, $button-style2-margin);
-@import '../mini/navigation';
-@import '../mini/table';
-@import '../mini/card';
+@import './jad/navigation';
+@import './jad/table';
+@import './jad/card';
 /*
   Custom elements for cards and containers.
 */
@@ -539,8 +503,8 @@ $include-center-block-name: false;
 @include make-card-section-alt-color ($card-section-style1-name, $card-section-style1-back-color, $card-section-style1-fore-color);
 @include make-card-section-alt-color ($card-section-style2-name, $card-section-style2-back-color, $card-section-style2-fore-color);
 @include make-card-section-alt-style ($card-section-padding1-name, $card-section-padding1-padding);
-@import '../mini/tab';
-@import '../mini/contextual';
+@import './jad/tab';
+@import './jad/contextual';
 /*
   Custom contextual background elements and alerts.
 */
@@ -550,7 +514,7 @@ $include-center-block-name: false;
 @include make-mark-alt-style ($mark-style2-name, $mark-style2-border-style, $mark-style2-border-radius, $mark-style2-padding, $mark-style2-font-size, $mark-style2-line-height);
 @include make-toast-alt-style($toast-style1-name, $toast-style1-border-style, $toast-style1-border-radius, $toast-style1-padding);
 @include make-toast-alt-style($toast-style2-name, $toast-style2-border-style, $toast-style2-border-radius, $toast-style2-padding);
-@import '../mini/progress';
+@import './jad/progress';
 /*
   Custom elements for progress elements and spinners.
 */
@@ -560,7 +524,7 @@ $include-center-block-name: false;
 @include make-spinner-donut-alt-color ($spinner-donut-variant1-name, $spinner-donut-variant1-back-color, $spinner-donut-variant1-fore-color);
 @include make-spinner-donut-alt-color ($spinner-donut-variant2-name, $spinner-donut-variant2-back-color, $spinner-donut-variant2-fore-color);
 @include make-spinner-donut-alt-style ($spinner-donut-style1-name, $spinner-donut-style1-size, $spinner-donut-style1-border-thickness);
-@import '../mini/utility';
+@import './jad/utility';
 /*
   Custom elements for utilities and helper classes.
 */
