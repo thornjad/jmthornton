@@ -19,10 +19,9 @@
     "url": "https://github.com/raindeer44/jmthornton/issues"
   },
   "homepage": "https://github.com/raindeer44/jmthornton#readme",
-  "dependencies": {
-    "mini.css": "^2.3.0"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "mini.css": "^2.3.4",
     "purify-css": "^1.2.5"
   }
 }
