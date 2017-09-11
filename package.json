@@ -21,5 +21,8 @@
   "homepage": "https://github.com/raindeer44/jmthornton#readme",
   "dependencies": {
     "mini.css": "^2.3.0"
+  },
+  "devDependencies": {
+    "purify-css": "^1.2.5"
   }
 }
