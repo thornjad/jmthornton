@@ -2,50 +2,33 @@
   Definitions for forms and input elements.
 */
 // Different elements are styled based on the same set of rules.
-$input-group-name: 'input-group' !default;
-// Class name for input groups.
-$include-fluid-input-group: true !default;
-// Should fluid input groups be included? (`true`/`false`)
-$input-group-fluid-name: 'fluid' !default;
-// Class name for fluid input groups.
-$include-vertical-input-group: true !default;
-// Should vertical input groups be included? (`true`/`false`)
-$input-group-vertical-name: 'vertical' !default;
-// Class name for vertical input groups.
-$button-class-name: 'button' !default;
-// Class for custom button elements.
-$include-button-group: true !default;
-// [Hidden flag] Should button groups be enabled? (`true`/`false`)
+$input-group-name: 'input-group' !default; // Class name for input groups.
+$include-fluid-input-group: true !default; // Should fluid input groups be included? (`true`/`false`)
+$input-group-fluid-name: 'fluid' !default; // Class name for fluid input groups.
+$include-vertical-input-group: true !default; // Should vertical input groups be included? (`true`/`false`)
+$input-group-vertical-name: 'vertical' !default; // Class name for vertical input groups.
+$button-class-name: 'button' !default; // Class for custom button elements.
+$include-button-group: true !default; // [Hidden flag] Should button groups be enabled? (`true`/`false`)
 $button-group-name: 'button-group' !default; // Class for button groups.
-$apply-select-fix: true !default;
-// [Hidden flag] Should the styles that fix <select> styling be applied? (`true`/`false`)
+$apply-select-fix: true !default; // [Hidden flag] Should the styles that fix <select> styling be applied? (`true`/`false`)
 // The below option will use the legacy high specificity selectors for <input> element styling instead
 // of the less specific, yet less complicated and less bloated input selector. This only applies to
 // the pseudo-classes and states of the <input> controls and not the default styling of them.
-$input-high-specificity-selectors: false !default;
-// [Hidden flag] Use legacy selectors for <input> element styling (`true`/`false`).
+$input-high-specificity-selectors: false !default; // [Hidden flag] Use legacy selectors for <input> element styling (`true`/`false`).
 // The below option will use the legacy high specificity selectors for <button> and button-like elements
 // instead of the less specific, yet less complicated and less bloated generic selector. This only applies
 // to the styling of consecutive elements.
 $button-group-high-specificity-selectors: false !default; // [Hidden flag] Use legacy selectors for button-like elements inside button groups (`false`/ `true`).
-$hide-file-inputs: true !default;
-// Should `file` <input> elements be hidden? (`true`/`false`)
-$hide-check-and-radio: true !default;
-// [Hidden flag] Should checkboxes and radios be hidden? (`true`/`false`)
-$include-switch: true !default;
-// Should switch components be included? (`true`/`false`)
-$switch-name: 'switch' !default;
-// Class name for switch components
+$hide-file-inputs: true !default; // Should `file` <input> elements be hidden? (`true`/`false`)
+$hide-check-and-radio: true !default; // [Hidden flag] Should checkboxes and radios be hidden? (`true`/`false`)
+$include-switch: true !default; // Should switch components be included? (`true`/`false`)
+$switch-name: 'switch' !default; // Class name for switch components
 // External variables' defaults are used only if you import this module on its own, without the rest of the framework.
-$back-color: white !default;
-// [External variable - core] Background color for everything.
-$fore-color: black !default;
-// [External variable - core] Foreground color for everything.
+$back-color: white !default; // [External variable - core] Background color for everything.
+$fore-color: black !default; // [External variable - core] Foreground color for everything.
 // Policy for below external flag is `ALWAYS_TRUE`. This is done due to links being underlined by default.
-$apply-link-underline: true !default;
-// [External flag - core] Should underlining be applied to <a> elements? (`true`/`false`)
-$style-link-active-state: false !default;
-// [External flag - core] Should the :active state of <a> elements be stylized, same as the :hover state (`true`/`false`).
+$apply-link-underline: true !default; // [External flag - core] Should underlining be applied to <a> elements? (`true`/`false`)
+$style-link-active-state: false !default; // [External flag - core] Should the :active state of <a> elements be stylized, same as the :hover state (`true`/`false`).
 // Necessary functions for certain elements (select)
 /// Courtesy of: https://css-tricks.com/snippets/sass/str-replace-function/
 /// -----------------------------------------------------------------------
@@ -65,12 +48,19 @@ $style-link-active-state: false !default;
 // Generate the arrow for the select element
 @function selectArrow() {
   $_input_fore_color: str-replace(#{$input-fore-color}, '#', '%23'); // Make sure it's all encoded properly
-  @return 'data:image/svg+xml, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1.5"><path fill="'+$_input_fore_color+'" d="M.25.75h.5L.5 1"/></svg>'; } // [Obsolete as of v2.3.2] Generate the rest of the background for the select element @function selectBackground() { $_input_back_color: str-replace(#{$input-back-color}, '#', '%23'); // Make sure it's all encoded properly @return 'data:image/svg+xml, <svg xmlns="http://www.w3.org/2000/svg" style="background:'+$_input-back-color+'"/>';
+  @return 'data:image/svg+xml, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1.5"><path fill="'+$_input_fore_color+'" d="M.25.75h.5L.5 1"/></svg>';
+} // [Obsolete as of v2.3.2] Generate the rest of the background for the select element
+
+@function selectBackground() {
+  $_input_back_color: str-replace(#{$input-back-color}, '#', '%23'); // Make sure it's all encoded properly
+  @return 'data:image/svg+xml, <svg xmlns="http://www.w3.org/2000/svg" style="background:'+$_input-back-color+'"/>';
 }
 // [Obsolete as of v2.3.2] Generate the rest of the background for the select element when readonly
 @function selectReadonlyBackground() {
   $_input-readonly-back-color: str-replace(#{$input-readonly-back-color}, '#', '%23'); // Make sure it's all encoded properly
-  @return 'data:image/svg+xml, <svg xmlns="http://www.w3.org/2000/svg" style="background:'+$_input-readonly-back-color+'"/>'; } // Check the `_input_control_mixins.scss` file to find this module's mixins. @import 'input_control_mixins'; // Base form styling.
+  @return 'data:image/svg+xml, <svg xmlns="http://www.w3.org/2000/svg" style="background:'+$_input-readonly-back-color+'"/>';
+} // Check the `_input_control_mixins.scss` file to find this module's mixins.
+@import 'input_control_mixins'; // Base form styling.
 
   form {
     @if $form-back-color != $back-color {
@@ -96,7 +86,6 @@ $style-link-active-state: false !default;
     }
   }
   // Fieldset styling.
-
   fieldset {
     @if $fieldset-back-color != $form-back-color {
       background: $fieldset-back-color;
@@ -108,7 +97,6 @@ $style-link-active-state: false !default;
     padding: $fieldset-padding;
   }
   // Legend styling.
-
   legend {
     // IE and Edge fixes.
     box-sizing: border-box;
@@ -133,7 +121,6 @@ $style-link-active-state: false !default;
     }
   }
   // Input group base naming.
-
   .#{$input-group-name} {
     display: inline-block;
     // Fluid input groups
@@ -206,30 +193,25 @@ $style-link-active-state: false !default;
     }
   }
   // Correct the cursor style of increment and decrement buttons in Chrome.
-
   [type="number"]::-webkit-inner-spin-button,
   [type="number"]::-webkit-outer-spin-button {
     height: auto;
   }
   // Remove the default vertical scrollbar in IE.
-
   textarea {
     overflow: auto;
   }
   // Correct style in Chrome and Safari.
-
   [type="search"] {
     -webkit-appearance: textfield;
     outline-offset: -2px;
   }
   // Correct style in Chrome and Safari.
-
   [type="search"]::-webkit-search-cancel-button,
   [type="search"]::-webkit-search-decoration {
     -webkit-appearance: none;
   }
   // Common textual input styling.
-
   [type="email"],
   [type="number"],
   [type="password"],
@@ -324,7 +306,6 @@ $style-link-active-state: false !default;
     }
   }
   // Placeholder styling (keep browser-specific definitions separated, they do not play well together).
-
   ::-webkit-input-placeholder {
     opacity: 1;
     color: $input-placeholder-fore-color;
@@ -347,7 +328,6 @@ $style-link-active-state: false !default;
   // Definitions for the button and button-like elements.
   // Different elements are styled based on the same set of rules.
   // Reset for Firefox focusing on button elements.
-
   [type="button"]::-moz-focus-inner,
   [type="reset"]::-moz-focus-inner,
   [type="submit"]::-moz-focus-inner,
@@ -356,7 +336,6 @@ $style-link-active-state: false !default;
     padding: 0;
   }
   // Fixes for Android 4, iOS and Safari.
-
   [type="reset"],
   [type="submit"],
   button,
@@ -364,7 +343,6 @@ $style-link-active-state: false !default;
     -webkit-appearance: button;
   }
   // Other fixes.
-
   button {
     overflow: visible;
     // Show the overflow in IE.
@@ -372,7 +350,6 @@ $style-link-active-state: false !default;
     // Remove inheritance of text-transform in Edge, Firefox, and IE.
   }
   // Default styling
-
   .#{$button-class-name},
   [role="button"],
   [type="button"],
@@ -431,7 +408,6 @@ $style-link-active-state: false !default;
       select,
       textarea {
         // .button[disabled] is actually higher specificity than a.button, so no need for more than that
-
         &:disabled,
         &[disabled] {
           cursor: not-allowed;
@@ -592,7 +568,6 @@ $style-link-active-state: false !default;
     }
   }
   // Use input-group to setup the style for labels.
-
   .#{$input-group-name} {
     // Label styling based on the specifics of the checkbox/radio variables.
     [type="checkbox"] + label,
