@@ -7,8 +7,7 @@
 @mixin make-progress-inline ($progress-inline-name, $progress-inline-width) {
   progress.#{$progress-inline-name} {
     display: inline-block;
-    vertical-align: middle;
-    // Align progress bar vertically to look better with text next to it.
+    vertical-align: middle;   // Align progress bar vertically to look better with text next to it.
     @if $progress-inline-width != 100% {
       width: $progress-inline-width;
     }
@@ -22,23 +21,17 @@
 @mixin make-progress-alt-color ($progress-alt-name, $progress-alt-fore-color, $progress-alt-back-color: $progress-back-color) {
   progress.#{$progress-alt-name} {
     @if $progress-alt-back-color != $progress-back-color {
-      background: $progress-alt-back-color;
-      // Background color of the element (IE 10+ and Firefox).
-      &::-webkit-progress-bar {
-        // Background of the element (webkit browsers).
+      background: $progress-alt-back-color;   // Background color of the element (IE 10+ and Firefox).
+      &::-webkit-progress-bar {          // Background of the element (webkit browsers).
         background: $progress-alt-back-color;
       }
     }
     @if $progress-alt-fore-color != $progress-fore-color {
-      color: $progress-alt-fore-color;
-      // Foreground of the element (IE 10+).
-      &::-webkit-progress-value {
-        // Foreground of the element (webkit browsers).
+      color: $progress-alt-fore-color;      // Foreground of the element (IE 10+).
+      &::-webkit-progress-value {          // Foreground of the element (webkit browsers).
         background: $progress-alt-fore-color;
       }
-
-      &::-moz-progress-bar {
-        // Foreground of the element (Firefox).
+      &::-moz-progress-bar {             // Foreground of the element (Firefox).
         background: $progress-alt-fore-color;
       }
     }
@@ -53,7 +46,10 @@
 // - $progress-alt-border-style : (Optional) The border style of the alternate progress style. Defaults to the border style of the progress.
 // - $progress-alt-border-radius : (Optional) The border radius of the alternate progress style. Defaults to the border radius of the progress.
 // - $progress-alt-box-shadow : (Optional) The box shadow of the alternate progress style. Defaults to the box shadow of the progress.
-@mixin make-progress-alt-style ($progress-alt-name, $progress-alt-height, $progress-alt-top-bottom-margin : $progress-top-bottom-margin, $progress-alt-left-right-margin : $progress-left-right-margin, $progress-alt-border-style : $progress-border-style, $progress-alt-border-radius : $progress-border-radius, $progress-alt-box-shadow : $progress-box-shadow) {
+@mixin make-progress-alt-style ($progress-alt-name, $progress-alt-height,
+  $progress-alt-top-bottom-margin : $progress-top-bottom-margin, $progress-alt-left-right-margin : $progress-left-right-margin,
+  $progress-alt-border-style : $progress-border-style, $progress-alt-border-radius : $progress-border-radius,
+  $progress-alt-box-shadow : $progress-box-shadow) {
   progress.#{$progress-alt-name} {
     @if $progress-alt-height != $progress-height {
       height: $progress-alt-height;
@@ -72,22 +68,18 @@
     }
     @if progress-alt-border-radius != $progress-border-radius {
       border-radius: $progress-alt-border-radius;
-
       &::-webkit-progress-value {
         border-top-left-radius: $progress-alt-border-radius;
         border-bottom-left-radius: $progress-alt-border-radius;
       }
-
       &::-moz-progress-bar {
         border-top-left-radius: $progress-alt-border-radius;
         border-bottom-left-radius: $progress-alt-border-radius;
       }
-
       &[value="#{$progress-max-value}"] {
         &::-webkit-progress-value {
           border-radius: $progress-alt-border-radius;
         }
-
         &::-moz-progress-bar {
           border-radius: $progress-alt-border-radius;
         }
@@ -104,11 +96,32 @@
 // - $spinner-donut-alt-back-color : The background color of the alternate donut spinner.
 // - $spinner-donut-alt-fore-color : The foreground color of the alternate donut spinner.
 @mixin make-spinner-donut-alt-color ($spinner-donut-alt-name, $spinner-donut-alt-back-color, $spinner-donut-alt-fore-color) {
-   @if not ($include-spinner-donut){
-    @error "Progress module's spinner donut mixins are only available if spinner donuts are enabled. Set '$include-spinner-donut' to 'true' and try again!"; } .#{$spinner-donut-name}.#{$spinner-donut-alt-name} { border: $spinner-donut-border-thickness solid $spinner-donut-alt-back-color; border-left: $spinner-donut-border-thickness solid $spinner-donut-alt-fore-color; } } // Mixin for alternate donut spinner styles (spinner donut styles variants).
-    // Variables:
-    // - $spinner-donut-alt-name : The name of the class used for the alternate donut spinner style.
-    // - $spinner-donut-alt-size : The size of the alternate donut spinner style.
-    // - $spinner-donut-alt-border-thickness : (Optional) The border thickness of the alternate donut spinner style.
-    // Defaults to the value of $spinner-donut-alt-border-thickness. 
-    @mixin make-spinner-donut-alt-style ($spinner-donut-alt-name, $spinner-donut-alt-size, $spinner-donut-alt-border-thickness : $spinner-donut-border-thickness) { @if not ($include-spinner-donut) { @error "Progress module's spinner donut mixins are only available if spinner donuts are enabled. Set '$include-spinner-donut' to 'true' and try again!"; } .#{$spinner-donut-name}.#{$spinner-donut-alt-name} { @if $spinner-donut-alt-border-thickness != $spinner-donut-border-thickness { border-width: $spinner-donut-alt-border-thickness; } @if $spinner-donut-alt-size != $spinner-donut-size { width: $spinner-donut-alt-size; height: $spinner-donut-alt-size; } } };
+  @if not ($include-spinner-donut) {
+    @error "Progress module's spinner donut mixins are only available if spinner donuts are enabled. Set '$include-spinner-donut' to 'true' and try again!";
+  }
+  .#{$spinner-donut-name}.#{$spinner-donut-alt-name} {
+    border: $spinner-donut-border-thickness solid $spinner-donut-alt-back-color;
+    border-left: $spinner-donut-border-thickness solid $spinner-donut-alt-fore-color;
+  }
+}
+// Mixin for alternate donut spinner styles (spinner donut styles variants).
+// Variables:
+// - $spinner-donut-alt-name : The name of the class used for the alternate donut spinner style.
+// - $spinner-donut-alt-size : The size of the alternate donut spinner style.
+// - $spinner-donut-alt-border-thickness : (Optional) The border thickness of the alternate donut spinner style.
+//  Defaults to the value of $spinner-donut-alt-border-thickness.
+@mixin make-spinner-donut-alt-style ($spinner-donut-alt-name, $spinner-donut-alt-size,
+  $spinner-donut-alt-border-thickness : $spinner-donut-border-thickness) {
+  @if not ($include-spinner-donut) {
+    @error "Progress module's spinner donut mixins are only available if spinner donuts are enabled. Set '$include-spinner-donut' to 'true' and try again!";
+  }
+  .#{$spinner-donut-name}.#{$spinner-donut-alt-name} {
+    @if $spinner-donut-alt-border-thickness != $spinner-donut-border-thickness {
+      border-width: $spinner-donut-alt-border-thickness;
+    }
+    @if $spinner-donut-alt-size != $spinner-donut-size {
+      width: $spinner-donut-alt-size;
+      height: $spinner-donut-alt-size;
+    }
+  }
+}

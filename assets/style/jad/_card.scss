@@ -2,22 +2,16 @@
   Definitions for cards and containers.
 */
 // Dependency: This module depends heavily on the grid system module.
-$card-name: 'card' !default;
-// Class name for the cards
-$card-section-name: 'section' !default;
-// Class name for the cards' sections
-$card-section-media-name: 'media' !default;
-// Class name for the cards' sections (media cotent)
-$card-normal-width: 320px !default;
-// Width for normal cards
+$card-name:                'card' !default;          // Class name for the cards
+$card-section-name:        'section' !default;       // Class name for the cards' sections
+$card-section-media-name:  'media' !default;         // Class name for the cards' sections (media cotent)
+$card-normal-width:        320px !default;           // Width for normal cards
 // External variables' defaults are used only if you import this module on its own, without the rest of the framework.
-$back-color: white !default;
-// [External variable - core] Background color for everything.
-$fore-color: black !default;
-// [External variable - core] Foreground color for everything.
+$back-color:               white !default;           // [External variable - core] Background color for everything.
+$fore-color:               black !default;           // [External variable - core] Foreground color for everything.
 // Check the `_card_mixins.scss` file to find this module's mixins.
-@import 'card_mixins'; // Card styling
-
+@import 'card_mixins';
+// Card styling
 .#{$card-name} {
   // Old syntax
   display: -webkit-box;
@@ -26,13 +20,13 @@ $fore-color: black !default;
   -webkit-box-align: center;
   // New syntax
   display: -webkit-flex;
-  display: flex;
+  display:         flex;
   -webkit-flex-direction: column;
-  flex-direction: column;
+          flex-direction: column;
   -webkit-justify-content: space-between;
-  justify-content: space-between;
+          justify-content: space-between;
   -webkit-align-self: center;
-  align-self: center;
+          align-self: center;
   position: relative;
   width: 100%;
   // Actual styling for the cards
@@ -60,8 +54,7 @@ $fore-color: black !default;
   & > .#{$card-section-name} {
     box-sizing: border-box;
     margin: 0;
-    border: 0;
-    // Clean borders and radiuses for any element-based sections
+    border: 0;        // Clean borders and radiuses for any element-based sections
     border-radius: 0; // Clean borders and radiuses for any element-based sections
     border-bottom: $card-section-border-style;
     padding: $card-section-padding;
@@ -71,13 +64,12 @@ $fore-color: black !default;
       height: $card-section-media-height;
       padding: 0;
       -o-object-fit: cover;
-      object-fit: cover;
+         object-fit: cover;
     }
   }
   // Card sections - last
   & > .#{$card-section-name}:last-child {
-    border-bottom: 0;
-    // Clean the extra border for last section
+    border-bottom: 0;  // Clean the extra border for last section
   }
 }
 // Responsiveness (if the screen is larger than card, set max-width)

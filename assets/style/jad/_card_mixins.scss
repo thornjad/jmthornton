@@ -12,7 +12,7 @@
     }
   }
   @else {
-     @media screen and (min-width: #{$card-alt-size-width}){
+    @media screen and (min-width: #{$card-alt-size-width}) {
       .#{$card-name}.#{$card-alt-size-name} {
         max-width: $card-alt-size-width;
       }
@@ -30,7 +30,9 @@
 //  of $card-border-radius.
 // - $card-alt-section-border-style : (Optional) The border style of the alternate card's sections. Defaults to
 //  the value of $card-section-border-style.
-@mixin make-card-alt-color ($card-alt-name, $card-alt-back-color, $card-alt-fore-color, $card-alt-border-style : $card-border-style, $card-alt-border-radius : $card-border-radius, $card-alt-section-border-style : $card-section-border-style) {
+@mixin make-card-alt-color ($card-alt-name, $card-alt-back-color, $card-alt-fore-color,
+  $card-alt-border-style : $card-border-style, $card-alt-border-radius : $card-border-radius,
+  $card-alt-section-border-style : $card-section-border-style) {
   .#{$card-name}.#{$card-alt-name} {
     @if $card-alt-back-color != $card-back-color {
       background: $card-alt-back-color;
@@ -44,14 +46,12 @@
     @if $card-alt-border-radius != $card-border-radius {
       border-radius: $card-alt-border-radius;
     }
-    @if $card-alt-section-border-style != $card-section-border-style {
+    @if $card-alt-section-border-style != $card-section-border-style{
       & > .#{$card-section-name} {
         border-bottom: $card-alt-section-border-style;
       }
-
       & > .#{$card-section-name}:last-child {
-        border-bottom: 0;
-        // Clean the extra border for last section
+        border-bottom: 0;  // Clean the extra border for last section
       }
     }
   }
@@ -63,7 +63,8 @@
 // - $card-section-alt-fore-color : The text color of the alternate card section.
 // - $card-section-alt-border-style : (Optional) The border style of the alternate card section. Defaults to
 //  the value of $card-section-border-style.
-@mixin make-card-section-alt-color ($card-section-alt-name, $card-section-alt-back-color, $card-section-alt-fore-color, $card-section-alt-border-style : $card-section-border-style) {
+@mixin make-card-section-alt-color ($card-section-alt-name, $card-section-alt-back-color,
+  $card-section-alt-fore-color, $card-section-alt-border-style : $card-section-border-style) {
   .#{$card-name} > .#{$card-section-name}.#{$card-section-alt-name} {
     @if $card-section-alt-back-color != $card-back-color {
       background: $card-section-alt-back-color;
