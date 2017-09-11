@@ -50,6 +50,7 @@ CNAME
 # Development Directories #
 ###########################
 .sass-cache/
+node_modules/
 
 # Restricted files #
 ####################
