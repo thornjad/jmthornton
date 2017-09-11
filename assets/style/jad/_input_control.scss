@@ -47,7 +47,7 @@ $style-link-active-state: false !default;             // [External flag - core] 
 }
 // Generate the arrow for the select element
 @function selectArrow() {
-  $_input_fore_color: str-replace(#{$input-fore-color}, '#', '%23'); // Make sure it's all encoded properly
+  $_input_fore_color: str-replace("#{$input-fore-color}", '#', '%23'); // Make sure it's all encoded properly
   @return 'data:image/svg+xml, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1.5"><path fill="'+$_input_fore_color+'" d="M.25.75h.5L.5 1"/></svg>';
 }
 // [Obsolete as of v2.3.2] Generate the rest of the background for the select element
