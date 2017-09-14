@@ -1,126 +1,263 @@
 <!DOCTYPE html>
 
 <head>
-    <title>Jade Thornton Web Development</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="copyright" content=" Copyright (C) 2017 Jade Thornton This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, version 3.0. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License along with this program. If not, see http://www.gnu.org/licenses/."
-    />
-    <meta name="author" content="Jade Thornton" />
-    <meta name="description" content="Home of Jade Thornton Web Development" />
-    <meta name="keywords" content="web development, web design, internet programming, internet development, jade thornton, jade michael thornton, jmthornton, thornton, front end, freecodecamp, free code camp, web developer, developer, tutorials, setup guide, humphrey school, umn, hhh, public affairs, html, css, ruby, rails, ruby on rails, bootstrap, pachyderm, hubert humphrey, university of minnesota, information technology, it" />
-    <meta name="robots" content="home, follow" />
-    <meta name="googlebot" content="home, follow" />
-    <meta name="google-site-verification" content="JUM1Dl9n9ic9xPMb03Nzf4NgW_-8PWZrJ4eJGC_PoYM" />
-    <meta charset="utf-8" />
-    <link rel="alternate" href="https://jmthornton.net" hreflang="es-us" />
-    <link rel="canonical" href="https://jmthornton.net">
-    <link rel="stylesheet" href="assets/style/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="assets/style/main.css" type="text/css" />
-    <link rel="stylesheet" href="assets/style/navigation.css" type="text/css" />
-    <link rel="shortcut icon" href="assets/images/favicon.png" />
-    <link rel="apple-itouch-icon" href="assets/images/favicon.ico" />
-    <style>
-        :root {
-            background-color: rgba(229, 233, 236, 1);
-            margin-left: -1vw;
-            background-image: url("assets/images/background.svg");
-            background-position: calc(50% - 12vw) 50%;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
+  <title>Jade Thornton</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Jade Thornton" />
+  <meta name="description" content="Learn more about Jade Thornton, a full stack web developer passionate about technology and information" />
+  <meta name="robots" content="home, follow" />
+  <meta name="googlebot" content="home, follow" />
+  <meta name="google-site-verification" content="JUM1Dl9n9ic9xPMb03Nzf4NgW_-8PWZrJ4eJGC_PoYM" />
+  <meta charset="utf-8">
+  <link rel="alternate" href="https://jmthornton.net" hreflang="es-us" />
+  <link rel="canonical" href="https://jmthornton.net" />
+  <link rel="stylesheet" href="assets/style/main.css" type="text/css" />
+  <link rel="shortcut icon" href="assets/images/favicon.png" />
+  <link rel="apple-itouch-icon" href="assets/images/favicon.ico" />
+  <style media="screen">
+    @media (min-width: 720px) {
+      .landing-zone {
+        background: url("assets/images/background.svg") no-repeat center center;
+        height: calc(100vh - 44px);
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+      }
+    }
 
-        body {
-            background-color: transparent;
-        }
+    @media (max-width: 719px) {
+      .landing-zone {
+        background: url("assets/images/background-small.svg") no-repeat center center;
+        height: calc(80vh - 44px);
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+      }
+    }
 
-        .main {
-            text-align: right;
-            right: 0;
-            background-color: transparent;
-            padding-top: 18em;
-            height: 100vh;
-        }
+    .landing-zone {
+      border-bottom: 44px solid #1b1b1b;
+    }
 
-        .btn {
-            font-family: "Rounded";
-        }
-
-        @media (max-width: 800px) {
-            :root {
-                background-image: url("assets/images/background-small.svg");
-            }
-
-            .main {
-                padding-top: 14em;
-            }
-        }
-
-        .main .section {
-            margin: 3vw;
-        }
-
-        #main {
-            font-size: 3em;
-            font-weight: bolder;
-            text-shadow: -1px 0 rgba(229, 233, 236, 0.8), 0 1px rgba(229, 233, 236, 0.8), 1px 0 rgba(229, 233, 236, 0.8), 0 -1px rgba(229, 233, 236, 0.8);
-            background-color: rgba(229, 233, 236, 0.65);
-            border-radius: 8%;
-        }
-
-        #secondary {
-            padding-top: 0.5em;
-            font-weight: bolder;
-            text-shadow: -1px 0 rgba(229, 233, 236, 0.8), 0 1px rgba(229, 233, 236, 0.8), 1px 0 rgba(229, 233, 236, 0.8), 0 -1px rgba(229, 233, 236, 0.8);
-            background-color: rgba(229, 233, 236, 0.65);
-            border-radius: 8%;
-        }
-
-        #buttons {
-            padding-top: 0.5em;
-        }
-
-        .title {
-            text-align: right;
-        }
-
-        .btn-default {
-            margin-top: 1em;
-            margin-bottom: 1em;
-            padding: 0.7em 3vw;
-            border: 2px solid #1c1c1c;
-            color: #1c1c1c;
-            background-color: rgba(229, 233, 236, 0.6);
-        }
-
-        .btn-default:hover {
-            background-color: #346E91;
-            color: white;
-        }
-    </style>
+    .contact-row {
+      padding-top: 1em;
+    }
+  </style>
 </head>
 
-<body>
-    <!-- TODO animate name and title in after image loads, then animate navbar buttons in, then navbar background -->
-    <div class="main container">
-        <div class="section">
-            <div class="col-lg-4 col-lg-offset-8 col-md-4 col-md-offset-6 col-sm-6 col-sm-offset-6 col-xs-12">
-                <div class="buttons btn-group-vertical" role="group" aria-label="navigation group" id="buttons">
-                    <a tabindex="1" type="button" role="button" class="btn btn-default btn-lg" href="pages/about.html">Meet</a>
-                    <a tabindex="3" type="button" role="button" class="btn btn-default btn-lg" href="https://blog.jmthornton.net">Blog</a>
-                    <a tabindex="4" type="button" role="button" class="btn btn-default btn-lg" href="pages/projects.html">Projects</a>
-                </div>
-            </div>
+<body id="top">
+  <header class="sticky">
+    <span class="header-hack">
+      <a href="#top" class="button" role="button">Home</a>
+      <a href="#projects" class="button" role="button">Projects</a>
+      <a href="#connect" class="button" role="button">Connect</a>
+      <a href="https://blog.jmthornton.net" class="button" role="button">Blog</a>
+    </span>
+  </header>
+
+  <div class="landing-zone"></div>
+
+  <main class="content">
+      <div class="projects">
+        <div class="main-projects-group">
+          <h2><a name="projects" href="#projects" class="hash-anchor">#</a>Projects</h2>
+
+          <p>Most of my software projects are open source on <a href="https://github.com/raindeer44">Github</a>.</p>
+
+          <div class="project">
+            <p>
+              <a href="https://atom.io/packages/clear-night-ui">Clear Night</a>
+              <br>
+              A dark UI and matching syntax theme for the Atom text editor.
+            </p>
+          </div>
+          <div class="project">
+            <p>
+              <a href="https://github.com/Raindeer44/vero">Vero</a>
+              <br>
+              A simple, neat and information-rich terminal theme for Zsh.
+            </p>
+          </div>
+          <div class="project">
+            <p>
+              <a href="https://github.com/Raindeer44/unbroken">Unbroken</a>
+              <br>
+              The most lovely flat light theme for GTK 3.
+            </p>
+          </div>
+          <div class="project">
+            <p>
+              <a href="https://github.com/Raindeer44/jade-bot">Jade-bot</a>
+              <br>
+              Automated Twitter! Jade-bot retweets and favorites tweets of interest.
+            </p>
+          </div>
+          <div class="project">
+            <p>
+              <a href="https://jmthornton.net/tools/dencode">Dencode</a>
+              <br>
+              Encode and decode URI strings.
+            </p>
+          </div>
+          <div class="project">
+            <p>
+              <a href="https://github.com/Raindeer44/pragmatic-js-style">Pragmatic Style</a>
+              <br>
+              My highly-opinionated personal JavaScript style guide.
+            </p>
+          </div>
+          <div class="project">
+            <p>
+              <a href="https://www.youtube.com/watch?v=HMi-g9iGVew&feature=youtu.be">nsrbiz</a>
+              <br>
+              Businez Incorporated Company Corporation Corps, LLC, an exploration in quickly building a website from scratch. See also the code on <a href="https://github.com/Raindeer44/_nsrbiz">Github</a>.
+            </p>
+          </div>
+          <div class="project">
+            <p>
+              <a href="https://github.com/Raindeer44/sas-timer">Sas Timer</a>
+              <br>
+              Increase your productivity with this minimal Pomodoro timer for Bash.
+            </p>
+          </div>
+          <div class="project">
+            <p>
+              <a href="https://jmthornton.net/projects/wind-map">Wind and weather map</a>
+              <br>
+              Wind and weather visualization from WindTv.
+            </p>
+          </div>
+          <div class="project">
+            <p>
+              <a href="./projects/tribute">MCR Tribute</a>
+              <br>
+              The very first web page I ever made! A tribute page to My Chemical Romance.
+            </p>
+          </div>
+
         </div>
+
+        <div class="in-progress-project-group" id="in-progress-project-group">
+          <h4><a name="in-progress-projects" href="#in-progress-projects" class="hash-anchor">##</a>Projects under development</h4>
+
+          <div class="project">
+            <p>
+              <a href="https://github.com/Raindeer44/bf">bf</a>
+              <br>
+              Various implementations of the <a href="https://en.wikipedia.org/wiki/Brainfuck">Brainfuck</a> language, created for fun.
+            </p>
+          </div>
+          <div class="project">
+            <p>
+              <a href="https://github.com/Raindeer44/jkl">jkl</a>
+              <br>
+              Calculate the linear chord and great-circle distance between any two points on Earth!
+            </p>
+          </div>
+
+        </div>
+
+        <div class="contributing-project-group" id="contributing-project-group">
+          <h4><a name="contributing-projects" href="#contributing-projects" class="hash-anchor">##</a>Projects I contribute to</h4>
+
+          <p>I contribute to other open source projects to varying degrees, and I'm not necessarily active in these communities right this moment.</p>
+
+          <div class="project">
+            <p>
+              <a href="https://www.brave.com/">Brave browser</a>
+              <br>
+              Browse faster by blocking ads and trackers that violate your privacy and cost you time and money. See also the code on <a href="https://github.com/brave/browser-laptop">Github</a>.
+            </p>
+          </div>
+          <div class="project">
+            <p>
+              <a href="http://tldr.sh/">tldr</a>
+              <br>
+              Community effort to simplify the beloved man pages with practical examples.
+            </p>
+          </div>
+          <div class="project">
+            <p>
+              <a href="https://github.com/spences10/twitter-bot-bootstrap">Twitter Bot Bootstrap</a>
+              <br>
+              Bootstrap framework for a Twitter bot running on Node.
+            </p>
+          </div>
+          <div class="project">
+            <p>
+              <a href="https://stephanieshrider.com">stephanieshrider.com</a>
+              <br>
+              The personal website and online portfolio of Stephanie Shrider. See also the code on <a href="https://github.com/sshrid/sshrid.github.io">Github</a>.
+            </p>
+          </div>
+
+      </div>
+
+      <div class="connect">
+        <h2><a name="connect" href="#connect" class="hash-anchor">#</a>Connect</h2>
+
+        <p>I'm a software engineer, web developer and hobby multirotor drone pilot in Minnesota. My passion is using technology to bring information to users in an attractive and enjoyable way. I'd love to get in contact (as long as you're a nice person)! Shoot me an email or check out various information about me using the buttons below.</p>
+
+        <div class="row contact-row">
+          <!-- <a href="#" class="button large"><span title="GeekProfile">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0" x="0px" y="0px" viewBox="0 0 1200.0024 1200.0071" class="icon icon-geekprofile" >
+              <path d="M1119.002 593.005h-387l50 228h313zm-653 0h-386l24 228h312zm723-67q13 14 11 31l-34 307q-3 16-13.5 26t-24.5 10h-376q-32-2-37-32l-61-267q-47-30-110-3l-60 270q-8 32-37 32h-376q-16-1-26-11t-11-25l-34-307q-2-18 9-31l433-222q16-7 29.5-1.5t20.5 19.5q6 15 1.5 31t-18.5 22l-274 124h793l-274-124q-15-8-20-23.5t2-29.5q8-15 22.5-20t28.5 2z"></path>
+            </svg>
+          </span></a> -->
+          <a href="contact" class="button large"><span title="Email me">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0" x="0px" y="0px" viewBox="0 0 512 512" class="icon icon-email" >
+              <path d="M427 171v-43L256 235 85 128v43l171 106 171-106zm0-86q17 0 29.5 13t12.5 30v256q0 17-12.5 30T427 427H85q-17 0-29.5-13T43 384V128q0-17 12.5-30T85 85h342z"></path>
+            </svg>
+          </span></a>
+            <a href="http://www.dronestagr.am/author/jadethornton/" class="button large social-button" role="button"><span title="Dronestagram">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0" x="0px" y="0px" viewBox="0 0 1920 1896.0833" class="icon icon-camera" >
+                <path d="M960 672q119 0 203.5 84.5T1248 960t-84.5 203.5T960 1248t-203.5-84.5T672 960t84.5-203.5T960 672zm704-416q106 0 181 75t75 181v896q0 106-75 181t-181 75H256q-106 0-181-75T0 1408V512q0-106 75-181t181-75h224l51-136q19-49 69.5-84.5T704 0h512q53 0 103.5 35.5T1389 120l51 136h224zM960 1408q185 0 316.5-131.5T1408 960t-131.5-316.5T960 512 643.5 643.5 512 960t131.5 316.5T960 1408z"></path>
+              </svg>
+            </span></a>
+            <a href="https://github.com/Raindeer44" class="button large social-button" role="button"><span title="GitHub">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0" x="0px" y="0px" viewBox="0 0 1024 1026" class="icon icon-github" >
+                <path d="M512 1C229.252 1 0 230.252 0 513c0 226.25 146.688 418.126 350.155 485.813 25.593 4.686 34.937-11.125 34.937-24.626 0-12.188-.47-52.562-.718-95.314-128.708 23.46-161.707-31.54-172.47-60.373-5.524-14.81-30.406-60.25-52.397-72.263-17.988-9.828-43.26-33.237-.917-33.735 40.434-.476 69.348 37.308 78.47 52.75 45.94 77.75 119.877 55.627 149 42.5 4.654-33 17.902-55.627 32.5-68.373-113.656-12.94-233.22-56.876-233.22-253.064 0-55.94 19.97-101.56 52.66-137.404-5.22-13-22.845-65.095 5.062-135.563 0 0 42.937-13.75 140.81 52.5 40.812-11.406 84.595-17.03 128.125-17.22 43.5.188 87.314 5.874 128.188 17.28 97.69-66.31 140.686-52.5 140.686-52.5 28 70.53 10.376 122.563 5.125 135.498 32.81 35.844 52.626 81.468 52.626 137.404 0 196.686-119.75 240-233.812 252.686 18.44 15.876 34.748 47 34.748 94.748 0 68.437-.686 123.627-.686 140.5 0 13.626 9.312 29.562 35.25 24.563C877.436 930.997 1024 739.125 1024 513 1024 230.252 794.748 1 512 1z"></path>
+              </svg>
+            </span></a>
+            <a href="https://us.linkedin.com/in/jademichael" class="button large social-button" role="button"><span title="LinkedIn">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0" x="0px" y="0px" viewBox="0 0 1000 1007" class="icon icon-linkedin" >
+                <path d="M196 5C88 5 0 93 0 201v608c0 108 88 196 196 196h608c108 0 196-88 196-196V201C1000 93 912 5 804 5H196zm49 165c52 0 83 34 84 78 0 44-33 78-85 78h-1c-51 0-83-35-83-78 0-45 34-78 85-78zm445 208c99 0 174 65 174 204v260H713V599c0-61-22-103-76-103-42 0-67 28-77 55-4 10-5 23-5 37v254H404s2-412 0-454h151v64c20-31 56-75 136-75zm-522 11h151v454H168V389z"></path>
+              </svg>
+            </span></a>
+            <a href="https://twitter.com/jmthorntonwhat" class="button large social-button" role="button"><span title="Twitter">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0" x="0px" y="0px" viewBox="0 0 1231 1007" class="icon icon-twitter" >
+                <path d="M1231 123q-51 76-126 130 1 14 1 33 0 101-30 203t-90 194q-61 93-145 164-84 72-202 114-118 43-252 43-210 0-387-113 31 3 60 3 176 0 314-108-82-2-147-50-65-49-89-125 24 5 48 5 34 0 66-9-87-18-145-87-58-70-58-161v-3q54 30 114 32-52-35-82-90T51 178q0-68 34-127 95 117 230 186 135 70 290 78-7-28-7-57 0-105 74-179T851 5q109 0 184 80 86-17 160-61-29 91-111 140 76-9 145-40z"></path>
+              </svg>
+            </span></a>
+            <a href="https://www.youtube.com/channel/UCQj_L7IjE7DkLz6D754l7hA" class="button large social-button" role="button"><span title="YouTube">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0" x="0px" y="0px" viewBox="0 0 64 64" class="icon icon-youtube" >
+                <path d="M52 8H12C5.4 8 0 13.4 0 20v24c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12V20c0-6.6-5.4-12-12-12zM24 48V16l20 16-20 16z"></path>
+              </svg>
+            </span></a>
+        </div>
+
+      </div>
+  </main>
+
+  <footer>
+    <div class="footer-text">
+      <div class="footer-nav">
+        <nav>
+          <a href="#top">Home</a>
+          <a href="#projects">Projects</a>
+            <a href="#in-progress-project-group" class="sublink-1">Projects in progress</a>
+            <a href="#contributing-project-group" class="sublink-1">Projects I contribute to</a>
+          <a href="#connect">Connect</a>
+          <a href="#blog">Blog</a>
+        </nav>
+      </div>
+      <div class="footer-line">
+        Jade Thornton | <a href="/p/about-site">v3.0.0</a> | <a href="https://github.com/raindeer44/jmthornton">Source code</a> | <a href="/p/sitemap/sitemap">Sitemap</a>
+      </div>
     </div>
-    <div class="check"></div>
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $(i).attr("aria-hidden", "true");
-        })
-    </script>
+  </footer>
 </body>
 
 </html>

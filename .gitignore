@@ -43,6 +43,15 @@ BingSiteAuth.xml
 #############
 CNAME
 
+# Development files #
+#####################
+*.old
+
+# Development Directories #
+###########################
+.sass-cache/
+node_modules/
+
 # Restricted files #
 ####################
 .htaccess
