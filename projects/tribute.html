@@ -305,7 +305,9 @@
             $(iframe).addClass("embed-responsive-item");
         });
 
-        $('.dropdown-toggle').dropdown()
+        $('.dropdown-toggle').dropdown();
+
+        document.getElementsByClassName('header').addEventListener('click', () => {history.back(); return false;});
     </script>
 </body>
 
