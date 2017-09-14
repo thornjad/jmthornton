@@ -1,18 +1,18 @@
 /*
-  Flavor name: Jad
-  Author: raindeer44 (https:
+  Author: raindeer44 (https://github.com/raindeer44)
   Maintainers: raindeer44
-  Based on: Nord for mini.css v2.3.4 by tphecca (https:
-  Color palette based on: Nord (https:
+  Based on: Nord for mini.css v2.3.4 by tphecca (https://github.com/tphecca)
+  Color palette based on: Nord (https://github.com/arcticicestudio/nord)
   Inspiration from: bootswatch v3.3.7 by Thomas Park and Twitter, Inc.
 */
 
+/* variables for ./jad components */
 $fore-color: #2E3440;
-$back-color: #ECEFF4;
+$back-color: #fcfcfa;
 $base-font-family: '-apple-system, BlinkMacSystemFont,\"Segoe UI\",\"Roboto\", \"Droid Sans\",\"Helvetica Neue\", Helvetica, Arial, sans-serif';
 $base-root-font-size: 16px;
 $base-font-size: 1em;
-$base-line-height: 1.5;
+$base-line-height: 1.5em;
 $use-fluid-typography: false;
 $body-margin: 0;
 $apply-defaults-to-all: true;
@@ -22,14 +22,19 @@ $h3-font-size: 1.25em;
 $h4-font-size: 1.1em;
 $h5-font-size: 1em;
 $h6-font-size: 0.85em;
+$h2-margin-top: 2em;
+$h3-margin-top: 1.8em;
+$h4-margin-top: 1.8em;
 $heading-line-height: 1.2em;
-$heading-margin: 12px 8px;
-$heading-font-weight: 500;
+$heading-margin: 2.1em 0.6em 0.8em 0.6em;
+$heading-font-weight: 800;
+$heading-color: #000;
 $heading-smalltext-fore-color: #424242;
 $make-heading-smalltext-block: true;
 $heading-smalltext-b-font-size: 75%;
 $heading-smalltext-b-top-margin: -4px;
 $paragraph-margin: 1px 8px;
+$paragraph-line-height: $base-line-height;
 $list-margin: 1px 8px 10px;
 $list-left-padding: 28px;
 $bold-font-weight: 700;
@@ -79,8 +84,8 @@ $sup-font-size: 75%;
 $sub-font-size: 75%;
 $sup-top: -8px;
 $sub-bottom: -4px;
-$link-fore-color: #88C0D0;
-$link-visited-fore-color: #5E81AC;
+$link-fore-color: #4277a3;
+$link-visited-fore-color: #4f6d91;
 $link-font-weight: 500;
 $apply-link-underline: true;
 $apply-link-hover-fade: true;
@@ -223,7 +228,7 @@ $header-padding: 2px 8px;
 $header-box-shadow: 0 2px 4px rgba(0,0,0, 0.18), 0 2px 3px rgba(0, 0, 0, 0.26);
 $header-logo-name: 'logo';
 $header-logo-font-size: 1.75em;
-$header-logo-line-height: 1.2;
+$header-logo-line-height: 1.2em;
 $header-logo-margin: 1px 6px 1px 1px;
 $header-logo-padding: 3px 0 0;
 $header-link-hover-color: #37474f;
@@ -258,12 +263,12 @@ $drawer-right-name: 'right';
 $drawer-persistent-name: 'persistent';
 $drawer-toggle-name: 'drawer-toggle';
 $drawer-toggle-font-size: 40px;
-$drawer-toggle-line-height: 0.125;
+$drawer-toggle-line-height: 0.125em;
 $drawer-toggle-top: 7px;
 $drawer-close-name: 'close';
 $drawer-close-top: 12px;
 $drawer-close-right: 4px;
-$footer-back-color: #434C5E;
+$footer-back-color: $nav-fore-color;
 $footer-fore-color: #ECEFF4;
 $footer-border-style: 0;
 $footer-font-size: 85%;
@@ -356,7 +361,7 @@ $tab-stacked-name: 'stacked';
 $mark-back-color: #5E81AC;
 $mark-fore-color: #ECEFF4;
 $mark-font-size: 95%;
-$mark-line-height: 1;
+$mark-line-height: 1em;
 $mark-border-style: 0;
 $mark-border-radius: 2px;
 $mark-padding: 2px 4px;
@@ -376,7 +381,7 @@ $mark-style2-border-style: 0;
 $mark-style2-border-radius: 2px;
 $mark-style2-padding: 5px;
 $mark-style2-font-size: 100%;
-$mark-style2-line-height: 1.35;
+$mark-style2-line-height: 1.35em;
 $include-toast: true;
 $toast-name: 'toast';
 $toast-bottom: 24px;
@@ -541,3 +546,8 @@ $include-center-block-name: false;
 @include make-box-shadow-generic ($box-shadow-style4-name, $box-shadow-style4-value);
 @include make-hidden-responsive ($responsive-hidden-prefix);
 @include make-visually-hidden-responsive ($responsive-visually-hidden-prefix);
+
+/*
+  * nit-picking and page-specific styling (at a higher level than inline css)
+  */
+@import './jad/nitpick';
