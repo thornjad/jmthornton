@@ -15,9 +15,26 @@
   <link rel="shortcut icon" href="assets/images/favicon.png" />
   <link rel="apple-itouch-icon" href="assets/images/favicon.ico" />
   <style media="screen">
-    section {
-      margin-top: 8em;
-      margin-bottom: 3em;
+    @media (min-width: 720px) {
+      .landing-zone {
+        background: url("assets/images/background.svg") no-repeat center center;
+        height: calc(100vh - 44px);
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+      }
+    }
+
+    @media (max-width: 719px) {
+      .landing-zone {
+        background: url("assets/images/background-small.svg") no-repeat center center;
+        height: calc(80vh - 44px);
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+      }
     }
 
     .landing-zone {
@@ -34,10 +51,6 @@
 </head>
 
 <body>
-  <div class="landing-zone" id="top">
-    <!-- deliberately empty -->
-  </div>
-
   <header class="sticky">
     <span class="header-hack">
       <a href="#top" class="button" role="button">Home</a>
@@ -46,6 +59,8 @@
       <a href="#" class="button" role="button">Blog</a>
     </span>
   </header>
+
+  <div class="landing-zone" id="top"></div>
 
   <main class="content">
       <div class="projects">
