@@ -1,24 +1,24 @@
 /*
   Browsers resets and base typography.
 */
-$apply-defaults-to-all:        true !default;        // Should default values be applied to all elements? (`true`/`false`).
-$base-root-font-size:          16px !default;        // Root font sizing for all elements - Should only be specified in `px` units!
-$_1px:  (1px/$base-root-font-size) * 1rem !default;  // Calculated rem value of 1px.
-$use-fluid-typography:         false !default;       // Should fluid typography be used at the root element? (`true`/`false`)
-$fluid-type-start-breakpoint:  320px !default;       // Breakpoint where fluid typography scaling starts.
-$fluid-type-end-breakpoint:    1600px !default;      // Breakpoint where fluid typography scaling ends.
-$fluid-type-small-type:        14px !default;        // Smallest root font size for fluid typography.
-$fluid-type-large-type:        18px !default;        // Largest root font size for fluid typography.
-$include-dfn-fix:              true !default;        // Fix display of <dfn> element in older versions of Android.
-$make-heading-smalltext-block: false !default;       // Should <small> elements in headings be displayed as blocks (`true`/`false`).
-$horizontal-rule-fancy-style:  false !default;       // Should a fancy styling be applied for the <hr> element (`true`/`false`).
-$add-pre-element-sidebar:      false !default;       // Should a fancy sidebar be added to the left side of <pre> (`true`/`false`).
-$apply-link-underline:         true !default;        // Should an underline be applied to all <a> elements? (`true`/`false`).
-$apply-link-hover-fade:        true !default;        // Should the :hover and :focus state of <a> elements use fade-out instead of a different color (`true`/`false`).
-$style-link-active-state:      false !default;       // [Hidden flag] Should the :active state of <a> elements be stylized, same as the :hover state (`true`/`false`).
-// Base typography rules
+
+$apply-defaults-to-all:        true !default;
+$base-root-font-size:          16px !default;
+$_1px:  (1px/$base-root-font-size) * 1rem !default;
+$use-fluid-typography:         false !default;
+$fluid-type-start-breakpoint:  320px !default;
+$fluid-type-end-breakpoint:    1600px !default;
+$fluid-type-small-type:        14px !default;
+$fluid-type-large-type:        18px !default;
+$include-dfn-fix:              true !default;
+$make-heading-smalltext-block: false !default;
+$horizontal-rule-fancy-style:  false !default;
+$add-pre-element-sidebar:      false !default;
+$apply-link-underline:         true !default;
+$apply-link-hover-fade:        true !default;
+$style-link-active-state:      false !default;
+
 @if $use-fluid-typography {
-  // Calculation of local variables (unitless values needed for the calculation of fluid typography)
   $_fluid-type-unitless-size-change:  ($fluid-type-large-type - $fluid-type-small-type)/($fluid-type-small-type * 0 + 1);
   $_fluid-type-unitless-distance:  ($fluid-type-end-breakpoint - $fluid-type-start-breakpoint)/($fluid-type-start-breakpoint * 0 + 1);
   html {
@@ -73,6 +73,11 @@ article, aside, section, figcaption, figure, main, details, menu {
   display: block;
 }
 
+section {
+  margin-top: 8em;
+  margin-bottom: 3em;
+}
+
 // Correct display in all browsers.
 summary {
   display: list-item;
@@ -116,6 +121,8 @@ h1, h2, h3, h4, h5, h6 {
   line-height: $heading-line-height;
   margin: $heading-margin;
   font-weight: $heading-font-weight;
+  color: $heading-color;
+  text-rendering: optimizeLegibility;
   small {
     color: $heading-smalltext-fore-color;
     @if $make-heading-smalltext-block {
@@ -135,12 +142,16 @@ h1 {
 }
 h2 {
   font-size: $h2-font-size;
+  margin-top: $h2-margin-top;
 }
 h3 {
   font-size: $h3-font-size;
+  margin-top: $h3-margin-top;
 }
 h4 {
   font-size: $h4-font-size;
+  margin-top: $h4-margin-top;
+  font-weight: $heading-font-weight - 200; // default override
 }
 h5 {
   font-size: $h5-font-size;
@@ -151,6 +162,7 @@ h6 {
 
 p {
   margin: $paragraph-margin;
+  line-height: $paragraph-line-height;
 }
 
 ol, ul {
@@ -411,7 +423,7 @@ $style-samp-element: false !default;
 }
 
 // Link styling
-a{
+a {
   color: $link-fore-color;
   @if $apply-link-underline {
     text-decoration: underline;
@@ -426,29 +438,36 @@ a{
     opacity: 1;
     transition: opacity 0.3s;
   }
+
   &:visited {
     color: $link-visited-fore-color;
   }
   @if $apply-link-hover-fade {
-    @if $style-link-active-state {
-      &:hover, &:focus, &:active {
+     @if $style-link-active-state{
+      &:active,
+      &:focus,
+      &:hover {
         opacity: 0.75;
       }
     }
     @else {
-      &:hover, &:focus {
+      &:focus,
+      &:hover {
         opacity: 0.75;
       }
     }
   }
   @else {
-    @if $style-link-active-state {
-      &:hover, &:focus, &:active {
+     @if $style-link-active-state{
+      &:active,
+      &:focus,
+      &:hover {
         color: $link-hover-fore-color;
       }
     }
     @else {
-      &:hover, &:focus {
+      &:focus,
+      &:hover {
         color: $link-hover-fore-color;
       }
     }

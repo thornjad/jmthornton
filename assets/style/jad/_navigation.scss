@@ -84,7 +84,7 @@ header {
   a[role="button"], label[role="button"], [role="button"] {
     background: $header-back-color;        // Apply color regardless to override styling from other things.
     color: $header-fore-color;
-    vertical-align: top;                  // Alignemt, really important to make this work well.
+    vertical-align: top; // Alignemt, really important to make this work well.
     @if $header-link-margin != 0 {
       margin: $header-link-margin;
     }

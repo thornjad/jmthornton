@@ -1,0 +1,49 @@
+@media (min-width: 960px) {
+  .header-hack {
+    padding: 0 6vw;
+  }
+
+  .content,
+  footer > .footer-text {
+    max-width: 960px;
+    padding: 0 10vw;
+    margin: 1em auto 4em auto;
+  }
+}
+
+@media (max-width: 959px) {
+  .content,
+  footer > .footer-text {
+    margin: 1em 3vw 4em 3vw;
+  }
+}
+
+footer > .footer-text {
+  padding-top: 4em;
+}
+
+.footer-nav > nav {
+  background: $nav-fore-color;
+  border: none;
+  box-shadow: none;
+  
+}
+
+.icon {
+  fill: #333333;
+  height: 1.4em;
+  padding-top: 0.5em;
+}
+
+.hash-anchor {
+  color: #999;
+  padding-right: 0.75em;
+}
+
+a:not(:hover) {
+  text-decoration: none;
+}
+
+.project {
+  margin-top: 1.3em;
+}
