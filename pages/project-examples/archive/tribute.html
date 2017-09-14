@@ -2,30 +2,24 @@
 <html>
 
 <head>
-    <title>Bootstrap | JMThornton Web Development</title>
+    <title>MCR Tribute | Jade Thornton</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="copyright" content=" Copyright (C) 2016 Jade Thornton This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, version 3.0. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License along with this program. If not, see http://www.gnu.org/licenses/."
-    />
     <meta name="author" content="Jade Thornton" />
-    <meta name="description" content="Home of JMThornton Web Development" />
-    <meta name="robots" content="index, follow" />
-    <meta name="googlebot" content="index, follow" />
+    <meta name="robots" content="no-index, no-follow" />
+    <meta name="googlebot" content="no-index, no-follow" />
     <meta charset="utf-8" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="../../../assets/style/navigation.css" type="text/css" />
-    <link rel="shortcut icon" href="../../../assets/images/favicon.png" />
-    <link rel="apple-itouch-icon" href="../../../assets/images/favicon.ico" />
+    <link rel="shortcut icon" href="/assets/images/favicon.png" />
     <style>
         :root {
             color: #E8E8E8 !important;
         }
 
         body {
-            margin-top: 50px;
             font-family: "Droid Sans", sans-serif;
             color: #E8E8E8 !important;
-            background-color: #6B6B6B
+            background-color: #000;
         }
 
         h1, h2, h3, h4, h5, h6 {
@@ -34,11 +28,6 @@
 
         .well {
             background-color: black;
-        }
-
-        .jumbotron {
-            background-color: #6B6B6B;
-            margin-top: 30px;
         }
 
         .btn {
@@ -76,10 +65,8 @@
             margin-bottom: -30px;
         }
 
-        .top {
-            background-image: url(https://i.sli.mg/WUNc7p.jpg);
-            background-repeat: no-repeat;
-            height: 100vh;
+        .band {
+          padding-bottom: 5em;
         }
 
         .band a {
@@ -93,7 +80,6 @@
 
         .top h1 {
             font-size: 4em;
-            padding-top: 80vh;
             color: #E8E8E8;
             font-weight: bold;
         }
@@ -107,68 +93,56 @@
             text-align: center;
             margin-top: 150px;
         }
+
+        .header {
+          display: block;
+          height: 44px;
+          background: #2E3440;
+          color: #ECEFF4;
+          padding: 2px 8px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18), 0 2px 3px rgba(0, 0, 0, 0.26);
+          white-space: nowrap;
+          overflow-x: auto;
+          overflow-y: hidden;
+          font-family: -apple-system, BlinkMacSystemFont,"Segoe UI","Roboto", "Droid Sans","Helvetica Neue", Helvetica, Arial, sans-serif;
+          line-height: 1.5em;
+          -webkit-text-size-adjust: 100%;
+        }
+
+        .header > a {
+          text-decoration: none;
+          background: #2E3440;
+          color: #ECEFF4;
+          vertical-align: top;
+          margin: 2px 0 0;
+          box-shadow: none;
+          display: inline-block;
+          border: 0;
+          border-radius: 2px;
+          padding: 8px 12px;
+          transition: background 0.3s;
+          cursor: pointer;
+          opacity: 1;
+          font-size: 1em;
+        }
     </style>
 </head>
 
 <body>
+  <header class="header">
+    <a href="/" class="back-button" title="Previous page">Go back</a>
+  </header>
+
     <div class="container-fluid">
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container-fluid">
-                <div class="navbar-header"> <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-                    <a class="navbar-brand img-responsive" href="../../../index.html" id="brand"><img src="../../../assets/images/icon.svg" /><span> JMThornton</span></a>
-                </div>
-                <div class="collapse navbar-collapse" id="navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="../../../index.html">Home</a></li>
-                        <li><a href="../../meet.html">Meet</a></li>
-                        <li><a href="../../projects.html">Projects</a></li>
-                        <li><a href="../../contact.html">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
         <div class="well">
-            <div class="image">
-                <div class="jumbotron">
-                    <div class="row band">
-                        <div class="col-md-12 col-lg-12">
-                            <a href="https://play.spotify.com/artist/7FBcuc1gsnv6Y1nwFtNRCb" target="_blank">
-                                <div class="top text-center well">
-                                    <h1>My Chemical Romance</h1>
-                                    <h3><em>The true lives of the Fabulous Killjoys</em></h3>
-                                </div>
-                            </a>
+            <div class="row band">
+                <div class="col-md-12 col-lg-12">
+                    <a href="https://play.spotify.com/artist/7FBcuc1gsnv6Y1nwFtNRCb" target="_blank">
+                        <div class="top text-center">
+                            <h1>My Chemical Romance</h1>
+                            <h3><em>The true lives of the Fabulous Killjoys</em></h3>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3 col-xs-6 col-lg-3 albums">
-                            <a href="#" target="_blank">
-                                <img src="https://i.sli.mg/7RXYez.jpg" class="img-responsive bullets" alt="I Brought You My Bullets, You Brought Me Your Love album art">
-                            </a>
-                        </div>
-                        <div class="col-md-3 col-xs-6 col-lg-3 albums">
-                            <a href="https://play.spotify.com/album/3DuiGV3J09SUhvp8gqNx8h" target="_blank">
-                                <img src="https://i.sli.mg/x9zr5S.jpg" class="img-responsive revenge" alt="Three Cheers For Sweet Revenge album art">
-                            </a>
-                        </div>
-                        <div class="col-md-3 col-xs-6 col-lg-3 albums">
-                            <a href="https://play.spotify.com/album/0FZK97MXMm5mUQ8mtudjuK" target="_blank">
-                                <img src="https://i.sli.mg/xSAvY9.jpg" class="img-responsive black-parade" alt="The Black Parade album art">
-                            </a>
-                        </div>
-                        <div class="col-md-3 col-xs-6 col-lg-3 albums">
-                            <a href="https://play.spotify.com/album/2wPnKggTK3QhYAKL7Q0vvr" target="_blank">
-                                <img src="https://i.sli.mg/WFMV9m.jpg" class="img-responsive danger-days" alt="Danger Days album art">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="row caption">
-                        <div class="text-center">
-                            <h4><em>
-                            The band and their albums in chronological order (not including singles or live albums)
-                        </em></h4>
-                        </div>
-                    </div>
+                    </a>
                 </div>
             </div>
             <div class="details">
@@ -320,7 +294,7 @@
                 </div>
                 <div class="footer">
                     <h6>
-                    Page originally created in 2016 by <a href="https://github.com/Raindeer44" target="_blank">Jade Thornton</a>, information taken from <a href="http://mychemicalromance.wikia.com/wiki/Main_Page" target="_blank">My Chemical Romance Wiki</a>. Find original source code on <a href="https://codepen.io/Raindeer44/full/ZWgROq/">Codepen</a>.
+                    Page originally created in 2016 by <a href="https://github.com/Raindeer44" target="_blank">Jade Thornton</a>, information taken from <a href="http://mychemicalromance.wikia.com/wiki/Main_Page" target="_blank">My Chemical Romance Wiki</a>.
                 </h6>
                 </div>
             </div>
