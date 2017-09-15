@@ -1,6 +1,6 @@
 {
   "name": "jmthornton",
-  "version": "2.8.2",
+  "version": "3.0.0",
   "description": "Personal website of Jade Thornton",
   "main": "index.js",
   "directories": {
@@ -19,7 +19,9 @@
     "url": "https://github.com/raindeer44/jmthornton/issues"
   },
   "homepage": "https://github.com/raindeer44/jmthornton#readme",
-  "dependencies": {
-    "mini.css": "^2.3.0"
+  "dependencies": {},
+  "devDependencies": {
+    "mini.css": "^2.3.4",
+    "purify-css": "^1.2.5"
   }
 }

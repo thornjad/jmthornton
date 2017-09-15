@@ -1,0 +1,23 @@
+/* TEAM */
+Primary developer: Jade Thornton
+Site: jmthornton.net
+GitHub: raindeer44
+Twitter: jmthorntonwhat
+Location: US
+
+
+
+/* THANKS */
+Stephanie Shrider: all the love and support in the world
+GitHub: sshrid
+
+CosmoX: original creator of geek-profile, the anscestor of GeekProfile
+GitHub: hackjutsu
+
+
+
+/* SITE */
+Last update: September 15, 2017
+Version: 3.0.0
+Standards: HTML5, CSS3
+Software: Atom, Firefox, npm, DuckDuckGo
