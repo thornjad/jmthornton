@@ -1983,4 +1983,13 @@ a:not(:hover) {
 .project {
   margin-top: 1.3em; }
 
+.anchor-spacer-div {
+  overflow: hidden;
+  position: relative; }
+
+.anchor-spacer-span {
+  position: absolute;
+  top: -25px;
+  visibility: hidden; }
+
 /*# sourceMappingURL=main.css.map */

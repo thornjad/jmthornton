@@ -26,7 +26,7 @@ footer > .footer-text {
   background: $nav-fore-color;
   border: none;
   box-shadow: none;
-  
+
 }
 
 .icon {
@@ -46,4 +46,15 @@ a:not(:hover) {
 
 .project {
   margin-top: 1.3em;
+}
+
+.anchor-spacer-div {
+  overflow: hidden;
+  position: relative;
+}
+
+.anchor-spacer-span {
+  position: absolute;
+  top: -25px;
+  visibility: hidden;
 }
