@@ -11,7 +11,7 @@
   Browsers resets and base typography.
 */
 html {
-  font-size: 16px; }
+  font-size: 18px; }
 
 html, * {
   font-family: -apple-system, BlinkMacSystemFont,"Segoe UI","Roboto", "Droid Sans","Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -106,7 +106,7 @@ hr {
   overflow: visible;
   line-height: 1.25em;
   margin: 8px;
-  height: 0.0625rem;
+  height: 0.0555555556rem;
   background: linear-gradient(to right, #ECEFF4, #D8DEE9, #ECEFF4); }
 
 blockquote {
