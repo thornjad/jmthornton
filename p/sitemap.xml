@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--Created using XmlSitemapGenerator.org - Free HTML, RSS and XML sitemap generator-->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://jmthornton.net/</loc>
@@ -9,7 +8,7 @@
   <url>
     <loc>https://jmthornton.net/projects/pachyderm/pachyman</loc>
     <lastmod>2017-09-16</lastmod>
-    <changefreq>monthly</changefreq>
+    <changefreq>yearly</changefreq>
     <image:image>
       <image:loc>https://jmthornton.net/assets/images/Placeholder.jpg</image:loc>
       <image:title>A beautiful placeholder image</image:title>
@@ -19,22 +18,22 @@
   <url>
     <loc>https://jmthornton.net/projects/wind-map</loc>
     <lastmod>2017-09-16</lastmod>
-    <changefreq>monthly</changefreq>
+    <changefreq>yearly</changefreq>
   </url>
   <url>
     <loc>https://jmthornton.net/projects/tribute</loc>
     <lastmod>2017-09-16</lastmod>
-    <changefreq>monthly</changefreq>
+    <changefreq>yearly</changefreq>
   </url>
   <url>
     <loc>https://jmthornton.net/projects/help.html</loc>
     <lastmod>2017-09-16</lastmod>
-    <changefreq>monthly</changefreq>
+    <changefreq>yearly</changefreq>
   </url>
   <url>
     <loc>https://jmthornton.net/tools/dencode</loc>
     <lastmod>2017-09-16</lastmod>
-    <changefreq>monthly</changefreq>
+    <changefreq>yearly</changefreq>
     <image:image>
       <image:loc>https://jmthornton.net/images/public/somerights.gif</image:loc>
       <image:title>Creative Commons License</image:title>
@@ -42,5 +41,3 @@
     </image:image>
   </url>
 </urlset>
-<!--<guid value="12020e25-eecf-4342-885c-c123ba1423ba" />-->
-<!--Created using XmlSitemapGenerator.org - Free HTML, RSS and XML sitemap generator-->
