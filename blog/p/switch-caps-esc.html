@@ -1,0 +1,21 @@
+Switch Caps Lock and Escape	2017-03-28 20:29:39	Guides,how to,programming,post-format-aside,tips	The standard QWERTY keyboard is great in a lot of ways and for a lot of uses. My current keyboard has been with me for years and I know it well. However, if I could change the locations of just a few keys, I would. And naturally, that's what I did.
+\n
+\nThe most useful change I've made is switching the Caps Lock and Escape keys. This is much easier (after the initial muscle-memory retraining) because of how often I use Escape while programming. Instead of a reach up to the edge of the keyboard, it's only one key to the left of my pinky finger on home row. So how do you do it? It's surprisingly easy:
+\n
+\n&nbsp;
+\n
+\nFirst, add the following to <code>~/.Xmodmap</code> (note the capital X):
+\n<pre>clear Lock
+\n
+\nkeysym Caps_Lock = Escape
+\n
+\nkeysym Escape = Caps_Lock
+\n
+\nadd Lock = Caps_Lock</pre>
+\n&nbsp;
+\n
+\nNext, add the following line to your <code>~/.zshrc</code> (or <code>~/.profile</code> if you use bash):
+\n<pre>xmodmap ~/.Xmodmap</pre>
+\n&nbsp;
+\n
+\nThere you go! <code>source ~/.zshrc</code> (or logout and login again for bash) and they should be switched. Comment below if you have any problems!
