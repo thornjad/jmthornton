@@ -1,0 +1,19 @@
+Set DuckDuckGo as default search in Thunderbird	2017-02-27 12:00:33	Guides,security,how to,email,duckduckgo,thunderbird	<div class="markdown-here-wrapper" data-md-url="https://blog.jmthornton.net/wp-admin/post-new.php">
+\n<p style="margin: 0px 0px 1.2em !important;">For whatever reason, DuckDuckGo can still be tricky to add to some services despite being the default browser for numerous browsers. A couple years ago, Mozilla <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1120777">made the decision</a> to open searches from Thunderbird in your default browser, instead of using a tab in Thunderbird itself which broke the previous method of adding DDG to the settings. However, they neglected to update their tutorials for adding more than the default search engines, and as of this writing neither has DuckDuckGo (though I will be contributing this tutorial to them).</p>
+\n<p style="margin: 0px 0px 1.2em !important;"><em>This tutorial is confirmed as working for Thunderbird 45.2 - 45.7</em></p>
+\n
+\n<h2 style="margin: 0px 0px 1.2em !important;">Install DuckDuckGo</h2>
+\n<ol>
+\n \t<li style="margin: 0px 0px 1.2em !important;">Download and install the <a href="http://addons.mozilla.org/en-US/thunderbird/addon/google-search-for-thunderbi/">Google Search for Thunderbird</a> add-on. You can easily do this within Thunderbird by going to Tools &gt; Add-ons &gt; Get Add-ons</li>
+\n \t<li style="margin: 0px 0px 1.2em !important;">Navigate to your profile library. One way to get there is Help &gt; Troubleshooting information &gt; Application basics &gt; Profile Directory &gt; <em>Open Directory</em></li>
+\n \t<li style="margin: 0px 0px 1.2em !important;">Navigate to the directory <em>extensions/gsearch@standard8.plus.com/searchplugins</em></li>
+\n \t<li style="margin: 0px 0px 1.2em !important;">Save the following file into that directory: <a href="https://duckduckgo.com/opensearch.xml">https://duckduckgo.com/opensearch.xml</a>
+\n<ol>
+\n \t<li>Rename the file as anything you want as long as you keep the .xml suffix</li>
+\n \t<li style="margin: 0px 0px 1.2em !important;">Make sure to leave the existing Google.xml file as is</li>
+\n</ol>
+\n</li>
+\n \t<li style="margin: 0px 0px 1.2em !important;">Restart Thunderbird</li>
+\n \t<li style="margin: 0px 0px 1.2em !important;">Go to Edit &gt; Preferences &gt; General &gt; Default Search Engine and choose DuckDuckGo! Now you’re set!</li>
+\n</ol>
+\n<p style="margin: 0px 0px 1.2em !important;">You can also put any other OpenSearch XML files into that same directory if you want to add any other search engines.</p>
