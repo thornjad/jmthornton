@@ -72,15 +72,15 @@ h1 {
 
 h2 {
   font-size: 1.5em;
-  margin-top: 2em; }
+  margin-top: 3.5em; }
 
 h3 {
   font-size: 1.25em;
-  margin-top: 1.8em; }
+  margin-top: 2.8em; }
 
 h4 {
   font-size: 1.1em;
-  margin-top: 1.8em;
+  margin-top: 2.8em;
   font-weight: 600; }
 
 h5 {
@@ -1962,6 +1962,9 @@ ul.breadcrumbs {
     margin: 1em 3vw 4em 3vw; } }
 footer > .footer-text {
   padding-top: 4em; }
+
+footer .footer-line {
+  padding-top: 2em; }
 
 .footer-nav > nav {
   background: #2E3440;
