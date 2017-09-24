@@ -33,7 +33,7 @@ $heading-smalltext-fore-color: #424242;
 $make-heading-smalltext-block: true;
 $heading-smalltext-b-font-size: 75%;
 $heading-smalltext-b-top-margin: -4px;
-$paragraph-margin: 1px 8px;
+$paragraph-margin: 1.3em 0;
 $paragraph-line-height: $base-line-height;
 $list-margin: 1px 8px 10px;
 $list-left-padding: 28px;
@@ -551,3 +551,4 @@ $include-center-block-name: false;
   * nit-picking and page-specific styling (at a higher level than inline css)
   */
 @import './jad/nitpick';
+@import './jad/blog';
