@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Switch Caps Lock and Escape (Linux) | Blog | Jade Thornton</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link type="text/plain" rel="author" href="https://jmthornton.net/humans.txt" />
+
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="google-site-verification" content="JUM1Dl9n9ic9xPMb03Nzf4NgW_-8PWZrJ4eJGC_PoYM" />
+    <link rel="shortcut icon" href="https://jmthornton.net/assets/images/favicon.png" />
+    <link rel="apple-itouch-icon" href="https://jmthornton.net/assets/images/favicon.ico" />
+
+    <!-- <link rel="stylesheet" href="https://jmthornton.net/assets/style/main.css" type="text/css" /> -->
+    <!-- TODO switch dev -->
+    <link rel="stylesheet" href="/assets/style/main.css" type="text/css" />
+
+    <!-- twitter tags reference: https://dev.twitter.com/cards/markup -->
+    <!-- opengraph tags reference: http://ogp.me -->
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@jmthorntonwhat">
+    <meta name="twitter:creator" content="@jmthorntonwhat">
+
+    <!-- max 70 chars -->
+    <meta property="og:title" content="Switch Caps Lock and Escape (Linux)">
+    <meta name="twitter:title" content="Switch Caps Lock and Escape (Linux)">
+
+    <!-- max 200 chars -->
+    <meta name="description" content="For those with lazy hands like me, switching Caps Lock and Escape can avoid uncessesary effort. Making the switch is just a couple short steps.">
+    <meta name="og:description" content="For those with lazy hands like me, switching Caps Lock and Escape can avoid uncessesary effort. Making the switch is just a couple short steps.">
+    <meta name="twitter:description" content="For those with lazy hands like me, switching Caps Lock and Escape can avoid uncessesary effort. Making the switch is just a couple short steps.">
+
+    <meta property="og:image" content="https://blog.jmthornton.net/assets/images/code-fluff-asm.png">
+    <meta name="twitter:image" content="https://blog.jmthornton.net/assets/images/code-fluff-asm.png">
+
+    <meta property="og:url" content="https://blog.jmthornton.net/p/switch-caps-esc">
+    <meta property="og:site_name" content="jmthornton.net">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US" />
+
+    <meta name="article:author" content="https://jmthornton.net">
+    <meta property="article:published_time" content="2017-03-28">
+    <meta name="article:modified_time" content="2017-09-23">
+  </head>
+  <body>
+    <header class="sticky">
+      <span class="header-hack">
+        <a href="https://jmthornton.net/#top" class="button" role="button">Home</a>
+        <a href="https://jmthornton.net/#projects" class="button" role="button">Projects</a>
+        <a href="https://jmthornton.net/#connect" class="button" role="button">Connect</a>
+        <a href="https://blog.jmthornton.net" class="button" role="button">Blog</a>
+      </span>
+    </header>
+
+    <article class="post blog-content">
+      <h2 class="hash-line-1-blog"><span class="hash-anchor">#</span>Switch Caps Lock and Escape (Linux)</h2>
+      <address>
+        <a href="https://jmthornton.net">Jade Thornton</a>
+      </address>
+      <time datetime="2017-03-28">March 28, 2017</time>
+
+      <div class="post-main">
+        <div class="blog-body">
+          <p>
+            The standard QWERTY keyboard is great in a lot of ways and for a lot of uses. My current keyboard has been with me for years and I know it well, but if I could change the locations of a couple keys, I would. And naturally, that's what I did.
+          </p>
+          <p>
+            The most useful change I've made is switching the Caps Lock and Escape keys. This is much easier (after the initial muscle-memory retraining) because of how often I use Escape while programming. Instead of a reach up to the edge of the keyboard, it's only one key to the left of my pinky finger on home row. So how do you do it? It's pleasantly simple:
+          </p>
+          <p>
+            First, add the folowing code to your <code>~/.Xmodmap</code> (note the capital X):
+          </p>
+          <pre>
+            clear Lock
+            keysym Caps_Lock = Escape
+            keysym Escape = Caps_Lock
+            add Lock = Caps_Lock</pre>
+          <p>
+            Next, add the following line to your <code>~/.zshrc</code> (or <code>~/.profile</code> if you're using bash):
+          </p>
+          <pre>
+            xmodmap ~/.Xmodmap</pre>
+          <p>
+            There you go! <code>source ~/.zshrc</code> (or logout and login again for bash) and they should switch!
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <footer>
+      <div class="footer-text">
+        <div class="footer-line">
+          Jade Thornton | <a href="https://jmthornton.net/p/about-site">About the site</a> | <a href="https://github.com/raindeer44/jmthornton">Source code</a> | <a href="https://jmthornton.net/p/sitemap/sitemap">Sitemap</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
