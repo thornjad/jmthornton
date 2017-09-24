@@ -9,10 +9,16 @@
     padding: 0 10vw;
     margin: 1em auto 4em auto;
   }
+
+  .blog-content {
+    max-width: 720px;
+    margin: 1em auto 4em auto;
+  }
 }
 
 @media (max-width: 959px) {
   .content,
+  .blog-content,
   footer > .footer-text {
     margin: 1em 3vw 4em 3vw;
   }
