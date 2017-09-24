@@ -97,7 +97,7 @@ p {
   line-height: 1.5em; }
 
 ol, ul {
-  margin: 1px 8px 10px;
+  margin: 1px 8px 1.8em;
   padding-left: 28px; }
 
 b, strong {
@@ -2005,6 +2005,10 @@ a:not(:hover) {
   position: absolute;
   top: -25px;
   visibility: hidden; }
+
+li {
+  padding-top: 0.4em;
+  padding-bottom: 0.4em; }
 
 @media (min-width: 960px) {
   .blog-content {
