@@ -1977,6 +1977,12 @@ footer > .footer-text {
   color: #999;
   padding-right: 0.75em; }
 
+.hash-line-1 {
+  text-indent: -1.5em; }
+
+.hash-line-2 {
+  text-indent: -2em; }
+
 a:not(:hover) {
   text-decoration: none; }
 
@@ -1991,5 +1997,19 @@ a:not(:hover) {
   position: absolute;
   top: -25px;
   visibility: hidden; }
+
+@media (min-width: 960px) {
+  .blog-content {
+    max-width: 720px;
+    margin: 1em auto 4em auto; } }
+@media (max-width: 959px) {
+  .blog-content,
+  footer > .footer-text {
+    margin: 1em 3vw 4em 3vw; } }
+.hash-line-1-blog {
+  text-indent: -2em; }
+
+.blog-body {
+  padding: 4vh 0; }
 
 /*# sourceMappingURL=main.css.map */
