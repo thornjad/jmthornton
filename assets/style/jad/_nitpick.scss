@@ -9,10 +9,16 @@
     padding: 0 10vw;
     margin: 1em auto 4em auto;
   }
+
+  .blog-content {
+    max-width: 720px;
+    margin: 1em auto 4em auto;
+  }
 }
 
 @media (max-width: 959px) {
   .content,
+  .blog-content,
   footer > .footer-text {
     margin: 1em 3vw 4em 3vw;
   }
@@ -44,11 +50,19 @@ footer .footer-line {
   padding-right: 0.75em;
 }
 
+.hash-line-1 {
+  text-indent: -1.5em;
+}
+
+.hash-line-2 {
+  text-indent: -2em;
+}
+
 a:not(:hover) {
   text-decoration: none;
 }
 
-.project {
+.project, .listing {
   margin-top: 1.3em;
 }
 
@@ -61,4 +75,9 @@ a:not(:hover) {
   position: absolute;
   top: -25px;
   visibility: hidden;
+}
+
+li {
+  padding-top: 0.4em;
+  padding-bottom: 0.4em;
 }
