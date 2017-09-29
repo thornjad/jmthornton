@@ -47,6 +47,7 @@ CNAME
 #####################
 *.old
 assets/style/main.css.map
+blog/_template/tmp.md
 
 # Development Directories #
 ###########################
