@@ -46,16 +46,19 @@ footer .footer-line {
 }
 
 .hash-anchor {
-  color: #999;
+  color: #909090 !important;
   padding-right: 0.75em;
+  padding-top: 8vh;
+  font-weight: 100;
+
 }
 
 .hash-line-1 {
-  text-indent: -1.5em;
+  text-indent: -2em;
 }
 
 .hash-line-2 {
-  text-indent: -2em;
+  text-indent: -2.5em;
 }
 
 a:not(:hover) {
@@ -80,4 +83,8 @@ a:not(:hover) {
 li {
   padding-top: 0.4em;
   padding-bottom: 0.4em;
+}
+
+a {
+  cursor: pointer;
 }
