@@ -9,7 +9,7 @@ Location: US
 
 /* BLOG */
 Editor, primary writer: Jade Thornton
-Last update: September 27, 2017
+Last update: September 29, 2017
 
 
 
@@ -23,6 +23,6 @@ GitHub: hackjutsu
 
 
 /* SITE */
-Last update: September 27, 2017
+Last update: September 29, 2017
 Standards: HTML5, CSS3
 Software: Atom, Firefox, Chromium, Opera, NeoVim, npm, DuckDuckGo
