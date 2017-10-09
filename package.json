@@ -1,10 +1,11 @@
 {
   "name": "jmthornton",
-  "version": "3.1.3",
+  "version": "3.1.4",
   "description": "Personal website of Jade Thornton",
   "main": "index.js",
   "scripts": {
     "start": "node_modules/http-server/bin/http-server",
+    "build": "node src/build.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,11 +17,12 @@
   "bugs": {
     "url": "https://github.com/raindeer44/jmthornton/issues"
   },
-  "homepage": "https://github.com/raindeer44/jmthornton#readme",
+  "homepage": "https://github.com/raindeer44/jmthornton",
   "dependencies": {},
   "devDependencies": {
     "http-server": "^0.10.0",
     "mini.css": "^2.3.4",
-    "purify-css": "^1.2.5"
+    "purify-css": "^1.2.5",
+    "shelljs": "^0.7.8"
   }
 }
