@@ -7,6 +7,7 @@ const pkg = require('../package.json');
 const dirs = [
   '.',
   'blog',
+  'blog/p',
   'p',
   'projects',
   'tools',
@@ -16,7 +17,6 @@ const build = () => {
   checkDeps();
   doSass();
   doBeautify();
-
 }
 
 const checkDeps = () => {
@@ -50,8 +50,9 @@ const doBeautify = () => {
   } catch (e) {
     console.error(e);
     sh.exit(1);
+  } finally {
+    removeTmp();
   }
-  removeTmp();
 }
 
 const prepStyle = () => {
@@ -61,47 +62,46 @@ const prepStyle = () => {
 
 const beautifyAndMinifyStyle = async () => {
   const whitelist = await getHtmlFiles();
-  const whitelistString = stringify(whitelist);
-  const cmd = `node_modules/purify-css/bin/purifycss --min --info --rejected --out assets/style/main.css ${whitelistString}`;
+  console.log(whitelist);
+  const cmd = `node_modules/purify-css/bin/purifycss --min --info --rejected --out assets/style/main.css tmp/m.css ${whitelist}`;
   sh.exec(cmd);
 }
 
 const getHtmlFiles = async () => {
   let fileList = [];
+  let files;
   for (let d of dirs) {
-    const files = await getFiles(d);
-    files = files.filter(f => path.extname(f) === '.html');
+    files = await getFiles(d);
+    files = files
+      .filter(f => path.extname(f) === '.html')
+      .map((f) => `${d}/${f}`);
     fileList.push(files);
   }
-  return flatten(fileList);
+  return stringifySpaces(fileList);
 }
 
 const getFiles = (dir) => new Promise((resolve, reject) => {
+  console.log(`reading ${dir} for HTML files...`);
   fs.readdir(dir, (err, files) => {
-    if (err) reject(err);
-    else resolve(files);
+    if (err) {
+      reject(err);
+    } else {
+      resolve(files);
+    }
   });
 });
 
-const flatten = (arr) => {
-  let out = [];
+const stringifySpaces = (arr) => {
+  let str = '';
   let i = 0;
   while (i < arr.length) {
     const val = arr[i];
     if (Array.isArray(val)) {
-      flatten(val);
+      str += `${stringifySpaces(val)} `;
     } else {
-      out.push(val);
+      str += `${val} `;
     }
     i++;
-  }
-  return out;
-}
-
-const stringifySpaces = (arr) => {
-  let str = '';
-  for (let el of arr) {
-    str += `${el} `;
   }
   return str;
 }
