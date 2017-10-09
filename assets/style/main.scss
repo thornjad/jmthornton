@@ -6,7 +6,7 @@
   Inspiration from: bootswatch v3.3.7 by Thomas Park and Twitter, Inc.
 */
 
-/* variables for ./jad components */
+/* variables for ./mini components */
 $fore-color: #2E3440;
 $back-color: #fcfcfa;
 $base-font-family: '-apple-system, BlinkMacSystemFont,\"Segoe UI\",\"Roboto\", \"Droid Sans\",\"Helvetica Neue\", Helvetica, Arial, sans-serif';
@@ -484,9 +484,9 @@ $responsive-visually-hidden-prefix: 'visually-hidden';
 $include-floats: false;
 $include-clearfix: false;
 $include-center-block-name: false;
-@import './jad/core';
-@import './jad/grid';
-@import './jad/input_control';
+@import './mini/core';
+@import './mini/grid';
+@import './mini/input_control';
 /*
   Custom elements for forms and input elements.
 */
@@ -496,9 +496,9 @@ $include-center-block-name: false;
 @include make-button-alt-color ($button-variant4-name, $button-variant4-back-color, $button-variant4-back-opacity, $button-variant4-hover-back-opacity, $button-variant4-fore-color);
 @include make-button-alt-style ($button-style1-name, $button-style1-border-style, $button-style1-border-radius, $button-style1-padding, $button-style1-margin);
 @include make-button-alt-style ($button-style2-name, $button-style2-border-style, $button-style2-border-radius, $button-style2-padding, $button-style2-margin);
-@import './jad/navigation';
-@import './jad/table';
-@import './jad/card';
+@import './mini/navigation';
+@import './mini/table';
+@import './mini/card';
 /*
   Custom elements for cards and containers.
 */
@@ -510,8 +510,8 @@ $include-center-block-name: false;
 @include make-card-section-alt-color ($card-section-style1-name, $card-section-style1-back-color, $card-section-style1-fore-color);
 @include make-card-section-alt-color ($card-section-style2-name, $card-section-style2-back-color, $card-section-style2-fore-color);
 @include make-card-section-alt-style ($card-section-padding1-name, $card-section-padding1-padding);
-@import './jad/tab';
-@import './jad/contextual';
+@import './mini/tab';
+@import './mini/contextual';
 /*
   Custom contextual background elements and alerts.
 */
@@ -521,7 +521,7 @@ $include-center-block-name: false;
 @include make-mark-alt-style ($mark-style2-name, $mark-style2-border-style, $mark-style2-border-radius, $mark-style2-padding, $mark-style2-font-size, $mark-style2-line-height);
 @include make-toast-alt-style($toast-style1-name, $toast-style1-border-style, $toast-style1-border-radius, $toast-style1-padding);
 @include make-toast-alt-style($toast-style2-name, $toast-style2-border-style, $toast-style2-border-radius, $toast-style2-padding);
-@import './jad/progress';
+@import './mini/progress';
 /*
   Custom elements for progress elements and spinners.
 */
@@ -531,7 +531,7 @@ $include-center-block-name: false;
 @include make-spinner-donut-alt-color ($spinner-donut-variant1-name, $spinner-donut-variant1-back-color, $spinner-donut-variant1-fore-color);
 @include make-spinner-donut-alt-color ($spinner-donut-variant2-name, $spinner-donut-variant2-back-color, $spinner-donut-variant2-fore-color);
 @include make-spinner-donut-alt-style ($spinner-donut-style1-name, $spinner-donut-style1-size, $spinner-donut-style1-border-thickness);
-@import './jad/utility';
+@import './mini/utility';
 /*
   Custom elements for utilities and helper classes.
 */
@@ -550,5 +550,5 @@ $include-center-block-name: false;
 /*
   * nit-picking and page-specific styling (at a higher level than inline css)
   */
-@import './jad/nitpick';
-@import './jad/blog';
+@import './custom/nitpick';
+@import './custom/blog';
