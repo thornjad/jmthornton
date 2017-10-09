@@ -1,7 +1,7 @@
 const sh = require('shelljs');
 
 const build = require('./build');
-const pkg = require('./package.json');
+const pkg = require('../package.json');
 
 const pack = () => {
   build();
