@@ -36,7 +36,6 @@ const doBeautify = () => {
   prepStyle();
   purifyStyle()
     .then((success) => {
-      console.log('Purification complete');
       removeTmp();
     }, (err) => {
       console.error(err);
@@ -52,7 +51,6 @@ const prepStyle = () => {
 const purifyStyle = async () => {
   const whitelist = await getHtmlFiles();
   const cmd = `node_modules/purify-css/bin/purifycss --min --info --out assets/style/main.css tmp/m.css ${whitelist}`;
-  console.log(cmd);
   sh.exec(cmd);
 }
 
