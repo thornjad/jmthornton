@@ -21,7 +21,7 @@
   "dependencies": {},
   "devDependencies": {
     "http-server": "^0.10.0",
-    "mini.css": "^2.3.4",
+    "mini.css": "2.3.4",
     "purify-css": "^1.2.5",
     "shelljs": "^0.7.8"
   }
