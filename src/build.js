@@ -111,3 +111,6 @@ const removeTmp = () => {
 }
 
 module.exports = build;
+
+/* Now time for the fun */
+build();

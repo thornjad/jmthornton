@@ -38,3 +38,6 @@ const versionNode = () => {
 const pushAll = () => {
   sh.exec('git push');
 }
+
+/* Now time for the fun */
+pack();
