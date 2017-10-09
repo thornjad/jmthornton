@@ -6,7 +6,6 @@
   "scripts": {
     "start": "node_modules/http-server/bin/http-server",
     "build": "node src/build.js",
-    "pack": "node src/pack.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
