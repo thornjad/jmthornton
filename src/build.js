@@ -2,8 +2,6 @@ const sh = require('shelljs');
 const fs = require('fs');
 const path = require('path');
 
-const pkg = require('../package.json');
-
 const dirs = [
   '.',
   'blog',
@@ -15,7 +13,7 @@ const dirs = [
 
 const build = () => {
   checkDeps();
-  doSass();
+  compileSass();
   doBeautify();
 }
 
@@ -30,29 +28,20 @@ const checkDeps = () => {
   }
 }
 
-const doSass = () => {
-  compileSass();
-  removeSassMap();
-}
-
 const compileSass = () => {
   sh.exec('sass assets/style/main.scss assets/style/main.css');
 }
 
-const removeSassMap = () => {
-  sh.rm('assets/style/main.css.map');
-}
-
 const doBeautify = () => {
   prepStyle();
-  try {
-    beautifyAndMinifyStyle();
-  } catch (e) {
-    console.error(e);
-    sh.exit(1);
-  } finally {
-    removeTmp();
-  }
+  purifyStyle()
+    .then((success) => {
+      console.log('Purification complete');
+      removeTmp();
+    }, (err) => {
+      console.error(err);
+      removeTmp();
+    });
 }
 
 const prepStyle = () => {
@@ -60,10 +49,10 @@ const prepStyle = () => {
   sh.mv('assets/style/main.css', 'tmp/m.css');
 }
 
-const beautifyAndMinifyStyle = async () => {
+const purifyStyle = async () => {
   const whitelist = await getHtmlFiles();
-  console.log(whitelist);
-  const cmd = `node_modules/purify-css/bin/purifycss --min --info --rejected --out assets/style/main.css tmp/m.css ${whitelist}`;
+  const cmd = `node_modules/purify-css/bin/purifycss --min --info --out assets/style/main.css tmp/m.css ${whitelist}`;
+  console.log(cmd);
   sh.exec(cmd);
 }
 
@@ -107,7 +96,7 @@ const stringifySpaces = (arr) => {
 }
 
 const removeTmp = () => {
-  sh.rm('-rf', 'tmp');
+  sh.rm('-rf', './tmp');
 }
 
 module.exports = build;
