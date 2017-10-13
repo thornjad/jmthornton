@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Remove an element from an Array | Blog | Jade Thornton</title>
+    <title>Remove an element from an Array | Blog | Jade M Thornton</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link type="text/plain" rel="author" href="https://jmthornton.net/humans.txt" />
@@ -41,14 +41,14 @@
     <meta property="og:type" content="article">
     <meta property="og:locale" content="en_US" />
 
-    <meta name="article:author" content="https://jmthornton.net">
+    <meta name="article:author" content="https://blog.jmthornton.net">
     <meta property="article:published_time" content="2017-10-26">
     <meta name="article:modified_time" content="2017-11-23">
   </head>
   <body>
     <header class="sticky">
       <span class="header-hack">
-        <a href="https://jmthornton.net/#top" class="button" role="button">Home</a>
+        <a href="https://jmthornton.net/" class="button" role="button">Home</a>
         <a href="https://jmthornton.net/#projects" class="button" role="button">Projects</a>
         <a href="https://jmthornton.net/#connect" class="button" role="button">Connect</a>
         <a href="https://blog.jmthornton.net" class="button" role="button">Blog</a>
@@ -56,24 +56,22 @@
     </header>
 
     <article class="post blog-content">
-      <h2 class="hash-line-1-blog"><span class="hash-anchor">#</span>Remove an element from an Array in Javascript</h2>
+      <h2 class="hash-line-1"><span class="hash-anchor">#</span>Remove an element from an Array in Javascript</h2>
       <address>
-        <a href="https://jmthornton.net">Jade Thornton</a>
+        <a href="https://jmthornton.net">Jade M Thornton</a>
       </address>
-      <time datetime="2017-10-26">October 26, 2017</time>
+      <time datetime="2017-10-26">October 13, 2017</time>
 
       <div class="post-main">
 
         <div class="blog-body">
-                    Remove an element from an Array in Javascript
+          <p>From time to time, one comes to the issue of removing elements from an Array. While there are certainly ways to do this with built-in functions like <code>splice()</code>, they just don't quite do everything I want. So, as usual, I made my own.</p>
 
-          Jade M Thornton
+          <aside class="content-skip">
+            <a href="#completeFunction">> Skip to the complete function and examples</a>
+          </aside>
 
-          <p>From time to time, one comes to the issue of removing elements from an Array. While there are certainly ways to do this with built-in functions like <code>splice()<code>, they just don't quite do everything I want. So, as usual, I made my own.</p>
-
-          <a href="#">Skip to the final function and examples</a>
-
-          <p>The first iteration I created was designed to be able to polymorphically take either a sigle argument (the index of the element to remove), or two arguments defining a range. It then basically concatenates the part of the array before the removed element(s) with the part of the array after the removed element(s). Here's how that took shape:</p>
+          <p>The first iteration I created was designed to be able to polymorphically take either a single argument (the index of the element to remove), or two arguments defining a range. It then basically concatenates the part of the array before the removed element(s) with the part of the array after the removed element(s). Here's how that took shape:</p>
 
 <pre>const removeElement = (arr, from, to) => {
   const rest = arr.slice(to || from);
@@ -87,7 +85,7 @@
 
           <p>In the post, John outlined five goals for his <a href="https://johnresig.com/blog/javascript-array-remove/"><code>Array.remove</code></a>:</p>
 
-          <blockquote>
+          <blockquote cite="https://johnresig.com/blog/javascript-array-remove">
             <ul>
               <li>It had to add an extra method to an array object that would allow me to remove an item by index (e.g. array.remove(1) to remove the second item).</li>
               <li>It had to be able to remove items by negative index (e.g. array.remove(-1) to remove the last item in the array).</li>
@@ -101,9 +99,9 @@
 
           <p>So I combined my function and ideas with John's function, and came up with something I'm quite happy with. This function is already being used in several projects and is ready to be utilized elsewhere:</p>
 
-          <!-- link to here -->
+          <span id="completeFunction"><h3 class="hash-line-2"><span class="hash-anchor">##</span>The complete function</h3></span>
 
-          <strong>Array.prototype.removeElement</strong>
+          <h4>Array.prototype.removeElement</h4>
 
 <pre>// Array#removeElement - By Jade M Thornton (ISC Licensed)
 Array.prototype.removeElement = function(from, to) {
@@ -112,7 +110,7 @@ Array.prototype.removeElement = function(from, to) {
   return this.push(...rest);
 }</pre>
 
-          <strong>Example usage</strong>
+          <h4>Example usage</h4>
 
 <pre>let a = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -132,43 +130,47 @@ a.removeElement(2, 4);
 a.removeElement(-1, -2);
 // a --> [1, 3]</pre>
 
-          <strong>Explanation</strong>
+          <h4>Explanation</h4>
 
           <p>What's that you ask? What in David Hilbert's beard are those four lines of code doing? Let's take a look at it again, along with some helpful line numbers.</p>
 
-<pre>1   Array.prototype.removeElement = function(from, to) {
-2     const rest = this.slice((to || from) + 1 || this.length);
-3     this.length = from < 0 ? this.length + from : from;
-4     return this.push(...rest);
-5   }</pre>
+<pre>1 Array.prototype.removeElement = function(from, to) {
+2   const rest = this.slice((to || from) + 1 || this.length);
+3   this.length = from < 0 ? this.length + from : from;
+4   return this.push(...rest);
+5 }</pre>
 
-          </p>Each line is doing something important. Let's break it up by line and I'll talk through what's going down.</p>
+          </p>Each line is doing something important, so let's break them up and talk through what's going down.</p>
 
-          <p>In line <code>1</code> is the assignment of our new <a href="#">anonymous function</a> to <code>Array.prototype</code>. Unlike my first implementation above, this allows us to use the function as a method on an instance of an <a href="#"><code>Array</code></a> itself.</p>
+          <p>In line <code>1</code> is the assignment of our new <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions">anonymous function</a> to <code>Array.prototype.removeElement</code>. Unlike my first implementation above, this allows us to use the function as a method on an instance of an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array"><code>Array</code></a> itself. In a more heavily object-oriented language like Java, this would be similar to adding our function to the <code>Array</code> object, which we would later instantiate.</p>
 
-          <p>Line <code>2</code>, in a nutshell, grabs the part of the array starting <em>immediately after</em> the last element we want to remove. For example, if the function call is <code>arr.removeElement(2);</code> then <code>rest</code> will be the elements of the array starting at index 3 and continuing to the end of the array. However, there's some trickiness in there for handling different cases. Let's break this line down further.</p>
+          <p>Line <code>2</code>, in a nutshell, grabs the part of the Array starting <em>immediately after</em> the last element we want to remove. For example, if the function call is <code>arr.removeElement(2);</code> then <code>rest</code> will be the elements of the Array starting at index 3 and continuing to the end of the Array. However, there's some trickiness in there for handling different cases. Let's break this line down further.</p>
 
           <ul>
             <li>
-              What we're assigning to <code>rest</code> is a <a href="#"><code>slice</code></a> of <code>this</code>, which is referring to the array we're working on.
+              What we're assigning to <code>rest</code> is a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array"><code>slice</code></a> of <code>this</code>, which is referring to the Array we're working on.
             </li>
 
             <li>
-              The argument (yes, singular argument) takes advantage of <a href="#">falsey</a> values. The first part, <code>(to || from)</code>, evaluates to the value of <code>to</code> if it's assigned to a value. If <code>to</code> is <code>undefined</code>, which is falsey, the statement <a href="#">short-circuits</a> to the value of <code>from</code>.
+              The argument (yes, singular argument) takes advantage of <a href="https://developer.mozilla.org/en-US/docs/Glossary/Falsy">falsy</a> values. The first part, <code>(to || from)</code>, evaluates to the value of <code>to</code> if it's assigned to a value. If <code>to</code> is <code>undefined</code>, which is falsy, the statement <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_Operators">short-circuits</a> to the value of <code>from</code>.
             </li>
             <li>
               We then add 1 to the value of <code>(to || from)</code>, which gets us the element immediately after the removal section.
             </li>
             <li>
-              In the case that <code>(to || from)</code> is -1, meaning we want to remove the last element, then adding 1 brings it to 0. we don't want to roll over to the first element like that, so we take advantage of 0 being falsey. <code>(to || from) + 1 || this.length</code> lets us translate -1 into the last element.
+              In the case that <code>(to || from)</code> is -1, meaning we want to remove the last element, then adding 1 brings it to 0. we don't want to roll over to the first element like that, so we take advantage of 0 being falsy. <code>(to || from) + 1 || this.length</code> lets us translate -1 into the last element.
             </li>
           </ul>
 
-          <p>Line <code>3</code> handles the front part of the array, the part before the removal area. We use a <a href="#">ternary operator</a> to handle negative indexing. If <code>from</code> is negative, <code>this.length</code> gets <code>from</code> added to itself (which is the same as subtracting the negative). Otherwise, we just use <code>from</code> directly. Because Javascript is (rightfully) zero-indexed, this results in <code>this</code> Array being shortened correctly.</p>
+          <p>Line <code>3</code> handles the front part of the Array, the part before the removal area. We use a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator">conditional operator</a> to handle negative indexing. If <code>from</code> is negative, <code>this.length</code> gets <code>from</code> added to itself (which is the same as subtracting the negative). Otherwise, we just use <code>from</code> directly. Because Javascript is (rightfully) zero-indexed, this results in <code>this</code> Array being shortened correctly.</p>
 
-          <p>The last (meaningful) line, line <code>4</code> reassembles the section before the removed element(s), stored in <code>this</code>, with the section after the removed element(s), stored in <code>rest</code>. It does this by pushing <code>rest</code> onto <code>this</code> Array&mdash;utilizing the <a href="#">spread operator</a>&mdash;which achieves the goal of destroying the old Array in favor of the new, altered one. Furthermore, the new Array is returned so the function can be used in an assignment.</p>
+          <p>The last (meaningful) line, line <code>4</code> reassembles the section before the removed element(s), stored in <code>this</code>, with the section after the removed element(s), stored in <code>rest</code>. It does this by pushing <code>rest</code> onto <code>this</code> Array&mdash;utilizing the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_operator">spread operator</a>&mdash;which achieves the goal of destroying the old Array in favor of the new, altered one. Furthermore, the new Array is returned so the function can be used in an assignment.</p>
 
           <p>Technically there's a fifth line, but it's a closing brace. I'm going to let you guess <a href="https://en.wikipedia.org/wiki/Scope_(computer_science)#Block_scope">what that does</a>.</p>
+
+          <br><br><br>
+
+          <p>All code created by me, Jade M Thornton, is licensed under the terms of the <a href="https://jmthornton.net/LICENSE">ISC License</a>, just like the rest of this site.</p>
         </div>
       </div>
     </article>
