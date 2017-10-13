@@ -23,6 +23,5 @@ GitHub: hackjutsu
 
 
 /* SITE */
-Last update: October 8, 2017
 Standards: HTML5, CSS3
 Software: Atom, Firefox, Chromium, Opera, NeoVim, npm, DuckDuckGo
