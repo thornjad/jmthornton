@@ -41,6 +41,7 @@
 
     <meta name="article:author" content="https://blog.jmthornton.net">
     <meta property="article:published_time" content="2017-10-13">
+    <meta name="article:modified_time" content="2017-10-25">
   </head>
   <body>
     <header class="sticky">
@@ -73,7 +74,7 @@
 <pre>const removeElement = (arr, from, to) => {
   const rest = arr.slice(to || from);
   arr.length = from;
-  return arr.push(...rest);
+  return [...rest];
 }</pre>
 
           <p>This works out pretty well, and I even started using it in a project. However, I soon came across the case where I wanted to remove the last element in an array. Sure, that's just as easy as <code>removeElement(arr, arr.length - 1)</code>, right? Well, sure, but I'm too lazy for all that typing. Ideally what I really want is negative indexing like Python allows, where <code>arr[-1] === arr[arr.length - 1]</code>.</p>
@@ -104,7 +105,8 @@
 Array.prototype.removeElement = function(from, to) {
   const rest = this.slice((to || from) + 1 || this.length);
   this.length = from < 0 ? this.length + from : from;
-  return this.push(...rest);
+  this.push(...rest);
+  return this;
 }</pre>
 
           <h4>Example usage</h4>
@@ -129,13 +131,14 @@ a.removeElement(-1, -2);
 
           <h4>Explanation</h4>
 
-          <p>What's that you ask? What in David Hilbert's beard are those four lines of code doing? Let's take a look at it again, along with some helpful line numbers.</p>
+          <p>What's that you ask? What in David Hilbert's beard are those six lines of code doing? Let's take a look at it again, along with some helpful line numbers.</p>
 
 <pre>1 Array.prototype.removeElement = function(from, to) {
 2   const rest = this.slice((to || from) + 1 || this.length);
 3   this.length = from < 0 ? this.length + from : from;
-4   return this.push(...rest);
-5 }</pre>
+4   this.push(...rest);
+5   return this;
+6 }</pre>
 
           </p>Each line is doing something important, so let's break them up and talk through what's going down.</p>
 
@@ -161,9 +164,9 @@ a.removeElement(-1, -2);
 
           <p>Line <code>3</code> handles the front part of the Array, the part before the removal area. We use a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator">conditional operator</a> to handle negative indexing. If <code>from</code> is negative, <code>this.length</code> gets <code>from</code> added to itself (which is the same as subtracting the negative). Otherwise, we just use <code>from</code> directly. Because Javascript is (rightfully) zero-indexed, this results in <code>this</code> Array being shortened correctly.</p>
 
-          <p>The last (meaningful) line, line <code>4</code> reassembles the section before the removed element(s), stored in <code>this</code>, with the section after the removed element(s), stored in <code>rest</code>. It does this by pushing <code>rest</code> onto <code>this</code> Array&mdash;utilizing the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_operator">spread operator</a>&mdash;which achieves the goal of destroying the old Array in favor of the new, altered one. Furthermore, the new Array is returned so the function can be used in an assignment.</p>
+          <p>In line <code>4</code>, we reassemble the section before the removed element(s), stored in <code>this</code>, with the section after the removed element(s), stored in <code>rest</code>. We do this by pushing <code>rest</code> onto <code>this</code> Array&mdash;utilizing the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_operator">spread operator</a>&mdash;which achieves the goal of destroying the old Array in favor of the new, altered one.</p>
 
-          <p>Technically there's a fifth line, but it's a closing brace. I'm going to let you guess <a href="https://en.wikipedia.org/wiki/Scope_(computer_science)#Block_scope">what that does</a>.</p>
+          <p>The last (meaningful) line, line <code>5</code>, the new Array is returned so the function can be used in an assignment. Technically there's a fifth line, but it's a closing brace. I'm going to let you guess <a href="https://en.wikipedia.org/wiki/Scope_(computer_science)#Block_scope">what that does</a>.</p>
 
           <br><br><br>
 
