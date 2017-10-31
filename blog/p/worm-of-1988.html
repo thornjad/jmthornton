@@ -65,21 +65,23 @@
       <div class="post-main">
         <aside class="intro">
           <em>
-            The paper I've archived below is the story of the 1988 Internet worm that shut down the existing Internet, and an analysis of it's reverse-engineered clone. I am not the author of this text&mdash;in fact I hadn't yet been born when these events took place&mdash;. When I was just starting out exploring computers, I came across this paper and it has stuck with me. Recently, I finally found a copy of it and I want to put it up here for the world to read and remember.
+            <p>The paper I've archived below is the story of the 1988 Internet worm that shut down the existing Internet, and an analysis of its reverse-engineered clone. I am not the author of this text&mdash;in fact I hadn't yet been born when these events took place. When I was just starting out exploring computers, I came across this paper and it has stuck with me. Recently, I finally found a copy of it and I want to put it up here for the world to read and remember.</p>
+
+            <p>The formatting has been slightly modified such that it displays correctly in modern browsers and integrates with this blog's styling rules. The content is un-modified in its entirety.</p>
           </em>
         </aside>
-        <hr>
+        <br><hr><br>
 
         <div class="blog-body">
-          <center><h3>A Tour of the Worm</h3><br>
+          <center><h3>A Tour of the Worm</h3><br><br>
 
           <em>Donn Seeley</em><br>
           Department of Computer Science<br>
-          University of Utah<br>
+          University of Utah<br><br><br><br>
 
-          <em>ABSTRACT</em><br>
+          <em>ABSTRACT</em><br><br>
           </center>
-          <blockquote>
+          <em>
             On the evening of November 2, 1988, a self-replicating program was released
             upon the Internet (<A NAME="rf1" HREF="#f1">1</a>) This program (a worm) invaded VAX and Sun-3 computers
             running versions of Berkeley UNIX, and used their resources to attack still
@@ -88,45 +90,44 @@
             them unusable due to the burden of its activity. This paper provides a
             chronology for the outbreak and presents a detailed description of the
             internals of the worm, based on a C version produced by decompiling.
-          </blockquote>
-          <hr>
+          </em><br>
+          <br><hr><br>
           <strong>Table of contents:</strong>
           <dl>
-            <DT>1. <a href="#p1">Introduction</a>
-            <DT>2. <a href="#p2">Chronology</a>
-            <DT>3. <a href="#p3">Overview</a>
-            <DT>4. <a href="#p4">Internals</a>
+            <DT>1. <a href="#p1">Introduction</a></dt>
+            <DT>2. <a href="#p2">Chronology</a></dt>
+            <DT>3. <a href="#p3">Overview</a></dt>
+            <DT>4. <a href="#p4">Internals</a></dt>
             <DL>
-               <DT>4.1. <a href="#p4.1">The thread of control</a>
-               <DT>4.2. <a href="#p4.2">Data structures</a>
-               <DT>4.3. <a href="#p4.3">Population growth</a>
-               <DT>4.4. <a href="#p4.4">Locating new hosts to infect</a>
-               <DT>4.5. <a href="#p4.5">Security holes</a>
+               <DT>4.1. <a href="#p4.1">The thread of control</a></dt>
+               <DT>4.2. <a href="#p4.2">Data structures</a></dt>
+               <DT>4.3. <a href="#p4.3">Population growth</a></dt>
+               <DT>4.4. <a href="#p4.4">Locating new hosts to infect</a></dt>
+               <DT>4.5. <a href="#p4.5">Security holes</a></dt>
                <DL>
-                  <DT>4.5.1. <a href="#p4.5.1"><I>Rsh</I> and <I>rexec</I></a>
-                  <DT>4.5.2. <a href="#p4.5.2"><I>Finger</I></a>
-                  <DT>4.5.3. <a href="#p4.5.3"><I>Sendmail</I></a>
+                  <DT>4.5.1. <a href="#p4.5.1"><I>Rsh</I> and <I>rexec</I></a></dt>
+                  <DT>4.5.2. <a href="#p4.5.2"><I>Finger</I></a></dt>
+                  <DT>4.5.3. <a href="#p4.5.3"><I>Sendmail</I></a></dt>
                </DL>
-               <DT>4.6. <a href="#p4.6">Infection</a>
-               <DT>4.7. <a href="#p4.7">Password cracking</a>
+               <DT>4.6. <a href="#p4.6">Infection</a></dt>
+               <DT>4.7. <a href="#p4.7">Password cracking</a></dt>
                <DL>
-                  <DT>4.7.1. <a href="#p4.7.1">Guessing passwords</a>
-                  <DT>4.7.2. <a href="#p4.7.2">Faster password encryption</a>
+                  <DT>4.7.1. <a href="#p4.7.1">Guessing passwords</a></dt>
+                  <DT>4.7.2. <a href="#p4.7.2">Faster password encryption</a></dt>
               </DL>
             </DL>
-            <DT>5. <a href="#p5">Opinions</a>
-            <DT>6. <a href="#p6">Conclusion</a>
-            <DT><a href="#ack">Acknowledgments</a>
+            <DT>5. <a href="#p5">Opinions</a></dt>
+            <DT>6. <a href="#p6">Conclusion</a></dt>
+            <DT><a href="#ack">Acknowledgments</a></dt>
           </dl>
-          <hr>
+          <br><hr><br>
 
           <a NAME="p1"></a>
           <H2>1. Introduction</H2>
 
-          <BLOCKQUOTE>
+          <BLOCKQUOTE cite="Grampp and Morris, 'UNIX Operating System Security'">
           There is a fine line between helping administrators protect their systems
           and providing a cookbook for bad guys.
-          [Grampp and Morris, "UNIX Operating System Security"]
           </BLOCKQUOTE>
 
           <p>November 3, 1988 is already coming to be known as Black Thursday. System
@@ -168,19 +169,19 @@
           <a NAME="p2"></a>
           <H2>2. Chronology</H2>
 
-          <BLOCKQUOTE>
+          <BLOCKQUOTE cite="Dennis Miller, on NBC's Saturday Night Live">
           Remember, when you connect with another computer, you're connecting to every
           computer that computer has connected to.
-          [Dennis Miller, on NBC's Saturday Night Live]<p>
-
-          Here is the gist of a message I got: I'm sorry.
-          [Andy Sudduth, in an anonymous posting to the TCP-IP list on behalf of the
-          author of the worm, 11/3/88]
           </BLOCKQUOTE>
 
-          Many details of the chronology of the attack are not yet available. The
+          <blockquote cite="Andy Sudduth, in a posting to the TCP-IP list on behalf of the
+          worm's author">
+          Here is the gist of a message I got: I'm sorry.
+          </blockquote>
+
+          <p>Many details of the chronology of the attack are not yet available. The
           following list represents dates and times that we are currently aware of.
-          Times have all been rendered in Pacific Standard Time for convenience.<p>
+          Times have all been rendered in Pacific Standard Time for convenience.</p>
 
           <DL>
             <DT>11/2:1800 (approx.)</dt>
@@ -191,69 +192,69 @@
             and the disks aren't backed up to tape: a perfect target. A number of
             "tourist" users (individuals using public accounts) were reported to be
             active that evening. These users would have appeared in the session logging,
-            but see below.</dd>
+            but see below.</dd><br>
 
             <DT>11/2:1824</dt>
             <DD>First known West Coast infection: <I>rand.org</I> at Rand Corp. in Santa
-            Monica.</dd>
+            Monica.</dd><br>
 
             <DT>11/2:1904</dt>
             <DD><I>csgw.berkeley.edu</I> is infected. This machine is a major network
             gateway at UC Berkeley. Mike Karels and Phil Lapsley discover the infection
-            shortly afterward.</dd>
+            shortly afterward.</dd><br>
 
             <DT>11/2:1954</dt>
             <DD><I>mimsy.umd.edu</I> is attacked through its <I>finger</I> server. This machine is at the
-            University of Maryland College Park Computer Science Department.</dd>
+            University of Maryland College Park Computer Science Department.</dd><br>
 
             <DT>11/2: 2000 (approx.)</dt>
-            <DD>Suns at the MIT AI Lab are attacked.</dd>
+            <DD>Suns at the MIT AI Lab are attacked.</dd><br>
 
             <DT>11/2: 2028</dt>
-            <DD>First <I>sendmail</I> attack on <i>mimsy</I>.</dd>
+            <DD>First <I>sendmail</I> attack on <i>mimsy</I>.</dd><br>
 
             <DT>11/2: 2040</dt>
             <dd>Berkeley staff figure out the <I>sendmail</I> and <I>rsh</I> attacks,
             notice <I>telnet</I> and <I>finger</I> peculiarities, and start shutting
-            these services off.</dd>
+            these services off.</dd><br>
 
             <DT>11/2: 2049</dt>
             <DD><I>cs.utah.edu</I> is infected. This VAX 8600 is the central Computer
             Science Department machine at the University of Utah. The next several entries
             follow documented events at Utah and are representative of other infections
-            around the country.</dd>
+            around the country.</dd><br>
 
             <DT>11/2: 2109</dt>
-            <DD>First <I>sendmail</I> attack at <I>cs.utah.edu</I>.</dd>
+            <DD>First <I>sendmail</I> attack at <I>cs.utah.edu</I>.</dd><br>
 
             <DT>11/2: 2121</dt>
             <DD>The load average on <I>cs.utah.edu</I> reaches 5. The "load average" is a
             system-generated value that represents the average number of jobs in the run
             queue over the last minute; a load of 5 on a VAX 8600 noticeably degrades
             response times, while a load over 20 is a drastic degradation. At 9 PM, the
-            load is typically between 0.5 and 2.</dd>
+            load is typically between 0.5 and 2.</dd><br>
 
             <DT>11/2: 2141</dt>
-            <DD>The load average on <I>cs.utah.edu</I> reaches 7.</dd>
+            <DD>The load average on <I>cs.utah.edu</I> reaches 7.</dd><br>
 
             <DT>11/2: 2201</dt>
-            <DD>The load average on <I>cs.utah.edu</I> reaches 16.</dd>
+            <DD>The load average on <I>cs.utah.edu</I> reaches 16.</dd><br>
 
             <DT>11/2: 2206</dt>
             <DD>The maximum number of distinct runnable processes (100) is reached on
-            <I>cs.utah.edu</I>; the system is unusable.</dd>
+            <I>cs.utah.edu</I>; the system is unusable.</dd><br>
 
             <DT>11/2: 2220</dt>
             <DD>Jeff Forys at Utah kills off worms on <I>cs.utah.edu</I>. Utah Sun clusters are
             infected. 11/2: 2241 Re-infestation causes the load average to reach 27 on
-            <I>cs.utah.edu</I>.</dd>
+            <I>cs.utah.edu</I>.</dd><br>
 
             <DT>11/2: 2249</dt>
-            <DD>Forys shuts down <I>cs.utah.edu</I>.</dd>
+            <DD>Forys shuts down <I>cs.utah.edu</I>.</dd><br>
 
             <DT>11/3: 2321</dt>
             <DD>Re-infestation causes the load average to reach 37 on <I>cs.utah.edu</I>, despite
-            continuous efforts by Forys to kill worms.</dd>
+            continuous efforts by Forys to kill worms.</dd><br>
 
             <DT>11/2: 2328</dt>
             <DD>Peter Yee at NASA Ames Research Center posts a warning to the
@@ -261,7 +262,7 @@
             It has hit UC Berkeley, UC San Diego, Lawrence Livermore, Stanford, and NASA
             Ames." He suggests turning off <I>telnet</I>, <I>ftp</I>, <I>finger</I>, <I>rsh</I> and SMTP services.
             He does not mention <I>rexec</I>. Yee is actually at Berkeley working with Keith
-            Bostic, Mike Karels and Phil Lapsley.</dd>
+            Bostic, Mike Karels and Phil Lapsley.</dd><br>
 
             <DT>11/3: 0034</dt>
             <DD>At another's prompting, Andy Sudduth of Harvard anonymously posts a warning
@@ -271,20 +272,20 @@
             explicitly mentions the <I>rexec</I> attack. Unfortunately Sudduth's message is
             blocked at relay.cs.net while that gateway is shut down to combat the worm,
             and it does not get delivered for almost two days. Sudduth acknowledges
-            authorship of the message in a subsequent message to TCP-IP on Nov. 5.</dd>
+            authorship of the message in a subsequent message to TCP-IP on Nov. 5.</dd><br>
 
             <DT>11/3: 0254</dt>
             <DD>Keith Bostic sends a fix for <I>sendmail</I> to the newsgroup
             comp.bugs.4bsd.ucb-fixes and to the TCP-IP mailing list. These fixes (and
             later ones) are also mailed directly to important system administrators
-            around the country.</dd>
+            around the country.</dd><br>
 
             <DT>11/3: early morning</dt>
-            <DD>The wtmp session log is mysteriously removed on prep.ai.mit.edu.</dd>
+            <DD>The wtmp session log is mysteriously removed on prep.ai.mit.edu.</dd><br>
 
             <DT>11/3: 0507</dt>
             <DD>Edward Wang at Berkeley figures out and reports the <I>finger</I> attack, but his
-            message doesn't come to Mike Karels' attention for 12 hours.</dd>
+            message doesn't come to Mike Karels' attention for 12 hours.</dd><br>
 
             <DT>11/3: 0900</dt>
             <DD>The annual Berkeley Unix Workshop commences at UC Berkeley. 40 or so
@@ -292,41 +293,41 @@
             disaster erupts at home. Several people who had planned to fly in on
             Thursday morning are trapped by the crisis. Keith Bostic spends much of
             the day on the phone at the Computer Systems Research Group offices answering
-            calls from panicked system administrators from around the country.</dd>
+            calls from panicked system administrators from around the country.</dd><br>
 
             <DT>11/3 :1500 (approx.)</dt>
             <DD>The team at MIT Athena calls Berkeley with an example of how the <I>finger</I>
-            server bug works.</dd>
+            server bug works.</dd><br>
 
             <DT>11/3:1626</dt>
             <DD>Dave Pare arrives at Berkeley CSRG offices;
             disassembly and decompiling start shortly afterward using Pare's special
-            tools.</dd>
+            tools.</dd><br>
 
             <DT>11/3:1800 (approx.)</dt>
             <DD>The Berkeley group sends out for calzones. People arrive and leave;
             the offices are crowded, there's plenty of excitement. Parallel work is in
-            progress at MIT Athena; the two groups swap code.</dd>
+            progress at MIT Athena; the two groups swap code.</dd><br>
 
             <DT>11/3:1918</dt>
-            <DD>Keith Bostic posts a fix for the <I>finger</I> server.</dd>
+            <DD>Keith Bostic posts a fix for the <I>finger</I> server.</dd><br>
 
             <DT>11/4: 0600</dt>
             <DD>Members of the Berkeley team, with the worm almost completely disassembled
             and largely decompiled, finally take off for a couple hours' sleep before
-            returning to the workshop.</dd>
+            returning to the workshop.</dd><br>
 
             <DT>11/4: 1236</dt>
             <DD>Theodore Ts'o of Project Athena at MIT publicly announces that MIT and
-            Berkeley have completely disassembled the worm.</dd>
+            Berkeley have completely disassembled the worm.</dd><br>
 
             <DT>11/4:1700 (approx.)</dt>
             <DD>A short presentation on the worm is made at the end of the Berkeley UNIX
-            Workshop.</dd>
+            Workshop.</dd><br>
 
             <DT>11/8:</dt>
             <DD>National Computer Security Center meeting to discuss the worm. There are
-            about 50 attendees.</dd>
+            about 50 attendees.</dd><br>
 
             <DT>11/11: 0038</dt>
             <DD>Fully decompiled and commented worm source is installed at Berkeley.</dd>
@@ -1271,33 +1272,33 @@
           <p>Ken Thompson, "Reflections on Trusting Trust," 1983 ACM Turing Award Lecture,
           in the Communications of the ACM, Vol. 27, No. 8, p. 761, August 1984.</p>
 
-          <hr><br>
+          <br><hr><br><br>
 
           <B>Footnotes</B>
 
           <dl>
           <DT>(<A NAME="f1" HREF="#rf1">1</a>)</dt>
              <DD>The Internet is a logical network made up of many physical networks,
-                 all running the IP class of network protocols.</dd>
+                 all running the IP class of network protocols.</dd><br>
 
           <DT>(<A NAME="f2" HREF="#rf2">2</a>)</dt>
              <DD>VAX and Sun-3 are models of computers built by Digital Equipment Corp.
                  and Sun Microsystems Inc., respectively. UNIX is a Registered Bell of
-                 AT&amp;T Trademark Laboratories.</dd>
+                 AT&amp;T Trademark Laboratories.</dd><br>
 
           <DT>(<A NAME="f3" HREF="#rf3">3</a>)</dt>
              <DD>Actually, like much of the code in the Berkeley distribution, the
                  <I>finger</I> server was contributed from elsewhere; in this case, it
-                 appears that MIT was the source.</dd>
+                 appears that MIT was the source.</dd><br>
 
           <DT>(<A NAME="f4" HREF="#rf4">4</a>)</dt>
              <DD>See for example Appendix B, section 1.4 of the second edition of
-                 The C Programming Language by Kernighan and Ritchie.</dd>
+                 The C Programming Language by Kernighan and Ritchie.</dd><br>
 
           <DT>(<A NAME="f5" HREF="#rf5">5</a>)</dt>
              <DD>One minor exception: the <I>sendmail</I> attack doesn't use <I>sendworm()</I>
                  since it needs to handle the SMTP protocol in addition to the command
-                 interpreter interface, but the principle is the same.</dd>
+                 interpreter interface, but the principle is the same.</dd><br>
 
           <DT>(<A NAME="f6" HREF="#rf6">6</a>)</dt>
              <DD>For those mindful of details: The first call to <I>cracksome()</I> is
@@ -1316,7 +1317,7 @@
                  overhead is the minimum lifetime. In this period a worm will attack
                  at least 8 hosts through the host infection routines, and will try
                  about 18 passwords for each account, attacking more hosts if accounts
-                 are cracked.</dd>
+                 are cracked.</dd><br>
           </dl>
         </div>
       </div>
