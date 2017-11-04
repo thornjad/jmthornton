@@ -42,21 +42,22 @@ const getPostData = (id) => {
     const xhr = new XMLHttpRequest();
     xhr.onload = (data) => resolve(xhr.responseText);
     xhr.onerror = (e) => reject(xhr.errorText);
-    xhr.open('GET', `${apiURI}${id}.json`);
+    xhr.open('GET', `${apiURI}item/${id}.json`);
     xhr.send();
   });
 }
 
-async function loadFirst() => {
+async function loadFirst() {
   let posts = getPostList();
   let firstPostsFuture = [];
 
-  setTop().then(() => {
-    for (let i = 0; i < firstPageLoadLimit; i++) {
-      post = posts.next().value;
-      firstPostsFuture.push(getPostData(posts.next().value));
-    }
-    const firstPostsList = await Promise.all(firstPostsFuture);
-    console.log(firstPostsList);
-  });
+  await setTop();
+  for (let i = 0; i < firstPageLoadLimit; i++) {
+    firstPostsFuture.push(getPostData(posts.next().value));
+  }
+  const firstPostsList = await Promise.all(firstPostsFuture);
+  for (let post of firstPostsList) {
+    post = JSON.parse(post);
+    console.log(post.title);
+  }
 }
