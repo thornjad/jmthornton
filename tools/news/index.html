@@ -42,13 +42,31 @@
     <script src="https://jmthornton.net/assets/script/helpers.js"></script>
     <script src="/assets/script/news.js"></script>
     <script>
-      document.addEventListener('DOMContentLoaded', (evt) => {
-        loadFirst()
-          .catch((e) => {
-            console.error(e);
-            alert('An error occured. Please try again later');
-          });
-      });
+      async function run() {
+        try {
+          await posts.init();
+          await loadFirst();
+        } catch (e) {
+          console.error(e);
+          alert('An error occured. Please try again later');
+        }
+      }
+
+      async function loadFirst() {
+        let firstPostsFuture = [];
+
+        for (let i = 0; i < posts.firstPageLoadLimit; i++) {
+          firstPostsFuture.push(posts.getPostData(posts.genPost.next().value));
+        }
+        const firstPostsList = await Promise.all(firstPostsFuture);
+        for (let story of firstPostsList) {
+          story = JSON.parse(story);
+          console.log(story.title);
+        }
+      }
+
+      const posts = new NewsPosts();
+      document.addEventListener('DOMContentLoaded', run);
     </script>
   </body>
 </html>
