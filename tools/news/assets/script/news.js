@@ -33,14 +33,12 @@ class NewsPosts {
     });
   }
 
-  static formatLayout(title, url, source) {
+  static formatLayout(title, url) {
     return `
-    <div class="post">
       <hr>
       <p>
-        <a href="${url}">${title}</a>, (${source})
+        <a href="${url}">${title}</a> <span class="source">(${url.match(/:\/\/(.[^/]+)/)[1]})</span>
       </p>
-    </div>
     `;
   }
 
