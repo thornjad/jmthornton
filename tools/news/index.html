@@ -41,5 +41,14 @@
     </footer>
     <script src="https://jmthornton.net/assets/script/helpers.js"></script>
     <script src="/assets/script/news.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', (evt) => {
+        loadFirst()
+          .catch((e) => {
+            console.error(e);
+            alert('An error occured. Please try again later');
+          });
+      });
+    </script>
   </body>
 </html>
