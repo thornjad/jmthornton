@@ -58,17 +58,29 @@
       }
 
       async function loadFirst() {
+        const list = await loadPosts(posts.firstPageLoadLimit);
+        for (let story of list) {
+          story = JSON.parse(story);
+          injectPost(story.title, story.url);
+        }
+      }
+
+      async function loadMore() {
+        const list = await loadPosts(posts.loadMoreLoadLimit);
+        for (let story of list) {
+          story = JSON.parse(story);
+          injectPost(story.title, story.url);
+        }
+      }
+
+      async function loadPosts(numPostsToLoad) {
         let firstPostsFuture = [];
 
-        for (let i = 0; i < posts.firstPageLoadLimit; i++) {
+        for (let i = 0; i < numPostsToLoad; i++) {
           firstPostsFuture.push(posts.getPostData(posts.genPost.next().value));
         }
         const firstPostsList = await Promise.all(firstPostsFuture);
-        for (let story of firstPostsList) {
-          story = JSON.parse(story);
-          // TODO implement getting source host name from url
-          injectPost(story.title, story.url);
-        }
+        return firstPostsList;
       }
 
       function injectPost(title, url) {
@@ -81,6 +93,11 @@
 
       const posts = new NewsPosts();
       document.addEventListener('DOMContentLoaded', run);
+      document.addEventListener('scroll', (evt) => {
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+          loadMore();
+        }
+      });
     </script>
   </body>
 </html>

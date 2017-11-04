@@ -4,6 +4,7 @@ class NewsPosts {
   constructor() {
     this.apiURI = 'https://hacker-news.firebaseio.com/v0/';
     this.firstPageLoadLimit = 30;
+    this.loadMoreLoadLimit = 30;
     this.allPosts = null;
     this.genPost = null;
   }
