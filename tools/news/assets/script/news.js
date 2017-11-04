@@ -1,6 +1,7 @@
 'use strict';
 
 const apiURI = 'https://hacker-news.firebaseio.com/v0/';
+const firstPageLoadLimit = 30;
 
 let topPosts = [];
 
@@ -29,17 +30,33 @@ const getTop500 = () => {
   });
 }
 
-function* getPost() {
+function* getPostList() {
   while (topPosts.length > 0) {
     yield topPosts[0];
     topPosts = topPosts.removeElement(0);
   }
 }
 
-let posts = getPost();
+const getPostData = (id) => {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = (data) => resolve(xhr.responseText);
+    xhr.onerror = (e) => reject(xhr.errorText);
+    xhr.open('GET', `${apiURI}${id}.json`);
+    xhr.send();
+  });
+}
 
-setTop().then(() => {
-  for (let i = 0; i < 10; i++) {
-    console.log(posts.next().value);
-  }
-});
+async function loadFirst() => {
+  let posts = getPostList();
+  let firstPostsFuture = [];
+
+  setTop().then(() => {
+    for (let i = 0; i < firstPageLoadLimit; i++) {
+      post = posts.next().value;
+      firstPostsFuture.push(getPostData(posts.next().value));
+    }
+    const firstPostsList = await Promise.all(firstPostsFuture);
+    console.log(firstPostsList);
+  });
+}
