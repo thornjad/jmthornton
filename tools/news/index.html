@@ -15,6 +15,12 @@
     <link rel="stylesheet" href="https://jmthornton.net/assets/style/main.css" type="text/css" />
     <!-- <link rel="stylesheet" href="/assets/style/main.css" type="text/css" /> -->
 
+    <style media="screen">
+      .source {
+        font-weight: lighter;
+        font-size: 0.7em;
+      }
+    </style>
   </head>
   <body>
     <header class="sticky">
@@ -27,8 +33,7 @@
     </header>
 
     <main class="content" id="content">
-
-      <hr>
+      <!-- posts are injected here -->
     </main>
 
     <footer>
@@ -61,8 +66,17 @@
         const firstPostsList = await Promise.all(firstPostsFuture);
         for (let story of firstPostsList) {
           story = JSON.parse(story);
-          console.log(story.title);
+          // TODO implement getting source host name from url
+          injectPost(story.title, story.url);
         }
+      }
+
+      function injectPost(title, url) {
+        const layout = NewsPosts.formatLayout(title, url);
+        const div = document.createElement('div');
+        div.className = 'post';
+        div.innerHTML = layout;
+        document.getElementById('content').appendChild(div);
       }
 
       const posts = new NewsPosts();
