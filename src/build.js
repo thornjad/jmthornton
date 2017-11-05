@@ -1,6 +1,7 @@
 const sh = require('shelljs');
 const fs = require('fs');
 const path = require('path');
+const sitemap = require('sitemap-generator');
 
 const dirs = [
   '.',
@@ -16,6 +17,7 @@ const build = () => {
   checkDeps();
   compileSass();
   doBeautify();
+  buildSitemap();
 }
 
 const checkDeps = () => {
@@ -96,6 +98,19 @@ const stringifySpaces = (arr) => {
 
 const removeTmp = () => {
   sh.rm('-rf', './tmp');
+}
+
+const buildSitemap = () => {
+  const generator = sitemap('https://jmthornton.net/', {
+    filepath: path.join(process.cwd(), 'p/sitemap.xml'),
+    stripQueryString: true
+  });
+
+  generator.on('done', () => {
+    console.log('Sitemap generated for current release, and will be included in the next');
+  });
+
+  generator.start();
 }
 
 module.exports = build;
