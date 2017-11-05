@@ -1,3 +1,5 @@
+// @flow
+
 const fs = require('fs');
 const md = require('markdown').markdown;
 
