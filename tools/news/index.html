@@ -50,10 +50,10 @@
 
     <main class="content" id="content">
       <!-- posts are injected here -->
-      <div class="spinner-donut large" id="spinner"></div>
     </main>
+    <div class="spinner-donut large" id="spinner"></div>
 
-    <footer>
+    <footer id="footer">
       <div class="footer-text">
         <div class="footer-line">
           This page is powered by <a href="https://news.ycombinator.com">YCombinator News (Hacker News)</a>.<br><br>
@@ -87,6 +87,7 @@
           }
         } finally {
           hideSpinner();
+          showFooter();
         }
       }
 
@@ -113,6 +114,10 @@
 
       const showSpinner = () => {
         document.getElementById('spinner').style.display = 'block';
+      }
+
+      const showFooter = () => {
+        document.getElementById('footer').style.display = 'block';
       }
 
       async function loadPosts(numPostsToLoad) {
