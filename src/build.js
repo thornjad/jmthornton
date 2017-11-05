@@ -9,6 +9,7 @@ const dirs = [
   'p',
   'projects',
   'tools',
+  'tools/news'
 ]
 
 const build = () => {
