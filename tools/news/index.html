@@ -79,7 +79,11 @@
           const list = await loadPosts(posts.firstPageLoadLimit);
           for (let story of list) {
             story = JSON.parse(story);
-            injectPost(story.title, story.url);
+            if (story.url) {
+              injectPost(story.title, story.url);
+            } else {
+              continue;
+            }
           }
         } finally {
           hideSpinner();
@@ -92,7 +96,11 @@
           const list = await loadPosts(posts.loadMoreLoadLimit);
           for (let story of list) {
             story = JSON.parse(story);
-            injectPost(story.title, story.url);
+            if (story.url) {
+              injectPost(story.title, story.url);
+            } else {
+              continue;
+            }
           }
         } finally {
           hideSpinner();
