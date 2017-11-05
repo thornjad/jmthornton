@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>News | Jade Thornton</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link type="text/plain" rel="author" href="https://jmthornton.net/humans.txt" />
+    <meta name="description" content="News from the software realm" />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="google-site-verification" content="JUM1Dl9n9ic9xPMb03Nzf4NgW_-8PWZrJ4eJGC_PoYM" />
+    <link rel="shortcut icon" href="https://jmthornton.net/assets/images/favicon.png" />
+    <link rel="apple-itouch-icon" href="https://jmthornton.net/assets/images/favicon.ico" />
+
+    <!-- <link rel="stylesheet" href="https://jmthornton.net/assets/style/main.css" type="text/css" /> -->
+    <link rel="stylesheet" href="/assets/style/main.css" type="text/css" />
+
+    <style media="screen">
+      .source {
+        font-weight: lighter;
+        font-size: 0.7em;
+      }
+
+      a:visited {
+        font-weight: lighter;
+        color: grey;
+      }
+
+      footer {
+        display: none;
+      }
+
+      .spinner-donut {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 3em;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="sticky">
+      <span class="header-hack">
+        <a href="https://jmthornton.net/" class="button" role="button">Home</a>
+        <a href="https://jmthornton.net/#projects" class="button" role="button">Projects</a>
+        <a href="https://jmthornton.net/#connect" class="button" role="button">Connect</a>
+        <a href="https://blog.jmthornton.net" class="button" role="button">Blog</a>
+      </span>
+    </header>
+
+    <main class="content" id="content">
+      <!-- posts are injected here -->
+    </main>
+    <div class="spinner-donut large" id="spinner"></div>
+
+    <footer id="footer">
+      <div class="footer-text">
+        <div class="footer-line">
+          This page is powered by <a href="https://news.ycombinator.com">YCombinator News (Hacker News)</a>.<br><br>
+          Jade Thornton | <a href="https://jmthornton.net/p/about-site">About the site</a> | <a href="https://github.com/raindeer44/jmthornton">Source code</a> | <a href="https://jmthornton.net/p/sitemap/sitemap">Sitemap</a>
+        </div>
+      </div>
+    </footer>
+    <script src="https://jmthornton.net/assets/script/helpers.js"></script>
+    <script src="./assets/script/news.js"></script>
+    <script>
+      async function run() {
+        try {
+          await posts.init();
+          await loadFirst();
+        } catch (e) {
+          console.error(e);
+          alert('An error occured. Please try again later');
+        }
+      }
+
+      async function loadFirst() {
+        try {
+          const list = await loadPosts(posts.firstPageLoadLimit);
+          for (let story of list) {
+            story = JSON.parse(story);
+            if (story.url) {
+              injectPost(story.title, story.url);
+            } else {
+              continue;
+            }
+          }
+        } finally {
+          hideSpinner();
+          showFooter();
+        }
+      }
+
+      async function loadMore() {
+        try {
+          showSpinner();
+          const list = await loadPosts(posts.loadMoreLoadLimit);
+          for (let story of list) {
+            story = JSON.parse(story);
+            if (story.url) {
+              injectPost(story.title, story.url);
+            } else {
+              continue;
+            }
+          }
+        } finally {
+          hideSpinner();
+        }
+      }
+
+      const hideSpinner = () => {
+        document.getElementById('spinner').style.display = 'none';
+      }
+
+      const showSpinner = () => {
+        document.getElementById('spinner').style.display = 'block';
+      }
+
+      const showFooter = () => {
+        document.getElementById('footer').style.display = 'block';
+      }
+
+      async function loadPosts(numPostsToLoad) {
+        let firstPostsFuture = [];
+
+        for (let i = 0; i < numPostsToLoad; i++) {
+          firstPostsFuture.push(posts.getPostData(posts.genPost.next().value));
+        }
+        const firstPostsList = await Promise.all(firstPostsFuture);
+        return firstPostsList;
+      }
+
+      function injectPost(title, url) {
+        const layout = NewsPosts.formatLayout(title, url);
+        const div = document.createElement('div');
+        div.className = 'post';
+        div.innerHTML = layout;
+        document.getElementById('content').appendChild(div);
+      }
+
+      const posts = new NewsPosts();
+      document.addEventListener('DOMContentLoaded', run);
+      document.addEventListener('scroll', (evt) => {
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+          loadMore();
+        }
+      });
+    </script>
+  </body>
+</html>
