@@ -552,4 +552,6 @@ $include-center-block-name: false;
   */
 @import './custom/nitpick';
 @import './custom/blog';
-@import './custom/imagegallery';
+
+@import './custom/gallery/gallerymain';
+@import './custom/gallery/skin/galleryskin';
