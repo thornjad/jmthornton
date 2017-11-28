@@ -1,55 +1,55 @@
 [
   {
-    "src": "./photos/bogdam.png",
+    "src": "/gallery/photos/bogdam.png",
     "title": "Swamp, forest and sky",
     "location": "Woodland, MN",
     "date": "November 2017",
     "h": 2250,
     "w": 4000
   }, {
-    "src": "./photos/nagelabove.png",
+    "src": "/gallery/photos/nagelabove.png",
     "title": "Looking down from the clouds above",
     "location": "Woodland, MN",
     "date": "November 2017",
     "h": 2250,
     "w": 4000
   }, {
-    "src": "./photos/nagelabove2.png",
+    "src": "/gallery/photos/nagelabove2.png",
     "title": "The effect of sunset from above",
     "location": "Woodland, MN",
     "date": "November 2017",
     "h": 2250,
     "w": 4000
   }, {
-    "src": "./photos/riverhighway.png",
+    "src": "/gallery/photos/riverhighway.png",
     "title": "Highway 65 meets the Snake River",
     "location": "Woodland, MN",
     "date": "November 2017",
     "h": 2250,
     "w": 4000
   }, {
-    "src": "./photos/rivervalley-dramatic.png",
+    "src": "/gallery/photos/rivervalley-dramatic.png",
     "title": "A dramatic take on the Snake River valley",
     "location": "Woodland, MN",
     "date": "November 2017",
     "h": 2250,
     "w": 4000
   }, {
-    "src": "./photos/rivervalley.png",
+    "src": "/gallery/photos/rivervalley.png",
     "title": "Serenity of the Snake River valley",
     "location": "Woodland, MN",
     "date": "November 2017",
     "h": 2250,
     "w": 4000
   }, {
-    "src": "./photos/woodlandroad1.png",
+    "src": "/gallery/photos/woodlandroad1.png",
     "title": "The long and narrow forest path",
     "location": "Woodland, MN",
     "date": "November 2017",
     "h": 2250,
     "w": 4000
   }, {
-    "src": "./photos/woodlandroad2.png",
+    "src": "/gallery/photos/woodlandroad2.png",
     "title": "The long forest road",
     "location": "Woodland, MN",
     "date": "November 2017",
