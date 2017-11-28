@@ -11,7 +11,8 @@ const dirs: Array<string> = [
   'p',
   'projects',
   'tools',
-  'tools/news'
+  'tools/news',
+  'gallery'
 ]
 
 const build = (): void => {
