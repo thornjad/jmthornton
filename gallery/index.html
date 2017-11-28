@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Gallery | Jade M Thornton</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link type="text/plain" rel="author" href="https://jmthornton.net/humans.txt" />
+    <meta name="description" content="Gallery of images captured by Jade Thornton" />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="google-site-verification" content="JUM1Dl9n9ic9xPMb03Nzf4NgW_-8PWZrJ4eJGC_PoYM" />
+    <link rel="shortcut icon" href="/assets/images/favicon.png" />
+    <link rel="apple-itouch-icon" href="/assets/images/favicon.ico" />
+
+    <link rel="stylesheet" href="/assets/style/main.css" type="text/css" />
+  </head>
+  <body>
+    <header class="sticky">
+      <span class="header-hack">
+        <a href="/" class="button" role="button">Home</a>
+        <a href="/#connect" class="button" role="button">Connect</a>
+        <a href="/gallery/" class="button" role="button">Gallery</a>
+        <a href="https://blog.jmthornton.net" class="button" role="button">Blog</a>
+      </span>
+    </header>
+
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="pswp__bg"></div>
+      <div class="pswp__scroll-wrap">
+        <!-- Only 3 loaded at one time to save memory -->
+        <div class="pswp__container">
+          <div class="pswp__item"></div>
+          <div class="pswp__item"></div>
+          <div class="pswp__item"></div>
+        </div>
+        <div class="pswp__ui pswp__ui--hidden">
+          <div class="pswp__top-bar">
+            <div class="pswp__counter"></div>
+            <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+            <button class="pswp__button pswp__button--share" title="Share"></button>
+            <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+            <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+            <div class="pswp__preloader">
+              <div class="pswp__preloader__icn">
+                <div class="pswp__preloader__cut">
+                  <div class="pswp__preloader__donut"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+            <div class="pswp__share-tooltip"></div>
+          </div>
+          <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+          <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+          <div class="pswp__caption">
+            <div class="pswp__caption__center"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/assets/script/lib/photoswipe/photoswipe.js"></script>
+    <script src="/assets/script/lib/photoswipe/photoswipe-ui-default.js"></script>
+    <script>
+      const run = async () => {
+        const pswpElement = document.querySelector('.pswp');
+        const items = await getAllPhotos();
+        console.log(items);
+        const options = {
+          index: 0
+        };
+        const gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
+        gallery.init();
+      }
+
+      const getAllPhotos = () => {
+        return new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.addEventListener('load', () => {resolve(JSON.parse(xhr.responseText));});
+          xhr.addEventListener('error', () => {reject(xhr.statusText);});
+          xhr.open('get', '/gallery/photos/manifest.json');
+          xhr.send();
+        });
+      }
+
+      run();
+    </script>
+  </body>
+</html>
