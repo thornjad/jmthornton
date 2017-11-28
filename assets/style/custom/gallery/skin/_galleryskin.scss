@@ -179,6 +179,8 @@
 	opacity: 0;
 	transition: opacity 0.25s ease-out;
 	-webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  backface-visibility: hidden;
 	will-change: opacity;
 }
 
@@ -199,6 +201,7 @@
 	transform: translateY(6px);
 	transition: transform 0.25s;
 	-webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
 	will-change: transform;
 
 	a {
@@ -482,6 +485,7 @@ a.pswp__share--download {
 .pswp--has_mouse .pswp__button--arrow--left,
 .pswp--has_mouse .pswp__button--arrow--right {
 	-webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
   backface-visibility: hidden;
 	will-change: opacity;
 	transition: opacity $pswp__controls-transition-duration cubic-bezier(.4,0,.22,1);
