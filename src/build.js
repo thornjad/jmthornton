@@ -27,7 +27,7 @@ const checkDeps = (): void => {
     console.error('building requires Sass, please install Sass');
     sh.exit(1);
   }
-  if (!sh.which('node_modules/purify-css/bin/purifycss')) {
+  if (!sh.which('node_modules/.bin/purifycss')) {
     console.error('Try `npm install` first');
     sh.exit(1);
   }
