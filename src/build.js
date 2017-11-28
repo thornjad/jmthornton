@@ -12,14 +12,16 @@ const dirs: Array<string> = [
   'projects',
   'tools',
   'tools/news',
-  'gallery'
+  'gallery',
+  'assets/script/lib',
+  'assets/script/lib/photoswipe'
 ]
 
 const build = (): void => {
   checkDeps();
   compileSass();
   compileJS();
-  doBeautify();
+  doPurify();
 }
 
 const checkDeps = (): void => {
@@ -37,7 +39,7 @@ const compileSass = (): void => {
   sh.exec('sass assets/style/main.scss assets/style/main.css');
 }
 
-const doBeautify = (): void => {
+const doPurify = (): void => {
   prepStyle();
   purifyStyle()
     .then((): void => {
@@ -54,18 +56,18 @@ const prepStyle = (): void => {
 }
 
 const purifyStyle = async (): Promise<void> => {
-  const whitelist: string = await getHtmlFiles();
+  const whitelist: string = await getContentFiles();
   const cmd: string = `node_modules/purify-css/bin/purifycss --min --info --out assets/style/main.css tmp/m.css ${whitelist}`;
   sh.exec(cmd);
 }
 
-const getHtmlFiles = async (): Promise<string> => {
+const getContentFiles = async (): Promise<string> => {
   let fileList: Array<string | Array<*>> = [];
   let files: mixed;
   for (let d of dirs) {
     files = await getFiles(d);
     files = files
-      .filter(f => path.extname(f) === '.html')
+      .filter(f => path.extname(f) === '.html' || path.extname(f) === '.js')
       .map((f) => `${d}/${f}`);
     fileList.push(files);
   }
@@ -73,7 +75,7 @@ const getHtmlFiles = async (): Promise<string> => {
 }
 
 const getFiles = (dir: string): Promise<*> => new Promise((resolve, reject) => {
-  console.log(`reading ${dir} for HTML files...`);
+  console.log(`reading ${dir} for content files...`);
   fs.readdir(dir, (err, files) => {
     if (err) {
       reject(err);
