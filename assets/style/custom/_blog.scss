@@ -34,3 +34,31 @@
   padding-right: 0.5em;
   font-weight: 100;
 }
+
+.miner-notice-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.5em 0.9em;
+  z-index: 1050;
+  background-color: $fore-color;
+  color: $back-color;
+}
+
+.miner-notice-bar .miner-notice-text {
+  float: left;
+  padding-top: 0.4em;
+}
+
+.miner-notice-bar .miner-notice-close-btn {
+  float: right;
+  padding-top: 0.4em;
+  cursor: pointer;
+}
+
+@media print {
+  .miner-notice-bar {
+    display: none !important;
+  }
+}

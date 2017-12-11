@@ -1,13 +1,16 @@
 {
   "name": "jmthornton",
-  "version": "3.1.15",
+  "version": "3.1.16",
   "description": "Personal website of Jade Thornton",
   "main": "index.js",
   "scripts": {
-    "start": "node_modules/http-server/bin/http-server",
+    "start": "http-server",
     "build": "babel src/ -d lib/; node lib/build.js",
     "md": "node src/compile-md.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "snyk test",
+    "protect": "snyk protect --yes",
+    "prepare": "npm run protect",
+    "snyk": "snyk"
   },
   "repository": {
     "type": "git",
@@ -19,10 +22,13 @@
     "url": "https://github.com/raindeer44/jmthornton/issues"
   },
   "homepage": "https://github.com/raindeer44/jmthornton",
-  "dependencies": {},
+  "dependencies": {
+    "snyk": "^1.54.1"
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-flow": "^6.23.0",
+    "filefile": "file:../filefile/filefile-1.0.0.tgz",
     "flow-bin": "^0.58.0",
     "http-server": "^0.10.0",
     "markdown": "^0.5.0",
