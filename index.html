@@ -14,6 +14,17 @@
   <link rel="stylesheet" href="/assets/style/main.css" type="text/css" />
   <link rel="shortcut icon" href="/assets/images/favicon.png" />
   <link rel="apple-itouch-icon" href="/assets/images/favicon.ico" />
+  <script type="text/javascript">
+    const _bftn_options = {
+      theme: 'without', // countdown, glitch, money, stop, slow, without
+      org: 'fftf', // fftf is Fight for the Future
+      date: new Date(2017, 12, 15), // countdown date
+      viewCookieExpires: 1/24, // days
+      disableGoogleAnalytics: false, // only for tracking this modal
+      // always_show_widget: true // NOTE only for testing
+    };
+  </script>
+  <script src="https://widget.battleforthenet.com/widget.js" async></script>
   <style media="screen">
     @media (min-width: 720px) {
       .landing-zone {
@@ -44,6 +55,10 @@
     .contact-row {
       padding-top: 1em;
     }
+
+    a:focus {
+      outline: none;
+    }
   </style>
 </head>
 
@@ -58,6 +73,7 @@
   </header>
 
   <div class="landing-zone"></div>
+  <h1 class="page-title" style="display: none;">Jade Thornton</h1>
 
   <main class="content">
       <div class="projects">
@@ -96,9 +112,30 @@
           </div>
           <div class="project">
             <p>
-              <a href="https://github.com/Raindeer44/jade-bot">Jade-bot</a>
+              <a href="https://github.com/Raindeer44/jtbot">jtbot</a>
               <br>
-              Automated Twitter! Jade-bot retweets and favorites tweets of interest.
+              Automated Twitter! jtbot automatically retweets tweets of interest.
+            </p>
+          </div>
+          <div class="project">
+            <p>
+              <a href="https://github.com/Raindeer44/bf">bf</a>
+              <br>
+              Various implementations of the <a href="https://en.wikipedia.org/wiki/Brainfuck">Brainfuck</a>.
+            </p>
+          </div>
+          <div class="project">
+            <p>
+              <a href="https://github.com/Raindeer44/filefile">Filefile</a>
+              <br>
+              A splendid npm package keeping track of your redundantly-named 'file' files.
+            </p>
+          </div>
+          <div class="project">
+            <p>
+              <a href="https://github.com/Raindeer44/geekprofile">GeekProfile</a>
+              <br>
+              A simple and easy-to-use profile/resume creator.
             </p>
           </div>
           <div class="project">
@@ -117,9 +154,9 @@
           </div>
           <div class="project">
             <p>
-              <a href="https://www.youtube.com/watch?v=HMi-g9iGVew&feature=youtu.be">nsrbiz</a>
+              <a href="https://github.com/Raindeer44/dwyw">DWYW License</a>
               <br>
-              Businez Incorporated Company Corporation Corps, LLC, an exploration in quickly building a website from scratch. See also the code on <a href="https://github.com/Raindeer44/_nsrbiz">Github</a>.
+              The 'Do Whatever You Want' License; just about as free as you can get short of public domain.
             </p>
           </div>
           <div class="project">
@@ -138,16 +175,9 @@
           </div>
           <div class="project">
             <p>
-              <a href="https://jmthornton.net/projects/wind-map">Wind and weather map</a>
+              <a href="https://www.youtube.com/watch?v=HMi-g9iGVew&feature=youtu.be">nsrbiz</a>
               <br>
-              Wind and weather visualization from <a href="https://windy.com">Windy</a>.
-            </p>
-          </div>
-          <div class="project">
-            <p>
-              <a href="./projects/tribute">MCR Tribute</a>
-              <br>
-              The very first web page I ever made! A tribute page to My Chemical Romance.
+              Businez Incorporated Company Corporation Corps, LLC, an exploration in quickly building a website from scratch. See also the code on <a href="https://github.com/Raindeer44/_nsrbiz">Github</a>.
             </p>
           </div>
 
@@ -157,9 +187,23 @@
           <h4>Projects under development</h4>
           <div class="project">
             <p>
-              <a href="https://github.com/Raindeer44/bf">bf</a>
+              <a href="https://github.com/Raindeer44/text-encode">Text Encode</a>
               <br>
-              Various implementations of the <a href="https://en.wikipedia.org/wiki/Brainfuck">Brainfuck</a> language, created for fun.
+              An Atom package for changing text encodings (HTML entities, URI, Base64, SHA256, MD5, etc.)
+            </p>
+          </div>
+          <div class="project">
+            <p>
+              <a href="https://github.com/Raindeer44/moapi">Moapi</a>
+              <br>
+              A distributable Javascript API interface for the Mopidy server.
+            </p>
+          </div>
+          <div class="project">
+            <p>
+              <a href="https://github.com/Raindeer44/spiders">Spiders</a>
+              <br>
+              An esoteric language based on P''.
             </p>
           </div>
           <div class="project">
@@ -180,6 +224,13 @@
               <a href="https://www.brave.com/">Brave browser</a>
               <br>
               Browse faster by blocking ads and trackers that violate your privacy and cost you time and money. See also the code on <a href="https://github.com/brave/browser-laptop">Github</a>.
+            </p>
+          </div>
+          <div class="project">
+            <p>
+              <a href="https://minicss.org/">Mini.css</a>
+              <br>
+              A minimal, responsive, style-agnostic CSS framework.
             </p>
           </div>
           <div class="project">
