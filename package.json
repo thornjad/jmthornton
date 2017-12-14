@@ -1,6 +1,6 @@
 {
   "name": "jmthornton",
-  "version": "3.2.2",
+  "version": "3.2.5",
   "description": "Personal website of Jade Thornton",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,8 @@
     "test": "snyk test",
     "protect": "snyk protect --yes",
     "prepare": "npm run protect",
-    "snyk": "snyk"
+    "snyk": "snyk",
+    "flow": "flow"
   },
   "repository": {
     "type": "git",
