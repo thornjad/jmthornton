@@ -328,11 +328,23 @@
         </nav>
       </div>
       <div class="footer-line">
-        Jade Thornton | <a href="/p/about-site">About the site</a> | <a href="https://github.com/raindeer44/jmthornton">Source code</a> | <a href="/p/sitemap.xml">Sitemap</a>
+        Jade Thornton | <a href="/p/about-site">About the site</a> | <a href="https://github.com/raindeer44/jmthornton">Source code</a> | <a href="/p/sitemap.xml">Sitemap</a> | <span class="versioning"></span>
       </div>
       <div class="footer-line">
         Donate XMR: 46Gxh1vxibaEDjxDNqWYgXigK1GRS1kUm18A5kwbmT4oRj31Mdha3JDgYxXiicLLPKZJUQG3eiQ2cfAV3DX66tVEJ2YBnkp
       </div>
+      <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+          const v = document.querySelector('.versioning');
+          const xhr = new XMLHttpRequest();
+          xhr.addEventListener('load', () => {
+            const res = JSON.parse(xhr.responseText);
+            v.innerText = `Version ${res.version}`;
+          });
+          xhr.open('get', '/package.json');
+          xhr.send();
+        });
+      </script>
     </div>
   </footer>
 </body>
