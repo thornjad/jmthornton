@@ -6,6 +6,7 @@
   "scripts": {
     "start": "http-server",
     "build": "babel src/ -d lib/; node lib/build.js",
+    "build-prod": "BABEL_ENV=production yarn run build",
     "md": "node src/compile-md.js",
     "test": "snyk test",
     "protect": "snyk protect --yes",
@@ -27,6 +28,10 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-minify": "^0.2.0",
+    "babel-plugin-transform-remove-console": "^6.8.5",
+    "babel-plugin-transform-remove-debugger": "^6.8.5",
+    "babel-plugin-transform-strict-mode": "^6.24.1",
     "babel-preset-flow": "^6.23.0",
     "filefile": "^1.0.1",
     "flow-bin": "^0.58.0",
