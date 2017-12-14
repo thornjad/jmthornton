@@ -11,7 +11,8 @@
     "test": "snyk test",
     "protect": "snyk protect --yes",
     "prepare": "npm run protect",
-    "snyk": "snyk"
+    "snyk": "snyk",
+    "flow": "flow"
   },
   "repository": {
     "type": "git",
