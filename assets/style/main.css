@@ -61,7 +61,7 @@ dfn {
 
 h1, h2, h3, h4, h5, h6 {
   line-height: 1.2em;
-  margin: 2.1em 0.6em 0.8em 0.6em;
+  margin: 2.1em 0.6em 0.8em 0em;
   font-weight: 800;
   color: #000;
   text-rendering: optimizeLegibility; }
@@ -1999,6 +1999,9 @@ footer .footer-line {
 a:not(:hover) {
   text-decoration: none; }
 
+a:focus, input:focus {
+  outline: none; }
+
 .project, .listing {
   margin-top: 1.3em; }
 
@@ -2038,6 +2041,9 @@ a {
 .hash-line-2-blog {
   text-indent: -1.5em; }
 
+.title h1, .post-title {
+  font-size: 1.7em; }
+
 .blog-body {
   padding: 4vh 0; }
 
@@ -2050,6 +2056,28 @@ a {
   padding-right: 0.5em;
   font-weight: 100; }
 
+.miner-notice-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.5em 0.9em;
+  z-index: 1050;
+  background-color: #2E3440;
+  color: #fcfcfa; }
+
+.miner-notice-bar .miner-notice-text {
+  float: left;
+  padding-top: 0.4em; }
+
+.miner-notice-bar .miner-notice-close-btn {
+  float: right;
+  padding-top: 0.4em;
+  cursor: pointer; }
+
+@media print {
+  .miner-notice-bar {
+    display: none !important; } }
 @keyframes hexdots-loader {
   0% {
     box-shadow: #666666 0 -30px 0 7px, #999 0 -30px 0 7px, #999 26px -15px 0 7px, #999 26px 15px 0 7px, #999 0 30px 0 7px, #999 -26px 15px 0 7px, #999 -26px -15px 0 7px; }
