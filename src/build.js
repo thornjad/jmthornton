@@ -15,8 +15,7 @@ const dirs: Array<string> = [
   'tools',
   'tools/news',
   'gallery',
-  'assets/script/lib',
-  'assets/script/lib/photoswipe'
+  'assets/script/lib'
 ]
 
 const build = (): void => {
@@ -42,24 +41,15 @@ const compileSass = (): void => {
 }
 
 const doPurify = (): void => {
-  prepStyle();
   purifyStyle()
-    .then((): void => {
-      removeTmp();
-    }, (err: mixed): void => {
+    .catch((err: mixed): void => {
       console.error(err);
-      removeTmp();
     });
-}
-
-const prepStyle = (): void => {
-  sh.mkdir('tmp');
-  sh.mv('assets/style/main.css', 'tmp/m.css');
 }
 
 const purifyStyle = async (): Promise<void> => {
   const whitelist: string = await getContentFiles();
-  const cmd: string = `node_modules/purify-css/bin/purifycss --min --info --out assets/style/main.css tmp/m.css ${whitelist}`;
+  const cmd: string = `node_modules/.bin/purifycss --min --info assets/style/main.css ${whitelist} --out assets/style/main.css`;
   sh.exec(cmd);
 }
 
@@ -102,14 +92,8 @@ const stringifySpaces = (arr: Array<Array<*> | string>): string => {
   return str;
 }
 
-const removeTmp = (): void => {
-  sh.rm('-rf', './tmp');
-}
-
 const compileJS = (): void => {
-  console.log('compiling main site scripts');
   sh.exec('babel assets/script/src/ -d assets/script/lib/');
-  console.log('compiling news site scripts');
   sh.exec('babel tools/news/assets/script/src -d tools/news/assets/script/lib');
 }
 
