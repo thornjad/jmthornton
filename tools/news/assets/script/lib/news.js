@@ -51,3 +51,117 @@ class NewsPosts {
     }
   }
 }
+
+const run = async () => {
+  try {
+    await posts.init();
+    await loadFirst();
+  } catch (e) {
+    console.error(e);
+    alert('An error occured. Please try again later');
+  }
+};
+
+const loadFirst = async () => {
+  try {
+    const list = await loadPosts(posts.firstPageLoadLimit);
+    for (let story of list) {
+      story = JSON.parse(story);
+      if (story.url) {
+        injectPost(story.title, story.url);
+      } else {
+        continue;
+      }
+    }
+  } finally {
+    hideSpinner();
+    showFooter();
+  }
+};
+
+const loadMore = async () => {
+  try {
+    showSpinner();
+    const list = await loadPosts(posts.loadMoreLoadLimit);
+    for (let story of list) {
+      story = JSON.parse(story);
+      if (story.url) {
+        injectPost(story.title, story.url);
+      } else {
+        continue;
+      }
+    }
+  } finally {
+    hideSpinner();
+  }
+};
+
+const hideSpinner = () => {
+  document.getElementById('spinner').style.display = 'none';
+};
+
+const showSpinner = () => {
+  document.getElementById('spinner').style.display = 'block';
+};
+
+const showFooter = () => {
+  document.getElementById('footer').style.display = 'block';
+};
+
+const loadPosts = async numPostsToLoad => {
+  let firstPostsFuture = [];
+
+  for (let i = 0; i < numPostsToLoad; i++) {
+    firstPostsFuture.push(posts.getPostData(posts.genPost.next().value));
+  }
+  const firstPostsList = await Promise.all(firstPostsFuture);
+  return firstPostsList;
+};
+
+const injectPost = (title, url) => {
+  const layout = NewsPosts.formatLayout(title, url);
+  const div = document.createElement('div');
+  div.className = 'post';
+  div.innerHTML = layout;
+  const main = document.querySelector('main.content');
+  if (main) {
+    main.append(div);
+  }
+};
+
+const addUpdatedMessage = () => {
+  const msg = document.createElement('h6');
+  window.newsUpdateTime = Date.now();
+  msg.className = 'updated-message';
+  msg.innerText = 'Last updated now';
+  const main = document.querySelector('main.content');
+  if (main) {
+    main.prepend(msg);
+  }
+  window.newsUpdateTimer = setInterval(() => {
+    let timeNow = Date.now();
+    let timeSince = (timeNow - window.newsUpdateTime) / 60000;
+    if (timeSince < 3600000) {
+      // 1 hour
+      msg.innerText = `Last updated ${timeSince | 0} minutes ago`;
+    } else {
+      clearInterval(window.newsUpdateTimer);
+      msg.innerText = `Last updated 1 hour ago`;
+      window.newsUpdateTimer = setInterval(() => {
+        let timeNow = Date.now();
+        let timeSince = (timeNow - window.newsUpdateTime) / 3600000;
+        msg.innerText = `Last updated ${timeSince | 0} hours ago`;
+      });
+    }
+  }, 300000);
+};
+
+// run script
+const posts = new NewsPosts();
+document.addEventListener('DOMContentLoaded', run);
+document.addEventListener('scroll', evt => {
+  if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+    loadMore();
+  }
+});
+addUpdatedMessage();
