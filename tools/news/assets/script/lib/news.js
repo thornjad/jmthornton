@@ -141,8 +141,7 @@ const addUpdatedMessage = () => {
   window.newsUpdateTimer = setInterval(() => {
     let timeNow = Date.now();
     let timeSince = (timeNow - window.newsUpdateTime) / 60000;
-    if (timeSince < 3600000) {
-      // 1 hour
+    if (timeSince < 60) {
       msg.innerText = `Last updated ${timeSince | 0} minutes ago`;
     } else {
       clearInterval(window.newsUpdateTimer);
