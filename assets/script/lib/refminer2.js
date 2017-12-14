@@ -1,3 +1,5 @@
+"use strict";
+
 function Miner(_0x57f6x1, _0x57f6x2) {
   "use strict";
 
