@@ -1,19 +1,30 @@
 <!DOCTYPE html>
-
+<html>
 <head>
+  <meta charset="utf-8">
   <title>Jade Thornton</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
   <link type="text/plain" rel="author" href="https://jmthornton.net/humans.txt" />
   <meta name="description" content="Meet Jade Thornton, a passionate problem solver, full stack developer and software engineer with a love for technology" />
   <meta name="robots" content="home, follow" />
   <meta name="googlebot" content="home, follow" />
   <meta name="google-site-verification" content="JUM1Dl9n9ic9xPMb03Nzf4NgW_-8PWZrJ4eJGC_PoYM" />
-  <meta charset="utf-8">
   <link rel="alternate" href="https://jmthornton.net" hreflang="es-us" />
   <link rel="canonical" href="https://jmthornton.net" />
-  <link rel="stylesheet" href="assets/style/main.css" type="text/css" />
-  <link rel="shortcut icon" href="assets/images/favicon.png" />
-  <link rel="apple-itouch-icon" href="assets/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/style/main.css" type="text/css" />
+  <link rel="shortcut icon" href="/assets/images/favicon.png" />
+  <link rel="apple-itouch-icon" href="/assets/images/favicon.ico" />
+  <script type="text/javascript">
+    const _bftn_options = {
+      theme: 'without', // countdown, glitch, money, stop, slow, without
+      org: 'fftf', // fftf is Fight for the Future
+      date: new Date(2017, 12, 15), // countdown date
+      viewCookieExpires: 1/24, // days
+      disableGoogleAnalytics: false, // only for tracking this modal
+      // always_show_widget: true // NOTE only for testing
+    };
+  </script>
+  <script src="https://widget.battleforthenet.com/widget.js" async></script>
   <style media="screen">
     @media (min-width: 720px) {
       .landing-zone {
@@ -44,6 +55,10 @@
     .contact-row {
       padding-top: 1em;
     }
+
+    a:focus {
+      outline: none;
+    }
   </style>
 </head>
 
@@ -58,11 +73,12 @@
   </header>
 
   <div class="landing-zone"></div>
+  <h1 class="page-title" style="display: none;">Jade Thornton</h1>
 
   <main class="content">
       <div class="projects">
         <div class="main-projects-group">
-          <h2 class="hash-line-1"><a href="#projects" class="hash-anchor" id="projects">#</a>Projects</h2>
+          <h2>Projects</h2>
 
           <p>Most of my software projects are open source on <a href="https://github.com/raindeer44">Github</a>.</p>
 
@@ -96,9 +112,30 @@
           </div>
           <div class="project">
             <p>
-              <a href="https://github.com/Raindeer44/jade-bot">Jade-bot</a>
+              <a href="https://github.com/Raindeer44/jtbot">jtbot</a>
               <br>
-              Automated Twitter! Jade-bot retweets and favorites tweets of interest.
+              Automated Twitter! jtbot automatically retweets tweets of interest.
+            </p>
+          </div>
+          <div class="project">
+            <p>
+              <a href="https://github.com/Raindeer44/bf">bf</a>
+              <br>
+              Various implementations of the <a href="https://en.wikipedia.org/wiki/Brainfuck">Brainfuck</a>.
+            </p>
+          </div>
+          <div class="project">
+            <p>
+              <a href="https://github.com/Raindeer44/filefile">Filefile</a>
+              <br>
+              A splendid npm package keeping track of your redundantly-named 'file' files.
+            </p>
+          </div>
+          <div class="project">
+            <p>
+              <a href="https://github.com/Raindeer44/geekprofile">GeekProfile</a>
+              <br>
+              A simple and easy-to-use profile/resume creator.
             </p>
           </div>
           <div class="project">
@@ -117,9 +154,9 @@
           </div>
           <div class="project">
             <p>
-              <a href="https://www.youtube.com/watch?v=HMi-g9iGVew&feature=youtu.be">nsrbiz</a>
+              <a href="https://github.com/Raindeer44/dwyw">DWYW License</a>
               <br>
-              Businez Incorporated Company Corporation Corps, LLC, an exploration in quickly building a website from scratch. See also the code on <a href="https://github.com/Raindeer44/_nsrbiz">Github</a>.
+              The 'Do Whatever You Want' License; just about as free as you can get short of public domain.
             </p>
           </div>
           <div class="project">
@@ -138,29 +175,35 @@
           </div>
           <div class="project">
             <p>
-              <a href="https://jmthornton.net/projects/wind-map">Wind and weather map</a>
+              <a href="https://www.youtube.com/watch?v=HMi-g9iGVew&feature=youtu.be">nsrbiz</a>
               <br>
-              Wind and weather visualization from <a href="https://windy.com">Windy</a>.
-            </p>
-          </div>
-          <div class="project">
-            <p>
-              <a href="./projects/tribute">MCR Tribute</a>
-              <br>
-              The very first web page I ever made! A tribute page to My Chemical Romance.
+              Businez Incorporated Company Corporation Corps, LLC, an exploration in quickly building a website from scratch. See also the code on <a href="https://github.com/Raindeer44/_nsrbiz">Github</a>.
             </p>
           </div>
 
         </div>
 
         <div class="in-progress-project-group" id="in-progress-project-group">
-          <h4 class="hash-line-2"><a name="in-progress-projects" href="#in-progress-projects" class="hash-anchor">##</a>Projects under development</h4>
-
+          <h4>Projects under development</h4>
           <div class="project">
             <p>
-              <a href="https://github.com/Raindeer44/bf">bf</a>
+              <a href="https://github.com/Raindeer44/text-encode">Text Encode</a>
               <br>
-              Various implementations of the <a href="https://en.wikipedia.org/wiki/Brainfuck">Brainfuck</a> language, created for fun.
+              An Atom package for changing text encodings (HTML entities, URI, Base64, SHA256, MD5, etc.)
+            </p>
+          </div>
+          <div class="project">
+            <p>
+              <a href="https://github.com/Raindeer44/moapi">Moapi</a>
+              <br>
+              A distributable Javascript API interface for the Mopidy server.
+            </p>
+          </div>
+          <div class="project">
+            <p>
+              <a href="https://github.com/Raindeer44/spiders">Spiders</a>
+              <br>
+              An esoteric language based on P''.
             </p>
           </div>
           <div class="project">
@@ -174,15 +217,20 @@
         </div>
 
         <div class="contributing-project-group" id="contributing-project-group">
-          <h4 class="hash-line-2"><a name="contributing-projects" href="#contributing-projects" class="hash-anchor">##</a>Projects I contribute to</h4>
-
+          <h4>Projects I contribute to</h4>
           <p>I contribute to other open source projects to varying degrees, and I'm not necessarily active in these communities right this moment.</p>
-
           <div class="project">
             <p>
               <a href="https://www.brave.com/">Brave browser</a>
               <br>
               Browse faster by blocking ads and trackers that violate your privacy and cost you time and money. See also the code on <a href="https://github.com/brave/browser-laptop">Github</a>.
+            </p>
+          </div>
+          <div class="project">
+            <p>
+              <a href="https://minicss.org/">Mini.css</a>
+              <br>
+              A minimal, responsive, style-agnostic CSS framework.
             </p>
           </div>
           <div class="project">
@@ -224,10 +272,8 @@
       </div>
 
       <div class="connect">
-        <h2 class="hash-line-1"><a href="#connect" class="hash-anchor" id="connect">#</a>Connect</h2>
-
-        <p>I'm a software engineer, web developer and hobby multirotor drone pilot in Minnesota. My passion is using technology to bring information to users in an attractive and enjoyable way. I'd love to get in contact (as long as you're a nice person)! Shoot me an email or check out various information about me using the buttons below.</p>
-
+        <h2>Connect</h2>
+        <p>I'm a software engineer, web developer and hobby multirotor drone pilot in Minnesota. My passion is using technology to bring information to users in an attractive and enjoyable way. I'd love to get in contact, so check out various information about me using the buttons below.</p>
         <div class="row contact-row">
           <a href="geekprofile" class="button large" role="button" title="GeekProfile"><span>
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0" x="0px" y="0px" viewBox="0 0 1200.0024 1200.0071" class="icon icon-geekprofile" >
@@ -283,6 +329,9 @@
       </div>
       <div class="footer-line">
         Jade Thornton | <a href="/p/about-site">About the site</a> | <a href="https://github.com/raindeer44/jmthornton">Source code</a> | <a href="/p/sitemap.xml">Sitemap</a>
+      </div>
+      <div class="footer-line">
+        Donate XMR: 46Gxh1vxibaEDjxDNqWYgXigK1GRS1kUm18A5kwbmT4oRj31Mdha3JDgYxXiicLLPKZJUQG3eiQ2cfAV3DX66tVEJ2YBnkp
       </div>
     </div>
   </footer>

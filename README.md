@@ -1,5 +1,7 @@
 ## Hello there!
 
+[![Known Vulnerabilities](https://snyk.io/test/github/raindeer44/jmthornton/badge.svg)](https://snyk.io/test/github/raindeer44/jmthornton)
+
 This is the source code of [jmthornton.net](http://jmthornton.net), the
 personal website of me, Jade Thornton. It showcases work I have done, provides
 easy means of contact, hosts my [blog](https://blog.jmthornton.net)
