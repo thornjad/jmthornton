@@ -1,10 +1,6 @@
 {
   "presets": ["flow"],
   "plugins": [
-    ["transform-remove-console", {
-      "exclude": ["error", "warn"]
-      }
-    ],
     "transform-remove-debugger",
     "transform-strict-mode"
   ],
