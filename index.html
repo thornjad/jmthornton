@@ -56,6 +56,10 @@
       padding-top: 1em;
     }
 
+    .connect {
+      margin-top: 5em;
+    }
+
     a:focus {
       outline: none;
     }
@@ -66,7 +70,7 @@
   <header class="sticky">
     <span class="header-hack">
       <a href="/" class="button" role="button">Home</a>
-      <a href="#connect" class="button" role="button">Connect</a>
+      <a href="/#connect" class="button" role="button">Connect</a>
       <a href="/gallery/" class="button" role="button">Gallery</a>
       <a href="https://blog.jmthornton.net" class="button" role="button">Blog</a>
     </span>
@@ -268,12 +272,13 @@
               The personal website and online portfolio of Stephanie Shrider. See also the code on <a href="https://github.com/sshrid/sshrid.github.io">Github</a>.
             </p>
           </div>
-
       </div>
 
-      <div class="connect" id="connect">
+      <div class="connect-anchor"><div id="connect"></div></div>
+
+      <div class="connect">
         <h2>Connect</h2>
-        <p>I'm a software engineer, web developer and hobby multirotor drone pilot in Minnesota. My passion is using technology to bring information to users in an attractive and enjoyable way. I'd love to get in contact, so check out various information about me using the buttons below.</p>
+        <p>I'm a software engineer, web developer and hobby multirotor drone pilot in Minnesota. My passion is using technology to bring information to users in an attractive and enjoyable way. I'd love to get in contact, so check out my various repositories of personal data below, and be sure to visit my <a href="https://blog.jmthornton.net">blog.</a></p>
         <div class="row contact-row">
           <a href="geekprofile" class="button large" role="button" title="GeekProfile"><span>
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0" x="0px" y="0px" viewBox="0 0 1200.0024 1200.0071" class="icon icon-geekprofile" >
@@ -311,27 +316,35 @@
               </svg>
             </span></a>
         </div>
+      </div>
 
+      <div class="about-site">
+        <h2>About the site</h2>
+        <a href="https://raw.githubusercontent.com/Raindeer44/jmthornton/master/LICENSE"><img src="https://img.shields.io/badge/license-ISC-blue.svg" alt="ISC License"></a> <a href="https://travis-ci.org/Raindeer44/jmthornton"><img src="https://travis-ci.org/Raindeer44/jmthornton.svg?branch=master" alt="Build Status"></a> <a href="https://snyk.io/test/github/raindeer44/jmthornton"><img src="https://snyk.io/test/github/raindeer44/jmthornton/badge.svg" alt="Known Vulnerabilities" data-canonical-src="https://snyk.io/test/github/raindeer44/jmthornton" style="max-width:100%;"/></a> <a href="https://greenkeeper.io/"><img src="https://badges.greenkeeper.io/Raindeer44/jmthornton.svg" alt="Greenkeeper badge"></a>
+
+        <p>I'm a proud supporter of the <a href="https://www.eff.org/">Electronic Frontier Foundation</a>. <a href="https://supporters.eff.org/donate/">Donate to the EFF</a> to support privacy and freedom online and around the world.</p>
+        <p>This site runs on and makes use of:
+          <ul>
+            <li><a href="https://minicss.org">Mini.css</a></li>
+            <li><a href="http://sass-lang.com/">Sass preprocessor</a></li>
+            <li><a href="https://nodejs.org/en/">Node.js</a> and <a href="https://www.npmjs.com/">npm</a></li>
+            <li><a href="https://snyk.io/">Snyk</a></li>
+            <li><a href="https://babeljs.io/">Babel compiler</a></li>
+            <li><a href="https://flow.org/">Flow static type checker</a></li>
+            <li><a href="https://httpd.apache.org/">Apache HTTPD</a></li>
+            <li><a href="https://github.com/Raindeer44/jmthornton">GitHub</a></li>
+          </ul>
+        </p>
       </div>
   </main>
 
   <footer>
     <div class="footer-text">
-      <div class="footer-nav">
-        <nav>
-          <a href="#top">Home</a>
-          <a href="#projects">Projects</a>
-            <a href="#in-progress-project-group" class="sublink-1">Projects in progress</a>
-            <a href="#contributing-project-group" class="sublink-1">Projects I contribute to</a>
-          <a href="#connect">Connect</a>
-          <a href="#blog">Blog</a>
-        </nav>
+      <div class="footer-line">
+        Jade Thornton | <a href="https://github.com/raindeer44/jmthornton">Source code</a> | <a href="/p/sitemap.xml">Sitemap</a>
       </div>
       <div class="footer-line">
-        Jade Thornton | <a href="/p/about-site">About the site</a> | <a href="https://github.com/raindeer44/jmthornton">Source code</a> | <a href="/p/sitemap.xml">Sitemap</a>
-      </div>
-      <div class="footer-line">
-        Donate XMR: 46Gxh1vxibaEDjxDNqWYgXigK1GRS1kUm18A5kwbmT4oRj31Mdha3JDgYxXiicLLPKZJUQG3eiQ2cfAV3DX66tVEJ2YBnkp
+        Give me XMR: 46Gxh1vxibaEDjxDNqWYgXigK1GRS1kUm18A5kwbmT4oRj31Mdha3JDgYxXiicLLPKZJUQG3eiQ2cfAV3DX66tVEJ2YBnkp
       </div>
     </div>
   </footer>
