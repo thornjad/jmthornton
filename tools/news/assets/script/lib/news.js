@@ -57,6 +57,7 @@ const run = async () => {
     await posts.init();
     await loadFirst();
   } catch (e) {
+    console.error(e);
     alert('An error occured. Please try again later');
   }
 };
