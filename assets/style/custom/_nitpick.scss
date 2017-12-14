@@ -65,6 +65,10 @@ a:not(:hover) {
   text-decoration: none;
 }
 
+a:focus, input:focus {
+  outline: none;
+}
+
 .project, .listing {
   margin-top: 1.3em;
 }
