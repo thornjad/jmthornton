@@ -326,7 +326,9 @@
       this._emit("authed", msg.params);
       this._reconnectRetry = 3;
     } else if (msg.type === "error") {
-      if (console && function () {}) {}
+      if (console && console.error) {
+        console.error("authedmine Error:", msg.params.error);
+      }
       this._emit("error", msg.params);
       if (msg.params.error === "invalid_site_key") {
         this._reconnectRetry = 6e3;
