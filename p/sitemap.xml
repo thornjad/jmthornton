@@ -5,8 +5,13 @@
     <priority>1.00</priority>
   </url>
   <url>
-    <loc>https://jmthornton.net/tools/dencode</loc>
+    <loc>https://jmthornton.net/gallery</loc>
     <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://jmthornton.net/tools/dencode</loc>
+    <changefreq>yearly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
@@ -21,16 +26,11 @@
   </url>
   <url>
     <loc>https://jmthornton.net/projects/tribute</loc>
-    <changefreq>monthly</changefreq>
+    <changefreq>never</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://jmthornton.net/geekprofile</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://jmthornton.net/p/about-site</loc>
+    <loc>https://jmthornton.net/profile</loc>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
