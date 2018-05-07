@@ -1,7 +1,7 @@
 /* TEAM */
 Primary developer: Jade Thornton
 Site: jmthornton.net
-GitHub: raindeer44
+GitHub: thornjad
 Twitter: jmthorntonwhat
 Location: US
 

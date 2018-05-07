@@ -16,14 +16,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/raindeer44/jmthornton.git"
+    "url": "git+https://github.com/thornjad/jmthornton.git"
   },
   "author": "Jade Thornton",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/raindeer44/jmthornton/issues"
+    "url": "https://github.com/thornjad/jmthornton/issues"
   },
-  "homepage": "https://github.com/raindeer44/jmthornton",
+  "homepage": "https://github.com/thornjad/jmthornton",
   "dependencies": {
     "snyk": "^1.54.1"
   },
