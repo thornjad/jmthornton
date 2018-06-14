@@ -1,6 +1,6 @@
 [submodule "_nsrbiz"]
 	path = _nsrbiz
-	url = git@github.com:thornjad/_nsrbiz.git
+	url = https://github.com/thornjad/_nsrbiz.git
 [submodule "analytics"]
 	path = analytics
-	url = git@github.com:matomo-org/matomo.git
+	url = https://github.com/matomo-org/matomo.git
