@@ -1,0 +1,1867 @@
+<!-- Created by Bracy 0.4 on Monday, March 12, 2018 at 5:40 PM CDT -->
+<html>
+ <head>
+  <title>
+   Input and Output in Orson
+  </title>
+  <style>
+   a:active
+    { color: purple;
+      font-weight: bold;
+      text-decoration: none }
+   a:link
+    { color: blue;
+      font-weight: bold;
+      text-decoration: none }
+   a:visited
+    { color: purple;
+      font-weight: bold;
+      text-decoration: none }
+   hr
+    { background-color: black;
+      border: none;
+      color: black;
+      height: 1px }
+   table
+    { border-collapse: collapse }
+  </style>
+ </head>
+ <body bgcolor="#FFFFFF">
+  <p align="center">
+   <b>Input and Output in Orson</b>
+   <br />
+   <br />
+   James B. Moen
+   <br />
+   March 12, 2018
+  </p>
+  <p align="justify">
+   Copyright &#169; 2018 James B. Moen. Permission is granted to copy,
+   distribute, and/or modify this document under the terms of the
+   G<small>NU</small> Free Documentation License, Version 1.3 or any later
+   version published by the Free Software Foundation; with no Invariant
+   Sections, no Front-Cover Texts, and no Back-Cover Texts. A copy of the
+   license may be obtained at
+   <a href="http://fsf.org/">
+    <tt>&lt;http://fsf.org/&gt;.</tt>
+   </a>
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This document uses special characters.
+   Without proper rendering support, you may see question marks, boxes, or
+   other symbols in place of these characters. This document must be rendered
+   in a font where an italic quote &lsquo;&nbsp;<i>"</i>&nbsp;&rsquo;
+   looks different from two apostrophes &lsquo;&nbsp;''&nbsp;&rsquo;.
+  </p>
+  <hr />
+  <p align="center">
+   <b>Contents</b>
+  </p>
+  <table cellpadding="0" cellspacing="0">
+   <tr valign="top">
+    <td>
+     <p>
+      <a href="#intro">
+       1.
+      </a>
+      &nbsp;
+     </p>
+    </td>
+    <td>
+     <p>
+      Introduction.
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      <a href="#fileos">
+       2.
+      </a>
+      &nbsp;
+     </p>
+    </td>
+    <td>
+     <p>
+      The library file <i>file.os</i>.
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+    <td>
+     <table cellpadding="0" cellspacing="0">
+      <tr valign="top">
+       <td>
+        <p>
+         <a href="#character">
+          2.1.
+         </a>
+         &nbsp;
+        </p>
+       </td>
+       <td>
+        <p>
+         <i>eol, eop,</i> and <i>ill.</i>
+        </p>
+       </td>
+      </tr>
+      <tr valign="top">
+       <td>
+        <p>
+         <a href="#standard">
+          2.2.
+         </a>
+         &nbsp;
+        </p>
+       </td>
+       <td>
+        <p>
+         <i>errput, input,</i> and <i>output.</i>
+        </p>
+       </td>
+      </tr>
+      <tr valign="top">
+       <td>
+        <p>
+         <a href="#close">
+          2.3.
+         </a>
+         &nbsp;
+        </p>
+       </td>
+       <td>
+        <p>
+         <i>close.</i>
+        </p>
+       </td>
+      </tr>
+      <tr valign="top">
+       <td>
+        <p>
+         <a href="#flush">
+          2.4.
+         </a>
+         &nbsp;
+        </p>
+       </td>
+       <td>
+        <p>
+         <i>flush.</i>
+        </p>
+       </td>
+      </tr>
+      <tr valign="top">
+       <td>
+        <p>
+         <a href="#get">
+          2.5.
+         </a>
+         &nbsp;
+        </p>
+       </td>
+       <td>
+        <p>
+         <i>get.</i>
+        </p>
+       </td>
+      </tr>
+      <tr valign="top">
+       <td>
+        <p>
+         <a href="#index">
+          2.6.
+         </a>
+         &nbsp;
+        </p>
+       </td>
+       <td>
+        <p>
+         <i>index.</i>
+        </p>
+       </td>
+      </tr>
+      <tr valign="top">
+       <td>
+        <p>
+         <a href="#open">
+          2.7.
+         </a>
+         &nbsp;
+        </p>
+       </td>
+       <td>
+        <p>
+         <i>open.</i>
+        </p>
+       </td>
+      </tr>
+      <tr valign="top">
+       <td>
+        <p>
+         <a href="#opened">
+          2.8.
+         </a>
+         &nbsp;
+        </p>
+       </td>
+       <td>
+        <p>
+         <i>opened.</i>
+        </p>
+       </td>
+      </tr>
+      <tr valign="top">
+       <td>
+        <p>
+         <a href="#put">
+          2.9.
+         </a>
+         &nbsp;
+        </p>
+       </td>
+       <td>
+        <p>
+         <i>put.</i>
+        </p>
+       </td>
+      </tr>
+      <tr valign="top">
+       <td>
+        <p>
+         <a href="#read">
+          2.10.
+         </a>
+         &nbsp;
+        </p>
+       </td>
+       <td>
+        <p>
+         <i>read.</i>
+        </p>
+       </td>
+      </tr>
+      <tr valign="top">
+       <td>
+        <p>
+         <a href="#reset">
+          2.11.
+         </a>
+         &nbsp;
+        </p>
+       </td>
+       <td>
+        <p>
+         <i>reset.</i>
+        </p>
+       </td>
+      </tr>
+      <tr valign="top">
+       <td>
+        <p>
+         <a href="#unget">
+          2.12.
+         </a>
+         &nbsp;
+        </p>
+       </td>
+       <td>
+        <p>
+         <i>unget.</i>
+        </p>
+       </td>
+      </tr>
+      <tr valign="top">
+       <td>
+        <p>
+         <a href="#unread">
+          2.13.
+         </a>
+         &nbsp;
+        </p>
+       </td>
+       <td>
+        <p>
+         <i>unread.</i>
+        </p>
+       </td>
+      </tr>
+      <tr valign="top">
+       <td>
+        <p>
+         <a href="#write">
+          2.14.
+         </a>
+         &nbsp;
+        </p>
+       </td>
+       <td>
+        <p>
+         <i>write.</i>
+        </p>
+       </td>
+      </tr>
+      <tr valign="top">
+       <td>
+        <p>
+         <a href="#writeln">
+          2.15.
+         </a>
+         &nbsp;
+        </p>
+       </td>
+       <td>
+        <p>
+         <i>writeln.</i>
+        </p>
+       </td>
+      </tr>
+     </table>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      <a href="#extend">
+       3.
+      </a>
+      &nbsp;
+     </p>
+    </td>
+    <td>
+     <p>
+      Extension conventions.
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      <a href="#references">
+       4.
+      </a>
+      &nbsp;
+     </p>
+    </td>
+    <td>
+     <p>
+      References.
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+   </tr>
+  </table>
+  <hr />
+  <a name="intro">
+  </a>
+  <p>
+   <b>1. Introduction.</b>
+  </p>
+  <blockquote>
+   <p>
+    Anything&nbsp;goes&nbsp;in.&nbsp;
+    <br />
+    Anything&nbsp;goes&nbsp;out!&nbsp;
+    <br />
+    Fish,&nbsp;bananas,&nbsp;old&nbsp;pyjamas,&nbsp;
+    <br />
+    Mutton!&nbsp;Beef!&nbsp;and&nbsp;Trout!
+   </p>
+   <p align="right">
+    <a href="#cha1989">
+     [<small>CHA</small> 1989]
+    </a>
+   </p>
+  </blockquote>
+  <p align="justify">
+   The programming language Orson
+   <a href="#moe2018">
+    [<small>MOE</small> 2018]
+   </a>
+   can perform input and output on Unix streams
+   <a href="#ste2005">
+    [<small>STE</small> 2005].
+   </a>
+   A stream is an ordered series of zero or more unsigned bytes. Orson&rsquo;s
+   standard prelude binds the name <i>stream</i> to an execution type that
+   describes a stream.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i>Opening</i> a stream associates it
+   with a file. (A stream may also be associated with a peripheral device or a
+   program, but that isn&rsquo;t discussed here.) It may be opened as an
+   <i>input stream,</i> which allows reading unsigned bytes from the file,
+   or as an <i>output stream,</i> which allows writing unsigned bytes to
+   the file. It may also be opened for both input and output.
+   <i>Closing</i> an open stream breaks its association with a file.
+   Reading or writing a closed stream has undefined results.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Each unsigned byte in an open stream is
+   identified by a nonnegative integer called its <i>index.</i> The
+   stream&rsquo;s <i>position</i> is the index of the next unsigned byte
+   to be read or written. When a stream is read or written, its position is
+   incremented. Its position may also be changed without reading or writing
+   anything.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Orson represents unsigned bytes as
+   nonnegative integers. The standard prelude binds the name <i>eos</i> to
+   a negative integer that may be read from an input stream. The integer
+   <i>eos</i> does not represent an unsigned byte, but acts as a sentinel
+   that represents the end of the stream.
+  </p>
+  <a name="fileos">
+  </a>
+  <p>
+   <b>2. The library file <i>file.os.</i></b>
+  </p>
+  <p align="justify">
+   The library file <i>file.os</i> provides forms that perform input and
+   output on streams. Some of these forms read and write single characters.
+   Others read a series of characters that notates an integer, a real, or a
+   string. Still others write a series of characters that notates an integer, a
+   real, a string, or a pointer. Orson uses a 31-bit character set that
+   includes the familiar 21-bit Unicode
+   <a href="#uni2006">
+    [<small>UNI</small> 2006]
+   </a>
+   and 7-bit <small>ASCII</small>
+   <a href="#ans1986">
+    [<small>ANS</small> 1986]
+   </a>
+   character sets as subsets. Each character is read or written as a series of
+   one to six unsigned bytes in the <small>UTF</small>-8 encoding
+   <a href="#uni2006">
+    [<small>UNI</small> 2006].
+   </a>
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The rest of this note discusses forms and
+   other objects that are provided by <i>file.os.</i> They include the
+   characters
+   <a href="#character">
+    <i>eol,</i>
+   </a>
+   <a href="#character">
+    <i>eop,</i>
+   </a>
+   and
+   <a href="#character">
+    <i>ill,</i>
+   </a>
+   the streams
+   <a href="#standard">
+    <i>errput,</i>
+   </a>
+   <a href="#standard">
+    <i>input</i>
+   </a>
+   and
+   <a href="#standard">
+    <i>output,</i>
+   </a>
+   and the forms
+   <a href="#close">
+    <i>close,</i>
+   </a>
+   <a href="#flush">
+    <i>flush,</i>
+   </a>
+   <a href="#get">
+    <i>get,</i>
+   </a>
+   <a href="#index">
+    <i>index,</i>
+   </a>
+   <a href="#open">
+    <i>open,</i>
+   </a>
+   <a href="#opened">
+    <i>opened,</i>
+   </a>
+   <a href="#put">
+    <i>put,</i>
+   </a>
+   <a href="#read">
+    <i>read,</i>
+   </a>
+   <a href="#reset">
+    <i>reset,</i>
+   </a>
+   <a href="#unget">
+    <i>unget,</i>
+   </a>
+   <a href="#unread">
+    <i>unread,</i>
+   </a>
+   <a href="#write">
+    <i>write,</i>
+   </a>
+   and
+   <a href="#writeln">
+    <i>writeln.</i>
+   </a>
+   Many of these forms return Boolean values that tell whether they performed
+   successfully. Most were suggested by procedures from the programming
+   languages C
+   <a href="#ker1988">
+    [<small>KER</small> 1988]
+   </a>
+   and Pascal
+   <a href="#jen1974">
+    [<small>JEN</small> 1974].
+   </a>
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Orson is currently implemented as a
+   translator that converts Orson programs to <small>GNU</small> C
+   programs
+   <a href="#sta2008">
+    [<small>STA</small> 2008]
+   </a>
+   which run under Unix-like operating systems, such as
+   G<small>NU</small>/Linux. As a result, most forms provided by
+   <i>file.os</i> are actually just false beards for functions defined by
+   the G<small>NU</small> C Library
+   <a href="#loo2014">
+    [<small>LOO</small> 2014].
+   </a>
+   They use the form <i>c</i>'<i>s</i>
+   <a href="#moe2017">
+    [<small>MOE</small> 2017]
+   </a>
+   to call these functions. Readers who wish more information may consult the
+   Unix <i>man</i> pages for the functions that are called in this way.
+   For example, information about the format strings used by
+   <a href="#write">
+    <i>write</i>
+   </a>
+   and
+   <a href="#writeln">
+    <i>writeln</i>
+   </a>
+   may be found in the <i>man</i> page for the function
+   <tt>fprintf.</tt>
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; G<small>NU</small> C uses objects called
+   <i>locales</i> to specify conventions about input and output. All the
+   forms defined by <i>file.os</i> use a default locale, called the
+   <i>C</i> or <i>P<small>OSIX</small></i> locale. As a result,
+   some forms (like those involving formatted input and output) may behave
+   differently than expected. Their behavior may be changed by using
+   <i>c</i>'<i>s</i> to call the function
+   <tt>setlocale</tt>, which changes the locale. Details can be found in
+   the <i>man</i> page for <tt>setlocale</tt>.
+  </p>
+  <a name="character">
+  </a>
+  <p>
+   <b>2.1. <i>eol, eop,</i> and <i>ill.</i></b>
+  </p>
+  <p align="justify">
+   The names <i>eol, eop,</i> and <i>ill</i> are bound in the
+   following way.
+  </p>
+  <blockquote>
+   <table cellpadding="0" cellspacing="0">
+    <tr valign="top">
+     <td>
+      <p>
+       <i>cha</i>&nbsp;<i>eol</i>
+      </p>
+     </td>
+     <td>
+      <p align="center">
+       &nbsp;:&#8722;&nbsp;
+      </p>
+     </td>
+     <td>
+      <p>
+       '\N'
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       <i>cha</i>&nbsp;<i>eop</i>
+      </p>
+     </td>
+     <td>
+      <p align="center">
+       &nbsp;:&#8722;&nbsp;
+      </p>
+     </td>
+     <td>
+      <p>
+       '\F'
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       <i>cha</i>&nbsp;<i>ill</i>
+      </p>
+     </td>
+     <td>
+      <p align="center">
+       &nbsp;:&#8722;&nbsp;
+      </p>
+     </td>
+     <td>
+      <p>
+       '\#FFFD'
+      </p>
+     </td>
+    </tr>
+   </table>
+  </blockquote>
+  <p align="justify">
+   The name <i>eol</i> is bound to an invisible character that terminates
+   a line. Writing <i>eol</i> to a text file will end the current line and
+   start a new one. The name <i>eop</i> is bound to an invisible character
+   that some programs use to terminate a page. Writing <i>eop</i> to a
+   text file will end the current page and start a new one. The name
+   <i>ill</i> is bound to the Unicode replacement character
+   '&#65533;'. It is used in place of a character whose value is unknown,
+   or that cannot be represented in Unicode
+   <a href="#uni2006">
+    [<small>UNI</small> 2006].
+   </a>
+  </p>
+  <a name="standard">
+  </a>
+  <p>
+   <b>2.2. <i>errput, input,</i> and <i>output.</i></b>
+  </p>
+  <p align="justify">
+   The names <i>errput, input,</i> and <i>output</i> are bound in the
+   following way.
+  </p>
+  <blockquote>
+   <table cellpadding="0" cellspacing="0">
+    <tr valign="top">
+     <td>
+      <p>
+       <i>errput</i>
+      </p>
+     </td>
+     <td>
+      <p align="center">
+       &nbsp;:&#8722;&nbsp;
+      </p>
+     </td>
+     <td>
+      <p>
+       <i>c</i>'<i>s</i>(<i>stream</i>,&nbsp;''<tt>stderr</tt>'')
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       <i>input</i>
+      </p>
+     </td>
+     <td>
+      <p align="center">
+       &nbsp;:&#8722;&nbsp;
+      </p>
+     </td>
+     <td>
+      <p>
+       <i>c</i>'<i>s</i>(<i>stream</i>,&nbsp;''<tt>stdin</tt>'')
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p>
+       <i>output</i>
+      </p>
+     </td>
+     <td>
+      <p align="center">
+       &nbsp;:&#8722;&nbsp;
+      </p>
+     </td>
+     <td>
+      <p>
+       <i>c</i>'<i>s</i>(<i>stream</i>,&nbsp;''<tt>stdout</tt>'')
+      </p>
+     </td>
+    </tr>
+   </table>
+  </blockquote>
+  <p align="justify">
+   The names <i>input</i> and <i>output</i> are bound to streams that
+   are associated, respectively, with a standard input device and a standard
+   output device. The stream <i>input</i> is usually associated with the
+   keyboard, and the stream <i>output</i> is usually associated with the
+   console display. However, some programs may associate <i>input</i> and
+   <i>output</i> with files.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The name <i>errput</i> is bound to an
+   <a href="#flush">
+    unbuffered
+   </a>
+   stream that is associated with the same standard output device as
+   <i>output.</i> It is used to write error messages and other diagnostic
+   information to the user.
+  </p>
+  <a name="close">
+  </a>
+  <p>
+   <b>2.3. <i>close.</i></b>
+  </p>
+  <p align="justify">
+   The name <i>close</i> is bound in the following way.
+  </p>
+  <blockquote>
+   <p>
+    <i>close</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>c</i></font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>)&nbsp;<i>bool</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>c</i>(<b>f</b></font><i>c</i>'<i>s</i>(<i>int</i>,&nbsp;''<tt>fclose</tt>'':&nbsp;<i>s</i>)&nbsp;=&nbsp;0)
+   </p>
+  </blockquote>
+  <p align="justify">
+   The form <i>close</i> takes a stream <i>s</i> as its single
+   argument. If <i>s</i> is an output stream, then it is
+   <a href="#flush">
+    flushed.
+   </a>
+   The form <i>close</i> then severs the association between <i>s</i>
+   and a file or peripheral device.
+  </p>
+  <a name="flush">
+  </a>
+  <p>
+   <b>2.4. <i>flush.</i></b>
+  </p>
+  <p align="justify">
+   The name <i>flush</i> is bound in the following way.
+  </p>
+  <blockquote>
+   <p>
+    <i>flush</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i></font>(<b>alt</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>(</font>(<b>form</b>&nbsp;()&nbsp;<i>bool</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>f</b></font><i>flush</i>(<i>nil</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>(</font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>)&nbsp;<i>bool</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>f</b></font><i>c</i>'<i>s</i>(<i>int</i>,&nbsp;''<tt>fflush</tt>'':&nbsp;<i>s</i>)&nbsp;=&nbsp;0))
+   </p>
+  </blockquote>
+  <p align="justify">
+   If <i>flush</i> is called with an
+   <a href="#open">
+    open
+   </a>
+   output stream <i>s</i> as its argument, and <i>s</i> has a buffer,
+   then all bytes in the buffer will be written to <i>s.</i> The stream
+   <i>s</i> remains open after it has been flushed in this way. If
+   <i>flush</i> is called with no arguments, then it will flush all open
+   output streams that belong to the current program.
+  </p>
+  <a name="get">
+  </a>
+  <p>
+   <b>2.5. <i>get.</i></b>
+  </p>
+  <p align="justify">
+   The name <i>get</i> is bound in the following way.
+  </p>
+  <blockquote>
+   <p>
+    <i>get</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>g</i></font>(<b>alt</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>g</i>(</font>(<b>form</b>&nbsp;()&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>g</i>((<b>f</b></font><i>get</i>(<i>input</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>g</i>(</font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>g</i>((<b>f</b></font><i>c</i>'<i>s</i>(<i>int</i>,&nbsp;''<tt>fgetc</tt>'':&nbsp;<i>s</i>)))
+   </p>
+  </blockquote>
+  <p align="justify">
+   If <i>get</i> is called with an
+   <a href="#open">
+    open
+   </a>
+   input stream <i>s</i> as its argument, then it will read the next
+   unsigned byte from <i>s</i> and return it as an <i>int.</i> If no
+   unsigned bytes remain to be read from <i>s,</i> then <i>get</i>
+   will return <i>eos</i> instead. If <i>get</i> is called with no
+   arguments, then it reads from the input stream
+   <a href="#standard">
+    <i>input.</i>
+   </a>
+  </p>
+  <a name="index">
+  </a>
+  <p>
+   <b>2.6. <i>index.</i></b>
+  </p>
+  <p align="justify">
+   The name <i>index</i> is bound in the following way.
+  </p>
+  <blockquote>
+   <p>
+    <i>index</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i></font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>f</b></font><i>c</i>'<i>s</i>(<i>int</i>,&nbsp;''<tt>ftell</tt>'':&nbsp;<i>s</i>))
+   </p>
+  </blockquote>
+  <p align="justify">
+   If <i>index</i> is called with an
+   <a href="#open">
+    open
+   </a>
+   stream <i>s</i> as its argument, then it will return the current index
+   of <i>s.</i>
+  </p>
+  <a name="open">
+  </a>
+  <p>
+   <b>2.7. <i>open.</i></b>
+  </p>
+  <p align="justify">
+   The name <i>open</i> is bound in the following way.
+  </p>
+  <blockquote>
+   <p>
+    <i>open</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i></font>(<b>alt</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>(</font>(<b>with</b>&nbsp;<i>values</i>&nbsp;:&#8722;&nbsp;(<b>tuple</b>&nbsp;<i>bool</i>&nbsp;<i>success</i>,&nbsp;<i>stream</i>&nbsp;<i>stream</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>((</font><b>do</b>&nbsp;(<b>alt</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>((<b>do</b>&nbsp;(</font>(<b>form</b>&nbsp;()&nbsp;<i>values</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>((<b>do</b>&nbsp;((</font>(<b>with</b>&nbsp;<b>var</b>&nbsp;<i>values</i>&nbsp;<i>v</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>((<b>do</b>&nbsp;(((</font><b>do</b>&nbsp;<i>v</i>.<i>stream</i>&nbsp;:=&nbsp;<i>c</i>'<i>s</i>(<i>stream</i>,&nbsp;''<tt>tmpfile</tt>'':)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>((<b>do</b>&nbsp;(((<b>do</b>&nbsp;</font><i>v</i>.<i>success</i>&nbsp;:=&nbsp;<i>v</i>.<i>stream</i>&nbsp;&#8800;&nbsp;<i>nil</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>((<b>do</b>&nbsp;(((<b>do</b>&nbsp;</font><i>v</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>((<b>do</b>&nbsp;(</font>(<b>form</b>&nbsp;(<i>string</i>&nbsp;<i>p</i>,&nbsp;<i>string</i>&nbsp;<i>m</i>)&nbsp;<i>values</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>((<b>do</b>&nbsp;((</font>(<b>with</b>&nbsp;<b>var</b>&nbsp;<i>values</i>&nbsp;<i>v</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>((<b>do</b>&nbsp;(((</font><b>do</b>&nbsp;<i>v</i>.<i>stream</i>&nbsp;:=&nbsp;<i>c</i>'<i>s</i>(<i>stream</i>,&nbsp;''<tt>fopen</tt>'':&nbsp;<i>p</i>,&nbsp;<i>m</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>((<b>do</b>&nbsp;(((<b>do</b>&nbsp;</font><i>v</i>.<i>success</i>&nbsp;:=&nbsp;<i>v</i>.<i>stream</i>&nbsp;&#8800;&nbsp;<i>nil</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>((<b>do</b>&nbsp;(((<b>do</b>&nbsp;</font><i>v</i>)))),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>(</font>(<b>form</b>&nbsp;(<b>var</b>&nbsp;<i>stream</i>&nbsp;<i>s</i>)&nbsp;<i>bool</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>((<b>f</b></font><i>s</i>&nbsp;:=&nbsp;<i>c</i>'<i>s</i>(<i>stream</i>,&nbsp;''<tt>tmpfile</tt>'':)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>((<b>f</b></font><i>s</i>&nbsp;&#8800;&nbsp;<i>nil</i>),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>(</font>(<b>form</b>&nbsp;(<b>var</b>&nbsp;<i>stream</i>&nbsp;<i>s</i>,&nbsp;<i>string</i>&nbsp;<i>p</i>,&nbsp;<i>string</i>&nbsp;<i>m</i>)&nbsp;<i>bool</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>((<b>f</b></font><i>s</i>&nbsp;:=&nbsp;<i>c</i>'<i>s</i>(<i>stream</i>,&nbsp;''<tt>fopen</tt>'':&nbsp;<i>p</i>,&nbsp;<i>m</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>((<b>f</b></font><i>s</i>&nbsp;&#8800;&nbsp;<i>nil</i>))
+   </p>
+  </blockquote>
+  <p align="justify">
+   The form <i>open</i> opens a file, and returns a stream that is
+   associated with that file. It is usually called with two arguments,
+   <i>p</i> and <i>m.</i> The string <i>p</i> is a pathname that
+   denotes the file to be opened. The string <i>m</i> is a
+   <i>mode</i> that specifies the input and operations which will be
+   allowed on the file. Modes and their meanings are described in the following
+   table.
+  </p>
+  <blockquote>
+   <table align="center" border="1" cellpadding="3" cellspacing="0">
+    <tr bgcolor="#D3D3D3" valign="top">
+     <td>
+      <p align="center">
+       &nbsp;<b><small>MODE</small></b>&nbsp;
+      </p>
+     </td>
+     <td>
+      <p align="center">
+       &nbsp;<b><small>MEANING</small></b>&nbsp;
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p align="center">
+       ''<tt>a</tt>''
+      </p>
+     </td>
+     <td>
+      <p align="justify">
+       Open the file for writing. If the file does not exist, then create a new
+       file. The stream is positioned at the end of the file.
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p align="center">
+       ''<tt>a+</tt>''
+      </p>
+     </td>
+     <td>
+      <p align="justify">
+       Open the file for reading and writing. If the file does not exist, then
+       create a new file. The stream is positioned at the end of the file.
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p align="center">
+       ''<tt>r</tt>''
+      </p>
+     </td>
+     <td>
+      <p align="justify">
+       Open an existing file for reading. The stream is positioned at the
+       beginning of the file.
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p align="center">
+       ''<tt>r+</tt>''
+      </p>
+     </td>
+     <td>
+      <p align="justify">
+       Open the file for both reading and writing. The stream is positioned at
+       the beginning of the file.
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p align="center">
+       ''<tt>w</tt>''
+      </p>
+     </td>
+     <td>
+      <p align="justify">
+       Open the file for writing. If the file exists, then truncate it to zero
+       length. If it does not exist, then create a new file. The stream is
+       positioned at the beginning of the file.
+      </p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td>
+      <p align="center">
+       ''<tt>w+</tt>''
+      </p>
+     </td>
+     <td>
+      <p align="justify">
+       Open the file for reading and writing. If the file exists, then truncate
+       it to zero length. If it does not exist, then create a new file. The
+       stream is positioned at the beginning of the file.
+      </p>
+     </td>
+    </tr>
+   </table>
+  </blockquote>
+  <p align="justify">
+   If <i>open</i> is called with only <i>p</i> and <i>m,</i>
+   then it will return a tuple with two slots, <i>success</i> and
+   <i>stream.</i> If the Boolean slot <i>success</i> is
+   <i>true,</i> then the file was opened successfully, and
+   <i>stream</i> is the stream that is associated with the file. If
+   <i>success</i> is <i>false,</i> then the file could not be opened
+   with the requested mode, and <i>stream</i> is undefined.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If <i>open</i> is called with three
+   arguments <i>s, p,</i> and <i>m,</i> then it will return a Boolean
+   value. If it returns <i>true,</i> then the file was opened
+   successfully, and the variable <i>s</i> is set to the stream that is
+   associated with the file. If it returns <i>false,</i> then the file
+   could not be opened with the requested mode, and <i>s</i> is undefined.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If <i>p</i> and <i>m</i> are
+   missing, then they default to specify a temporary file that allows reading
+   and writing. The temporary file will be deleted automatically when its
+   stream is closed.
+  </p>
+  <a name="opened">
+  </a>
+  <p>
+   <b>2.8. <i>opened.</i></b>
+  </p>
+  <p align="justify">
+   The name <i>opened</i> is bound in the following way.
+  </p>
+  <blockquote>
+   <p>
+    <i>opened</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i></font>(<b>alt</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>(</font>(<b>form</b>&nbsp;()&nbsp;<i>foj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>((</font>(<b>form</b>&nbsp;(<b>form</b>&nbsp;(<i>bool</i>,&nbsp;<i>stream</i>)&nbsp;<i>obj</i>&nbsp;<i>body</i>)&nbsp;<i>bool</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>(((</font>(<b>with</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>((((<b>w</b></font><i>stream</i>&nbsp;<i>s</i>&nbsp;:&#8722;&nbsp;<i>c</i>'<i>s</i>(<i>stream</i>,&nbsp;''<tt>tmpfile</tt>'':)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>((((<b>w</b></font><i>bool</i>&nbsp;<i>f</i>&nbsp;:&#8722;&nbsp;<i>s</i>&nbsp;&#8800;&nbsp;<i>nil</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>((((</font><b>do</b>&nbsp;<i>body</i>(<i>f</i>,&nbsp;<i>s</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>((((<b>do</b>&nbsp;</font><i>f</i>&nbsp;&#8743;&nbsp;<i>close</i>(<i>s</i>)))),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i></font>(<b>form</b>&nbsp;(<i>string</i>&nbsp;<i>p</i>,&nbsp;<i>string</i>&nbsp;<i>m</i>)&nbsp;<i>foj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>(</font>(<b>form</b>&nbsp;(<b>form</b>&nbsp;(<i>bool</i>,&nbsp;<i>stream</i>)&nbsp;<i>obj</i>&nbsp;<i>body</i>)&nbsp;<i>bool</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>((</font>(<b>with</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>(((<b>w</b></font><i>stream</i>&nbsp;<i>s</i>&nbsp;:&#8722;&nbsp;<i>c</i>'<i>s</i>(<i>stream</i>,&nbsp;''<tt>fopen</tt>'':&nbsp;<i>p</i>,&nbsp;<i>m</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>(((<b>w</b></font><i>bool</i>&nbsp;<i>f</i>&nbsp;:&#8722;&nbsp;<i>s</i>&nbsp;&#8800;&nbsp;<i>nil</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>(((</font><b>do</b>&nbsp;<i>body</i>(<i>f</i>,&nbsp;<i>s</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>o</i>(((<b>do</b>&nbsp;</font><i>f</i>&nbsp;&#8743;&nbsp;<i>close</i>(<i>s</i>)))))
+   </p>
+  </blockquote>
+  <p align="justify">
+   The form <i>opened</i> is a wrapper that acts like a call to
+   <a href="#open">
+    <i>open</i>
+   </a>
+   followed by a call to
+   <a href="#close">
+    <i>close.</i>
+   </a>
+   The <i>for</i> clause
+   (<b>for</b>&nbsp;<i>bool</i>&nbsp;<i>b,</i>&nbsp;<i>stream</i>&nbsp;<i>s</i>&nbsp;<b>in</b>&nbsp;<i>opened</i>(<i>p,</i>&nbsp;<i>m</i>)&nbsp;<b>do</b>&nbsp;<i>d</i>)
+   makes a stream that is associated with a file whose pathname is the string
+   <i>p.</i> The stream allows input and output operations described by
+   the string <i>m,</i> its
+   <a href="#open">
+    <i>mode.</i>
+   </a>
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If the file was opened successfully, then
+   <i>d</i> is executed with <i>b</i> bound to <i>true</i> and
+   <i>s</i> bound to the stream. After <i>d</i> has finished
+   executing, the stream is closed. The <i>for</i> clause returns
+   <i>true</i> if the stream was closed successfully, and returns
+   <i>false</i> otherwise. If <i>d</i> terminates the <i>for</i>
+   clause by calling <i>throw,</i> then the stream will not be closed.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If the file was not opened successfully, then
+   <i>d</i> is executed with <i>b</i> bound to <i>false</i> and
+   <i>s</i> bound to an undefined stream. After <i>d</i> has finished
+   executing, the stream is not closed, and the <i>for</i> clause simply
+   returns <i>false.</i>
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If <i>p</i> and <i>m</i> are
+   missing, then they default to specify a temporary file that allows reading
+   and writing. The temporary file will be deleted automatically when it is
+   closed.
+  </p>
+  <a name="put">
+  </a>
+  <p>
+   <b>2.9. <i>put.</i></b>
+  </p>
+  <p align="justify">
+   The name <i>put</i> is bound in the following way.
+  </p>
+  <blockquote>
+   <p>
+    <i>put</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>p</i></font>(<b>alt</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>p</i>(</font>(<b>form</b>&nbsp;(<i>int</i>&nbsp;<i>b</i>)&nbsp;<i>bool</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>p</i>((<b>f</b></font><i>put</i>(<i>output</i>,&nbsp;<i>b</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>p</i>(</font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>,&nbsp;<i>int</i>&nbsp;<i>b</i>)&nbsp;<i>bool</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>p</i>((<b>f</b></font><i>c</i>'<i>s</i>(<i>int</i>,&nbsp;''<tt>fputc</tt>'':&nbsp;<i>s</i>,&nbsp;<i>b</i>)&nbsp;&#8800;&nbsp;<i>c</i>'<i>s</i>(<i>int</i>,&nbsp;''<tt>EOF</tt>'')))
+   </p>
+  </blockquote>
+  <p align="justify">
+   If <i>put</i> is called with a output stream <i>s</i> and an
+   integer <i>b</i> that represents an unsigned byte, then it will write
+   <i>b</i> to <i>s</i> at its current
+   <a href="#index">
+    index.
+   </a>
+   If the stream argument <i>s</i> does not appear, then the stream
+   <a href="#standard">
+    <i>output</i>
+   </a>
+   is assumed to appear in its place.
+  </p>
+  <a name="read">
+  </a>
+  <p>
+   <b>2.10. <i>read.</i></b>
+  </p>
+  <p align="justify">
+   The name <i>read</i> is bound in the following way.
+  </p>
+  <blockquote>
+   <p>
+    <i>read</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>r</i></font>(<b>alt</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>r</i>(</font>(<b>form</b>&nbsp;()&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>r</i>((<b>f</b></font><i>read</i>(<i>input</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>r</i>(</font>(<b>form</b>&nbsp;(<b>type</b>&nbsp;<i>char</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>r</i>((<b>f</b></font><i>read</i>(<i>input</i>,&nbsp;<i>char</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>r</i>(</font>(<b>form</b>&nbsp;(<i>string</i>&nbsp;<i>f</i>,&nbsp;<i>list</i>&nbsp;<i>l</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>r</i>((<b>f</b></font><i>read</i>(<i>input</i>,&nbsp;<i>f</i>,&nbsp;<i>l</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>r</i>(</font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>r</i>((<b>f</b></font><i>read</i>(<i>s</i>,&nbsp;<i>char</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>r</i>(</font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>,&nbsp;<b>type</b>&nbsp;<i>char</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>r</i>((<b>f</b></font><i>Read</i>(<i>s</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>r</i>(</font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>,&nbsp;<i>string</i>&nbsp;<i>f</i>,&nbsp;<i>list</i>&nbsp;<i>l</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>r</i>((<b>f</b></font><i>c</i>'<i>s</i>(<i>int</i>,&nbsp;''<tt>fscanf</tt>'':&nbsp;<i>s</i>,&nbsp;<i>f</i>,&nbsp;<i>l</i>)))
+   </p>
+  </blockquote>
+  <p align="justify">
+   If <i>read</i> is called with an input stream <i>s</i> as its only
+   argument, or if it is called with a stream <i>s</i> and the type
+   <i>char,</i> then it will read a Unicode
+   <a href="#uni2006">
+    [<small>UNI</small> 2006]
+   </a>
+   character from <i>s</i> and return it as an <i>int.</i> (This is
+   done by a secret procedure <i>Read,</i> whose definition is not shown.)
+   If there are no characters that remain to be read from <i>s,</i> then
+   <i>read</i> will return <i>eos.</i> If it reads a character with
+   an illegal <small>UTF</small>-8 encoding
+   <a href="#uni2006">
+    [<small>UNI</small> 2006],
+   </a>
+   then it will return
+   <a href="#character">
+    <i>ill.</i>
+   </a>
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If <i>read</i> is called with a stream
+   <i>s,</i> a format string <i>f,</i> and a list of variables
+   <i>l,</i> then it will read the notations of objects specified by
+   <i>f</i> from <i>s,</i> and assign the variables in <i>l</i>
+   to those objects. The number of bytes read from <i>s</i> is then
+   returned. Results are undefined if <i>read</i> encounters a series of
+   characters that do not notate the objects specified by <i>f.</i>
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; In all the above cases, if the stream
+   argument <i>s</i> does not appear, then the stream
+   <a href="#standard">
+    <i>input</i>
+   </a>
+   is assumed to appear in its place.
+  </p>
+  <a name="reset">
+  </a>
+  <p>
+   <b>2.11. <i>reset.</i></b>
+  </p>
+  <p align="justify">
+   The name <i>reset</i> is bound in the following way.
+  </p>
+  <blockquote>
+   <p>
+    <i>reset</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>r</i></font>(<b>alt</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>r</i>(</font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>)&nbsp;<i>bool</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>r</i>((<b>f</b></font><i>c</i>'<i>s</i>(<i>int</i>,&nbsp;''<tt>fseek</tt>'':&nbsp;<i>s</i>,&nbsp;0,&nbsp;<i>c</i>'<i>s</i>(<i>int</i>,&nbsp;''<tt>SEEK_END</tt>''))&nbsp;=&nbsp;0),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>r</i>(</font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>,&nbsp;<i>int</i>&nbsp;<i>i</i>)&nbsp;<i>bool</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>r</i>((<b>f</b></font><i>c</i>'<i>s</i>(<i>int</i>,&nbsp;''<tt>fseek</tt>'':&nbsp;<i>s</i>,&nbsp;<i>i</i>,&nbsp;<i>c</i>'<i>s</i>(<i>int</i>,&nbsp;''<tt>SEEK_SET</tt>''))&nbsp;=&nbsp;0))
+   </p>
+  </blockquote>
+  <p align="justify">
+   If <i>reset</i> is called with a stream <i>s</i> and a nonnegative
+   integer <i>i</i> as its arguments, then it will reset the
+   <a href="#index">
+    index
+   </a>
+   of <i>s</i> to <i>i.</i> For example,
+   <i>reset</i>(<i>s,</i>&nbsp;0) will reposition <i>s</i> to
+   its first byte.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If the argument <i>i</i> does not
+   appear, then the maximum index of <i>s</i> is assumed to appear in its
+   place. As a result, <i>reset</i>(<i>s</i>) positions the stream
+   <i>s</i> to its end. This is somewhat nonintuitive, and is the
+   <i>opposite</i> of what the procedure <i>reset</i> did in Pascal
+   <a href="#jen1974">
+    [<small>JEN</small> 1974].
+   </a>
+  </p>
+  <a name="unget">
+  </a>
+  <p>
+   <b>2.12. <i>unget.</i></b>
+  </p>
+  <p align="justify">
+   The name <i>unget</i> is bound in the following way.
+  </p>
+  <blockquote>
+   <p>
+    <i>unget</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>u</i></font>(<b>alt</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>u</i>(</font>(<b>form</b>&nbsp;(<i>int</i>&nbsp;<i>b</i>)&nbsp;<i>bool</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>u</i>((<b>f</b></font><i>unget</i>(<i>input</i>,&nbsp;<i>b</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>u</i>(</font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>,&nbsp;<i>int</i>&nbsp;<i>b</i>)&nbsp;<i>bool</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>u</i>((<b>f</b></font><i>c</i>'<i>s</i>(<i>int</i>,&nbsp;''<tt>ungetc</tt>'':&nbsp;<i>b</i>,&nbsp;<i>s</i>)&nbsp;&#8800;&nbsp;<i>c</i>'<i>s</i>(<i>int</i>,&nbsp;''<tt>EOF</tt>'')))
+   </p>
+  </blockquote>
+  <p align="justify">
+   If <i>unget</i> is called with an input stream <i>s</i> and an
+   integer <i>b</i> that represents an unsigned byte, then it sends
+   <i>b</i> back to <i>s</i> so that it may be read again. Calling
+   <i>unget</i> two or more times in a row on the same input stream has
+   undefined results. If the stream argument <i>s</i> does not appear,
+   then the stream
+   <a href="#standard">
+    <i>input</i>
+   </a>
+   is assumed to appear in its place.
+  </p>
+  <a name="unread">
+  </a>
+  <p>
+   <b>2.13. <i>unread.</i></b>
+  </p>
+  <p align="justify">
+   The name <i>unread</i> is bound in the following way.
+  </p>
+  <blockquote>
+   <p>
+    <i>unread</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>u</i></font>(<b>alt</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>u</i>(</font>(<b>form</b>&nbsp;(<i>cha</i>&nbsp;<i>c</i>)&nbsp;<i>bool</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>u</i>((<b>f</b></font><i>unread</i>(<i>input</i>,&nbsp;<i>c</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>u</i>(</font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>,&nbsp;<i>char</i>0&nbsp;<i>c</i>)&nbsp;<i>bool</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>u</i>((<b>f</b></font><i>unget</i>(<i>s</i>,&nbsp;<i>c</i>{<i>int</i>})),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>u</i>(</font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>,&nbsp;<i>char</i>1&nbsp;<i>c</i>)&nbsp;<i>bool</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>u</i>((<b>f</b></font><i>Unread</i>(<i>s</i>,&nbsp;<i>c</i>{<i>int</i>})))
+   </p>
+  </blockquote>
+  <p align="justify">
+   If <i>unread</i> is called with an input stream <i>s</i> and a
+   character <i>c,</i> then it sends <i>c</i> back to <i>s</i>
+   so that it may be read again. (This is done either by
+   <a href="#unget">
+    <i>unget,</i>
+   </a>
+   or by a secret procedure <i>Unread,</i> whose definition is not shown.)
+   Calling <i>unread</i> two or more times in a row on the same input
+   stream has undefined results. If the stream argument <i>s</i> does not
+   appear, then the stream
+   <a href="#standard">
+    <i>input</i>
+   </a>
+   is assumed to appear in its place.
+  </p>
+  <a name="write">
+  </a>
+  <p>
+   <b>2.14. <i>write.</i></b>
+  </p>
+  <p align="justify">
+   The name <i>write</i> is bound in the following way.
+  </p>
+  <blockquote>
+   <p>
+    <i>write</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i></font>(<b>alt</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;(<i>cha</i>&nbsp;<i>c</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((<b>f</b></font><i>write</i>(<i>output</i>,&nbsp;<i>c</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;(<i>inj</i>&nbsp;<i>i</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((<b>f</b></font><i>write</i>(<i>output</i>,&nbsp;<i>i</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;(<i>rej</i>&nbsp;<i>r</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((<b>f</b></font><i>write</i>(<i>output</i>,&nbsp;<i>r</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;(<i>string</i>&nbsp;<i>s</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((<b>f</b></font><i>write</i>(<i>output</i>,&nbsp;<i>s</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;(<b>row</b>&nbsp;<i>exe</i>&nbsp;<i>p</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((<b>f</b></font><i>write</i>(<i>output</i>,&nbsp;<i>p</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;(<i>string</i>&nbsp;<i>f</i>,&nbsp;<i>list</i>&nbsp;<i>l</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((<b>f</b></font><i>write</i>(<i>output</i>,&nbsp;<i>f</i>,&nbsp;<i>l</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>,&nbsp;<i>char</i>0&nbsp;<i>c</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((<b>f</b></font><i>put</i>(<i>s</i>,&nbsp;<i>c</i>{<i>int</i>})),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>,&nbsp;<i>char</i>1&nbsp;<i>c</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((<b>f</b></font><i>Write</i>(<i>s</i>,&nbsp;<i>c</i>{<i>int</i>})),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>,&nbsp;<i>inj</i>&nbsp;<i>i</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((<b>f</b></font><i>write</i>(<i>s</i>,&nbsp;''<tt>%i</tt>'':&nbsp;<i>i</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>,&nbsp;<i>rej</i>&nbsp;<i>r</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((<b>f</b></font><i>write</i>(<i>s</i>,&nbsp;''<tt>%G</tt>'':&nbsp;<i>r</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>,&nbsp;<i>string</i>&nbsp;<i>t</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((<b>f</b></font><i>write</i>(<i>s</i>,&nbsp;''<tt>%s</tt>'':&nbsp;<i>t</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>,&nbsp;<b>row</b>&nbsp;<i>exe</i>&nbsp;<i>p</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((<b>f</b></font><i>write</i>(<i>s</i>,&nbsp;''<tt>%08X</tt>'':&nbsp;<i>p</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>,&nbsp;<i>string</i>&nbsp;<i>f</i>,&nbsp;<i>list</i>&nbsp;<i>l</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((<b>f</b></font><i>c</i>'<i>s</i>(<i>int</i>,&nbsp;''<tt>fprintf</tt>'':&nbsp;<i>s</i>,&nbsp;<i>f</i>,&nbsp;<i>l</i>)))
+   </p>
+  </blockquote>
+  <p align="justify">
+   If <i>write</i> is called with an output stream <i>s</i> and a
+   character <i>c</i> as its arguments, then it writes <i>c</i> to
+   <i>s.</i> (This is done either by
+   <a href="#put">
+    <i>put,</i>
+   </a>
+   or by a secret procedure <i>Write,</i> whose definition is not shown.)
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If <i>write</i> is called with an output
+   stream <i>s</i> and an integer, a real, a string, or a pointer (other
+   than a string) as its arguments, then it will write to <i>s</i> a
+   series of characters that notate its second argument. A string is written
+   without surrounding quotation marks. A pointer that is not a string is
+   written as a series of hexadecimal digits.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If <i>write</i> is called with a stream
+   <i>s,</i> a format string <i>f,</i> and a list of objects
+   <i>l,</i> then it will write the notations of the objects in
+   <i>l</i> to <i>s,</i> in a way specified by <i>f.</i>
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; In all of the above cases, <i>write</i>
+   returns the number of bytes that were written to the stream <i>s.</i>
+   Also, if the stream argument <i>s</i> does not appear, then
+   <a href="#standard">
+    <i>output</i>
+   </a>
+   is assumed to appear in its place.
+  </p>
+  <a name="writeln">
+  </a>
+  <p>
+   <b>2.15. <i>writeln.</i></b>
+  </p>
+  <p align="justify">
+   The name <i>writeln</i> is bound in the following way.
+  </p>
+  <blockquote>
+   <p>
+    <i>writeln</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i></font>(<b>alt</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;()&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((<b>f</b></font><i>writeln</i>(<i>output</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((<b>f</b></font><i>c</i>'<i>s</i>(<i>int</i>,&nbsp;''<tt>fprintf</tt>'':&nbsp;<i>s</i>,&nbsp;&#1013;&nbsp;&amp;&nbsp;<i>eol</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;(<i>cha</i>&nbsp;<i>c</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((<b>f</b></font><i>writeln</i>(<i>output</i>,&nbsp;<i>c</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;(<i>inj</i>&nbsp;<i>i</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((<b>f</b></font><i>writeln</i>(<i>output</i>,&nbsp;<i>i</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;(<i>rej</i>&nbsp;<i>r</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((<b>f</b></font><i>writeln</i>(<i>output</i>,&nbsp;<i>r</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;(<i>string</i>&nbsp;<i>t</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((<b>f</b></font><i>writeln</i>(<i>output</i>,&nbsp;<i>t</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;(<b>row</b>&nbsp;<i>exe</i>&nbsp;<i>p</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((<b>f</b></font><i>writeln</i>(<i>output</i>,&nbsp;<i>p</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;(<i>string</i>&nbsp;<i>f</i>,&nbsp;<i>list</i>&nbsp;<i>l</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((<b>f</b></font><i>writeln</i>(<i>output</i>,&nbsp;<i>f</i>,&nbsp;<i>l</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>,&nbsp;<i>char</i>0&nbsp;<i>c</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((<b>f</b></font><i>writeln</i>(<i>s</i>,&nbsp;''<tt>%c</tt>'':&nbsp;<i>c</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>,&nbsp;<i>char</i>1&nbsp;<i>c</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((<b>f</b></font><i>Write</i>(<i>s</i>,&nbsp;<i>c</i>{<i>int</i>})&nbsp;+&nbsp;1&nbsp;<b>also</b>&nbsp;<i>put</i>(<i>s</i>,&nbsp;<i>eol</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>,&nbsp;<i>inj</i>&nbsp;<i>i</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((<b>f</b></font><i>writeln</i>(<i>s</i>,&nbsp;''<tt>%i</tt>'':&nbsp;<i>i</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>,&nbsp;<i>rej</i>&nbsp;<i>r</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((<b>f</b></font><i>writeln</i>(<i>s</i>,&nbsp;''<tt>%G</tt>'':&nbsp;<i>r</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>,&nbsp;<i>string</i>&nbsp;<i>t</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((<b>f</b></font><i>writeln</i>(<i>s</i>,&nbsp;''<tt>%s</tt>'':&nbsp;<i>t</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>,&nbsp;<b>row</b>&nbsp;<i>exe</i>&nbsp;<i>p</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((<b>f</b></font><i>writeln</i>(<i>s</i>,&nbsp;''<tt>%08X</tt>'':&nbsp;<i>p</i>)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(</font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>,&nbsp;<i>string</i>&nbsp;<i>f</i>,&nbsp;<i>list</i>&nbsp;<i>l</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>((</font>(<b>if</b>&nbsp;<i>isString</i>(<i>f</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(((</font><b>then</b>&nbsp;<i>c</i>'<i>s</i>(<i>int</i>,&nbsp;''<tt>fprintf</tt>'':&nbsp;<i>s</i>,&nbsp;<i>f</i>&nbsp;&amp;&nbsp;<i>eol</i>,&nbsp;<i>l</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>w</i>(((</font><b>else</b>&nbsp;<i>c</i>'<i>s</i>(<i>int</i>,&nbsp;''<tt>fprintf</tt>'':&nbsp;<i>s</i>,&nbsp;<i>f</i>,&nbsp;<i>l</i>)&nbsp;+&nbsp;<i>write</i>(<i>s</i>,&nbsp;<i>eol</i>))))
+   </p>
+  </blockquote>
+  <p align="justify">
+   If <i>writeln</i> is called with an output stream <i>s</i> as its
+   single argument, then it writes the character
+   <a href="#character">
+    <i>eol</i>
+   </a>
+   to <i>s,</i> thereby terminating the most recent line written to
+   <i>s.</i>
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Otherwise, a call to <i>writeln</i> is
+   equivalent to calling <i>write</i> with the same arguments, then
+   writing <i>eol</i> to the same output stream. For example, if
+   <i>i</i> is an integer, then calling
+   <i>writeln</i>(<i>s,</i>&nbsp;<i>i</i>) is equivalent to
+   <i>write</i>(<i>s,</i>&nbsp;<i>i</i>) followed by
+   <i>write</i>(<i>s,</i>&nbsp;<i>eol</i>).
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; In all the above cases, <i>writeln</i>
+   returns the number of bytes that were written to the stream <i>s,</i>
+   including the final <i>eol.</i> Also, if the stream argument
+   <i>s</i> does not appear, then
+   <a href="#standard">
+    <i>output</i>
+   </a>
+   is assumed to appear in its place.
+  </p>
+  <a name="extend">
+  </a>
+  <p>
+   <b>3. Extension conventions.</b>
+  </p>
+  <p align="justify">
+   Some Orson programs define representations for objects and methods that
+   operate on those objects. For example, a program might define a type
+   <i>comp</i> to represent complex numbers, and define methods like
+   <i>"</i>+<i>", "</i>&#8722;<i>", "</i>&#215;<i>",</i>
+   and <i>"</i>/<i>"</i> to operate on them. The program might then
+   be placed in a library so it could be used as part of larger programs.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; By convention, a program that defines a type
+   <i>t</i> and its operations may also extend the form
+   <a href="#read">
+    <i>read</i>
+   </a>
+   so it can read notations for objects of type <i>t.</i> For example, the
+   complex number program may define
+   <i>read</i>(<i>s,</i>&nbsp;<i>comp</i>) to read a notation
+   like <tt>2.0i</tt>&nbsp;<tt>+</tt>&nbsp;<tt>3.0</tt> from a
+   stream <i>s,</i> then return the corresponding complex number.
+   Similarly, the program may extend the form
+   <a href="#write">
+    <i>write</i>
+   </a>
+   so it can write notations for objects of type <i>t.</i> For example,
+   the complex number program may define
+   <i>write</i>(<i>s,</i>&nbsp;<i>z</i>) so it works when
+   <i>z</i> is a <i>comp.</i>
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Also by convention, if
+   <i>read</i>(<i>s,</i>&nbsp;<i>t</i>) reads a notation from
+   <i>s,</i> then <i>read</i>(<i>t</i>) may read the same
+   notation from
+   <a href="#standard">
+    <i>input.</i>
+   </a>
+   Similarly, if <i>write</i>(<i>s,</i>&nbsp;<i>o</i>) writes a
+   notation to <i>s,</i> then <i>write</i>(<i>o</i>) may write
+   the same notation to
+   <a href="#standard">
+    <i>output.</i>
+   </a>
+   The form
+   <a href="#writeln">
+    <i>writeln</i>
+   </a>
+   may be extended so that it behaves the same way as <i>write,</i> except
+   that it terminates its output with
+   <a href="#character">
+    <i>eol.</i>
+   </a>
+  </p>
+  <hr />
+  <a name="references">
+  </a>
+  <p align="center">
+   <b>References</b>
+  </p>
+  <table cellpadding="0" cellspacing="0">
+   <tr valign="top">
+    <td>
+     <p>
+      <a name="ans1986">
+      </a>
+      [<small>ANS</small>&nbsp;1986]&nbsp;&nbsp;
+     </p>
+    </td>
+    <td>
+     <p align="justify">
+      American National Standards Institute. <i>American National Standard
+      Code for Information Interchange.</i> A<small>NSI</small>
+      X3.4&#8211;1986.
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      <a name="cha1989">
+      </a>
+      [<small>CHA</small>&nbsp;1989]&nbsp;&nbsp;
+     </p>
+    </td>
+    <td>
+     <p align="justify">
+      Graham Chapman, John Cleese, Terry Gilliam, Eric Idle, Terry Jones,
+      Michael Palin. <i>Monty Python&rsquo;s Flying Circus: All The
+      Words.</i> Volume Two. Pantheon Books. New York, New York. 1989. Page
+      282.
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      <a name="jen1974">
+      </a>
+      [<small>JEN</small>&nbsp;1974]&nbsp;&nbsp;
+     </p>
+    </td>
+    <td>
+     <p align="justify">
+      Kathleen Jensen, Niklaus Wirth. <i>P<small>ASCAL</small> User
+      Manual and Report.</i> Lecture Notes in Computer Science Number 18.
+      Springer Verlag. Berlin, Germany. 1974.
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      <a name="ker1988">
+      </a>
+      [<small>KER</small>&nbsp;1988]&nbsp;&nbsp;
+     </p>
+    </td>
+    <td>
+     <p align="justify">
+      Brian W. Kernighan, Dennis M. Ritchie. <i>The C Programming
+      Language.</i> Second Edition. Prentice-Hall. Upper Saddle River, New
+      Jersey. 1988.
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      <a name="loo2014">
+      </a>
+      [<small>LOO</small>&nbsp;2014]&nbsp;&nbsp;
+     </p>
+    </td>
+    <td>
+     <p align="justify">
+      Sandra Loosemore, Richard M. Stallman, Roland McGrath, Andrew Oram,
+      Ulrich Drepper. <i>The G<small>NU</small> C Library Reference
+      Manual.</i> Free Software Foundation. Boston, Massachusetts. 2014.
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      <a name="moe2017">
+      </a>
+      [<small>MOE</small>&nbsp;2017]&nbsp;&nbsp;
+     </p>
+    </td>
+    <td>
+     <p align="justify">
+      James B. Moen. &lsquo;&lsquo;Orson&rsquo;s Interface to
+      G<small>NU</small> C.&rsquo;&rsquo; Unpublished technical report.
+      2017.
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      <a name="moe2018">
+      </a>
+      [<small>MOE</small>&nbsp;2018]&nbsp;&nbsp;
+     </p>
+    </td>
+    <td>
+     <p align="justify">
+      James B. Moen. &lsquo;&lsquo;Revised&#8315;&#185; Report on the
+      Algorithmic Language Orson.&rsquo;&rsquo; Unpublished technical report.
+      2018.
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      <a name="sta2008">
+      </a>
+      [<small>STA</small>&nbsp;2008]&nbsp;&nbsp;
+     </p>
+    </td>
+    <td>
+     <p align="justify">
+      Richard M. Stallman, the G<small>CC</small> Developer Community.
+      &lsquo;&lsquo;Using and Porting the G<small>NU</small> Compiler
+      Collection.&rsquo;&rsquo; Free Software Foundation. Boston,
+      Massachusetts. 2008.
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      <a name="ste2005">
+      </a>
+      [<small>STE</small>&nbsp;2005]&nbsp;&nbsp;
+     </p>
+    </td>
+    <td>
+     <p align="justify">
+      W. Richard Stevens, Stephen A. Rago. <i>Advanced Programming in the
+      Unix Environment.</i> Second Edition. Addison-Wesley. Upper Saddle
+      River, New Jersey. 2005.
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      <a name="uni2006">
+      </a>
+      [<small>UNI</small>&nbsp;2006]&nbsp;&nbsp;
+     </p>
+    </td>
+    <td>
+     <p align="justify">
+      The Unicode Consortium. <i>The Unicode Standard, Version 5.0.</i>
+      Fifth Edition. Addison-Wesley Professional. Reading, Massachusetts. 2006.
+     </p>
+    </td>
+   </tr>
+  </table>
+ </body>
+</html>
