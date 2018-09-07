@@ -1,0 +1,437 @@
+<!-- Created by Bracy 0.4 on Monday, January 1, 2018 at 7:22 PM CST -->
+<html>
+ <head>
+  <title>
+   Orson Needs No More Parentheses Than C
+  </title>
+  <style>
+   a:active
+    { color: purple;
+      font-weight: bold;
+      text-decoration: none }
+   a:link
+    { color: blue;
+      font-weight: bold;
+      text-decoration: none }
+   a:visited
+    { color: purple;
+      font-weight: bold;
+      text-decoration: none }
+   hr
+    { background-color: black;
+      border: none;
+      color: black;
+      height: 1px }
+   table
+    { border-collapse: collapse }
+  </style>
+ </head>
+ <body bgcolor="#FFFFFF">
+  <p align="center">
+   <b>Orson Needs No More Parentheses Than C</b>
+   <br />
+   <br />
+   James B. Moen
+   <br />
+   February 3, 2014
+  </p>
+  <p align="justify">
+   Copyright &#169; 2014 James B. Moen. Permission is granted to copy,
+   distribute, and/or modify this document under the terms of the
+   G<small>NU</small> Free Documentation License, Version 1.3 or any later
+   version published by the Free Software Foundation; with no Invariant
+   Sections, no Front-Cover Texts, and no Back-Cover Texts. A copy of the
+   license may be obtained at
+   <a href="http://fsf.org/">
+    <tt>&lt;http://fsf.org/&gt;.</tt>
+   </a>
+  </p>
+  <hr />
+  <p>
+   <b>0. Introduction.</b>
+  </p>
+  <blockquote>
+   <p align="justify">
+    I would discard the Parenthesis. Also the reparenthesis, the
+    rereparenthesis, and the re-re-re-re-re-re-parentheses, and likewise the
+    final wide-reaching all inclosing king-parenthesis.
+   </p>
+   <p align="right">
+    <a href="#cle1971">
+     [<small>CLE</small> 1971]
+    </a>
+   </p>
+  </blockquote>
+  <p align="justify">
+   When people first encounter the programming language Orson
+   <a href="#moe2014">
+    [<small>MOE</small> 2014],
+   </a>
+   they often complain that it requires too many parentheses. Some even compare
+   Orson with Lisp
+   <a href="#ste1990">
+    [<small>STE</small> 1990],
+   </a>
+   even though Orson uses an infix notation, and Lisp uses a parenthesized
+   prefix notation. However, suppose that the word <i>parentheses</i>
+   means not only &lsquo;<tt>(</tt>&rsquo; and
+   &lsquo;<tt>)</tt>&rsquo;, but also &lsquo;<tt>{</tt>&rsquo; and
+   &lsquo;<tt>}</tt>&rsquo;, which are usually called <i>braces.</i>
+   Then Orson programs use about the same number of parentheses as equivalent C
+   <a href="#ker1988">
+    [<small>KER</small> 1988]
+   </a>
+   programs, and most Orson programs use fewer.
+  </p>
+  <p>
+   <b>1. Clauses and statements.</b>
+  </p>
+  <p align="justify">
+   Orson and C use about the same number of parentheses in expressions. Any
+   difference in the required number of parentheses must be shown by comparing
+   Orson clauses with C statements. The following table compares the number of
+   parentheses in Orson clauses on the left, and their equivalent C statements
+   on the right. The symbol <i>E</i> stands for an Orson assignment or its
+   equivalent C expression. The symbol <i>L</i> stands for an Orson
+   assignment or its equivalent C case label. The symbol <i>S</i> stands
+   for an Orson sequence or its equivalent series of C statements.
+  </p>
+  <table align="center" border="1" cellpadding="3" cellspacing="0">
+   <tr bgcolor="#D3D3D3" valign="top">
+    <td>
+     <p align="center">
+      <b>Orson</b>
+     </p>
+    </td>
+    <td>
+     <p align="center">
+      <b>C</b>
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      &nbsp;2&nbsp;&nbsp;&nbsp;(<b>while</b>&nbsp;<i>S</i>&nbsp;;&nbsp;<i>E</i>)
+     </p>
+    </td>
+    <td>
+     <p>
+      2&nbsp;&nbsp;&nbsp;<tt>do</tt>&nbsp;<i>S</i>&nbsp;<tt>while</tt>&nbsp;<tt>(</tt><i>E</i><tt>);</tt>&nbsp;
+      <br />
+      4&nbsp;&nbsp;&nbsp;<tt>do</tt>&nbsp;<tt>{</tt>&nbsp;<i>S</i>&nbsp;<tt>}</tt>&nbsp;<tt>while</tt>&nbsp;<tt>(</tt><i>E</i><tt>);</tt>
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      &nbsp;2&nbsp;&nbsp;&nbsp;(<b>if</b>&nbsp;<i>E</i>&nbsp;<b>then</b>&nbsp;<i>S</i>)&nbsp;
+      <br />
+      <font color="#FFFFFF">&nbsp;</font>2&nbsp;&nbsp;&nbsp;(<b>if</b>&nbsp;<i>E</i>&nbsp;<b>then</b>&nbsp;<i>S</i>&nbsp;<b>else</b>&nbsp;<i>S</i>)&nbsp;
+     </p>
+    </td>
+    <td>
+     <p>
+      2&nbsp;&nbsp;&nbsp;<tt>if</tt>&nbsp;<tt>(</tt><i>E</i><tt>)</tt>&nbsp;<i>S</i>&nbsp;
+      <br />
+      4&nbsp;&nbsp;&nbsp;<tt>if</tt>&nbsp;<tt>(</tt><i>E</i><tt>)</tt>&nbsp;<tt>{</tt>&nbsp;<i>S</i>&nbsp;<tt>}</tt>&nbsp;
+      <br />
+      2&nbsp;&nbsp;&nbsp;<tt>if</tt>&nbsp;<tt>(</tt><i>E</i><tt>)</tt>&nbsp;<i>S</i>&nbsp;<tt>else</tt>&nbsp;<i>S</i>&nbsp;
+      <br />
+      4&nbsp;&nbsp;&nbsp;<tt>if</tt>&nbsp;<tt>(</tt><i>E</i><tt>)</tt>&nbsp;<i>S</i>&nbsp;<tt>else</tt>&nbsp;<tt>{</tt>&nbsp;<i>S</i>&nbsp;<tt>}</tt>&nbsp;
+      <br />
+      4&nbsp;&nbsp;&nbsp;<tt>if</tt>&nbsp;<tt>(</tt><i>E</i><tt>)</tt>&nbsp;<tt>{</tt>&nbsp;<i>S</i>&nbsp;<tt>}</tt>&nbsp;<tt>else</tt>&nbsp;<i>S</i>&nbsp;
+      <br />
+      6&nbsp;&nbsp;&nbsp;<tt>if</tt>&nbsp;<tt>(</tt><i>E</i><tt>)</tt>&nbsp;<tt>{</tt>&nbsp;<i>S</i>&nbsp;<tt>}</tt>&nbsp;<tt>else</tt>&nbsp;<tt>{</tt>&nbsp;<i>S</i>&nbsp;<tt>}</tt>
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      &nbsp;2&nbsp;&nbsp;&nbsp;(<b>case</b>&nbsp;<i>E</i>&nbsp;<b>of</b>&nbsp;<i>L</i>:&nbsp;<i>E</i>)&nbsp;
+      <br />
+      <font color="#FFFFFF">&nbsp;</font>4&nbsp;&nbsp;&nbsp;(<b>case</b>&nbsp;<i>E</i>&nbsp;<b>of</b>&nbsp;<i>L</i>:&nbsp;(<i>S</i>))
+     </p>
+    </td>
+    <td>
+     <p>
+      2&nbsp;&nbsp;&nbsp;<tt>switch</tt>&nbsp;<tt>(</tt><i>E</i><tt>)</tt>&nbsp;<i>S</i>&nbsp;
+      <br />
+      4&nbsp;&nbsp;&nbsp;<tt>switch</tt>&nbsp;<tt>(</tt><i>E</i><tt>)</tt>&nbsp;<tt>{</tt>&nbsp;<i>S</i>&nbsp;<tt>}</tt>&nbsp;
+      <br />
+      4&nbsp;&nbsp;&nbsp;<tt>switch</tt>&nbsp;<tt>(</tt><i>E</i><tt>)</tt>&nbsp;<tt>{</tt>&nbsp;<i>L</i><tt>:</tt>&nbsp;<i>S</i>&nbsp;<tt>}</tt>&nbsp;
+      <br />
+      6&nbsp;&nbsp;&nbsp;<tt>switch</tt>&nbsp;<tt>(</tt><i>E</i><tt>)</tt>&nbsp;<tt>{</tt>&nbsp;<i>L</i><tt>:</tt>&nbsp;<tt>{</tt>&nbsp;<i>S</i>&nbsp;<tt>}}</tt>&nbsp;
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      &nbsp;2&nbsp;&nbsp;&nbsp;(<b>while</b>&nbsp;<i>E</i>&nbsp;<b>do</b>&nbsp;<i>S</i>)
+     </p>
+    </td>
+    <td>
+     <p>
+      2&nbsp;&nbsp;&nbsp;<tt>while</tt>&nbsp;<tt>(</tt><i>E</i><tt>)</tt>&nbsp;<i>S</i>&nbsp;
+      <br />
+      4&nbsp;&nbsp;&nbsp;<tt>while</tt>&nbsp;<tt>(</tt><i>E</i><tt>)</tt>&nbsp;<tt>{</tt>&nbsp;<i>S</i>&nbsp;<tt>}</tt>
+     </p>
+    </td>
+   </tr>
+  </table>
+  <p align="justify">
+   In each row of the table, the Orson clause uses no more parentheses than its
+   equivalent C statement, and often uses less. However, the table is
+   misleading when it compares Orson <i>case</i> clauses with C
+   <i>switch</i> statements. This is because a branch of a
+   <i>case</i> clause that is a sequence of expressions must be surrounded
+   by &lsquo;<tt>(</tt>&rsquo; and &lsquo;<tt>)</tt>&rsquo;. A branch
+   of a <i>switch</i> statement that is a series of statements need not be
+   surrounded by &lsquo;<tt>{</tt>&rsquo; and
+   &lsquo;<tt>}</tt>&rsquo;. As a result, long <i>case</i> clauses
+   may need more parentheses than their equivalent <i>switch</i>
+   statements.
+  </p>
+  <p>
+   <b>2. Example.</b>
+  </p>
+  <p align="justify">
+   The table&rsquo;s predictions can be verified by an example. The following
+   Orson equate defines a procedure that returns the index of an integer
+   element <i>key</i> in an integer array <i>keys,</i> using binary
+   search
+   <a href="#knu1973">
+    [<small>KNU</small> 1973].
+   </a>
+   If <i>key</i> is not an element of <i>keys,</i> then it returns
+   &#8722;1. The procedure uses 6 open parentheses and 6 closing parentheses,
+   for a total of 12 in all. (The brackets &lsquo;<tt>[</tt>&rsquo; and
+   &lsquo;<tt>]</tt>&rsquo; are not included in the count.)
+  </p>
+  <blockquote>
+   <p>
+    <i>binarySearch</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i></font>(<b>proc</b>&nbsp;([<i>k</i>]&nbsp;<i>int</i>&nbsp;<i>keys</i>,&nbsp;<i>int</i>&nbsp;<i>key</i>)&nbsp;<i>int</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>(</font>(<b>with</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>((<b>w</b></font><b>var</b>&nbsp;<i>int</i>&nbsp;<i>left</i>&nbsp;:&#8722;&nbsp;0&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>((<b>w</b></font><b>var</b>&nbsp;<i>int</i>&nbsp;<i>mid</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>((<b>w</b></font><b>var</b>&nbsp;<i>int</i>&nbsp;<i>right</i>&nbsp;:&#8722;&nbsp;<i>k</i>&nbsp;&#8722;&nbsp;1&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>((</font><b>do</b>&nbsp;(<b>while</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>((<b>do</b>&nbsp;(</font>(<b>if</b>&nbsp;<i>left</i>&nbsp;&gt;&nbsp;<i>right</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>((<b>do</b>&nbsp;((</font><b>then</b>&nbsp;<i>mid</i>&nbsp;:=&nbsp;&#8722;1&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>((<b>do</b>&nbsp;((<b>then</b>&nbsp;</font><i>false</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>((<b>do</b>&nbsp;((</font><b>else</b>&nbsp;<b>if</b>&nbsp;<i>mid</i>&nbsp;:=&nbsp;(<i>left</i>&nbsp;+&nbsp;<i>right</i>)&nbsp;/&nbsp;2&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>((<b>do</b>&nbsp;((<b>else</b>&nbsp;<b>if</b>&nbsp;</font><i>key</i>&nbsp;&lt;&nbsp;<i>keys</i>[<i>mid</i>]&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>((<b>do</b>&nbsp;((<b>else</b>&nbsp;</font><b>then</b>&nbsp;<i>right</i>&nbsp;:=&nbsp;<i>mid</i>&nbsp;&#8722;&nbsp;1&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>((<b>do</b>&nbsp;((<b>else</b>&nbsp;<b>then</b>&nbsp;</font><i>true</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>((<b>do</b>&nbsp;((<b>else</b>&nbsp;</font><b>else</b>&nbsp;<b>if</b>&nbsp;<i>key</i>&nbsp;&gt;&nbsp;<i>keys</i>[<i>mid</i>]&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>((<b>do</b>&nbsp;((<b>else</b>&nbsp;<b>else</b>&nbsp;</font><b>then</b>&nbsp;<i>left</i>&nbsp;:=&nbsp;<i>mid</i>&nbsp;+&nbsp;1&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>((<b>do</b>&nbsp;((<b>else</b>&nbsp;<b>else</b>&nbsp;<b>then</b>&nbsp;</font><i>true</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>((<b>do</b>&nbsp;((<b>else</b>&nbsp;<b>else</b>&nbsp;</font><b>else</b>&nbsp;<i>false</i>))&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>((<b>do</b>&nbsp;</font><i>mid</i>))
+   </p>
+  </blockquote>
+  <p align="justify">
+   This is a literal translation of the Orson procedure to a C function. Care
+   was taken to introduce only the minimum number of braces, even though some C
+   styles would use more. The function uses 8 open parentheses and 8 closing
+   parentheses, for a total of 16 in all.
+  </p>
+  <blockquote>
+   <p>
+    <tt>int&nbsp;binarySearch(int&nbsp;keys[],&nbsp;int&nbsp;key)&nbsp;</tt>
+    <br />
+    <tt>{&nbsp;int&nbsp;left&nbsp;=&nbsp;0;&nbsp;</tt>
+    <br />
+    <tt>&nbsp;&nbsp;int&nbsp;mid;&nbsp;</tt>
+    <br />
+    <tt>&nbsp;&nbsp;int&nbsp;right&nbsp;=&nbsp;k&nbsp;&#8722;&nbsp;1;&nbsp;</tt>
+    <br />
+    <tt>&nbsp;&nbsp;while&nbsp;(true)&nbsp;</tt>
+    <br />
+    <tt>&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(left&nbsp;&gt;&nbsp;right)&nbsp;</tt>
+    <br />
+    <tt>&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;mid&nbsp;=&nbsp;&#8722;1;&nbsp;</tt>
+    <br />
+    <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;&nbsp;}&nbsp;</tt>
+    <br />
+    <tt>&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;(mid&nbsp;=&nbsp;(left&nbsp;+&nbsp;right)&nbsp;/&nbsp;2,&nbsp;key&nbsp;&lt;&nbsp;keys[mid])&nbsp;</tt>
+    <br />
+    <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;right&nbsp;=&nbsp;mid&nbsp;&#8722;&nbsp;1;&nbsp;</tt>
+    <br />
+    <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;(key&nbsp;&gt;&nbsp;keys[mid])&nbsp;</tt>
+    <br />
+    <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;left&nbsp;=&nbsp;mid&nbsp;+&nbsp;1;&nbsp;</tt>
+    <br />
+    <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;</tt>
+    <br />
+    <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;&nbsp;</tt>
+    <br />
+    <tt>&nbsp;&nbsp;return&nbsp;mid;&nbsp;}</tt>
+   </p>
+  </blockquote>
+  <p align="justify">
+   It might be possible to rewrite the function so that
+   <tt>left&nbsp;&gt;&nbsp;right</tt> is moved into the
+   <tt>while</tt> loop&rsquo;s test. That would eliminate an
+   <tt>if</tt> statement and 4 parentheses, giving the rewritten function
+   a total of 12 in all. However, this is still the same number of parentheses
+   used by the Orson procedure.
+  </p>
+  <hr />
+  <p align="center">
+   <b>References</b>
+  </p>
+  <table cellpadding="0" cellspacing="0">
+   <tr valign="top">
+    <td>
+     <p>
+      <a name="cle1971">
+      </a>
+      [<small>CLE</small>&nbsp;1971]&nbsp;&nbsp;
+     </p>
+    </td>
+    <td>
+     <p align="justify">
+      Samuel Clemens. &lsquo;&lsquo;The Awful German Language.&rsquo;&rsquo; In
+      <i>Satire from Aesop to Buchwald.</i> Fredrick Kiley, J. M.
+      Shuttleworth, editors. The Bobbs-Merrill Company, Inc. Indianapolis,
+      Indiana. 1971. Pages 218&#8211;234.
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      <a name="ker1988">
+      </a>
+      [<small>KER</small>&nbsp;1988]&nbsp;&nbsp;
+     </p>
+    </td>
+    <td>
+     <p align="justify">
+      Brian W. Kernighan, Dennis M. Ritchie. <i>The C Programming
+      Language.</i> Second Edition. Prentice-Hall. Upper Saddle River, New
+      Jersey. 1988.
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      <a name="knu1973">
+      </a>
+      [<small>KNU</small>&nbsp;1973]&nbsp;&nbsp;
+     </p>
+    </td>
+    <td>
+     <p align="justify">
+      Donald E. Knuth. <i>Sorting and Searching.</i> Addison-Wesley
+      Publishing Company, Inc. Reading, Massachusetts. 1973. Pages
+      406&#8211;408.
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      <a name="moe2014">
+      </a>
+      [<small>MOE</small>&nbsp;2014]&nbsp;&nbsp;
+     </p>
+    </td>
+    <td>
+     <p align="justify">
+      James B. Moen. &lsquo;&lsquo;Revised&#8315;&#185; Report on the
+      Algorithmic Language Orson.&rsquo;&rsquo; Unpublished technical report.
+      2014.
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      <a name="ste1990">
+      </a>
+      [<small>STE</small>&nbsp;1990]&nbsp;&nbsp;
+     </p>
+    </td>
+    <td>
+     <p align="justify">
+      Guy L. Steele Jr. <i>Common Lisp: The Language.</i> Second Edition.
+      Digital Press. Bedford, Massachusetts. 1990.
+     </p>
+    </td>
+   </tr>
+  </table>
+ </body>
+</html>

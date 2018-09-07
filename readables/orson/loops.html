@@ -1,0 +1,2207 @@
+<!-- Created by Bracy 0.4 on Monday, January 1, 2018 at 7:17 PM CST -->
+<html>
+ <head>
+  <title>
+   Writing Loops in Orson
+  </title>
+  <style>
+   a:active
+    { color: purple;
+      font-weight: bold;
+      text-decoration: none }
+   a:link
+    { color: blue;
+      font-weight: bold;
+      text-decoration: none }
+   a:visited
+    { color: purple;
+      font-weight: bold;
+      text-decoration: none }
+   hr
+    { background-color: black;
+      border: none;
+      color: black;
+      height: 1px }
+   table
+    { border-collapse: collapse }
+  </style>
+ </head>
+ <body bgcolor="#FFFFFF">
+  <p align="center">
+   <b>Writing Loops in Orson</b>
+   <br />
+   <br />
+   James B. Moen
+   <br />
+   June 12, 2013
+  </p>
+  <p align="center">
+   <b>Abstract</b>
+  </p>
+  <blockquote>
+   <p align="justify">
+    The only loop provided by the programming language Orson is a
+    <i>while</i> loop. However, Orson can still implement all the loops
+    that are commonly used in other languages, and many that are not. This
+    essay shows how to implement <i>repeat</i> loops, <i>middle
+    check</i> loops, and complex loops with multiple termination tests. It
+    also shows how higher order forms can implement <i>counting</i> loops,
+    C-like <i>for</i> loops, loops that can be terminated by
+    <i>breakers,</i> and <i>iterator</i> loops for specific data
+    structures.
+   </p>
+  </blockquote>
+  <p align="justify">
+   Copyright &#169; 2013 James B. Moen. Permission is granted to copy,
+   distribute, and/or modify this document under the terms of the
+   G<small>NU</small> Free Documentation License, Version 1.3 or any later
+   version published by the Free Software Foundation; with no Invariant
+   Sections, no Front-Cover Texts, and no Back-Cover Texts. A copy of the
+   license may be obtained at
+   <a href="http://fsf.org/">
+    <tt>&lt;http://fsf.org/&gt;.</tt>
+   </a>
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This document uses special characters.
+   Without proper rendering support, you may see question marks, boxes, or
+   other symbols in place of these characters. This document must be rendered
+   in a font where an italic quote &lsquo;&nbsp;<i>"</i>&nbsp;&rsquo;
+   looks different from two apostrophes &lsquo;&nbsp;''&nbsp;&rsquo;.
+  </p>
+  <hr />
+  <p>
+   <b>1. Introduction.</b>
+  </p>
+  <blockquote>
+   <p align="justify">
+    You will soon find a loop [...] that is right for your purpose, one that is
+    both practical and attractive.
+   </p>
+   <p align="right">
+    <a href="#zar1961">
+     [<small>ZAR</small> 1961]
+    </a>
+   </p>
+  </blockquote>
+  <p align="justify">
+   Most programming languages provide several different kinds of loops, but
+   Orson
+   <a href="#moe2013a">
+    [<small>MOE</small> 2013<small>A</small>]
+   </a>
+   provides only one. It&rsquo;s called a <i>while</i> clause, and it
+   looks like this.
+  </p>
+  <blockquote>
+   <p>
+    (<b>while</b>&nbsp;<i>test</i>&nbsp;<b>do</b>&nbsp;<i>body</i>)
+   </p>
+  </blockquote>
+  <p align="justify">
+   Orson executes a <i>while</i> clause by first executing the expression
+   <i>test.</i> If it executes to a <i>true</i> value (any integer
+   other than zero) then the expression <i>body</i> is executed, its value
+   is discarded, and the <i>while</i> clause is executed in the same way
+   again. However, if it executes to a <i>false</i> value (zero) then the
+   <i>while</i> clause is terminated, and it returns the dummy value
+   <i>skip.</i> For example, the following fragment prints integers from 1
+   to 10, using the form <i>writeln</i>
+   <a href="#moe2013b">
+    [<small>MOE</small> 2013<small>B</small>].
+   </a>
+  </p>
+  <blockquote>
+   <p>
+    (<b>with</b>&nbsp;<b>var</b>&nbsp;<i>int</i>&nbsp;<i>k</i>&nbsp;:&#8722;&nbsp;1&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;(<b>while</b>&nbsp;<i>k</i>&nbsp;&#8804;&nbsp;10&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(</font><b>do</b>&nbsp;<i>writeln</i>(<i>k</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;</font><i>k</i>&nbsp;+=&nbsp;1))
+   </p>
+  </blockquote>
+  <p align="justify">
+   This essay will show how you can use Orson&rsquo;s <i>while</i> clause
+   to implement other kinds of loops. Some of these loops depend on Orson being
+   an expression language, in which everything returns a value. Other loops
+   depend on higher-order forms that take other forms as arguments, or that
+   return other forms as values. It&rsquo;s assumed that you already know a
+   little about Orson.
+  </p>
+  <p>
+   <b>2. Repeat loops.</b>
+  </p>
+  <p align="justify">
+   Some languages provide a loop similar to a <i>while</i> clause, but
+   whose body is always executed at least once. The programming language Pascal
+   <a href="#jnw1974">
+    [<small>JNW</small> 1974]
+   </a>
+   called this a <i>repeat</i> statement, and the languages based on C
+   <a href="#knr1988">
+    [<small>KNR</small> 1988]
+   </a>
+   call it a <i>do</i> statement. I&rsquo;ll call it a <i>repeat</i>
+   loop. You can implement a <i>repeat</i> loop in Orson by using the
+   semicolon operator, like this.
+  </p>
+  <blockquote>
+   <p>
+    (<b>while</b>&nbsp;<i>body</i>&nbsp;;&nbsp;<i>test</i>&nbsp;<b>do</b>&nbsp;<i>skip</i>)
+   </p>
+  </blockquote>
+  <p align="justify">
+   Here the expression (<i>body</i>&nbsp;;&nbsp;<i>test</i>) first
+   executes <i>body,</i> then <i>test,</i> and returns the value of
+   <i>test.</i> Since the <i>while</i> clause&rsquo;s body is
+   <i>skip,</i> the loop can also be abbreviated like this.
+  </p>
+  <blockquote>
+   <p>
+    (<b>while</b>&nbsp;<i>body</i>&nbsp;;&nbsp;<i>test</i>)
+   </p>
+  </blockquote>
+  <p align="justify">
+   A repeat loop implemented in this way can print integers from 1 to 10, as
+   shown below.
+  </p>
+  <blockquote>
+   <p>
+    (<b>with</b>&nbsp;<b>var</b>&nbsp;<i>int</i>&nbsp;<i>k</i>&nbsp;:&#8722;&nbsp;1&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;(<b>while</b>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>w</b></font><i>writeln</i>(<i>k</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>w</b></font><i>k</i>&nbsp;+=&nbsp;1&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>w</b></font><i>k</i>&nbsp;&#8804;&nbsp;10))
+   </p>
+  </blockquote>
+  <p align="justify">
+   I first saw this trick for implementing <i>repeat</i> loops as
+   <i>while</i> loops in the programming language Algol 68
+   <a href="#vwi1977">
+    [<small>VWI</small> 1977].
+   </a>
+  </p>
+  <p>
+   <b>3. Middle check loops.</b>
+  </p>
+  <p align="justify">
+   In a <i>while</i> clause, the Boolean test is executed before the body.
+   In an <i>until</i> loop, it&rsquo;s executed <i>after</i> the
+   body. You can also have a loop that has two bodies, with the test between
+   them. I&rsquo;ll call it a <i>middle check</i> loop. It looks like
+   this.
+  </p>
+  <blockquote>
+   <p>
+    (<b>while</b>&nbsp;<i>body</i>&#8321;&nbsp;;&nbsp;<i>test</i>&nbsp;<b>do</b>&nbsp;<i>body</i>&#8322;)
+   </p>
+  </blockquote>
+  <p align="justify">
+   The first body (<i>body</i>&#8321;) is executed, well, first. Then
+   <i>test</i> is executed. If <i>test</i> executes to a true value,
+   then the second body (<i>body</i>&#8322;) is executed, and the loop
+   keeps going. If it executes to a false value, then the loop terminates
+   without executing the second body.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Middle check loops are often used to read
+   files. Suppose that <i>open</i>(<i>p,</i>&nbsp;''r'')
+   returns a <i>stream</i>
+   <a href="#moe2013a">
+    [<small>MOE</small> 2013<small>A</small>]
+   </a>
+   that&rsquo;s connected to a file whose pathname is the string <i>p</i>
+   <a href="#moe2013b">
+    [<small>MOE</small> 2013<small>B</small>].
+   </a>
+   Also suppose that <i>read</i>(<i>s</i>) reads a <i>char</i>
+   from the stream <i>s</i> and returns it. If there are no more
+   characters left to read, then it returns <i>eos</i> (end of stream)
+   instead. If <i>c</i> is a <i>char,</i> then
+   <i>write</i>(<i>c</i>) writes it on a standard output device. And
+   if <i>s</i> is a stream, then <i>close</i>(<i>s</i>) breaks
+   the connection between the stream and the file that was made by
+   <i>open.</i>
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; You can now write a code fragment that lists
+   a file whose name is ''foo''. It uses a middle check loop, as shown
+   below. The first body is <i>read</i>(<i>s</i>), the test is
+   (<i>c</i>&nbsp;&#8800;&nbsp;<i>eos</i>), and the second body is
+   <i>write</i>(<i>c</i>).
+  </p>
+  <blockquote>
+   <p>
+    (<b>with</b>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b></font><i>stream</i>&nbsp;<i>s</i>&nbsp;:&#8722;&nbsp;<i>open</i>(''foo'',&nbsp;''r'')&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b></font><b>var</b>&nbsp;<i>char</i>&nbsp;<i>c</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;(<b>while</b>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>w</b></font><i>c</i>&nbsp;:=&nbsp;<i>read</i>(<i>s</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>w</b></font><i>c</i>&nbsp;&#8800;&nbsp;<i>eos</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(</font><b>do</b>&nbsp;<i>write</i>(<i>c</i>))&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;</font><i>close</i>(<i>s</i>))
+   </p>
+  </blockquote>
+  <p align="justify">
+   In languages based on C
+   <a href="#knr1988">
+    [<small>KNR</small> 1988],
+   </a>
+   you&rsquo;d set the variable <i>c</i> inside the test for
+   <i>eos.</i> However, this is a bad idea, since it requires complicated
+   rules about how to handle side effects inside expressions. As a result,
+   it&rsquo;s almost never done in Orson programs.
+  </p>
+  <p>
+   <b>4. Complex loops.</b>
+  </p>
+  <p align="justify">
+   So far, you&rsquo;ve seen what I call <i>simple loops,</i> because they
+   have only one test that decides when they should terminate. Other loops,
+   which I&rsquo;ll call <i>complex loops,</i> can have two or more such
+   tests.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I&rsquo;ll talk about complex loops by
+   showing how to find a node in a binary search tree (<small>BST</small>
+   for short). See any undergraduate data structures textbook to find out about
+   <small>BST</small>s (my favorite is
+   <a href="#wir1976">
+    [<small>WIR</small> 1976],
+   </a>
+   but it&rsquo;s long out of print). I&rsquo;ll represent a node in a
+   <small>BST</small> by using a tuple type, like this.
+  </p>
+  <blockquote>
+   <p>
+    <i>bst</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i></font>(<b>tuple</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>(<b>t</b></font><i>keyType</i>&nbsp;<i>key</i>,&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>(<b>t</b></font><i>valueType</i>&nbsp;<i>value</i>,&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>(<b>t</b></font><b>var</b>&nbsp;<b>ref</b>&nbsp;<i>bst</i>&nbsp;<i>left</i>,&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>(<b>t</b></font><b>var</b>&nbsp;<b>ref</b>&nbsp;<i>bst</i>&nbsp;<i>right</i>)
+   </p>
+  </blockquote>
+  <p align="justify">
+   I&rsquo;ll assume the <i>key</i> slots are totally ordered, so that if
+   you have two keys, the first is either less than the second, greater than
+   the second, or equal to the second. I&rsquo;ll also assume that in each
+   node, the left subtree <i>left</i> is either empty, or else is made up
+   of nodes whose keys are less than <i>key.</i> Similarly, the right
+   subtree <i>right</i> is either empty, or else is made up of nodes whose
+   keys are greater than <i>key.</i> An empty subtree is represented as
+   <i>nil.</i>
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Now, I want to write a procedure called
+   <i>find</i> whose parameters are a <small>BST</small> whose root
+   is <i>r,</i> and a key <i>k.</i> It finds the node in
+   <i>r</i> whose key equals <i>k,</i> and returns that node. If
+   there&rsquo;s no such node in <i>r,</i> then <i>find</i> returns
+   the empty tree <i>nil</i> instead.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; To write <i>find,</i> I&rsquo;ll use a
+   complex loop that starts at <i>r</i> and moves downward into
+   <i>r</i>&rsquo;s subtrees. There are two ways to stop the loop, handled
+   by two different tests. One test detects an empty subtree <i>nil.</i>
+   The other test detects when I&rsquo;ve found the node I&rsquo;m looking for:
+   the one whose <i>key</i> slot equals <i>k.</i>
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The first way I can think of to write
+   <i>find</i> uses a Boolean variable <i>g,</i> which is true as
+   long as the loop is still going. It becomes false when the loop should stop.
+  </p>
+  <blockquote>
+   <p>
+    <i>find</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i></font>(<b>proc</b>&nbsp;(<b>ref</b>&nbsp;<i>bst</i>&nbsp;<i>r</i>,&nbsp;<i>keyType</i>&nbsp;<i>k</i>)&nbsp;<b>ref</b>&nbsp;<i>bst</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>(</font>(<b>with</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>w</b></font><b>var</b>&nbsp;<i>bool</i>&nbsp;<i>g</i>&nbsp;:&#8722;&nbsp;<i>true</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>w</b></font><b>var</b>&nbsp;<b>ref</b>&nbsp;<i>bst</i>&nbsp;<i>p</i>&nbsp;:&#8722;&nbsp;<i>r</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((</font><b>do</b>&nbsp;(<b>while</b>&nbsp;<i>g</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;(</font><b>do</b>&nbsp;(<b>if</b>&nbsp;<i>p</i>&nbsp;=&nbsp;<i>nil</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;(<b>do</b>&nbsp;(</font><b>then</b>&nbsp;<i>g</i>&nbsp;:=&nbsp;<i>false</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;(<b>do</b>&nbsp;(</font><b>else</b>&nbsp;<b>if</b>&nbsp;<i>k</i>&nbsp;&lt;&nbsp;<i>p</i>&#8593;.<i>key</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;(<b>do</b>&nbsp;(<b>else</b>&nbsp;</font><b>then</b>&nbsp;<i>p</i>&nbsp;:=&nbsp;<i>p</i>&#8593;.<i>left</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;(<b>do</b>&nbsp;(<b>else</b>&nbsp;</font><b>else</b>&nbsp;<b>if</b>&nbsp;<i>k</i>&nbsp;&gt;&nbsp;<i>p</i>&#8593;.<i>key</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;(<b>do</b>&nbsp;(<b>else</b>&nbsp;<b>else</b>&nbsp;</font><b>then</b>&nbsp;<i>p</i>&nbsp;:=&nbsp;<i>p</i>&#8593;.<i>right</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;(<b>do</b>&nbsp;(<b>else</b>&nbsp;<b>else</b>&nbsp;</font><b>else</b>&nbsp;<i>g</i>&nbsp;:=&nbsp;<i>false</i>))&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;</font><i>p</i>))
+   </p>
+  </blockquote>
+  <p align="justify">
+   This is slightly unpleasant, because <i>g</i> has little to do with the
+   problem. It&rsquo;s there only to control the loop. One way to eliminate it
+   uses a <i>catch</i> clause, so the loop continues until
+   <i>throw</i> is called.
+  </p>
+  <blockquote>
+   <p>
+    <i>find</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i></font>(<b>proc</b>&nbsp;(<b>ref</b>&nbsp;<i>bst</i>&nbsp;<i>r</i>,&nbsp;<i>keyType</i>&nbsp;<i>k</i>)&nbsp;<b>ref</b>&nbsp;<i>bst</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>(</font>(<b>with</b>&nbsp;<b>var</b>&nbsp;<b>ref</b>&nbsp;<i>bst</i>&nbsp;<i>p</i>&nbsp;:&#8722;&nbsp;<i>r</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((</font><b>do</b>&nbsp;(<b>catch</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;(</font>(<b>while</b>&nbsp;<i>true</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;((</font><b>do</b>&nbsp;(<b>if</b>&nbsp;<i>p</i>&nbsp;=&nbsp;<i>nil</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;((<b>do</b>&nbsp;(</font><b>then</b>&nbsp;<i>throw</i>()&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;((<b>do</b>&nbsp;(</font><b>else</b>&nbsp;<b>if</b>&nbsp;<i>k</i>&nbsp;&lt;&nbsp;<i>p</i>&#8593;.<i>key</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;((<b>do</b>&nbsp;(<b>else</b>&nbsp;</font><b>then</b>&nbsp;<i>p</i>&nbsp;:=&nbsp;<i>p</i>&#8593;.<i>left</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;((<b>do</b>&nbsp;(<b>else</b>&nbsp;</font><b>else</b>&nbsp;<b>if</b>&nbsp;<i>k</i>&nbsp;&gt;&nbsp;<i>p</i>&#8593;.<i>key</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;((<b>do</b>&nbsp;(<b>else</b>&nbsp;<b>else</b>&nbsp;</font><b>then</b>&nbsp;<i>p</i>&nbsp;:=&nbsp;<i>p</i>&#8593;.<i>right</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;((<b>do</b>&nbsp;(<b>else</b>&nbsp;<b>else</b>&nbsp;</font><b>else</b>&nbsp;<i>throw</i>())))&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;</font><i>p</i>))
+   </p>
+  </blockquote>
+  <p align="justify">
+   Although this works, Orson may require significant effort to set up
+   <i>catch</i> clauses, so they should be used only for handling
+   infrequent or unexpected situations. They&rsquo;re also typically used to
+   make big jumps through a program, not little jumps inside a single
+   procedure. All this means they&rsquo;re not appropriate for terminating most
+   loops.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A better way to get rid of <i>g</i> uses
+   an <i>if</i> clause that returns a Boolean value. I&rsquo;ll write an
+   <i>if</i> clause inside the loop, so it returns <i>false</i> if
+   the loop should stop, and returns <i>true</i> if the loop should
+   continue. This gets rid of both the Boolean variable <i>g</i> and the
+   <i>catch</i> clause.
+  </p>
+  <blockquote>
+   <p>
+    <i>find</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i></font>(<b>proc</b>&nbsp;(<b>ref</b>&nbsp;<i>bst</i>&nbsp;<i>r</i>,&nbsp;<i>keyType</i>&nbsp;<i>k</i>)&nbsp;<b>ref</b>&nbsp;<i>bst</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>(</font>(<b>with</b>&nbsp;<b>var</b>&nbsp;<b>ref</b>&nbsp;<i>bst</i>&nbsp;<i>p</i>&nbsp;:&#8722;&nbsp;<i>r</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((</font><b>do</b>&nbsp;(<b>while</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;(</font>(<b>if</b>&nbsp;<i>p</i>&nbsp;=&nbsp;<i>nil</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;((</font><b>then</b>&nbsp;<i>false</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;((</font><b>else</b>&nbsp;<b>if</b>&nbsp;<i>k</i>&nbsp;&lt;&nbsp;<i>p</i>&#8593;.<i>key</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;((<b>else</b>&nbsp;</font><b>then</b>&nbsp;<i>p</i>&nbsp;:=&nbsp;<i>p</i>&#8593;.<i>left</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;((<b>else</b>&nbsp;<b>then</b>&nbsp;</font><i>true</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;((<b>else</b>&nbsp;</font><b>else</b>&nbsp;<b>if</b>&nbsp;<i>k</i>&nbsp;&gt;&nbsp;<i>p</i>&#8593;.<i>key</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;((<b>else</b>&nbsp;<b>else</b>&nbsp;</font><b>then</b>&nbsp;<i>p</i>&nbsp;:=&nbsp;<i>p</i>&#8593;.<i>right</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;((<b>else</b>&nbsp;<b>else</b>&nbsp;<b>then</b>&nbsp;</font><i>true</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;((<b>else</b>&nbsp;<b>else</b>&nbsp;</font><b>else</b>&nbsp;<i>false</i>))&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;</font><i>p</i>))
+   </p>
+  </blockquote>
+  <p align="justify">
+   If I want to write a loop with two or more tests, then I can use an
+   <i>if</i> clause with more branches. If the number of branches is large
+   enough, I might be able to use a <i>case</i> clause instead.
+  </p>
+  <p>
+   <b>5. Higher-order forms.</b>
+  </p>
+  <p align="justify">
+   The rest of the loops I&rsquo;ll discuss in this essay will be implemented
+   by forms that take other forms as arguments, or that return other forms as
+   values, or both. Such forms are called <i>higher-order</i> forms, a
+   term borrowed from mathematical logic. The easiest way to explain
+   higher-order forms is by using an example. Suppose that I define a form
+   called <i>tenTimes,</i> like this.
+  </p>
+  <blockquote>
+   <p>
+    <i>tenTimes</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>t</i></font>(<b>form</b>&nbsp;(<b>form</b>&nbsp;(<i>int</i>)&nbsp;<i>obj</i>&nbsp;<i>f</i>)&nbsp;<i>void</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>t</i>(</font>(<b>with</b>&nbsp;<b>var</b>&nbsp;<i>int</i>&nbsp;<i>k</i>&nbsp;:&#8722;&nbsp;1&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>t</i>((</font><b>do</b>&nbsp;(<b>while</b>&nbsp;<i>k</i>&nbsp;&#8804;&nbsp;10&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>t</i>((<b>do</b>&nbsp;(</font><b>do</b>&nbsp;<i>f</i>(<i>k</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>t</i>((<b>do</b>&nbsp;(<b>do</b>&nbsp;</font><i>k</i>&nbsp;+=&nbsp;1)))
+   </p>
+  </blockquote>
+  <p align="justify">
+   The form <i>tenTimes</i> takes another form called <i>f</i> as an
+   argument. It uses a loop to call <i>f</i> on the integers 1 through 10.
+   The form <i>f,</i> in turn, takes an integer as its single argument. It
+   returns an object (an <i>obj</i>) that I don&rsquo;t care about.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If I want to write the integers from 1 to 10
+   (as in previous examples), I can do it by calling <i>tenTimes,</i> like
+   this. Here <i>writeln</i> is a form that takes an integer as its
+   argument, and writes the integer to standard output.
+  </p>
+  <blockquote>
+   <p>
+    <i>tenTimes</i>(<i>writeln</i>)
+   </p>
+  </blockquote>
+  <p align="justify">
+   When I call a form, Orson makes a new copy of the form&rsquo;s body, in
+   which the parameters are replaced by their corresponding arguments. The copy
+   of the form&rsquo;s body then replaces the call to the form. As a result,
+   the call <i>tenTimes</i>(<i>writeln</i>) is replaced by this.
+  </p>
+  <blockquote>
+   <p>
+    (<b>with</b>&nbsp;<b>var</b>&nbsp;<i>int</i>&nbsp;<i>k</i>&nbsp;:&#8722;&nbsp;1&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;(<b>while</b>&nbsp;<i>k</i>&nbsp;&#8804;&nbsp;10&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(</font><b>do</b>&nbsp;<i>writeln</i>(<i>k</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;</font><i>k</i>&nbsp;+=&nbsp;1))
+   </p>
+  </blockquote>
+  <p align="justify">
+   (What I just said isn&rsquo;t quite true. What really happens is that
+   <i>f</i> is not replaced by <i>writeln,</i> but rather by the
+   expression that results from transforming <i>writeln.</i> Things like
+   this don&rsquo;t matter for the purposes of this essay, so I won&rsquo;t
+   mention them again.)
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Similarly, if I want to write only the odd
+   integers from 1 to 10, I can use my own form instead of using
+   <i>writeln.</i> I&rsquo;ll assume <i>isOdd</i>(<i>j</i>)
+   returns a true value if <i>j</i> is an odd integer, and a false value
+   otherwise.
+  </p>
+  <blockquote>
+   <p>
+    <i>tenTimes</i>(&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>t</i></font>(<b>form</b>&nbsp;(<i>int</i>&nbsp;<i>j</i>)&nbsp;<i>void</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>t</i>(</font>(<b>if</b>&nbsp;<i>isOdd</i>(<i>j</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>t</i>((</font><b>then</b>&nbsp;<i>writeln</i>(<i>j</i>))))
+   </p>
+  </blockquote>
+  <p align="justify">
+   Now I get a loop that&rsquo;s similar to the one you just saw, but with an
+   <i>if</i> clause inside it. Let&rsquo;s see how that works. The first
+   thing that happens is that <i>f</i> is replaced by the form I gave to
+   <i>tenTimes</i> as an argument, like this.
+  </p>
+  <blockquote>
+   <p>
+    (<b>with</b>&nbsp;<b>var</b>&nbsp;<i>int</i>&nbsp;<i>k</i>&nbsp;:&#8722;&nbsp;1&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;(<b>while</b>&nbsp;<i>k</i>&nbsp;&#8804;&nbsp;10&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(</font><b>do</b>&nbsp;(<b>form</b>&nbsp;(<i>int</i>&nbsp;<i>j</i>)&nbsp;<i>void</i>:&nbsp;(<b>if</b>&nbsp;<i>isOdd</i>(<i>j</i>)&nbsp;<b>then</b>&nbsp;<i>writeln</i>(<i>j</i>)))(<i>k</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;</font><i>k</i>&nbsp;+=&nbsp;1))
+   </p>
+  </blockquote>
+  <p align="justify">
+   Then the form inside the <i>while</i> clause is called, so that
+   <i>j</i> is replaced by <i>k.</i> This gives me a loop that writes
+   the odd numbers, which looks like this.
+  </p>
+  <blockquote>
+   <p>
+    (<b>with</b>&nbsp;<b>var</b>&nbsp;<i>int</i>&nbsp;<i>k</i>&nbsp;:&#8722;&nbsp;1&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;(<b>while</b>&nbsp;<i>k</i>&nbsp;&#8804;&nbsp;10&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(</font><b>do</b>&nbsp;(<b>if</b>&nbsp;<i>isOdd</i>(<i>k</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;(</font><b>then</b>&nbsp;<i>writeln</i>(<i>k</i>))&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;</font><i>k</i>&nbsp;+=&nbsp;1))
+   </p>
+  </blockquote>
+  <p align="justify">
+   At this point you may ask why anyone would bother defining
+   <i>tenTimes,</i> when it&rsquo;s so easy to write such a simple loop.
+   You&rsquo;re right: for a loop like this, it&rsquo;s probably more trouble
+   than it&rsquo;s worth. However, it might be worth it for a more complicated
+   loop, or for a loop that gets used very often.
+  </p>
+  <p>
+   <b>6. Counting loops.</b>
+  </p>
+  <p align="justify">
+   One loop that&rsquo;s used often is called a <i>counting loop,</i> in
+   which a name is bound to a series of integer values. Each value is computed
+   by incrementing or decrementing the previous value, until some final value
+   is reached. The example that prints the integers from 1 to 10 is a counting
+   loop. Counting loops are commonly used in programs that work with arrays. In
+   fact, the only kind of loops provided by early programming languages were
+   counting loops, since they were primarily designed for array algorithms. If
+   you wanted another kind of loop, you had to build it yourself out of
+   <i>goto</i>&rsquo;s.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Orson&rsquo;s Standard Prelude uses an
+   alternate form called <i>"</i>for<i>"</i> to implement four
+   different kinds of counting loops. (The last member is in gray because I
+   won&rsquo;t discuss it until later.)
+  </p>
+  <blockquote>
+   <p>
+    <i>"</i>for<i>"</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i></font>(<b>alt</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>(</font>(<b>form</b>&nbsp;(<b>form</b>&nbsp;(<i>int</i>)&nbsp;<i>obj</i>&nbsp;<i>f</i>,&nbsp;<i>int</i>&nbsp;<i>b</i>,&nbsp;<i>int</i>&nbsp;<i>e</i>,&nbsp;<i>int</i>&nbsp;<i>s</i>)&nbsp;<i>void</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>((</font>(<b>with</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>(((<b>w</b></font><i>e</i>&nbsp;:&#8722;&nbsp;(<b>past</b>&nbsp;<i>e</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>(((<b>w</b></font><i>s</i>&nbsp;:&#8722;&nbsp;(<b>past</b>&nbsp;<i>s</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>(((<b>w</b></font><b>var</b>&nbsp;<i>int</i>&nbsp;<i>k</i>&nbsp;:&#8722;&nbsp;<i>b</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>(((</font><b>do</b>&nbsp;(<b>while</b>&nbsp;(<b>if</b>&nbsp;<i>s</i>&nbsp;&#8805;&nbsp;0&nbsp;<b>then</b>&nbsp;<i>k</i>&nbsp;&#8804;&nbsp;<i>e</i>&nbsp;<b>else</b>&nbsp;<i>k</i>&nbsp;&#8805;&nbsp;<i>e</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>(((<b>do</b>&nbsp;(</font><b>do</b>&nbsp;<i>f</i>(<i>k</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>(((<b>do</b>&nbsp;(<b>do</b>&nbsp;</font><i>k</i>&nbsp;+=&nbsp;<i>s</i>))),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>(</font>(<b>form</b>&nbsp;(<b>form</b>&nbsp;(<i>int</i>)&nbsp;<i>obj</i>&nbsp;<i>f</i>,&nbsp;<i>int</i>&nbsp;<i>b</i>,&nbsp;<i>int</i>&nbsp;<i>e</i>)&nbsp;<i>void</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>((<b>f</b></font><i>"</i>for<i>"</i>(<i>f</i>,&nbsp;<i>b</i>,&nbsp;<i>e</i>,&nbsp;1)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>(</font>(<b>form</b>&nbsp;(<b>form</b>&nbsp;(<i>int</i>)&nbsp;<i>obj</i>&nbsp;<i>f</i>,&nbsp;<i>int</i>&nbsp;<i>e</i>)&nbsp;<i>void</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>((<b>f</b></font><i>"</i>for<i>"</i>(<i>f</i>,&nbsp;0,&nbsp;<i>e</i>&nbsp;&#8722;&nbsp;1,&nbsp;1)),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>(</font>(<b>form</b>&nbsp;(<b>form</b>&nbsp;()&nbsp;<i>obj</i>&nbsp;<i>f</i>,&nbsp;<i>int</i>&nbsp;<i>e</i>)&nbsp;<i>void</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>((</font>(<b>with</b>&nbsp;<b>var</b>&nbsp;<i>int</i>&nbsp;<i>k</i>&nbsp;:&#8722;&nbsp;<i>e</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>(((</font><b>do</b>&nbsp;(<b>while</b>&nbsp;<i>k</i>&nbsp;&gt;&nbsp;0&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>(((<b>do</b>&nbsp;(</font><b>do</b>&nbsp;<i>f</i>()&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>(((<b>do</b>&nbsp;(<b>do</b>&nbsp;</font><i>k</i>&nbsp;&#8722;=&nbsp;1)))<font color="#A9A9A9">,</font>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>(</font><font color="#A9A9A9">(<b>gen</b>&nbsp;(<b>type</b>&nbsp;<i>foj</i>&nbsp;<i>fType</i>)&nbsp;</font>
+    <br />
+    <font color="#FFFFFF"><i>"</i>((<b>g</b></font><b><font color="#A9A9A9">gen</font></b><font color="#A9A9A9">&nbsp;(<b>type</b>&nbsp;<b>form</b>&nbsp;(<i>fType</i>)&nbsp;<i>obj</i>&nbsp;<i>wType</i>)&nbsp;</font>
+    <br />
+    <font color="#FFFFFF"><i>"</i>((<b>gg</b></font><b><font color="#A9A9A9">form</font></b><font color="#A9A9A9">&nbsp;(<i>fType</i>&nbsp;<i>f</i>,&nbsp;<i>wType</i>&nbsp;<i>w</i>)&nbsp;<i>obj</i>:&nbsp;</font>
+    <br />
+    <font color="#FFFFFF"><i>"</i>((<b>ggf</b></font><i><font color="#A9A9A9">w</font></i><font color="#A9A9A9">(<i>f</i>))</font>)
+   </p>
+  </blockquote>
+  <p align="justify">
+   A <i>for</i> clause abbreviates a call to the form
+   <i>"</i>for<i>"</i> as defined above. For example, suppose I write
+   this <i>for</i> clause.
+  </p>
+  <blockquote>
+   <p>
+    (<b>for</b>&nbsp;<i>int</i>&nbsp;<i>j</i>&nbsp;<b>in</b>&nbsp;1,&nbsp;10,&nbsp;1&nbsp;<b>do</b>&nbsp;<i>writeln</i>(<i>j</i>))
+   </p>
+  </blockquote>
+  <p align="justify">
+   It abbreviates a call to the form <i>"</i>for<i>"</i> that looks
+   like this.
+  </p>
+  <blockquote>
+   <p>
+    <i>"</i>for<i>"</i>((<b>form</b>&nbsp;(<i>int</i>&nbsp;<i>j</i>)&nbsp;<i>obj</i>:&nbsp;<i>writeln</i>(<i>j</i>)),&nbsp;1,&nbsp;10,&nbsp;1)
+   </p>
+  </blockquote>
+  <p align="justify">
+   The form <i>"</i>for<i>"</i> is a higher-order form, like
+   <i>tenTimes</i> from the last section, because it&rsquo;s called with
+   another form as its argument. When <i>"</i>for<i>"</i> is called
+   in this example, the parameter <i>f</i> is replaced by
+   (<b>form</b>&nbsp;(<i>int</i>&nbsp;<i>j</i>)&nbsp;<i>obj</i>:&nbsp;<i>writeln</i>(<i>j</i>)).
+   Similarly, <i>b</i> is replaced by 1, <i>e</i> is replaced by 10,
+   and <i>s</i> is also replaced by 1. (The parameters <i>b, e,</i>
+   and <i>s</i> stand for <i>begin, end,</i> and <i>step,</i>
+   respectively.) As a result of these replacements, the call to
+   <i>"</i>for<i>"</i> shown above is replaced by this expression:
+  </p>
+  <blockquote>
+   <p>
+    (<b>with</b>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b></font><i>e</i>&nbsp;:&#8722;&nbsp;10&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b></font><i>s</i>&nbsp;:&#8722;&nbsp;1&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b></font><b>var</b>&nbsp;<i>int</i>&nbsp;<i>k</i>&nbsp;:&#8722;&nbsp;1&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;(<b>while</b>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(</font>(<b>if</b>&nbsp;1&nbsp;&#8805;&nbsp;0&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;((</font><b>then</b>&nbsp;<i>k</i>&nbsp;&#8804;&nbsp;<i>e</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;((</font><b>else</b>&nbsp;<i>k</i>&nbsp;&#8805;&nbsp;<i>e</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(</font><b>do</b>&nbsp;(<b>form</b>&nbsp;(<i>int</i>&nbsp;<i>j</i>)&nbsp;<i>obj</i>:&nbsp;<i>writeln</i>(<i>j</i>))(<i>k</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;</font><i>k</i>&nbsp;+=&nbsp;1))
+   </p>
+  </blockquote>
+  <p align="justify">
+   Orson simplifies the parts of this expression that involve constants. It
+   replaces <i>e</i> by 10, <i>s</i> by 1, and 1&nbsp;&#8805;&nbsp;0
+   by a true value, so you end up with this.
+  </p>
+  <blockquote>
+   <p>
+    (<b>with</b>&nbsp;<b>var</b>&nbsp;<i>int</i>&nbsp;<i>k</i>&nbsp;:&#8722;&nbsp;1&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;(<b>while</b>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(</font>(<b>if</b>&nbsp;<i>true</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;((</font><b>then</b>&nbsp;<i>k</i>&nbsp;&#8804;&nbsp;10&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;((</font><b>else</b>&nbsp;<i>k</i>&nbsp;&#8805;&nbsp;10)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(</font><b>do</b>&nbsp;(<b>form</b>&nbsp;(<i>int</i>&nbsp;<i>j</i>)&nbsp;<i>obj</i>:&nbsp;<i>writeln</i>(<i>j</i>))(<i>k</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;</font><i>k</i>&nbsp;+=&nbsp;1))
+   </p>
+  </blockquote>
+  <p align="justify">
+   It also simplifies the <i>if</i> clause, and calls the form inside the
+   <i>while</i> clause. After all that, you get this.
+  </p>
+  <blockquote>
+   <p>
+    (<b>with</b>&nbsp;<b>var</b>&nbsp;<i>int</i>&nbsp;<i>k</i>&nbsp;:&#8722;&nbsp;1&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;(<b>while</b>&nbsp;<i>k</i>&nbsp;&#8804;&nbsp;10&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(</font><b>do</b>&nbsp;<i>writeln</i>(<i>k</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;</font><i>k</i>&nbsp;+=&nbsp;1))
+   </p>
+  </blockquote>
+  <p align="justify">
+   This is the same counting loop that appeared in previous examples, except
+   that <i>"</i>for<i>"</i> did all the work of writing it. Also,
+   <i>"</i>for<i>"</i> works for values of <i>b, e,</i> and
+   <i>s</i> that aren&rsquo;t constants, and it lets you count either
+   forwards or backwards, in steps other than 1.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The other members of alternate form (except
+   the last, in gray) provide counting loops in which <i>b, e,</i> and
+   <i>s</i> take on default values. If the stepping value <i>s</i> is
+   1, you can write something like this, and the second member does the work.
+  </p>
+  <blockquote>
+   <p>
+    (<b>for</b>&nbsp;<i>int</i>&nbsp;<i>j</i>&nbsp;<b>in</b>&nbsp;1,&nbsp;10&nbsp;<b>do</b>&nbsp;<i>writeln</i>(<i>j</i>))
+   </p>
+  </blockquote>
+  <p align="justify">
+   If you want to write integers from 0 to 9 in steps of 1, you can also write
+   this, so the third member does the work. Note that this loop generates
+   integers that are the indexes of an array or a list whose length is 10.
+  </p>
+  <blockquote>
+   <p>
+    (<b>for</b>&nbsp;<i>int</i>&nbsp;<i>j</i>&nbsp;<b>in</b>&nbsp;10&nbsp;<b>do</b>&nbsp;<i>writeln</i>(<i>n</i>))
+   </p>
+  </blockquote>
+  <p align="justify">
+   If you just want to execute something a fixed number of times, you can leave
+   off everything before <b>in,</b> and the fourth member does the work.
+   For example, this <i>for</i> clause writes three cheers.
+  </p>
+  <blockquote>
+   <p>
+    (<b>in</b>&nbsp;3&nbsp;<b>do</b>&nbsp;<i>writeln</i>(''cheer''))
+   </p>
+  </blockquote>
+  <p align="justify">
+   In all these examples, the resulting loops are just as efficient as if
+   you&rsquo;d written them by hand, without using a <i>for</i> clause.
+   This is because a <i>for</i> clause abbreviates a form call, and form
+   calls are replaced by copies of their bodies. There is usually no execution
+   time penalty for using forms, as there is for procedures, so you can use
+   them as much as you like.
+  </p>
+  <p>
+   <b>7. C&rsquo;s <i>for</i> statements.</b>
+  </p>
+  <p align="justify">
+   C
+   <a href="#knr1988">
+    [<small>KNR</small> 1988]
+   </a>
+   provides an ugly but very general kind of loop, called a <i>for</i>
+   statement. (It has little to do with Orson&rsquo;s <i>for</i> clauses:
+   any coincidence of names is regretted.) For example, the following fragment
+   of C code uses a <i>for</i> statement to print the integers from 1 to
+   10.
+  </p>
+  <blockquote>
+   <p>
+    <tt>int&nbsp;k;&nbsp;</tt>
+    <br />
+    <tt>for&nbsp;(k&nbsp;=&nbsp;1;&nbsp;k&nbsp;&lt;=&nbsp;10;&nbsp;k&nbsp;+=&nbsp;1)&nbsp;</tt>
+    <br />
+    <tt>{&nbsp;</tt>
+    <br />
+    <tt>&nbsp;&nbsp;fprintf(stdout,&nbsp;"%i\n",&nbsp;k);&nbsp;</tt>
+    <br />
+    <tt>}</tt>
+   </p>
+  </blockquote>
+  <p align="justify">
+   The advantage of C&rsquo;s <i>for</i> statement is that all the
+   important parts of the loop are in one place, where they&rsquo;re easy to
+   find. It&rsquo;s actually just an abbreviation for C&rsquo;s
+   <i>while</i> statement, which acts much like Orson&rsquo;s
+   <i>while</i> clause. Suppose that <i>start, test,</i> and
+   <i>next</i> are C expressions, and <i>body</i> is a C statement.
+   Then this <i>for</i> statement:
+  </p>
+  <blockquote>
+   <p>
+    <tt>for</tt> (<i>start</i><tt>;</tt>
+    <i>test</i><tt>;</tt> <i>next</i>) <i>body</i>
+   </p>
+  </blockquote>
+  <p align="justify">
+   is an abbreviation for this C code fragment.
+  </p>
+  <blockquote>
+   <p>
+    <i>start</i>&nbsp;
+    <br />
+    <tt>while</tt>&nbsp;<tt>(</tt><i>test</i><tt>)</tt>&nbsp;
+    <br />
+    <tt>{</tt>&nbsp;
+    <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;<i>body</i>&nbsp;
+    <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;<i>next</i>&nbsp;
+    <br />
+    <tt>}</tt>
+   </p>
+  </blockquote>
+  <p align="justify">
+   You can plug in any expression for <i>start</i> and <i>next,</i>
+   and any expression that returns a integer value for <i>test.</i>
+   Because of this, you can use a C <i>for</i> statement for things other
+   than just counting loops. For example, you could use it to traverse a linear
+   linked chain.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Now suppose that you want to define an Orson
+   form that does the same thing as a C <i>for</i> statement. You can do
+   it like this, much like the C code fragment shown above.
+  </p>
+  <blockquote>
+   <p>
+    <i>"</i>for<i>"</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i></font>(<b>form</b>&nbsp;(<b>form</b>&nbsp;()&nbsp;<i>obj</i>&nbsp;<i>body</i>,&nbsp;<i>exe</i>&nbsp;<i>start</i>,&nbsp;<i>bool</i>&nbsp;<i>test</i>,&nbsp;<i>exe</i>&nbsp;<i>next</i>)&nbsp;<i>void</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>(<b>f</b></font><i>start</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>(<b>f</b></font>(<b>while</b>&nbsp;<i>test</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>(<b>f</b>(</font><b>do</b>&nbsp;<i>body</i>()&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>(<b>f</b>(<b>do</b>&nbsp;</font><i>next</i>))
+   </p>
+  </blockquote>
+  <p align="justify">
+   This equate adds a new member to the beginning of the alternate form
+   <i>"</i>for<i>"</i> from the previous section. As a result, you
+   can call the new member by writing something like this. Like my previous
+   examples, it writes the integers from 1 to 10.
+  </p>
+  <blockquote>
+   <p>
+    (<b>with</b>&nbsp;<b>var</b>&nbsp;<i>int</i>&nbsp;<i>k</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;(<b>in</b>&nbsp;<i>k</i>&nbsp;:=&nbsp;1,&nbsp;<i>k</i>&nbsp;&#8804;&nbsp;10,&nbsp;<i>k</i>&nbsp;+=&nbsp;1&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(</font><b>do</b>&nbsp;<i>writeln</i>(<i>k</i>)))
+   </p>
+  </blockquote>
+  <p align="justify">
+   This isn&rsquo;t exactly like a C <i>for</i> statement, because in C
+   you can omit the expressions <i>start, next,</i> and <i>test,</i>
+   and they&rsquo;re replaced by defaults. That won&rsquo;t work in the Orson
+   version: all three expressions must appear. You could handle the defaults by
+   adding more members to the alternate form.
+  </p>
+  <p>
+   <b>8. Breakers.</b>
+  </p>
+  <p align="justify">
+   Sometimes you want to stop a counting loop (or some other kind of loop)
+   before it&rsquo;s supposed to finish. For example, suppose you want to
+   search a series of integers from 0 to <i>n,</i> looking for the first
+   such integer that has the property <i>p.</i> When you find the integer,
+   you want to write it and stop searching. Here&rsquo;s a loop that does that.
+   I assume the method <i>isP</i> tests if its argument has the property
+   <i>p.</i>
+  </p>
+  <blockquote>
+   <p>
+    (<b>with</b>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b></font><b>var</b>&nbsp;<i>int</i>&nbsp;<i>k</i>&nbsp;:&#8722;&nbsp;0&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b></font><b>var</b>&nbsp;<i>bool</i>&nbsp;<i>g</i>&nbsp;:&#8722;&nbsp;<i>true</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;(<b>while</b>&nbsp;<i>g</i>&nbsp;&#8743;&nbsp;<i>k</i>&nbsp;&#8804;&nbsp;<i>n</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(</font><b>do</b>&nbsp;(<b>if</b>&nbsp;<i>isP</i>(<i>k</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;(</font><b>then</b>&nbsp;<i>writeln</i>(<i>k</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;(<b>then</b>&nbsp;</font><i>g</i>&nbsp;:=&nbsp;<i>false</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;(</font><i>k</i>&nbsp;+=&nbsp;1))
+   </p>
+  </blockquote>
+  <p align="justify">
+   You can also write a <i>"</i>for<i>"</i> loop that can be stopped
+   in this way. What&rsquo;s more, you can stop it without even having to know
+   that a Boolean variable like <i>g</i> is used to control the loop. The
+   trick is to use a form called a <i>breaker.</i>
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I&rsquo;ll start by defining
+   <i>breaker</i> to be the type of a breaker. I&rsquo;ll also define a
+   higher-order form <i>makeBreaker</i> that returns a new breaker when
+   it&rsquo;s called.
+  </p>
+  <blockquote>
+   <p>
+    <i>breaker</i>&nbsp;:&#8722;&nbsp;<b>form</b>&nbsp;()&nbsp;<i>void</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i></font>
+    <br />
+    <i>makeBreaker</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>m</i></font>(<b>form</b>&nbsp;(<b>var</b>&nbsp;<i>bool</i>&nbsp;<i>g</i>)&nbsp;<i>breaker</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>m</i>(</font>(<b>form</b>&nbsp;()&nbsp;<i>void</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>m</i>((<b>f</b></font><i>g</i>&nbsp;:=&nbsp;<i>false</i>))
+   </p>
+  </blockquote>
+  <p align="justify">
+   The form <i>makeBreaker</i> takes a Boolean variable <i>g</i> as
+   its argument. It returns a new form with no parameters that sets
+   <i>g</i> to <i>false.</i>
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Using <i>breaker</i> and
+   <i>makeBreaker,</i> I can define a new member of the alternate form
+   <i>"</i>for<i>".</i> Like the earlier members of
+   <i>"</i>for<i>",</i> it implements a counting loop. Unlike them,
+   however, it can use a breaker to stop the loop. To make things simpler,
+   I&rsquo;ll write the loop so it increments <i>k</i> only in steps of 1.
+  </p>
+  <blockquote>
+   <p>
+    <i>"</i>for<i>"</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i></font>(<b>form</b>&nbsp;(<b>form</b>&nbsp;(<i>breaker</i>,&nbsp;<i>int</i>)&nbsp;<i>obj</i>&nbsp;<i>f</i>,&nbsp;<i>int</i>&nbsp;<i>b</i>,&nbsp;<i>int</i>&nbsp;<i>e</i>)&nbsp;<i>void</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>(</font>(<b>with</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>((<b>w</b></font><i>e</i>&nbsp;:&#8722;&nbsp;(<b>past</b>&nbsp;<i>e</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>((<b>w</b></font><b>var</b>&nbsp;<i>int</i>&nbsp;<i>k</i>&nbsp;:&#8722;&nbsp;<i>b</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>((<b>w</b></font><b>var</b>&nbsp;<i>bool</i>&nbsp;<i>g</i>&nbsp;:&#8722;&nbsp;<i>true</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>((</font><b>do</b>&nbsp;(<b>while</b>&nbsp;<i>g</i>&nbsp;&#8743;&nbsp;<i>k</i>&nbsp;&#8804;&nbsp;<i>e</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>((<b>do</b>&nbsp;(</font><b>do</b>&nbsp;<i>f</i>(<i>makeBreaker</i>(<i>g</i>),&nbsp;<i>k</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>((<b>do</b>&nbsp;(<b>do</b>&nbsp;</font><i>k</i>&nbsp;+=&nbsp;1)))
+   </p>
+  </blockquote>
+  <p align="justify">
+   Now I can write a <i>for</i> clause that acts like the loop at the
+   beginning of this section. Calling <i>x</i>() will stop the loop at the
+   end of its current iteration.
+  </p>
+  <blockquote>
+   <p>
+    (<b>for</b>&nbsp;<i>breaker</i>&nbsp;<i>x</i>,&nbsp;<i>int</i>&nbsp;<i>j</i>&nbsp;<b>in</b>&nbsp;0,&nbsp;<i>n</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;(<b>if</b>&nbsp;<i>isP</i>(<i>j</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(</font><b>then</b>&nbsp;<i>writeln</i>(<i>j</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>then</b>&nbsp;</font><i>x</i>()))
+   </p>
+  </blockquote>
+  <p align="justify">
+   To see how this works, recall that a <i>for</i> clause is an
+   abbreviation for a call to the form <i>"</i>for<i>".</i> That
+   means the <i>for</i> clause that I just wrote will turn into this:
+  </p>
+  <blockquote>
+   <p>
+    <i>"</i>for<i>"</i>(&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>f</font>(<b>form</b>&nbsp;(<i>breaker</i>&nbsp;<i>x</i>,&nbsp;<i>int</i>&nbsp;<i>j</i>)&nbsp;<i>obj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>f(</font>(<b>if</b>&nbsp;<i>isP</i>(<i>j</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>f((</font><b>then</b>&nbsp;<i>writeln</i>(<i>j</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>f((<b>then</b>&nbsp;</font><i>x</i>())),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>f</font>0,&nbsp;<i>n</i>)
+   </p>
+  </blockquote>
+  <p align="justify">
+   Also recall that when you call a form, it turns into a copy of its body, in
+   which parameters are replaced by their corresponding arguments. As a result,
+   the call to <i>"</i>for<i>"</i> turns into this expression.
+  </p>
+  <blockquote>
+   <p>
+    (<b>with</b>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b></font><i>e</i>&nbsp;:&#8722;&nbsp;<i>n</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b></font><b>var</b>&nbsp;<i>int</i>&nbsp;<i>k</i>&nbsp;:&#8722;&nbsp;0&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b></font><b>var</b>&nbsp;<i>bool</i>&nbsp;<i>g</i>&nbsp;:&#8722;&nbsp;<i>true</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;(<b>while</b>&nbsp;<i>g</i>&nbsp;&#8743;&nbsp;<i>k</i>&nbsp;&#8804;&nbsp;<i>e</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(</font><b>do</b>&nbsp;(<b>form</b>&nbsp;(<i>breaker</i>&nbsp;<i>x</i>,&nbsp;<i>int</i>&nbsp;<i>j</i>)&nbsp;<i>obj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;(</font>(<b>if</b>&nbsp;<i>isP</i>(<i>j</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;((</font><b>then</b>&nbsp;<i>writeln</i>(<i>j</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;((<b>then</b>&nbsp;</font><i>x</i>()))(<i>makeBreaker</i>(<i>g</i>),&nbsp;<i>k</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;</font><i>k</i>&nbsp;+=&nbsp;1))
+   </p>
+  </blockquote>
+  <p align="justify">
+   I&rsquo;ll now explain what Orson does to this expression, one step at a
+   time. First, I&rsquo;ll replace <i>e</i> by <i>n,</i> just to get
+   the easy part out of the way.
+  </p>
+  <blockquote>
+   <p>
+    (<b>with</b>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b></font><b>var</b>&nbsp;<i>int</i>&nbsp;<i>k</i>&nbsp;:&#8722;&nbsp;0&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b></font><b>var</b>&nbsp;<i>bool</i>&nbsp;<i>g</i>&nbsp;:&#8722;&nbsp;<i>true</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;(<b>while</b>&nbsp;<i>g</i>&nbsp;&#8743;&nbsp;<i>k</i>&nbsp;&#8804;&nbsp;<i>n</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(</font><b>do</b>&nbsp;(<b>form</b>&nbsp;(<i>breaker</i>&nbsp;<i>x</i>,&nbsp;<i>int</i>&nbsp;<i>j</i>)&nbsp;<i>obj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;(</font>(<b>if</b>&nbsp;<i>isP</i>(<i>j</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;((</font><b>then</b>&nbsp;<i>writeln</i>(<i>j</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;((<b>then</b>&nbsp;</font><i>x</i>()))(<i>makeBreaker</i>(<i>g</i>),&nbsp;<i>k</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;</font><i>k</i>&nbsp;+=&nbsp;1))
+   </p>
+  </blockquote>
+  <p align="justify">
+   Next, I&rsquo;ll replace <i>breaker</i> by the type
+   <b>form</b>&nbsp;()&nbsp;<i>void.</i>
+  </p>
+  <blockquote>
+   <p>
+    (<b>with</b>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b></font><b>var</b>&nbsp;<i>int</i>&nbsp;<i>k</i>&nbsp;:&#8722;&nbsp;0&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b></font><b>var</b>&nbsp;<i>bool</i>&nbsp;<i>g</i>&nbsp;:&#8722;&nbsp;<i>true</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;(<b>while</b>&nbsp;<i>g</i>&nbsp;&#8743;&nbsp;<i>k</i>&nbsp;&#8804;&nbsp;<i>n</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(</font><b>do</b>&nbsp;(<b>form</b>&nbsp;(<b>form</b>&nbsp;()&nbsp;<i>void</i>&nbsp;<i>x</i>,&nbsp;<i>int</i>&nbsp;<i>j</i>)&nbsp;<i>obj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;(</font>(<b>if</b>&nbsp;<i>isP</i>(<i>j</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;((</font><b>then</b>&nbsp;<i>writeln</i>(<i>j</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;((<b>then</b>&nbsp;</font><i>x</i>()))(<i>makeBreaker</i>(<i>g</i>),&nbsp;<i>k</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;</font><i>k</i>&nbsp;+=&nbsp;1))
+   </p>
+  </blockquote>
+  <p align="justify">
+   Now I&rsquo;ll call <i>makeBreaker</i> with the argument <i>g.</i>
+   Note that <i>g</i> is a Boolean variable, which is just what
+   <i>makeBreaker</i> expects.
+  </p>
+  <blockquote>
+   <p>
+    (<b>with</b>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b></font><b>var</b>&nbsp;<i>int</i>&nbsp;<i>k</i>&nbsp;:&#8722;&nbsp;0&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b></font><b>var</b>&nbsp;<i>bool</i>&nbsp;<i>g</i>&nbsp;:&#8722;&nbsp;<i>true</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;(<b>while</b>&nbsp;<i>g</i>&nbsp;&#8743;&nbsp;<i>k</i>&nbsp;&#8804;&nbsp;<i>n</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(</font><b>do</b>&nbsp;(<b>form</b>&nbsp;(<b>form</b>&nbsp;()&nbsp;<i>void</i>&nbsp;<i>x</i>,&nbsp;<i>int</i>&nbsp;<i>j</i>)&nbsp;<i>obj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;(</font>(<b>if</b>&nbsp;<i>isP</i>(<i>j</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;((</font><b>then</b>&nbsp;<i>writeln</i>(<i>j</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;((<b>then</b>&nbsp;</font><i>x</i>()))((<b>form</b>&nbsp;()&nbsp;<i>void</i>:&nbsp;<i>g</i>&nbsp;:=&nbsp;<i>false</i>),&nbsp;<i>k</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;</font><i>k</i>&nbsp;+=&nbsp;1))
+   </p>
+  </blockquote>
+  <p align="justify">
+   Next, I&rsquo;ll call the form that appears inside the <i>while</i>
+   clause. I&rsquo;ll replace <i>x</i> by the form that
+   <i>makeBreaker</i> made, and replace <i>j</i> by <i>k.</i>
+  </p>
+  <blockquote>
+   <p>
+    (<b>with</b>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b></font><b>var</b>&nbsp;<i>int</i>&nbsp;<i>k</i>&nbsp;:&#8722;&nbsp;0&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b></font><b>var</b>&nbsp;<i>bool</i>&nbsp;<i>g</i>&nbsp;:&#8722;&nbsp;<i>true</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;(<b>while</b>&nbsp;<i>g</i>&nbsp;&#8743;&nbsp;<i>k</i>&nbsp;&#8804;&nbsp;<i>n</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(</font><b>do</b>&nbsp;(<b>if</b>&nbsp;<i>isP</i>(<i>k</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;(</font><b>then</b>&nbsp;<i>writeln</i>(<i>k</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;(<b>then</b>&nbsp;</font>(<b>form</b>&nbsp;()&nbsp;<i>void</i>:&nbsp;<i>g</i>&nbsp;:=&nbsp;<i>false</i>)())&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;</font><i>k</i>&nbsp;+=&nbsp;1))
+   </p>
+  </blockquote>
+  <p align="justify">
+   Finally, I&rsquo;ll do the last form call, inside the <i>if</i> clause.
+  </p>
+  <blockquote>
+   <p>
+    (<b>with</b>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b></font><b>var</b>&nbsp;<i>int</i>&nbsp;<i>k</i>&nbsp;:&#8722;&nbsp;0&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b></font><b>var</b>&nbsp;<i>bool</i>&nbsp;<i>g</i>&nbsp;:&#8722;&nbsp;<i>true</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;(<b>while</b>&nbsp;<i>g</i>&nbsp;&#8743;&nbsp;<i>k</i>&nbsp;&#8804;&nbsp;<i>n</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(</font><b>do</b>&nbsp;(<b>if</b>&nbsp;<i>isP</i>(<i>k</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;(</font><b>then</b>&nbsp;<i>writeln</i>(<i>k</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;(<b>then</b>&nbsp;</font><i>g</i>&nbsp;:=&nbsp;<i>false</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;</font><i>k</i>&nbsp;+=&nbsp;1))
+   </p>
+  </blockquote>
+  <p align="justify">
+   This gives me the same loop that I wrote by hand at the beginning of this
+   section. The form <i>"</i>for<i>"</i> did all the work of setting
+   it up.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I need to make a few comments. First, to make
+   things easier to understand, I took some liberties with the order in which
+   Orson would have transformed the call to <i>"</i>for<i>".</i>
+   Despite that, however, Orson would get the same results that I did.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Second, all the transformations I just showed
+   are done automatically, behind the scenes. You can write a <i>for</i>
+   clause with a breaker without knowing (or even caring!) that breakers use
+   hidden Boolean variables like <i>g.</i> You don&rsquo;t even have to
+   know that breakers are forms.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Third, a breaker stops a loop after its
+   current iteration is finished. It doesn&rsquo;t act like the
+   <tt>break</tt> statement in C-like languages
+   <a href="#knr1988">
+    [<small>KNR</small> 1988],
+   </a>
+   that stops a loop immediately. To get the same effect as a
+   <tt>break</tt> statement, the loop body must always call a breaker as
+   the last thing it does.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fourth, each breaker stops only a single
+   loop. To see why that matters, suppose that you want to find the first pair
+   of integers <i>i,</i>&nbsp;<i>j</i> that have some property
+   <i>q.</i> Assume that
+   <i>isQ</i>(<i>i,</i>&nbsp;<i>j</i>) returns <i>true</i>
+   if they do. You might then write a nested loop that looks something like
+   this, using two breakers <i>xi</i> and <i>xj.</i>
+  </p>
+  <blockquote>
+   <p>
+    (<b>for</b>&nbsp;<i>breaker</i>&nbsp;<i>xi</i>,&nbsp;<i>int</i>&nbsp;<i>i</i>&nbsp;<b>in</b>&nbsp;0,&nbsp;<i>n</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;(<b>for</b>&nbsp;<i>breaker</i>&nbsp;<i>xj</i>,&nbsp;<i>int</i>&nbsp;<i>j</i>&nbsp;<b>in</b>&nbsp;0,&nbsp;<i>n</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(</font><b>do</b>&nbsp;(<b>if</b>&nbsp;<i>isQ</i>(<i>i</i>,&nbsp;<i>j</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;(</font><b>then</b>&nbsp;<i>writeln</i>(''%i&nbsp;%i'':&nbsp;<i>i</i>,&nbsp;<i>j</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;(<b>then</b>&nbsp;</font><i>xi</i>()&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;(<b>then</b>&nbsp;</font><i>xj</i>())))
+   </p>
+  </blockquote>
+  <p align="justify">
+   To stop both loops, you must call both breakers. If you didn&rsquo;t call
+   <i>xi,</i> then the inner loop would stop, but the outer one one would
+   keep going, and it would start the inner loop over again. If you
+   didn&rsquo;t call <i>xj,</i> then the inner loop would keep going, but
+   the outer loop would stop as soon as the inner loop finished. Sometimes you
+   want to do things like that.
+  </p>
+  <p>
+   <b>9. Wrappers.</b>
+  </p>
+  <p align="justify">
+   It&rsquo;s time to discuss that last member of the alternate form
+   <i>"</i>for<i>".</i> Recall that <i>"</i>for<i>"</i> was
+   defined in the prelude like this. I&rsquo;ve already talked about the
+   members that appear in gray.
+  </p>
+  <blockquote>
+   <p>
+    <i>"</i>for<i>"</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i></font>(<b>alt</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>(</font><font color="#A9A9A9">(<b>form</b>&nbsp;(<b>form</b>&nbsp;(<i>int</i>)&nbsp;<i>obj</i>&nbsp;<i>f</i>,&nbsp;<i>int</i>&nbsp;<i>b</i>,&nbsp;<i>int</i>&nbsp;<i>e</i>,&nbsp;<i>int</i>&nbsp;<i>s</i>)&nbsp;<i>void</i>:&nbsp;</font>
+    <br />
+    <font color="#FFFFFF"><i>"</i>((</font><font color="#A9A9A9">(<b>with</b>&nbsp;</font>
+    <br />
+    <font color="#FFFFFF"><i>"</i>(((<b>w</b></font><i><font color="#A9A9A9">e</font></i><font color="#A9A9A9">&nbsp;:&#8722;&nbsp;(<b>past</b>&nbsp;<i>e</i>)&nbsp;</font>
+    <br />
+    <font color="#FFFFFF"><i>"</i>(((<b>w</b></font><i><font color="#A9A9A9">s</font></i><font color="#A9A9A9">&nbsp;:&#8722;&nbsp;(<b>past</b>&nbsp;<i>s</i>)&nbsp;</font>
+    <br />
+    <font color="#FFFFFF"><i>"</i>(((<b>w</b></font><b><font color="#A9A9A9">var</font></b><font color="#A9A9A9">&nbsp;<i>int</i>&nbsp;<i>k</i>&nbsp;:&#8722;&nbsp;<i>b</i>&nbsp;</font>
+    <br />
+    <font color="#FFFFFF"><i>"</i>(((</font><b><font color="#A9A9A9">do</font></b><font color="#A9A9A9">&nbsp;(<b>while</b>&nbsp;</font>
+    <br />
+    <font color="#FFFFFF"><i>"</i>(((<b>do</b>&nbsp;(</font><font color="#A9A9A9">(<b>if</b>&nbsp;<i>s</i>&nbsp;&#8805;&nbsp;0&nbsp;</font>
+    <br />
+    <font color="#FFFFFF"><i>"</i>(((<b>do</b>&nbsp;((</font><b><font color="#A9A9A9">then</font></b><font color="#A9A9A9">&nbsp;<i>k</i>&nbsp;&#8804;&nbsp;<i>e</i>&nbsp;</font>
+    <br />
+    <font color="#FFFFFF"><i>"</i>(((<b>do</b>&nbsp;((</font><b><font color="#A9A9A9">else</font></b><font color="#A9A9A9">&nbsp;<i>k</i>&nbsp;&#8805;&nbsp;<i>e</i>)&nbsp;</font>
+    <br />
+    <font color="#FFFFFF"><i>"</i>(((<b>do</b>&nbsp;(</font><b><font color="#A9A9A9">do</font></b><font color="#A9A9A9">&nbsp;<i>f</i>(<i>k</i>)&nbsp;</font>
+    <br />
+    <font color="#FFFFFF"><i>"</i>(((<b>do</b>&nbsp;(<b>do</b>&nbsp;</font><i><font color="#A9A9A9">k</font></i><font color="#A9A9A9">&nbsp;+=&nbsp;<i>s</i>))),&nbsp;</font>
+    <br />
+    <font color="#FFFFFF"><i>"</i>(</font><font color="#A9A9A9">(<b>form</b>&nbsp;(<b>form</b>&nbsp;(<i>int</i>)&nbsp;<i>obj</i>&nbsp;<i>f</i>,&nbsp;<i>int</i>&nbsp;<i>b</i>,&nbsp;<i>int</i>&nbsp;<i>e</i>)&nbsp;<i>void</i>:&nbsp;</font>
+    <br />
+    <font color="#FFFFFF"><i>"</i>((<b>f</b></font><i><font color="#A9A9A9">"</font></i><font color="#A9A9A9">for<i>"</i>(<i>f</i>,&nbsp;<i>b</i>,&nbsp;<i>e</i>,&nbsp;1)),&nbsp;</font>
+    <br />
+    <font color="#FFFFFF"><i>"</i>(</font><font color="#A9A9A9">(<b>form</b>&nbsp;(<b>form</b>&nbsp;(<i>int</i>)&nbsp;<i>obj</i>&nbsp;<i>f</i>,&nbsp;<i>int</i>&nbsp;<i>e</i>)&nbsp;<i>void</i>:&nbsp;</font>
+    <br />
+    <font color="#FFFFFF"><i>"</i>((<b>f</b></font><i><font color="#A9A9A9">"</font></i><font color="#A9A9A9">for<i>"</i>(<i>f</i>,&nbsp;0,&nbsp;<i>e</i>&nbsp;&#8722;&nbsp;1,&nbsp;1)),&nbsp;</font>
+    <br />
+    <font color="#FFFFFF"><i>"</i>(</font><font color="#A9A9A9">(<b>form</b>&nbsp;(<b>form</b>&nbsp;()&nbsp;<i>obj</i>&nbsp;<i>f</i>,&nbsp;<i>int</i>&nbsp;<i>e</i>)&nbsp;<i>void</i>:&nbsp;</font>
+    <br />
+    <font color="#FFFFFF"><i>"</i>((</font><font color="#A9A9A9">(<b>with</b>&nbsp;<b>var</b>&nbsp;<i>int</i>&nbsp;<i>k</i>&nbsp;:&#8722;&nbsp;<i>e</i>&nbsp;</font>
+    <br />
+    <font color="#FFFFFF"><i>"</i>(((</font><b><font color="#A9A9A9">do</font></b><font color="#A9A9A9">&nbsp;(<b>while</b>&nbsp;<i>k</i>&nbsp;&gt;&nbsp;0&nbsp;</font>
+    <br />
+    <font color="#FFFFFF"><i>"</i>(((<b>do</b>&nbsp;(</font><b><font color="#A9A9A9">do</font></b><font color="#A9A9A9">&nbsp;<i>f</i>()&nbsp;</font>
+    <br />
+    <font color="#FFFFFF"><i>"</i>(((<b>do</b>&nbsp;(<b>do</b>&nbsp;</font><i><font color="#A9A9A9">k</font></i><font color="#A9A9A9">&nbsp;&#8722;=&nbsp;1))),</font>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>(</font>(<b>gen</b>&nbsp;(<b>type</b>&nbsp;<i>foj</i>&nbsp;<i>fType</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>((<b>g</b></font><b>gen</b>&nbsp;(<b>type</b>&nbsp;<b>form</b>&nbsp;(<i>fType</i>)&nbsp;<i>obj</i>&nbsp;<i>wType</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>((<b>gg</b></font><b>form</b>&nbsp;(<i>fType</i>&nbsp;<i>f</i>,&nbsp;<i>wType</i>&nbsp;<i>w</i>)&nbsp;<i>obj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>((<b>ggf</b></font><i>w</i>(<i>f</i>)))
+   </p>
+  </blockquote>
+  <p align="justify">
+   The last member defines a <i>for</i> clause that uses a special kind of
+   form, called a <i>wrapper.</i> When a wrapper <i>w</i> is called
+   with zero or more arguments, it returns another form <i>w</i>&#8242;.
+   The form <i>w</i>&#8242; takes only one argument, which is a third form
+   <i>f.</i> When <i>w</i>&#8242; is called with <i>f,</i> it
+   transforms to an expression that (when executed) does some computation with
+   <i>f</i> and with <i>w</i>&rsquo;s arguments.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Lost? An example might make things clearer.
+   Suppose that you have the forms <i>close, open, read,</i> and
+   <i>write</i> that work with files. They were discussed earlier along
+   with middle check loops. You can then define a wrapper called
+   <i>file</i> that does all the dirty work of opening and closing a file.
+  </p>
+  <blockquote>
+   <p>
+    <i>file</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i></font>(<b>form</b>&nbsp;(<i>string</i>&nbsp;<i>p</i>)&nbsp;<i>foj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>(</font>(<b>form</b>&nbsp;(<b>form</b>&nbsp;(<i>stream</i>)&nbsp;<i>obj</i>&nbsp;<i>f</i>)&nbsp;<i>obj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((</font>(<b>with</b>&nbsp;<i>stream</i>&nbsp;<i>t</i>&nbsp;:&#8722;&nbsp;<i>open</i>(<i>p</i>,&nbsp;''r'')&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>(((</font><b>do</b>&nbsp;<i>f</i>(<i>t</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>(((<b>do</b>&nbsp;</font><i>close</i>(<i>t</i>))))
+   </p>
+  </blockquote>
+  <p align="justify">
+   The wrapper <i>file</i> is called with a string <i>p</i> that
+   names a file. It transforms to a second form that takes yet a third form
+   <i>f</i> as its argument. The third form <i>f</i> takes a stream
+   as its argument. When <i>f</i> is called, it transforms to an
+   expression that opens <i>p</i> to create a stream <i>t,</i> then
+   calls <i>f</i> on <i>t</i> to read or write characters from it.
+   When <i>f</i> is done, it closes <i>t.</i>
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Let&rsquo;s see how that works. Suppose you
+   want to read characters from a file ''foo'' and write them to standard
+   output, as in the previous example. You could do that by calling
+   <i>file</i> directly, like this.
+  </p>
+  <blockquote>
+   <p>
+    <i>file</i>(''foo'')(&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i></font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>)&nbsp;<i>obj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>(</font>(<b>with</b>&nbsp;<b>var</b>&nbsp;<i>char</i>&nbsp;<i>c</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((</font><b>do</b>&nbsp;(<b>while</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;(<b>w</b></font><i>c</i>&nbsp;:=&nbsp;<i>read</i>(<i>s</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;(<b>w</b></font><i>c</i>&nbsp;&#8800;&nbsp;<i>eos</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((<b>do</b>&nbsp;(</font><b>do</b>&nbsp;<i>write</i>(<i>c</i>)))))
+   </p>
+  </blockquote>
+  <p align="justify">
+   First, the call <i>file</i>(''foo'') is replaced by a copy of
+   <i>file</i>&rsquo;s body, in which <i>p</i> is replaced by
+   ''foo'', like this.
+  </p>
+  <blockquote>
+   <p>
+    (<b>form</b>&nbsp;(<b>form</b>&nbsp;(<i>stream</i>)&nbsp;<i>obj</i>&nbsp;<i>f</i>)&nbsp;<i>obj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font>(<b>with</b>&nbsp;<i>stream</i>&nbsp;<i>t</i>&nbsp;:&#8722;&nbsp;<i>open</i>(''foo'',&nbsp;''r'')&nbsp;
+    <br />
+    <font color="#FFFFFF">((</font><b>do</b>&nbsp;<i>f</i>(<i>t</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">((<b>do</b>&nbsp;</font><i>close</i>(<i>t</i>)))((<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>)&nbsp;<i>obj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF">((<b>do</b>&nbsp;<i>close</i>(<i>t</i>)))((</font>(<b>with</b>&nbsp;<b>var</b>&nbsp;<i>char</i>&nbsp;<i>c</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">((<b>do</b>&nbsp;<i>close</i>(<i>t</i>)))(((</font><b>do</b>&nbsp;(<b>while</b>&nbsp;
+    <br />
+    <font color="#FFFFFF">((<b>do</b>&nbsp;<i>close</i>(<i>t</i>)))(((<b>do</b>&nbsp;(<b>w</b></font><i>c</i>&nbsp;:=&nbsp;<i>read</i>(<i>s</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">((<b>do</b>&nbsp;<i>close</i>(<i>t</i>)))(((<b>do</b>&nbsp;(<b>w</b></font><i>c</i>&nbsp;&#8800;&nbsp;<i>eos</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">((<b>do</b>&nbsp;<i>close</i>(<i>t</i>)))(((<b>do</b>&nbsp;(</font><b>do</b>&nbsp;<i>write</i>(<i>c</i>)))))
+   </p>
+  </blockquote>
+  <p align="justify">
+   Then the first form is called. It&rsquo;s replaced by a copy of its body in
+   which <i>f</i> is replaced by the second form.
+  </p>
+  <blockquote>
+   <p>
+    (<b>with</b>&nbsp;<i>stream</i>&nbsp;<i>t</i>&nbsp;:&#8722;&nbsp;<i>open</i>(''foo'',&nbsp;''r'')&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>)&nbsp;<i>obj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(</font>(<b>with</b>&nbsp;<b>var</b>&nbsp;<i>char</i>&nbsp;<i>c</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;((</font><b>do</b>&nbsp;(<b>while</b>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;((<b>do</b>&nbsp;(<b>w</b></font><i>c</i>&nbsp;:=&nbsp;<i>read</i>(<i>s</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;((<b>do</b>&nbsp;(<b>w</b></font><i>c</i>&nbsp;&#8800;&nbsp;<i>eos</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;((<b>do</b>&nbsp;(</font><b>do</b>&nbsp;<i>write</i>(<i>c</i>))))(<i>t</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;</font><i>close</i>(<i>t</i>))
+   </p>
+  </blockquote>
+  <p align="justify">
+   Finally, the form inside the <i>with</i> clause is called. It&rsquo;s
+   replaced by a copy of its body where <i>s</i> is replaced by
+   <i>t.</i>
+  </p>
+  <blockquote>
+   <p>
+    (<b>with</b>&nbsp;<i>stream</i>&nbsp;<i>t</i>&nbsp;:&#8722;&nbsp;<i>open</i>(''foo'',&nbsp;''r'')&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;(<b>with</b>&nbsp;<b>var</b>&nbsp;<i>char</i>&nbsp;<i>c</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(</font><b>do</b>&nbsp;(<b>while</b>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;(<b>w</b></font><i>c</i>&nbsp;:=&nbsp;<i>read</i>(<i>t</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;(<b>w</b></font><i>c</i>&nbsp;&#8800;&nbsp;<i>eos</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;(</font><b>do</b>&nbsp;<i>write</i>(<i>c</i>)))&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;</font><i>close</i>(<i>t</i>))
+   </p>
+  </blockquote>
+  <p align="justify">
+   Orson can collapse the two nested <i>with</i> clauses into one. This
+   gives you the same expression that you saw before in the section on middle
+   check loops, but with the name <i>t</i> instead of <i>s.</i>
+  </p>
+  <blockquote>
+   <p>
+    (<b>with</b>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b></font><i>stream</i>&nbsp;<i>t</i>&nbsp;:&#8722;&nbsp;<i>open</i>(''foo'',&nbsp;''r'')&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b></font><b>var</b>&nbsp;<i>char</i>&nbsp;<i>c</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;(<b>while</b>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>w</b></font><i>c</i>&nbsp;:=&nbsp;<i>read</i>(<i>t</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>w</b></font><i>c</i>&nbsp;&#8800;&nbsp;<i>eos</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(</font><b>do</b>&nbsp;<i>write</i>(<i>c</i>))&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;</font><i>close</i>(<i>t</i>))
+   </p>
+  </blockquote>
+  <p align="justify">
+   Unlike the example, a wrapper like <i>file</i> is almost never called
+   directly. Instead, it&rsquo;s called by a <i>for</i> clause, like this.
+  </p>
+  <blockquote>
+   <p>
+    (<b>for</b>&nbsp;<i>stream</i>&nbsp;<i>s</i>&nbsp;<b>in</b>&nbsp;<i>file</i>(''foo'')&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;(<b>with</b>&nbsp;<b>var</b>&nbsp;<i>char</i>&nbsp;<i>c</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(</font><b>do</b>&nbsp;(<b>while</b>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;(<b>w</b></font><i>c</i>&nbsp;:=&nbsp;<i>read</i>(<i>s</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;(<b>w</b></font><i>c</i>&nbsp;&#8800;&nbsp;<i>eos</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(<b>do</b>&nbsp;(</font><b>do</b>&nbsp;<i>write</i>(<i>c</i>))))
+   </p>
+  </blockquote>
+  <p align="justify">
+   I&rsquo;ll now show that this <i>for</i> clause gives you the same
+   results as if you&rsquo;d called <i>file</i> directly. Recall that a
+   <i>for</i> clause abbreviates a call to <i>"</i>for<i>",</i>
+   like this.
+  </p>
+  <blockquote>
+   <p>
+    <i>"</i>for<i>"</i>(&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i></font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>)&nbsp;<i>obj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>(</font>(<b>with</b>&nbsp;<b>var</b>&nbsp;<i>char</i>&nbsp;<i>c</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>((</font><b>do</b>&nbsp;(<b>while</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>((<b>do</b>&nbsp;(<b>w</b></font><i>c</i>&nbsp;:=&nbsp;<i>read</i>(<i>s</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>((<b>do</b>&nbsp;(<b>w</b></font><i>c</i>&nbsp;&#8800;&nbsp;<i>eos</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>((<b>do</b>&nbsp;(</font><b>do</b>&nbsp;<i>write</i>(<i>c</i>)))),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i></font><i>file</i>(''foo''))
+   </p>
+  </blockquote>
+  <p align="justify">
+   When the form <i>file</i> is called, you get this.
+  </p>
+  <blockquote>
+   <p>
+    <i>"</i>for<i>"</i>(&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i></font>(<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>)&nbsp;<i>obj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>(</font>(<b>with</b>&nbsp;<b>var</b>&nbsp;<i>char</i>&nbsp;<i>c</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>((</font><b>do</b>&nbsp;(<b>while</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>((<b>do</b>&nbsp;(<b>w</b></font><i>c</i>&nbsp;:=&nbsp;<i>read</i>(<i>s</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>((<b>do</b>&nbsp;(<b>w</b></font><i>c</i>&nbsp;&#8800;&nbsp;<i>eos</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>((<b>do</b>&nbsp;(</font><b>do</b>&nbsp;<i>write</i>(<i>c</i>)))),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i></font>(<b>form</b>&nbsp;(<b>form</b>&nbsp;(<i>stream</i>)&nbsp;<i>obj</i>&nbsp;<i>f</i>)&nbsp;<i>obj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>(</font>(<b>with</b>&nbsp;<i>stream</i>&nbsp;<i>t</i>&nbsp;:&#8722;&nbsp;<i>open</i>(''foo'',&nbsp;''r'')&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>((</font><b>do</b>&nbsp;<i>f</i>(<i>t</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>"</i>((<b>do</b>&nbsp;</font><i>close</i>(<i>t</i>))))
+   </p>
+  </blockquote>
+  <p align="justify">
+   Now, this results in calling the last member of the alternate form
+   <i>"</i>for<i>",</i> like this.
+  </p>
+  <blockquote>
+   <p>
+    (<b>gen</b>&nbsp;(<b>type</b>&nbsp;<i>foj</i>&nbsp;<i>fType</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>g</b></font><b>gen</b>&nbsp;(<b>type</b>&nbsp;<b>form</b>&nbsp;(<i>fType</i>)&nbsp;<i>obj</i>&nbsp;<i>wType</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>gg</b></font><b>form</b>&nbsp;(<i>fType</i>&nbsp;<i>f</i>,&nbsp;<i>wType</i>&nbsp;<i>w</i>)&nbsp;<i>obj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>ggf</b></font><i>w</i>(<i>f</i>))((<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>)&nbsp;<i>obj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>ggf</b><i>w</i>(<i>f</i>))((</font>(<b>with</b>&nbsp;<b>var</b>&nbsp;<i>char</i>&nbsp;<i>c</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>ggf</b><i>w</i>(<i>f</i>))(((</font><b>do</b>&nbsp;(<b>while</b>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>ggf</b><i>w</i>(<i>f</i>))(((<b>do</b>&nbsp;(<b>w</b></font><i>c</i>&nbsp;:=&nbsp;<i>read</i>(<i>s</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>ggf</b><i>w</i>(<i>f</i>))(((<b>do</b>&nbsp;(<b>w</b></font><i>c</i>&nbsp;&#8800;&nbsp;<i>eos</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>ggf</b><i>w</i>(<i>f</i>))(((<b>do</b>&nbsp;(</font><b>do</b>&nbsp;<i>write</i>(<i>c</i>)))),&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>ggf</b><i>w</i>(<i>f</i>))(</font>(<b>form</b>&nbsp;(<b>form</b>&nbsp;(<i>stream</i>)&nbsp;<i>obj</i>&nbsp;<i>f</i>)&nbsp;<i>obj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>ggf</b><i>w</i>(<i>f</i>))((</font>(<b>with</b>&nbsp;<i>stream</i>&nbsp;<i>t</i>&nbsp;:&#8722;&nbsp;<i>open</i>(''foo'',&nbsp;''r'')&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>ggf</b><i>w</i>(<i>f</i>))(((</font><b>do</b>&nbsp;<i>f</i>(<i>t</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>ggf</b><i>w</i>(<i>f</i>))(((<b>do</b>&nbsp;</font><i>close</i>(<i>t</i>))))
+   </p>
+  </blockquote>
+  <p align="justify">
+   And that turns into this form call, which is just what we got above when we
+   called <i>file</i> directly, without using a <i>for</i> clause.
+  </p>
+  <blockquote>
+   <p>
+    (<b>form</b>&nbsp;(<b>form</b>&nbsp;(<i>stream</i>)&nbsp;<i>obj</i>&nbsp;<i>f</i>)&nbsp;<i>obj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font>(<b>with</b>&nbsp;<i>stream</i>&nbsp;<i>t</i>&nbsp;:&#8722;&nbsp;<i>open</i>(''foo'')&nbsp;
+    <br />
+    <font color="#FFFFFF">((</font><b>do</b>&nbsp;<i>f</i>(<i>t</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">((<b>do</b>&nbsp;</font><i>close</i>(<i>t</i>)))((<b>form</b>&nbsp;(<i>stream</i>&nbsp;<i>s</i>)&nbsp;<i>obj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF">((<b>do</b>&nbsp;<i>close</i>(<i>t</i>)))((</font>(<b>with</b>&nbsp;<b>var</b>&nbsp;<i>char</i>&nbsp;<i>c</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">((<b>do</b>&nbsp;<i>close</i>(<i>t</i>)))(((</font><b>do</b>&nbsp;(<b>while</b>&nbsp;
+    <br />
+    <font color="#FFFFFF">((<b>do</b>&nbsp;<i>close</i>(<i>t</i>)))(((<b>do</b>&nbsp;(<b>w</b></font><i>c</i>&nbsp;:=&nbsp;<i>read</i>(<i>s</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">((<b>do</b>&nbsp;<i>close</i>(<i>t</i>)))(((<b>do</b>&nbsp;(<b>w</b></font><i>c</i>&nbsp;&#8800;&nbsp;<i>eos</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">((<b>do</b>&nbsp;<i>close</i>(<i>t</i>)))(((<b>do</b>&nbsp;(</font><b>do</b>&nbsp;<i>write</i>(<i>c</i>)))))
+   </p>
+  </blockquote>
+  <p align="justify">
+   At this point, I could go through all the steps of calling <i>file</i>
+   again, and I&rsquo;d get the same middle check loop that copies characters
+   from <i>s</i> to standard output.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I&rsquo;ve left something out of this example
+   to simplify it. To see what it was, I&rsquo;ll show the definition of the
+   wrapper <i>file</i> again, so you can see it up close.
+  </p>
+  <blockquote>
+   <p>
+    <i>file</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i></font>(<b>form</b>&nbsp;(<i>string</i>&nbsp;<i>p</i>)&nbsp;<i>foj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>(</font>(<b>form</b>&nbsp;(<b>form</b>&nbsp;(<i>stream</i>)&nbsp;<i>obj</i>&nbsp;<i>f</i>)&nbsp;<i>obj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((</font>(<b>with</b>&nbsp;<i>stream</i>&nbsp;<i>s</i>&nbsp;:&#8722;&nbsp;<i>open</i>(<i>p</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>(((</font><b>do</b>&nbsp;<i>f</i>(<i>s</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>(((<b>do</b>&nbsp;</font><i>close</i>(<i>s</i>))))
+   </p>
+  </blockquote>
+  <p align="justify">
+   What happens if <i>f</i>(<i>s</i>) is replaced by an expression
+   that throws an exception? The <i>with</i> clause will be terminated
+   before it closes the stream <i>s.</i> This is a problem, because every
+   stream should be closed after it&rsquo;s opened. I can solve the problem by
+   rewriting <i>file</i> so it uses a <i>catch</i> clause, as
+   follows.
+  </p>
+  <blockquote>
+   <p>
+    <i>file</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i></font>(<b>form</b>&nbsp;(<i>string</i>&nbsp;<i>p</i>)&nbsp;<i>foj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>(</font>(<b>form</b>&nbsp;(<b>form</b>&nbsp;(<i>stream</i>)&nbsp;<i>obj</i>&nbsp;<i>f</i>)&nbsp;<i>obj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>((</font>(<b>with</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>(((<b>w</b></font><i>stream</i>&nbsp;<i>s</i>&nbsp;:&#8722;&nbsp;<i>open</i>(<i>p</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>(((<b>w</b></font><i>int</i>&nbsp;<i>x</i>&nbsp;:&#8722;&nbsp;(<b>catch</b>&nbsp;<i>f</i>(<i>s</i>))&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>(((</font><b>do</b>&nbsp;<i>close</i>(<i>s</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>(((<b>do</b>&nbsp;</font>(<b>if</b>&nbsp;<i>x</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>f</i>(((<b>do</b>&nbsp;(</font><b>then</b>&nbsp;<i>throw</i>(<i>x</i>)))))
+   </p>
+  </blockquote>
+  <p align="justify">
+   Now if <i>f</i>(<i>s</i>) throws an exception <i>x,</i> it
+   will be caught, the stream <i>s</i> will be closed, and <i>x</i>
+   will be thrown again, in case other <i>catch</i> clauses are waiting
+   for it. If <i>f</i>(<i>s</i>) doesn&rsquo;t throw an exception,
+   then <i>x</i> will be 0. The stream <i>s</i> will still be closed,
+   but <i>x</i> will not be thrown again.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Just as in previous examples, the wrapper
+   <i>file</i> can be used with a <i>for</i> clause even if you
+   don&rsquo;t know (or care) how it works. You don&rsquo;t need to know that
+   it uses higher-order forms, or that it catches exceptions and rethrows them.
+  </p>
+  <p>
+   <b>10. Iterators.</b>
+  </p>
+  <p align="justify">
+   I&rsquo;m not done talking about wrappers yet. An <i>iterator</i> is a
+   wrapper that acts like a loop: it executes an expression zero or more times.
+   Recall from the previous section that when a wrapper <i>w</i> is called
+   with some arguments, it returns a form <i>w</i>&#8242;. The form
+   <i>w</i>&#8242; in turn takes a third form <i>f</i> as its
+   argument. When <i>w</i>&#8242; is called with <i>f,</i> it
+   transforms to an expression that does some computation with <i>f,</i>
+   and with <i>w</i>&rsquo;s arguments. If this computation involves
+   executing that expression multiple times, then the wrapper is an iterator.
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; For example, I can use the wrapper
+   <i>file</i> from the previous section to write the iterator
+   <i>chars,</i> as shown. It reads characters from a file whose pathname
+   is <i>p.</i>
+  </p>
+  <blockquote>
+   <p>
+    <i>chars</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>c</i></font>(<b>form</b>&nbsp;(<i>string</i>&nbsp;<i>p</i>)&nbsp;<i>foj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>c</i>(</font>(<b>form</b>&nbsp;(<b>form</b>&nbsp;(<i>char</i>)&nbsp;<i>obj</i>&nbsp;<i>f</i>)&nbsp;<i>obj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>c</i>((</font>(<b>for</b>&nbsp;<i>stream</i>&nbsp;<i>s</i>&nbsp;<b>in</b>&nbsp;<i>file</i>(<i>p</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>c</i>(((</font><b>do</b>&nbsp;(<b>with</b>&nbsp;<b>var</b>&nbsp;<i>char</i>&nbsp;<i>c</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>c</i>(((<b>do</b>&nbsp;(</font><b>do</b>&nbsp;(<b>while</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>c</i>(((<b>do</b>&nbsp;(<b>do</b>&nbsp;(<b>w</b></font><i>c</i>&nbsp;:=&nbsp;<i>read</i>(<i>s</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>c</i>(((<b>do</b>&nbsp;(<b>do</b>&nbsp;(<b>w</b></font><i>c</i>&nbsp;&#8800;&nbsp;<i>eos</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>c</i>(((<b>do</b>&nbsp;(<b>do</b>&nbsp;(</font><b>do</b>&nbsp;<i>f</i>(<i>c</i>))))))
+   </p>
+  </blockquote>
+  <p align="justify">
+   Note that within <i>chars,</i> the wrapper <i>file</i> does all
+   the dirty work of opening a stream, catching exceptions, and closing the
+   stream. I can now use <i>chars</i> to write characters from the file
+   ''foo'' in a single <i>for</i> clause, like this.
+  </p>
+  <blockquote>
+   <p>
+    (<b>for</b>&nbsp;<i>char</i>&nbsp;<i>c</i>&nbsp;<b>in</b>&nbsp;<i>chars</i>(''foo'')&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;<i>write</i>(<i>c</i>))
+   </p>
+  </blockquote>
+  <p align="justify">
+   This <i>for</i> clause is transformed into the following loop. It
+   handles all the dirty work behind the scenes: opening the stream, copying
+   characters, closing the stream, catching and rethrowing exceptions.
+  </p>
+  <blockquote>
+   <p>
+    (<b>with</b>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b></font><i>stream</i>&nbsp;<i>s</i>&nbsp;:&#8722;&nbsp;<i>open</i>(''foo'')&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b></font><i>int</i>&nbsp;<i>x</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b><i>i</i></font>(<b>catch</b>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b><i>i</i>(</font>(<b>with</b>&nbsp;<b>var</b>&nbsp;<i>char</i>&nbsp;<i>c</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b><i>i</i>((</font><b>do</b>&nbsp;(<b>while</b>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b><i>i</i>((<b>do</b>&nbsp;(<b>w</b></font><i>c</i>&nbsp;:=&nbsp;<i>read</i>(<i>s</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b><i>i</i>((<b>do</b>&nbsp;(<b>w</b></font><i>c</i>&nbsp;&#8800;&nbsp;<i>eos</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b><i>i</i>((<b>do</b>&nbsp;(</font><b>do</b>&nbsp;<i>write</i>(<i>c</i>))))&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;<i>close</i>(<i>s</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;</font>(<b>if</b>&nbsp;<i>x</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(</font><b>then</b>&nbsp;<i>throw</i>(<i>x</i>)))
+   </p>
+  </blockquote>
+  <p align="justify">
+   I won&rsquo;t go through the steps in which this <i>for</i> clause is
+   transformed into a loop. I did that in earlier examples, and it would be
+   boring to read it again.
+  </p>
+  <p>
+   <b>11. Recursive iterators.</b>
+  </p>
+  <p align="justify">
+   An iterator need not use a loop to perform repetitive actions: it might use
+   recursion instead. I&rsquo;ll show an example using
+   <small>BST</small>&rsquo;s (binary search trees). First, recall from
+   previous examples that a <small>BST</small> can be built from tuples
+   like this.
+  </p>
+  <blockquote>
+   <p>
+    <i>bst</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i></font>(<b>tuple</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>(<b>t</b></font><i>keyType</i>&nbsp;<i>key</i>,&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>(<b>t</b></font><i>valueType</i>&nbsp;<i>value</i>,&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>(<b>t</b></font><b>var</b>&nbsp;<b>ref</b>&nbsp;<i>bst</i>&nbsp;<i>left</i>,&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>(<b>t</b></font><b>var</b>&nbsp;<b>ref</b>&nbsp;<i>bst</i>&nbsp;<i>right</i>)
+   </p>
+  </blockquote>
+  <p align="justify">
+   Using this tuple type, I can write an iterator that does an inorder
+   traversal of a <small>BST</small> whose root is <i>r.</i> An
+   inorder traversal will traverse the <small>BST</small> in sorted order
+   of its <i>key</i> slots. (As before, consult any undergraduate data
+   structures textbook to find out how to traverse binary trees.) My iterator
+   is called <i>inorder,</i> and it looks like this.
+  </p>
+  <blockquote>
+   <p>
+    <i>inorder</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i></font>(<b>form</b>&nbsp;(<b>ref</b>&nbsp;<i>bst</i>&nbsp;<i>r</i>)&nbsp;<i>foj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(</font>(<b>form</b>&nbsp;(<b>form</b>&nbsp;(<i>keyType</i>,&nbsp;<i>valueType</i>)&nbsp;<i>obj</i>&nbsp;<i>f</i>)&nbsp;<i>obj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>((</font>(<b>with</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(((<b>w</b></font><i>p</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(((<b>w</b><i>p</i></font>(<b>proc</b>&nbsp;(<b>ref</b>&nbsp;<i>bst</i>&nbsp;<i>s</i>)&nbsp;<i>void</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(((<b>w</b><i>p</i>(</font>(<b>if</b>&nbsp;<i>s</i>&nbsp;&#8800;&nbsp;<i>nil</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(((<b>w</b><i>p</i>((</font><b>then</b>&nbsp;<i>p</i>(<i>s</i>&#8593;.<i>left</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(((<b>w</b><i>p</i>((<b>then</b>&nbsp;</font><i>f</i>(<i>s</i>&#8593;.<i>key</i>,&nbsp;<i>s</i>&#8593;.<i>value</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(((<b>w</b><i>p</i>((<b>then</b>&nbsp;</font><i>p</i>(<i>s</i>&#8593;.<i>right</i>)))&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(((</font><b>do</b>&nbsp;<i>p</i>(<i>r</i>))))
+   </p>
+  </blockquote>
+  <p align="justify">
+   It&rsquo;s not possible to traverse a binary tree using only a loop, unless
+   you also use a stack, or add extra pointer slots to <i>node.</i> As a
+   result, I had to use a recursive procedure <i>p.</i> Now, if
+   <i>t</i> is the root of a <small>BST</small>, I now can write a
+   <i>for</i> clause to write the <i>key</i> slots of <i>t</i>
+   in sorted order.
+  </p>
+  <blockquote>
+   <p>
+    (<b>for</b>&nbsp;<i>keyType</i>&nbsp;<i>k</i>,&nbsp;<i>valueType</i>&nbsp;<i>v</i>&nbsp;<b>in</b>&nbsp;<i>inorder</i>(<i>t</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;<i>writeln</i>(<i>k</i>))
+   </p>
+  </blockquote>
+  <p align="justify">
+   The <i>for</i> clause transforms to an expression that looks like this.
+   I won&rsquo;t show the steps in this transformation: you&rsquo;ve seen
+   enough of those already.
+  </p>
+  <blockquote>
+   <p>
+    (<b>with</b>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b></font><i>p</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b><i>p</i></font>(<b>proc</b>&nbsp;(<b>ref</b>&nbsp;<i>bst</i>&nbsp;<i>s</i>)&nbsp;<i>void</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b><i>p</i>(</font>(<b>if</b>&nbsp;<i>s</i>&nbsp;&#8800;&nbsp;<i>nil</i>&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b><i>p</i>((</font><b>then</b>&nbsp;<i>p</i>(<i>s</i>&#8593;.<i>left</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b><i>p</i>((<b>then</b>&nbsp;</font><i>writeln</i>(<i>s</i>&#8593;.<i>key</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>w</b><i>p</i>((<b>then</b>&nbsp;</font><i>p</i>(<i>s</i>&#8593;.<i>right</i>)))&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;<i>p</i>(<i>t</i>))
+   </p>
+  </blockquote>
+  <p align="justify">
+   One problem with <i>inorder</i> is that it works only on
+   <small>BST</small>s whose <i>key</i> and <i>value</i> slots
+   have specific types. I can rewrite it so it works on
+   <small>BST</small>s whose slots have any execution (<i>exe</i>)
+   types. This is possible by making <i>bst</i> be a form that transforms
+   to a tuple type, and by making <i>inorder</i> be a generic form.
+  </p>
+  <blockquote>
+   <p>
+    <i>bst</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i></font>(<b>form</b>&nbsp;(<b>type</b>&nbsp;<i>exe</i>&nbsp;<i>keyType</i>,&nbsp;<b>type</b>&nbsp;<i>exe</i>&nbsp;<i>valueType</i>)&nbsp;<i>tup</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>(</font>(<b>with</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>((<b>w</b></font><i>n</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>((<b>w</b><i>n</i></font>(<b>tuple</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>((<b>w</b><i>n</i>(<b>t</b></font><i>keyType</i>&nbsp;<i>key</i>,&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>((<b>w</b><i>n</i>(<b>t</b></font><i>valueType</i>&nbsp;<i>value</i>,&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>((<b>w</b><i>n</i>(<b>t</b></font><b>var</b>&nbsp;<b>ref</b>&nbsp;<i>n</i>&nbsp;<i>left</i>,&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>((<b>w</b><i>n</i>(<b>t</b></font><b>var</b>&nbsp;<b>ref</b>&nbsp;<i>n</i>&nbsp;<i>right</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i>((</font><b>do</b>&nbsp;<i>n</i>))&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>b</i></font>
+    <br />
+    <i>inorder</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i></font>(<b>gen</b>&nbsp;(<b>type</b>&nbsp;<i>exe</i>&nbsp;<i>keyType</i>,&nbsp;<b>type</b>&nbsp;<i>exe</i>&nbsp;<i>valueType</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>g</b></font><b>form</b>&nbsp;(<b>ref</b>&nbsp;<i>bst</i>(<i>keyType</i>,&nbsp;<i>valueType</i>)&nbsp;<i>r</i>)&nbsp;<i>foj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b></font>(<b>form</b>&nbsp;(<b>form</b>&nbsp;(<i>keyType</i>,&nbsp;<i>valueType</i>)&nbsp;<i>obj</i>&nbsp;<i>f</i>)&nbsp;<i>obj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>(</font>(<b>with</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>((<b>w</b></font><i>p</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>((<b>w</b><i>p</i></font>(<b>proc</b>&nbsp;(<b>ref</b>&nbsp;<i>bst</i>(<i>keyType</i>,&nbsp;<i>valueType</i>)&nbsp;<i>s</i>)&nbsp;<i>void</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>((<b>w</b><i>p</i>(</font>(<b>if</b>&nbsp;<i>s</i>&nbsp;&#8800;&nbsp;<i>nil</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>((<b>w</b><i>p</i>((</font><b>then</b>&nbsp;<i>p</i>(<i>s</i>&#8593;.<i>left</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>((<b>w</b><i>p</i>((<b>then</b>&nbsp;</font><i>f</i>(<i>s</i>&#8593;.<i>key</i>,&nbsp;<i>s</i>&#8593;.<i>value</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>((<b>w</b><i>p</i>((<b>then</b>&nbsp;</font><i>p</i>(<i>s</i>&#8593;.<i>right</i>)))&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>((</font><b>do</b>&nbsp;<i>p</i>(<i>r</i>))))
+   </p>
+  </blockquote>
+  <p align="justify">
+   For example, I might have a <small>BST</small> of type
+   <b>ref</b>&nbsp;<i>bst</i>(<i>string,</i>&nbsp;<i>int</i>),
+   whose keys are strings and whose values are integers. If the root of this
+   <small>BST</small> is <i>r,</i> then the the following
+   <i>for</i> clause will write its <i>key</i> and <i>value</i>
+   slots, in lexicographic order of the <i>key</i> slots.
+  </p>
+  <blockquote>
+   <p>
+    (<b>for</b>&nbsp;<i>string</i>&nbsp;<i>k</i>,&nbsp;<i>int</i>&nbsp;<i>v</i>&nbsp;<b>in</b>&nbsp;<i>inorder</i>(<i>r</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;<i>writeln</i>(''%s&nbsp;%i'':&nbsp;<i>k</i>,&nbsp;<i>v</i>))
+   </p>
+  </blockquote>
+  <p align="justify">
+   As if that weren&rsquo;t enough, suppose that I want not only to traverse a
+   <small>BST</small> in order, but also to stop the traversal if I find a
+   specific node. I&rsquo;m not sure I&rsquo;d ever want to do that, but it
+   makes a good example. Regardless, I can do it by modifying
+   <i>inorder</i> so it uses a breaker.
+  </p>
+  <blockquote>
+   <p>
+    <i>inorder</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i></font>(<b>gen</b>&nbsp;(<b>type</b>&nbsp;<i>exe</i>&nbsp;<i>keyType</i>,&nbsp;<b>type</b>&nbsp;<i>exe</i>&nbsp;<i>valueType</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>g</b></font><b>form</b>&nbsp;(<b>ref</b>&nbsp;<i>bst</i>(<i>keyType</i>,&nbsp;<i>valueType</i>)&nbsp;<i>r</i>)&nbsp;<i>foj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b></font>(<b>form</b>&nbsp;(<b>form</b>&nbsp;(<i>breaker</i>,&nbsp;<i>keyType</i>,&nbsp;<i>valueType</i>)&nbsp;<i>obj</i>&nbsp;<i>f</i>)&nbsp;<i>obj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>(</font>(<b>with</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>((<b>w</b></font><b>var</b>&nbsp;<i>bool</i>&nbsp;<i>g</i>&nbsp;:&#8722;&nbsp;<i>true</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>((<b>w</b></font><i>p</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>((<b>w</b><i>p</i></font>(<b>proc</b>&nbsp;(<b>ref</b>&nbsp;<i>node</i>(<i>keyType</i>,&nbsp;<i>valueType</i>)&nbsp;<i>s</i>)&nbsp;<i>void</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>((<b>w</b><i>p</i>(</font>(<b>if</b>&nbsp;<i>s</i>&nbsp;&#8800;&nbsp;<i>nil</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>((<b>w</b><i>p</i>((</font><b>then</b>&nbsp;<i>p</i>(<i>s</i>&#8593;.<i>left</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>((<b>w</b><i>p</i>((<b>then</b>&nbsp;</font>(<b>if</b>&nbsp;<i>g</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>((<b>w</b><i>p</i>((<b>then</b>&nbsp;(</font><b>then</b>&nbsp;<i>f</i>(<i>makeBreaker</i>(<i>g</i>),&nbsp;<i>s</i>&#8593;.<i>key</i>,&nbsp;<i>s</i>&#8593;.<i>value</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>((<b>w</b><i>p</i>((<b>then</b>&nbsp;(<b>then</b>&nbsp;</font>(<b>if</b>&nbsp;<i>g</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>((<b>w</b><i>p</i>((<b>then</b>&nbsp;(<b>then</b>&nbsp;(</font><b>then</b>&nbsp;<i>p</i>(<i>s</i>&#8593;.<i>right</i>)))))&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>((</font><b>do</b>&nbsp;<i>p</i>(<i>r</i>))))
+   </p>
+  </blockquote>
+  <p align="justify">
+   Using this new version of <i>inorder,</i> I can traverse a
+   <small>BST</small> whose root is <i>t.</i> I can stop the
+   traversal if I find a value slot <i>v</i> that has some property
+   recognized by the method <i>isV.</i>
+  </p>
+  <blockquote>
+   <p>
+    (<b>for</b>&nbsp;<i>breaker</i>&nbsp;<i>x</i>,&nbsp;<i>keyType</i>&nbsp;<i>k</i>,&nbsp;<i>valueType</i>&nbsp;<i>v</i>&nbsp;<b>in</b>&nbsp;<i>inorder</i>(<i>t</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(</font><b>do</b>&nbsp;(<b>if</b>&nbsp;<i>isV</i>(<i>v</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(</font><b>then</b>&nbsp;<i>x</i>()&nbsp;
+    <br />
+    <font color="#FFFFFF">(<b>do</b>&nbsp;(</font><b>else</b>&nbsp;<i>writeln</i>(''%s&nbsp;%i'':&nbsp;<i>k</i>,&nbsp;<i>v</i>)))
+   </p>
+  </blockquote>
+  <p align="justify">
+   Here&rsquo;s the big finish. I can write a final, grand unified, version of
+   <i>inorder</i> that can be used with or without a breaker. The trick is
+   that <i>inorder</i> transforms to an alternate form whose first member
+   doesn&rsquo;t use a breaker, but whose second member does.
+  </p>
+  <blockquote>
+   <p>
+    <i>inorder</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i></font>(<b>gen</b>&nbsp;(<b>type</b>&nbsp;<i>exe</i>&nbsp;<i>keyType</i>,&nbsp;<b>type</b>&nbsp;<i>exe</i>&nbsp;<i>valueType</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>g</b></font><b>form</b>&nbsp;(<b>ref</b>&nbsp;<i>bst</i>(<i>keyType</i>,&nbsp;<i>valueType</i>)&nbsp;<i>r</i>)&nbsp;<i>foj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b></font>(<b>alt</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>(</font>(<b>form</b>&nbsp;(<b>form</b>&nbsp;(<i>keyType</i>,&nbsp;<i>valueType</i>)&nbsp;<i>obj</i>&nbsp;<i>f</i>)&nbsp;<i>obj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>((</font>(<b>with</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>(((<b>w</b></font><i>p</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>(((<b>w</b><i>p</i></font>(<b>proc</b>&nbsp;(<b>ref</b>&nbsp;<i>bst</i>(<i>keyType</i>,&nbsp;<i>valueType</i>)&nbsp;<i>s</i>)&nbsp;<i>void</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>(((<b>w</b><i>p</i>(</font>(<b>if</b>&nbsp;<i>s</i>&nbsp;&#8800;&nbsp;<i>nil</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>(((<b>w</b><i>p</i>((</font><b>then</b>&nbsp;<i>p</i>(<i>s</i>&#8593;.<i>left</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>(((<b>w</b><i>p</i>((<b>then</b>&nbsp;</font><i>f</i>(<i>s</i>&#8593;.<i>key</i>,&nbsp;<i>s</i>&#8593;.<i>value</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>(((<b>w</b><i>p</i>((<b>then</b>&nbsp;</font><i>p</i>(<i>s</i>&#8593;.<i>right</i>)))&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>(((</font><b>do</b>&nbsp;<i>p</i>(<i>r</i>))),&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>(</font>(<b>form</b>&nbsp;(<b>form</b>&nbsp;(<i>breaker</i>,&nbsp;<i>keyType</i>,&nbsp;<i>valueType</i>)&nbsp;<i>obj</i>&nbsp;<i>f</i>)&nbsp;<i>obj</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>((</font>(<b>with</b>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>(((<b>w</b></font><b>var</b>&nbsp;<i>bool</i>&nbsp;<i>g</i>&nbsp;:&#8722;&nbsp;<i>true</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>(((<b>w</b></font><i>p</i>&nbsp;:&#8722;&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>(((<b>w</b><i>p</i></font>(<b>proc</b>&nbsp;(<b>ref</b>&nbsp;<i>bst</i>(<i>keyType</i>,&nbsp;<i>valueType</i>)&nbsp;<i>s</i>)&nbsp;<i>void</i>:&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>(((<b>w</b><i>p</i>(</font>(<b>if</b>&nbsp;<i>s</i>&nbsp;&#8800;&nbsp;<i>nil</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>(((<b>w</b><i>p</i>((</font><b>then</b>&nbsp;<i>p</i>(<i>s</i>&#8593;.<i>left</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>(((<b>w</b><i>p</i>((<b>then</b>&nbsp;</font>(<b>if</b>&nbsp;<i>g</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>(((<b>w</b><i>p</i>((<b>then</b>&nbsp;(</font><b>then</b>&nbsp;<i>f</i>(<i>makeBreaker</i>(<i>g</i>),&nbsp;<i>s</i>&#8593;.<i>key</i>,&nbsp;<i>s</i>&#8593;.<i>value</i>)&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>(((<b>w</b><i>p</i>((<b>then</b>&nbsp;(<b>then</b>&nbsp;</font>(<b>if</b>&nbsp;<i>g</i>&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>(((<b>w</b><i>p</i>((<b>then</b>&nbsp;(<b>then</b>&nbsp;(</font><b>then</b>&nbsp;<i>p</i>(<i>s</i>&#8593;.<i>right</i>)))))&nbsp;
+    <br />
+    <font color="#FFFFFF"><i>i</i>(<b>gf</b>(((</font><b>do</b>&nbsp;<i>p</i>(<i>r</i>)))))
+   </p>
+  </blockquote>
+  <p align="justify">
+   It might have been better to use a <i>catch</i> clause in these last
+   two versions of <i>inorder.</i> The breaker would then call
+   <i>throw</i> to stop the iterator instead of setting a Boolean variable
+   to <i>false.</i> This would require the form <i>makeBreaker</i> to
+   be defined in a different way. Interested readers (if there are any) may
+   want to write such a thing themselves.
+  </p>
+  <hr />
+  <p align="center">
+   <b>References</b>
+  </p>
+  <table cellpadding="0" cellspacing="0">
+   <tr valign="top">
+    <td>
+     <p>
+      <a name="jnw1974">
+      </a>
+      [<small>JNW</small>&nbsp;1974]&nbsp;&nbsp;
+     </p>
+    </td>
+    <td>
+     <p align="justify">
+      Kathleen Jensen, Niklaus Wirth. <i>P<small>ASCAL</small> User
+      Manual and Report.</i> Lecture Notes In Computer Science No. 18.
+      Berlin, Germany. 1974.
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      <a name="knr1988">
+      </a>
+      [<small>KNR</small>&nbsp;1988]&nbsp;&nbsp;
+     </p>
+    </td>
+    <td>
+     <p align="justify">
+      Brian W. Kernighan, Dennis M. Ritchie. <i>The C Programming
+      Language.</i> Prentice Hall <small>PTR</small>. Upper Saddle
+      River, New Jersey. 1988.
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      <a name="moe2013a">
+      </a>
+      [<small>MOE</small>&nbsp;2013<small>A</small>]&nbsp;&nbsp;
+     </p>
+    </td>
+    <td>
+     <p align="justify">
+      James B. Moen. &lsquo;&lsquo;Revised&#8315;&#185; Report on the
+      Algorithmic Language Orson.&rsquo;&rsquo; Unpublished technical report.
+      2013.
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      <a name="moe2013b">
+      </a>
+      [<small>MOE</small>&nbsp;2013<small>B</small>]&nbsp;&nbsp;
+     </p>
+    </td>
+    <td>
+     <p align="justify">
+      James B. Moen. &lsquo;&lsquo;Input and Output in Orson.&rsquo;&rsquo;
+      Unpublished technical report. 2013.
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      <a name="vwi1977">
+      </a>
+      [<small>VWI</small>&nbsp;1977]&nbsp;&nbsp;
+     </p>
+    </td>
+    <td>
+     <p align="justify">
+      A.&nbsp;van Wijngaarden, B.&nbsp;J.&nbsp;Mailloux,
+      J.&nbsp;E.&nbsp;L.&nbsp;Peck, C.&nbsp;H.&nbsp;A.&nbsp;Koster,
+      M.&nbsp;Sintzoff, C.&nbsp;H.&nbsp;Lindsey,
+      L.&nbsp;G.&nbsp;L.&nbsp;T.&nbsp;Meertens, R.&nbsp;G.&nbsp;Fisker.
+      &lsquo;&lsquo;Revised Report on the Algorithmic Language Algol
+      68.&rsquo;&rsquo; <i>A<small>CM</small>
+      S<small>IGPLAN</small> Notices.</i> Vol. 12, No. 5, May 1977.
+      Pages 1&#8211;70.
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      <a name="wir1976">
+      </a>
+      [<small>WIR</small>&nbsp;1976]&nbsp;&nbsp;
+     </p>
+    </td>
+    <td>
+     <p align="justify">
+      Niklaus Wirth. <i>Algorithms + Data Structures = Programs.</i>
+      Prentice-Hall, Inc. Englewood Cliffs, New Jersey. 1976.
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+    <td>
+     <p>
+      &nbsp;
+     </p>
+    </td>
+   </tr>
+   <tr valign="top">
+    <td>
+     <p>
+      <a name="zar1961">
+      </a>
+      [<small>ZAR</small>&nbsp;1961]&nbsp;&nbsp;
+     </p>
+    </td>
+    <td>
+     <p align="justify">
+      Barbara J. Zarbock. <i>The Complete Book of Rug Hooking.</i> D. Van
+      Nostrand Company, Inc. Princeton, New Jersey. 1961. Page 60.
+     </p>
+    </td>
+   </tr>
+  </table>
+ </body>
+</html>
