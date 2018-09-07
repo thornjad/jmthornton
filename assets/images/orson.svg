@@ -9,9 +9,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="207.44745mm"
-   height="162.29189mm"
-   viewBox="0 0 735.05002 575.04998"
+   width="135"
+   height="135"
+   viewBox="0 0 135.00001 135"
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.49497475"
-     inkscape:cx="535.48188"
-     inkscape:cy="157.9381"
+     inkscape:zoom="5.6"
+     inkscape:cx="76.789775"
+     inkscape:cy="73.88306"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -40,7 +40,8 @@
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
-     fit-margin-bottom="0">
+     fit-margin-bottom="0"
+     units="px">
     <inkscape:grid
        type="xygrid"
        id="grid4162"
@@ -63,10 +64,10 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-4.975,-2.3372048)">
+     transform="translate(-4.975,-442.38725)">
     <g
        id="g4164"
-       transform="matrix(2.9274411,0,0,2.9274411,-918.27908,-640.8078)">
+       transform="matrix(0.55046095,0,0,0.55046095,-170.26243,334.70221)">
       <text
          transform="scale(0.8686308,1.1512371)"
          sodipodi:linespacing="125%"
