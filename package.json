@@ -1,7 +1,7 @@
 {
   "name": "jmthornton",
   "version": "3.3.4",
-  "description": "Personal website of Jade Thornton",
+  "description": "Personal website of Jade Michael Thornton",
   "main": "index.js",
   "scripts": {
     "start": "http-server",
@@ -16,14 +16,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thornjad/jmthornton.git"
+    "url": "git+https://gitlab.com/thornjad/jmthornton.git"
   },
-  "author": "Jade Thornton",
+  "author": "Jade Michael Thornton",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/thornjad/jmthornton/issues"
+    "url": "https://gitlab.com/thornjad/jmthornton/issues"
   },
-  "homepage": "https://github.com/thornjad/jmthornton",
+  "homepage": "https://gitlab.com/thornjad/jmthornton",
   "dependencies": {
     "snyk": "^1.54.1"
   },
