@@ -1,21 +1,28 @@
 /* TEAM */
-Primary developer: Jade Thornton
+Primary developer: Jade Michael Thornton
 Site: jmthornton.net
-GitHub: thornjad
+GitLab: thornjad
 Twitter: jmthorntonwhat
-Location: US
+Location: Texas, USA
+
+
+
+/* MAIN SITE */
+Last updated: See git history at https://gitlab.com/thornjad/jmthornton
 
 
 
 /* BLOG */
-Editor, primary writer: Jade Thornton
-Last update: September 29, 2017
+Editor, primary writer: Jade Michael Thornton
+Last post: September 29, 2017
 
 
 
 /* THANKS */
 Stephanie Shrider: all the love and support in the world
 GitHub: sshrid
+
+GitLab: For providing a fantastic platform
 
 CosmoX: original creator of geek-profile, the anscestor of GeekProfile
 GitHub: hackjutsu
@@ -24,4 +31,4 @@ GitHub: hackjutsu
 
 /* SITE */
 Standards: HTML5, CSS3
-Software: Atom, Firefox, Chromium, Opera, NeoVim, npm, DuckDuckGo
+Software: aero (Emacs), Firefox, npm
