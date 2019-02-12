@@ -1,9 +1,4 @@
 {
-  "presets": ["flow"],
-  "plugins": [
-    "transform-remove-debugger",
-    "transform-strict-mode"
-  ],
   "env": {
     "production": {
       "presets": ["minify"]
