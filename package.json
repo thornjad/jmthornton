@@ -25,7 +25,7 @@
   },
   "homepage": "https://gitlab.com/thornjad/jmthornton",
   "dependencies": {
-    "snyk": "^1.54.1"
+    "snyk": "^1.126.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
