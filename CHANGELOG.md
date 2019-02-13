@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - This changelog, backfilled for all releases
 
+### Changed
+- Use Gitlab link on index pages and latest posts
+
 ## [3.4.2] - 2019-02-12
 ### Changed
 - Snyk is now a dev dependency, not full dependency
