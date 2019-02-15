@@ -4,15 +4,13 @@
   "description": "Personal website of Jade Michael Thornton",
   "main": "index.js",
   "scripts": {
-    "start": "http-server",
-    "build": "babel src/ -d lib/; node lib/build.js",
-    "build-prod": "BABEL_ENV=production yarn run build",
-    "md": "node src/compile-md.js",
+    "start": "npm run build && http-server",
+    "build": "node lib/build.js",
+    "build-prod": "BABEL_ENV=production npm run build",
+    "md": "node lib/compile-md.js",
     "test": "snyk test",
     "protect": "snyk protect --yes",
-    "prepare": "npm run protect",
-    "snyk": "snyk",
-    "flow": "flow"
+    "prepare": "npm run protect"
   },
   "repository": {
     "type": "git",
@@ -25,7 +23,8 @@
   },
   "homepage": "https://gitlab.com/thornjad/jmthornton",
   "dependencies": {
-    "instant.page": "^1.1.0"
+    "instant.page": "^1.1.0",
+    "mini.css": "^3.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -33,7 +32,6 @@
     "filefile": "^1.0.1",
     "http-server": "^0.10.0",
     "markdown": "^0.5.0",
-    "mini.css": "2.3.4",
     "purify-css": "^1.2.5",
     "shelljs": "^0.7.8",
     "snyk": "^1.126.0"
