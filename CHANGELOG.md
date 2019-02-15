@@ -4,7 +4,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+(C A R S)
+
 ## [Unreleased]
+
+## [4.0.0] - 2019-02-15
+### Changed
+- Upgrade to mini.css 3
+- Move mini.css to npm, not committed
+- All external CSS
+- Package updates
+
+### Added
+- Add new tools index page
+- Published on Dat
+
 ### Removed
 - Unused flow config file
 
@@ -92,4 +106,3 @@ following semantic versioning
 
 ### Added
 - Initial commit <https://gitlab.com/thornjad/jmthornton/commit/ba1d848cf0b649d10bb09a14dcc3900c14e2e774>
-
