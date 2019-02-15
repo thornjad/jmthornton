@@ -5,11 +5,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Removed
+- Unused flow config file
+
+## [3.5.0] - 2019-02-15
 ### Added
 - This changelog, backfilled for all releases
+- Prefetch links on main page with instant.page
 
 ### Changed
 - Use Gitlab link on index pages and latest posts
+
+### Removed
+- Unused 50*.shtml files
 
 ## [3.4.2] - 2019-02-12
 ### Changed
