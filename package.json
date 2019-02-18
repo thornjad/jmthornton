@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run build && http-server",
-    "build": "node lib/build.js",
+    "build": "node bin/build.js",
     "build-prod": "BABEL_ENV=production npm run build",
-    "md": "node lib/compile-md.js",
+    "md": "node bin/compile-md.js",
     "test": "snyk test",
     "protect": "snyk protect --yes",
     "prepare": "npm run protect"
