@@ -4,7 +4,7 @@
   "description": "Personal website of Jade Michael Thornton",
   "main": "index.js",
   "scripts": {
-    "start": "npm run build && http-server",
+    "start": "npm run build && http-server -o -c-1",
     "build": "node bin/build.js",
     "build-prod": "BABEL_ENV=production npm run build",
     "md": "node bin/compile-md.js",

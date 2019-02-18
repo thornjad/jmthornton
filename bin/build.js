@@ -6,7 +6,7 @@ const path = require('path');
 
 require('filefile');
 
-const dirs = ['.', 'blog', 'blog/p', 'blog/r', 'blog/recipes', 'p', 'projects', 'tools', 'tools/news', 'gallery', 'assets/script/lib'];
+const dirs = ['.', 'blog', 'blog/p', 'blog/r', 'blog/recipes', 'p', 'projects', 'tools', 'tools/news', 'gallery', 'lib'];
 
 const build = () => {
   checkDeps();
