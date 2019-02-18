@@ -7,8 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 (C A R S)
 
 ## [Unreleased]
+### Changed
+- Restructure /assets/scripts into /lib
+
 ### Removed
 - Matomo analytics
+- Release notes (they were outdated anyway)
 
 ## [4.0.0] - 2019-02-15
 ### Changed
