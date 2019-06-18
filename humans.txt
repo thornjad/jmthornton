@@ -14,7 +14,6 @@ Last updated: See git history at https://gitlab.com/thornjad/jmthornton
 
 /* BLOG */
 Editor, primary writer: Jade Michael Thornton
-Last post: September 29, 2017
 
 
 
@@ -31,4 +30,4 @@ GitHub: hackjutsu
 
 /* SITE */
 Standards: HTML5, CSS3
-Software: aero (Emacs), Firefox, npm
+Software: Aero Emacs, Firefox, npm
