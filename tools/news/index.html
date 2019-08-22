@@ -37,30 +37,12 @@
         margin-top: 3em;
       }
     </style>
-    <!-- Matomo analytics -->
-    <script type="text/javascript">
-      var _paq = _paq || [];
-      /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-      _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
-      _paq.push(["setDomains", ["*.jmthornton.net/analytics"]]);
-      _paq.push(['trackPageView']);
-      _paq.push(['enableLinkTracking']);
-      (function() {
-        var u="//jmthornton.net/analytics/";
-        _paq.push(['setTrackerUrl', u+'piwik.php']);
-        _paq.push(['setSiteId', '1']);
-        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-      })();
-    </script>
-    <!-- End Matomo analytics -->
   </head>
   <body>
     <header class="sticky">
       <span class="header-hack">
         <a href="https://jmthornton.net/" class="button" role="button">Home</a>
-        <a href="https://jmthornton.net/#projects" class="button" role="button">Projects</a>
-        <a href="https://jmthornton.net/gallery" class="button" role="button">Gallery</a>
+				<a href="https://jmthornton.net/tools/" class="button" role="button">Tools</a>
         <a href="https://blog.jmthornton.net" class="button" role="button">Blog</a>
       </span>
     </header>
@@ -78,7 +60,7 @@
         </div>
       </div>
     </footer>
-    <script src="https://jmthornton.net/assets/script/lib/helpers.js"></script>
-    <script src="./assets/script/lib/news.js"></script>
+    <script src="https://jmthornton.net/lib/helpers.js" defer></script>
+    <script src="./lib/news.js" defer></script>
   </body>
 </html>
