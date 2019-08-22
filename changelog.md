@@ -3,7 +3,9 @@ All notable changes to this project will be documented in this file.
 
 (C A R S)
 
-## [Unreleased]
+## [unreleased]
+
+## [5.0.0] - 2019-08-22
 ### Changed
 - Restructure /assets/scripts into /lib and /bin
 - Update main page
