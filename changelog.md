@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 
 ## [unreleased]
 
+## [5.1.0] - 2019-08-22
+### Changed
+- Main page copy updates
+
+## [5.0.2] - 2019-08-22
+### Changed
+- Main page copy updates
+
+## [5.0.1] - 2019-08-22
+### Changed
+- Main page copy updates
+
 ## [5.0.0] - 2019-08-22
 ### Changed
 - Restructure /assets/scripts into /lib and /bin
