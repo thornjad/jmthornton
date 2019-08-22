@@ -1,7 +1,6 @@
 'use strict';
 
 class NewsPosts {
-
   constructor() {
     this.apiURI = 'https://hacker-news.firebaseio.com/v0/';
     this.firstPageLoadLimit = 30;
