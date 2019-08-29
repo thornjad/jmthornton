@@ -3,4 +3,5 @@ image: node:latest
 build:
   stage: build
   script:
+    - npm install
     - npm run build-prod
