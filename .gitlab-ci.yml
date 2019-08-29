@@ -1,0 +1,6 @@
+image: node:latest
+
+build:
+  stage: build
+  script:
+    - npm build-prod
