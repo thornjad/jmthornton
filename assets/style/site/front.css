@@ -48,3 +48,7 @@ a:focus {
 .construction-banner div {
   font-size: 0.8em;
 }
+
+.icon {
+	fill: none;
+}

@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 
 ## [unreleased]
 
+## [5.1.1] - 2019-08-28
+### Changed
+- Updated travis badge url
+- Updated http-server url
+- Tweak site button SVGs
+
+### Added
+- Additional site buttons
+
 ## [5.1.0] - 2019-08-22
 ### Changed
 - Main page copy updates
