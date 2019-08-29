@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 - Additional site buttons
+- Gitlab CI config
 
 ## [5.1.0] - 2019-08-22
 ### Changed
