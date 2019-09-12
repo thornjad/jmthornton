@@ -27,8 +27,9 @@
     "mini.css": "^3.0.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-minify": "^0.2.0",
+    "@babel/cli": "^7.6.0",
+    "@babel/core": "^7.6.0",
+    "babel-minify": "^0.5.1",
     "fibers": "^4.0.1",
     "filefile": "^1.0.2",
     "http-server": "^0.10.0",
