@@ -2,31 +2,52 @@
 
 const sh = require('shelljs');
 const fs = require('fs');
+const fsp = fs.promises;
 const path = require('path');
+const sass = require('sass');
+const Fiber = require('fibers');
 
 require('filefile');
 
-const dirs = ['.', 'blog', 'blog/p', 'blog/r', 'blog/recipes', 'p', 'projects', 'tools', 'tools/news', 'gallery', 'lib'];
+const dirs = ['.', 'blog', 'blog/p', 'blog/r', 'blog/recipes', 'p', 'projects', 'tools', 'tools/news', 'lib'];
 
-const build = () => {
+const build = async () => {
+  await compileSass();
+	console.info('Completed sass build');
   checkDeps();
-  compileSass();
   doPurify();
 };
 
 const checkDeps = () => {
-  if (!sh.which('sass')) {
-    console.error('building requires Sass, please install Sass');
-    sh.exit(1);
-  }
   if (!sh.which('node_modules/.bin/purifycss')) {
     console.error('Try `npm install` first');
     sh.exit(1);
   }
 };
 
-const compileSass = () => {
-  sh.exec('sass assets/style/main.scss assets/style/main.css');
+const compileSass = async () => {
+	return new Promise((resolve, reject) => {
+		const styleDir = 'assets/style';
+		const file = `${styleDir}/main.scss`;
+		const outFile = `${styleDir}/main.css`;
+		const sourceMap = `${styleDir}/main.map`;
+
+		sass.render({
+			file, outFile, sourceMap,
+			fiber: Fiber,
+		}, (err, result) => {
+			if (err) {
+				reject(err);
+			} else {
+				fsp.writeFile(outFile, result.css).then(() => {
+					console.info(`gave sass to ${outFile}`);
+					resolve();
+				}, (reason) => {
+					reject(reason);
+				});
+			}
+		});
+	});
 };
 
 const doPurify = () => {
@@ -52,6 +73,7 @@ const getContentFiles = async () => {
   return stringifySpaces(fileList);
 };
 
+// TODO move this to fsp
 const getFiles = dir => new Promise((resolve, reject) => {
   console.log(`reading ${dir} for content files...`);
   fs.readdir(dir, (err, files) => {
@@ -81,4 +103,8 @@ const stringifySpaces = arr => {
 module.exports = build;
 
 /* Now time for the fun */
-build();
+build().then(() => {
+	console.log('Completed build');
+}, (reason => {
+	console.error(reason);
+}));
