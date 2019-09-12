@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 
 ## [unreleased]
 
+## [5.2.0] - 2019-09-12
+### Changed
+- Build process uses JS port of Sass, rather than the old Ruby version
+- Upgraded Babel build tools into the age of Babel 7
+- Build process is now internally partially asynchronous
+
+### Added
+- Front page text
+
+### Removed
+- Build no longer depends on Ruby Sass
+
+### Security
+- Upgraded build dependencies. No true vulnerabilities existed in prod, but now
+  we're extra safe
+
 ## [5.1.1] - 2019-08-28
 ### Changed
 - Updated travis badge url
