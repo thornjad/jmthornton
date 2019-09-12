@@ -32,6 +32,10 @@ section {
   padding-top: 1em;
 }
 
+.contact-row a span {
+	font-weight: lighter;
+}
+
 a:focus {
   outline: none;
 }
@@ -43,10 +47,6 @@ a:focus {
 
 .stephpic {
   margin-top: 7em;
-}
-
-.construction-banner div {
-  font-size: 0.8em;
 }
 
 .icon {
