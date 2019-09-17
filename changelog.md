@@ -1,9 +1,17 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-(C A R S)
+> (C A R S)
 
 ## [unreleased]
+- Nothing so far
+
+## [5.2.1] - 2019-09-17
+### Changed
+- Copy updates
+
+### Added
+- Version number now links to this document
 
 ## [5.2.0] - 2019-09-12
 ### Changed
@@ -32,7 +40,7 @@ All notable changes to this project will be documented in this file.
 
 ## [5.1.0] - 2019-08-22
 ### Changed
-- Main page copy updates
+- Major copy updates
 
 ## [5.0.2] - 2019-08-22
 ### Changed
@@ -142,8 +150,8 @@ semantic versioning
 - npm package management
 
 ## NOTE
-- There was a large gap due to rapid development and a complete lack of
-following semantic versioning
+- There was a large gap due to rapid development and a complete lack of semantic
+ versioning
 
 ## [0.7.1] - 2016-11-13
 ### Changed
@@ -157,4 +165,6 @@ following semantic versioning
 - First open source release
 
 ### Added
-- Initial commit <https://gitlab.com/thornjad/jmthornton/commit/ba1d848cf0b649d10bb09a14dcc3900c14e2e774>
+- Initial commit into version control. Before this point, the site was updated
+  live.
+  <https://gitlab.com/thornjad/jmthornton/commit/ba1d848cf0b649d10bb09a14dcc3900c14e2e774>
