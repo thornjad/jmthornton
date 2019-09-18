@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 ## [unreleased]
 - Nothing so far
 
+## [5.2.2] - 2019-09-18
+### Changed
+- Fix version link
+
 ## [5.2.1] - 2019-09-17
 ### Changed
 - Copy updates
