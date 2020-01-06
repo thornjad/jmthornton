@@ -24,6 +24,10 @@
   font-size: 1.7em;
 }
 
+.post-main em {
+	margin: calc(1.5 * var(--universal-margin)) var(--universal-margin);
+}
+
 .blog-body {
   padding: 4vh 0;
 }
