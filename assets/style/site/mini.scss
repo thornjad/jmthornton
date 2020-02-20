@@ -5,6 +5,11 @@
   Maintainer: Jade Michael Thornton
   mini.css version: v3.0.1
 */
+
+/* Core */
+$a-link-color:             #679159 !default;    // Color for <a>:link
+$a-visited-color:          #919059 !default;    // Color for <a>:visited
+
 @import '../../../node_modules/mini.css/src/mini/core';
 @import '../../../node_modules/mini.css/src/mini/layout';
 
@@ -82,6 +87,25 @@ $button-large-name:    'large';              // Class name, padding and margin f
 $button-large-padding: calc(1.5 * var(#{$universal-padding-var})) calc(2 * var(#{$universal-padding-var}));
 $button-large-margin:  var(#{$universal-margin-var});
 @include make-button-alt-size ($button-large-name, $button-large-padding, $button-large-margin);
+
+
+/*
+	Custom nav
+*/
+$header-height:     3.1875rem !default;      // Height of the header element.
+$header-back-color: #1b1b1b !default;        // Background color for the header element.
+$header-hover-back-color: #679159 !default;  // Background color for the header element (hover).
+$header-fore-color:   #eceff4 !default;         // Text color for the header element.
+$header-border-color: #1b1b1b !default;         // Border color for the header element.
+$footer-fore-color:   #444 !default;         // Text color for the footer element.
+$footer-back-color:   #f8f8f8 !default;      // Background color for footer nav element.
+$footer-border-color: #ddd !default;         // Border color for the footer element.
+$footer-link-color:   #679159 !default;      // Color for link in the footer element.
+$nav-back-color:      #f8f8f8 !default;      // Background color for the nav element.
+$nav-hover-back-color: #f0f0f0 !default;     // Background color for the nav element (hover).
+$nav-fore-color:      #444 !default;         // Text color for the nav element.
+$nav-border-color:    #ddd !default;         // Border color for the nav element.
+$nav-link-color:      #679159 !default;      // Color for link in the nav element.
 
 @import '../../../node_modules/mini.css/src/mini/navigation';
 @import '../../../node_modules/mini.css/src/mini/table';
