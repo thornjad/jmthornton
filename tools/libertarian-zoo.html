@@ -24,15 +24,19 @@
 		<meta property="og:type" content="article">
 		<meta property="og:locale" content="en_US" />
 		<meta name="article:author" content="https://jmthornton.net">
-
-		<!-- TODO UPDATE ME -->
 		<meta property="og:image" content="https://jmthornton.net/assets/images/zoo/vermin.jpg">
 		<meta name="twitter:image" content="https://jmthornton.net/assets/images/zoo/vermin.jpg">
-		<meta property="article:published_time" content="2020-02-05">
+
+		<!-- TODO UPDATE ME -->
+		<meta property="article:published_time" content="2020-02-20">
 
 		<style>
 		 body {
 			 background-color: #ececec;
+		 }
+
+		 p {
+			 margin: none;
 		 }
 
 		 section {
@@ -133,22 +137,28 @@
 				<small><em>Ordered by popularity</em></small>
 			</h1>
 			<hr />
-			<h5 class="last-updated"><em>Last updated 2020-02-05</em></h5>
+			<h5 class="last-updated"><em>Last updated 2020-02-20</em></h5>
 			<div class="container mount-point"></div>
 		</section>
 
 		<script>
 		 const candidates = [
 			 {
+				 name: 'Jacob Hornberger',
+				 pic: 'hornberger.jpg',
+				 url: '',
+				 title: 'Founder of a political NGO',
+				 votes: 142,
+				 info: '',
+				 dropped: false,
+			 },
+			 {
 				 name: 'Vermin Supreme',
 				 pic: 'vermin.jpg',
 				 url: 'https://en.wikipedia.org/wiki/Vermin_Supreme',
 				 title: 'Performance artist and activist',
-				 percent: 26,
-				 info: '',
-				 facts: [
-					 'Won the first primary of 2020 (New Hampshire)',
-				 ],
+				 votes: 35,
+				 info: 'Won the first primary of 2020 (New Hampshire)',
 				 dropped: false,
 			 },
 			 {
@@ -156,10 +166,8 @@
 				 pic: 'jo.jpg',
 				 url: 'https://en.wikipedia.org/wiki/Jo_Jorgensen',
 				 title: 'Lecturer at Clemson University',
-				 percent: 17,
+				 votes: 35,
 				 info: '',
-				 facts: [
-				 ],
 				 dropped: false,
 			 },
 			 {
@@ -167,10 +175,8 @@
 				 pic: 'taxation-is-theft.jpg',
 				 url: 'https://behrman2020.com',
 				 title: 'Podcaster, guy with hat',
-				 percent: 13,
+				 votes: 27,
 				 info: '',
-				 facts: [
-				 ],
 				 dropped: false,
 			 },
 			 {
@@ -178,11 +184,8 @@
 				 pic: 'amash.jpg',
 				 url: 'https://en.wikipedia.org/wiki/Justin_Amash',
 				 title: 'US Representative from Michigan',
-				 percent: 0,
-				 info: '',
-				 facts: [
-					 'Not running for president',
-				 ],
+				 votes: 0,
+				 info: 'Is not running for president',
 				 dropped: false,
 			 },
 			 {
@@ -190,11 +193,8 @@
 				 pic: 'paul.jpg',
 				 url: 'https://en.wikipedia.org/wiki/Rand_Paul',
 				 title: 'US Senator from Kentucky',
-				 percent: 0,
-				 info: '',
-				 facts: [
-					 'Not running for president',
-				 ],
+				 votes: 0,
+				 info: 'Is not running for president',
 				 dropped: false,
 			 },
 			 {
@@ -202,22 +202,8 @@
 				 pic: 'ventura.jpg',
 				 url: 'https://en.wikipedia.org/wiki/Jesse_Ventura',
 				 title: 'Former Governor of Minnesota',
-				 percent: 0,
-				 info: '',
-				 facts: [
-					 'Not running for president',
-				 ],
-				 dropped: false,
-			 },
-			 {
-				 name: 'Jacob Hornberger',
-				 pic: 'hornberger.jpg',
-				 url: '',
-				 title: 'Founder of a political NGO',
-				 percent: 9,
-				 info: '',
-				 facts: [
-				 ],
+				 votes: 0,
+				 info: 'Is not running for president',
 				 dropped: false,
 			 },
 			 {
@@ -225,10 +211,8 @@
 				 pic: 'robb.jpg',
 				 url: '',
 				 title: 'Software engineer',
-				 percent: 8,
+				 votes: 15,
 				 info: '',
-				 facts: [
-				 ],
 				 dropped: false,
 			 },
 			 {
@@ -236,10 +220,17 @@
 				 pic: 'whitney.jpg',
 				 url: 'https://en.wikipedia.org/wiki/Mark_Whitney',
 				 title: 'Podcaster',
-				 percent: 6,
+				 votes: 10,
 				 info: '',
-				 facts: [
-				 ],
+				 dropped: false,
+			 },
+			 {
+				 name: 'Arvin Vohra',
+				 pic: 'vohra.jpg',
+				 url: 'https://en.wikipedia.org/wiki/Arvin_Vohra',
+				 title: 'Vice Chair of the Libertarian National Committee',
+				 votes: 9,
+				 info: '',
 				 dropped: false,
 			 },
 			 {
@@ -247,10 +238,8 @@
 				 pic: 'armstrong.jpg',
 				 url: '',
 				 title: 'Former member of the Honolulu County Neighborhood Board',
-				 percent: 5,
+				 votes: 7,
 				 info: '',
-				 facts: [
-				 ],
 				 dropped: false,
 			 },
 			 {
@@ -258,10 +247,8 @@
 				 pic: 'chafee.jpg',
 				 url: 'https://en.wikipedia.org/wiki/Lincoln_Chafee',
 				 title: 'Former Governor of Rhode Island',
-				 percent: 4,
+				 votes: 40,
 				 info: '',
-				 facts: [
-				 ],
 				 dropped: false,
 			 },
 			 {
@@ -269,10 +256,8 @@
 				 pic: 'abramson.jpg',
 				 url: 'https://en.wikipedia.org/wiki/Max_Abramson',
 				 title: 'State Representative in New Hampshire',
-				 percent: 0,
+				 votes: 7,
 				 info: '',
-				 facts: [
-				 ],
 				 dropped: false,
 			 },
 			 {
@@ -280,21 +265,17 @@
 				 pic: 'dunham.jpg',
 				 url: '',
 				 title: 'Guy from Myrtle Beach',
-				 percent: 0,
+				 votes: 4,
 				 info: '',
-				 facts: [
-				 ],
 				 dropped: false,
 			 },
 			 {
-				 name: 'Erik Herhardt',
+				 name: 'Erik Gerhardt',
 				 pic: 'gerhardt.png',
 				 url: '',
 				 title: 'Guy running for president',
-				 percent: 0,
+				 votes: 0,
 				 info: '',
-				 facts: [
-				 ],
 				 dropped: false,
 			 },
 			 {
@@ -302,10 +283,8 @@
 				 pic: 'kokesh.jpg',
 				 url: 'https://en.wikipedia.org/wiki/Adam_Kokesh',
 				 title: 'Anti-war activist',
-				 percent: 0,
+				 votes: 18,
 				 info: '',
-				 facts: [
-				 ],
 				 dropped: false,
 			 },
 			 {
@@ -313,7 +292,7 @@
 				 pic: 'mcafee.jpg',
 				 url: 'https://en.wikipedia.org/wiki/John_McAfee',
 				 title: 'Founder and CEO of McAfee',
-				 percent: 0,
+				 votes: 10,
 				 info: '',
 				 facts: [
 					 'Wanted for murder in Belize',
@@ -328,10 +307,8 @@
 				 pic: 'monds.jpg',
 				 url: 'https://en.wikipedia.org/wiki/John_Monds',
 				 title: 'Guy running for president',
-				 percent: 0,
+				 votes: 1,
 				 info: '',
-				 facts: [
-				 ],
 				 dropped: false,
 			 },
 			 {
@@ -339,60 +316,51 @@
 				 pic: 'zoltan.jpg',
 				 url: 'https://en.wikipedia.org/wiki/Zoltan_Istvan',
 				 title: 'Activist for transhumanism',
-				 percent: 0,
+				 votes: 0,
 				 info: '',
-				 facts: [
-					 'Dropped out January 2019',
-				 ],
 				 dropped: true,
 			 },
 		 ];
 
 		 const mountPoint = document.querySelector('.mount-point');
 
-		 candidates.sort((a, b) => b.percent - a.percent).forEach((c, i) => {
-			 const card = document.createRange().createContextualFragment(`
-				<article class="card fluid ${c.dropped ? 'dropped-out' : ''}">
-					<div class="dropped-out-overlay"></div>
-					<div class="img-container">
-						<img alt="${c.name}" src="/assets/images/zoo/${c.pic}" />
-					</div>
-					<h3 class="candidate-name">
-						<a href="${c.url}">${c.name}</a>
-						<small class="candidate-title"><em>
-							${c.title}
-						</em></small>
-						<p class="info">${c.info}</p>
-						<small class="dropped-text"><em>
-							${c.dropped ? 'Dropped out' : ''}
-						</em></small>
-						<small class="popular-vote">
-							${c.percent}% popular vote
-						</small>
-						<span class="position"><em>#${i + 1}</em></span>
-					</h3>
-				</article>
-			 `);
+		 candidates
+			 .sort((a, b) => a.dropped ? -1 : a.votes - b.dropped ? -1 : b.votes)
+			 .forEach((c, i) => {
+				 const card = document.createRange().createContextualFragment(`
+					<article class="card fluid ${c.dropped ? 'dropped-out' : ''}">
+						<div class="dropped-out-overlay"></div>
+						<div class="img-container">
+							<img alt="${c.name}" src="/assets/images/zoo/${c.pic}" />
+						</div>
+						<h3 class="candidate-name">
+							<a href="${c.url}">${c.name}</a>
+							<small class="candidate-title"><em>
+								${c.title}
+							</em></small>
+							<p class="info">${c.info}</p>
+							<small class="dropped-text"><em>
+								${c.dropped ? 'Dropped out' : ''}
+							</em></small>
+							<small class="popular-vote">
+								${c.votes} votes so far
+							</small>
+							<span class="position"><em>#${i + 1}</em></span>
+						</h3>
+					</article>
+				 `);
 
-			 mountPoint.appendChild(card);
-		 });
+				 mountPoint.appendChild(card);
+			 });
 		</script>
 
 		<footer>
 			<div class="footer-text">
 				<div class="footer-line">
-					Copyright © 2015-2020 Jade Michael Thornton | <a href="https://gitlab.com/thornjad/jmthornton">Source code</a> | <a href="/p/sitemap.xml">Sitemap</a> <span class="versioning"></span>
+					Copyright © 2015-2020 Jade Michael Thornton | <a href="https://gitlab.com/thornjad/jmthornton">Source code</a>
 				</div>
 			</div>
 		</footer>
-
-		<script>
-		 document.addEventListener('DOMContentLoaded', async () => {
-			 const v = document.querySelector('.versioning');
-			 const res = await fetch('/package.json');
-			 v.innerHTML = `| <a href="https://gitlab.com/thornjad/jmthornton/blob/master/changelog.md">Version ${(await res.json()).version}</a>`;
-		 });
-		</script>
 
 		<script src="/node_modules/instant.page/instantpage.js" type="module" integrity="sha384-EwBObn5QAxP8f09iemwAJljc+sU+eUXeL9vSBw1eNmVarwhKk2F9vBEpaN9rsrtp" defer></script>
 	</body>
