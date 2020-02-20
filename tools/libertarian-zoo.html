@@ -12,37 +12,70 @@
 		<link rel="stylesheet" href="/assets/style/site/front.css" type="text/css" />
 
 		<style>
-		 .container {
+		 body {
+			 background-color: #ececec;
+		 }
+
+		 section {
+			 max-width: 1284px;
+			 margin: auto;
+		 }
+
+		 div.container {
 			 margin-top: 2em;
-		 }
-
-		 figcaption h3.candidate-name a {
-			 color: var(--card-fore-color);
-		 }
-
-		 .card {
-			 min-height: 23em;
-			 position: relative;
-			 justify-content: start;
-		 }
-
-		 .container {
 			 padding: 2em;
+			 display: grid;
+			 grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+			 grid-gap: 1rem;
 		 }
 
-		 figcaption {
-			 text-align: left;
+		 .last-updated {
+			 padding-left: 2rem;
+		 }
+
+		 h3.candidate-name {
+			 margin-bottom: 5rem;
+			 padding: 1.25rem;
 		 }
 
 		 .img-container {
-			 height: 200px;
 			 display: flex;
-			 align-items: center;
+			 justify-content: center;
+			 background-color: black;
 		 }
 
 		 .img-container img {
-			 display: block;
-			 max-height: 100%;
+			 height: 25rem;
+			 max-width: none;
+		 }
+
+		 h3.candidate-name a {
+			 color: var(--card-fore-color);
+		 }
+
+		 small.popular-vote {
+			 position: absolute;
+			 bottom: 1.25rem;
+			 right: 2rem;
+		 }
+
+		 span.position {
+			 position: absolute;
+			 right: 2rem;
+			 bottom: 2rem;
+			 font-size: 3rem;
+			 color: grey;
+		 }
+
+		 article.card {
+			 min-height: 23em;
+			 position: relative;
+			 display: flex;
+			 flex-direction: column;
+			 justify-content: start;
+			 border: 0;
+			 box-shadow: 0 1px 1px 0 rgba(60,75,100,.14),0 2px 1px -1px rgba(60,75,100,.12),0 1px 3px 0 rgba(60,75,100,.2);
+			 border-radius: .25rem;
 		 }
 
 		 .dropped-out .dropped-out-overlay {
@@ -51,7 +84,18 @@
 			 left: 0;
 			 width: 100%;
 			 height: 100%;
-			 background-color: rgba(128,128,128,0.15);
+			 background-color: rgba(128,128,128,0.30);
+		 }
+
+		 .dropped-text {
+			 font-size: 0.8rem;
+			 position: absolute;
+			 bottom: 1.25rem;
+			 left: 2rem;
+		 }
+
+		 footer > .footer-text {
+			 text-align: center;
 		 }
 		</style>
 	</head>
@@ -65,15 +109,14 @@
 			</span>
 		</header>
 
-		<h1 class="center">Libertarian Zoo 2020
-			<small><em>Ordered by popularity</em></small>
-		</h1>
-		<hr />
-		<h5 style="padding-left: 2em;"><em>Last updated 2020-02-05</em></h5>
-
-		<div class="container">
-			<div class="row mount-point"></div>
-		</div>
+		<section>
+			<h1 class="center">Libertarian Zoo 2020
+				<small><em>Ordered by popularity</em></small>
+			</h1>
+			<hr />
+			<h5 class="last-updated"><em>Last updated 2020-02-05</em></h5>
+			<div class="container mount-point"></div>
+		</section>
 
 		<script>
 		 const candidates = [
@@ -82,8 +125,9 @@
 				 pic: 'vermin.jpg',
 				 url: 'https://en.wikipedia.org/wiki/Vermin_Supreme',
 				 title: 'Performance artist and activist',
+				 percent: 26,
+				 info: '',
 				 facts: [
-					 '26% of popular vote so far',
 					 'Won the first primary of 2020 (New Hampshire)',
 				 ],
 				 dropped: false,
@@ -93,8 +137,9 @@
 				 pic: 'jo.jpg',
 				 url: 'https://en.wikipedia.org/wiki/Jo_Jorgensen',
 				 title: 'Lecturer at Clemson University',
+				 percent: 17,
+				 info: '',
 				 facts: [
-					 '17% of popular vote so far',
 				 ],
 				 dropped: false,
 			 },
@@ -103,8 +148,9 @@
 				 pic: 'taxation-is-theft.jpg',
 				 url: 'https://behrman2020.com',
 				 title: 'Podcaster, guy with hat',
+				 percent: 13,
+				 info: '',
 				 facts: [
-					 '13% of popular vote so far',
 				 ],
 				 dropped: false,
 			 },
@@ -113,6 +159,8 @@
 				 pic: 'amash.jpg',
 				 url: 'https://en.wikipedia.org/wiki/Justin_Amash',
 				 title: 'US Representative from Michigan',
+				 percent: 0,
+				 info: '',
 				 facts: [
 					 'Not running for president',
 				 ],
@@ -123,6 +171,8 @@
 				 pic: 'paul.jpg',
 				 url: 'https://en.wikipedia.org/wiki/Rand_Paul',
 				 title: 'US Senator from Kentucky',
+				 percent: 0,
+				 info: '',
 				 facts: [
 					 'Not running for president',
 				 ],
@@ -133,6 +183,8 @@
 				 pic: 'ventura.jpg',
 				 url: 'https://en.wikipedia.org/wiki/Jesse_Ventura',
 				 title: 'Former Governor of Minnesota',
+				 percent: 0,
+				 info: '',
 				 facts: [
 					 'Not running for president',
 				 ],
@@ -143,8 +195,9 @@
 				 pic: 'hornberger.jpg',
 				 url: '',
 				 title: 'Founder of a political NGO',
+				 percent: 9,
+				 info: '',
 				 facts: [
-					 '9% of popular vote so far',
 				 ],
 				 dropped: false,
 			 },
@@ -153,28 +206,20 @@
 				 pic: 'robb.jpg',
 				 url: '',
 				 title: 'Software engineer',
+				 percent: 8,
+				 info: '',
 				 facts: [
-					 '8% of popular vote so far',
 				 ],
 				 dropped: false,
-			 },
-			 {
-				 name: 'Zoltan Istivan',
-				 pic: 'zoltan.jpg',
-				 url: 'https://en.wikipedia.org/wiki/Zoltan_Istvan',
-				 title: 'Activist for transhumanism',
-				 facts: [
-					 'Dropped out January 2019',
-				 ],
-				 dropped: true,
 			 },
 			 {
 				 name: 'Mark Whitney',
 				 pic: 'whitney.jpg',
 				 url: 'https://en.wikipedia.org/wiki/Mark_Whitney',
 				 title: 'Podcaster',
+				 percent: 6,
+				 info: '',
 				 facts: [
-					 '6% of popular vote so far',
 				 ],
 				 dropped: false,
 			 },
@@ -183,8 +228,9 @@
 				 pic: 'armstrong.jpg',
 				 url: '',
 				 title: 'Former member of the Honolulu County Neighborhood Board',
+				 percent: 5,
+				 info: '',
 				 facts: [
-					 '5% of popular vote so far',
 				 ],
 				 dropped: false,
 			 },
@@ -193,8 +239,9 @@
 				 pic: 'chafee.jpg',
 				 url: 'https://en.wikipedia.org/wiki/Lincoln_Chafee',
 				 title: 'Former Governor of Rhode Island',
+				 percent: 4,
+				 info: '',
 				 facts: [
-					 '4% of popular vote so far',
 				 ],
 				 dropped: false,
 			 },
@@ -203,6 +250,8 @@
 				 pic: 'abramson.jpg',
 				 url: 'https://en.wikipedia.org/wiki/Max_Abramson',
 				 title: 'State Representative in New Hampshire',
+				 percent: 0,
+				 info: '',
 				 facts: [
 				 ],
 				 dropped: false,
@@ -212,6 +261,8 @@
 				 pic: 'dunham.jpg',
 				 url: '',
 				 title: 'Guy from Myrtle Beach',
+				 percent: 0,
+				 info: '',
 				 facts: [
 				 ],
 				 dropped: false,
@@ -221,6 +272,8 @@
 				 pic: 'gerhardt.png',
 				 url: '',
 				 title: 'Guy running for president',
+				 percent: 0,
+				 info: '',
 				 facts: [
 				 ],
 				 dropped: false,
@@ -230,6 +283,8 @@
 				 pic: 'kokesh.jpg',
 				 url: 'https://en.wikipedia.org/wiki/Adam_Kokesh',
 				 title: 'Anti-war activist',
+				 percent: 0,
+				 info: '',
 				 facts: [
 				 ],
 				 dropped: false,
@@ -239,6 +294,8 @@
 				 pic: 'mcafee.jpg',
 				 url: 'https://en.wikipedia.org/wiki/John_McAfee',
 				 title: 'Founder and CEO of McAfee',
+				 percent: 0,
+				 info: '',
 				 facts: [
 					 'Wanted for murder in Belize',
 					 'Was deported from Guatemala for illegal entry',
@@ -252,51 +309,72 @@
 				 pic: 'monds.jpg',
 				 url: 'https://en.wikipedia.org/wiki/John_Monds',
 				 title: 'Guy running for president',
+				 percent: 0,
+				 info: '',
 				 facts: [
 				 ],
 				 dropped: false,
+			 },
+			 {
+				 name: 'Zoltan Istivan',
+				 pic: 'zoltan.jpg',
+				 url: 'https://en.wikipedia.org/wiki/Zoltan_Istvan',
+				 title: 'Activist for transhumanism',
+				 percent: 0,
+				 info: '',
+				 facts: [
+					 'Dropped out January 2019',
+				 ],
+				 dropped: true,
 			 },
 		 ];
 
 		 const mountPoint = document.querySelector('.mount-point');
 
-		 candidates.forEach(c => {
+		 candidates.sort((a, b) => b.percent - a.percent).forEach((c, i) => {
 			 const card = document.createRange().createContextualFragment(`
-					<div class="col-sm-12 col-md-4 col-lg-2">
-						<div class="card fluid ${c.dropped ? 'dropped-out' : ''}">
-							<div class="dropped-out-overlay"></div>
-							<figure>
-								<div class="img-container">
-									<img class="center" alt="${c.name}" src="/assets/images/zoo/${c.pic}" />
-								</div>
-								<figcaption>
-									<h3 class="candidate-name">
-										<a href="${c.url}">${c.name}</a>
-										<small class="candidate-title">
-											${c.title}
-										</small>
-										<small class="facts"></small>
-									</h3>
-								</figcaption>
-							</figure>
-						</div>
+				<article class="card fluid ${c.dropped ? 'dropped-out' : ''}">
+					<div class="dropped-out-overlay"></div>
+					<div class="img-container">
+						<img alt="${c.name}" src="/assets/images/zoo/${c.pic}" />
 					</div>
+					<h3 class="candidate-name">
+						<a href="${c.url}">${c.name}</a>
+						<small class="candidate-title"><em>
+							${c.title}
+						</em></small>
+						<p class="info">${c.info}</p>
+						<small class="dropped-text"><em>
+							${c.dropped ? 'Dropped out' : ''}
+						</em></small>
+						<small class="popular-vote">
+							${c.percent}% popular vote
+						</small>
+						<span class="position"><em>#${i + 1}</em></span>
+					</h3>
+				</article>
 			 `);
-
-			 if (c.facts.length) {
-				 const list = document.createRange().createContextualFragment(`<ul></ul>`);
-				 c.facts.forEach(f => {
-					 const fact = document.createRange().createContextualFragment(`
-							<li><em>${f}</em></li>
-					 `);
-					 list.appendChild(fact);
-				 });
-
-				 card.querySelector('small.facts').appendChild(list);
-			 }
 
 			 mountPoint.appendChild(card);
 		 });
 		</script>
+
+		<footer>
+			<div class="footer-text">
+				<div class="footer-line">
+					Copyright © 2015-2020 Jade Michael Thornton | <a href="https://gitlab.com/thornjad/jmthornton">Source code</a> | <a href="/p/sitemap.xml">Sitemap</a> <span class="versioning"></span>
+				</div>
+			</div>
+		</footer>
+
+		<script>
+		 document.addEventListener('DOMContentLoaded', async () => {
+			 const v = document.querySelector('.versioning');
+			 const res = await fetch('/package.json');
+			 v.innerHTML = `| <a href="https://gitlab.com/thornjad/jmthornton/blob/master/changelog.md">Version ${(await res.json()).version}</a>`;
+		 });
+		</script>
+
+		<script src="/node_modules/instant.page/instantpage.js" type="module" integrity="sha384-EwBObn5QAxP8f09iemwAJljc+sU+eUXeL9vSBw1eNmVarwhKk2F9vBEpaN9rsrtp" defer></script>
 	</body>
 </html>
