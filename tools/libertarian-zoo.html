@@ -28,7 +28,7 @@
 		<meta name="twitter:image" content="https://jmthornton.net/assets/images/zoo/vermin.jpg">
 
 		<!-- TODO UPDATE ME -->
-		<meta property="article:published_time" content="2020-02-20">
+		<meta property="article:published_time" content="2020-02-26">
 
 		<style>
 		 body {
@@ -137,7 +137,7 @@
 				<small><em>Ordered by popularity</em></small>
 			</h1>
 			<hr />
-			<h5 class="last-updated"><em>Last updated 2020-02-20</em></h5>
+			<h5 class="last-updated"><em>Last updated 2020-02-26</em></h5>
 			<div class="container mount-point"></div>
 		</section>
 
@@ -160,6 +160,15 @@
 				 votes: 35,
 				 info: 'Won the first primary of 2020 (New Hampshire)',
 				 dropped: false,
+			 },
+			 {
+				 name: 'Kim Ruff',
+				 pic: '',
+				 url: '',
+				 title: 'Write-in candidate for Arizona State Mine Inspector in 2018',
+				 votes: 0,
+				 info: '',
+				 dropped: true,
 			 },
 			 {
 				 name: 'Jo Jorgensen',
@@ -320,12 +329,21 @@
 				 info: '',
 				 dropped: true,
 			 },
+			 {
+				 name: 'Christopher Marks',
+				 pic: '',
+				 url: '',
+				 title: 'Lawyer',
+				 votes: 0,
+				 info: '',
+				 dropped: true,
+			 }
 		 ];
 
 		 const mountPoint = document.querySelector('.mount-point');
 
 		 candidates
-			 .sort((a, b) => a.dropped ? -1 : a.votes - b.dropped ? -1 : b.votes)
+			 .sort((a, b) => (b.dropped ? -1 : b.votes) - (a.dropped ? -1 : a.votes))
 			 .forEach((c, i) => {
 				 const card = document.createRange().createContextualFragment(`
 					<article class="card fluid ${c.dropped ? 'dropped-out' : ''}">
