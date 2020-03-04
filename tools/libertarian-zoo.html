@@ -71,6 +71,10 @@
 			 background-color: black;
 		 }
 
+		 .img-container.nota {
+			 background-color: white;
+		 }
+
 		 .img-container img {
 			 height: 25rem;
 			 max-width: none;
@@ -364,7 +368,7 @@
 				 const card = document.createRange().createContextualFragment(`
 					<article class="card fluid ${c.dropped ? 'dropped-out' : ''}">
 						<div class="dropped-out-overlay"></div>
-						<div class="img-container">
+						<div class="img-container ${c.name === 'None of the above' ? 'nota' : ''}">
 							<img alt="${c.name}" src="/assets/images/zoo/${c.pic}" />
 						</div>
 						<h3 class="candidate-name">
