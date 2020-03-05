@@ -1,1 +1,24 @@
-bh
+<html>
+	<head></head>
+	<body>
+		<div class="mount"></div>
+
+		<script>
+		 const textResponse = (mount) => {
+			 mount.innerText = 'bh';
+		 };
+
+		 const mount = document.querySelector('.mount');
+		 const params = new URLSearchParams(window.location.search);
+		 const format = params.get('format');
+
+		 switch (format) {
+			 default:
+			 case 'text':
+				 textResponse(mount);
+				 break;
+		 }
+		</script>
+
+	</body>
+</html>
