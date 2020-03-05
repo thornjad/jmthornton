@@ -23,7 +23,7 @@
 		<script class="matomo-analytics" type='text/javascript'>
 		 var _paq = _paq || [];
 		 _paq.push(['setDocumentTitle', document.domain + ' -/- ' + document.title]);
-		 _paq.push(['setDomains', '*.jmthornton.net']);
+		 _paq.push(['setDoNotTrack', true]);
 		 _paq.push(['setCookieDomains', '*.jmthornton.net']);
 		 _paq.push(['trackPageView']);
 		 _paq.push(['enableLinkTracking']);
