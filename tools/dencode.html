@@ -1,83 +1,105 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta http-equiv="content-type" content="text/html">
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Easily and quickly encode and decode URL strings online for free">
-  <meta name="robots" content="index, follow" />
-  <meta name="googlebot" content="index, follow" />
-  <meta name="google-site-verification" content="JUM1Dl9n9ic9xPMb03Nzf4NgW_-8PWZrJ4eJGC_PoYM" />
-  <meta charset="utf-8" />
-  <link type="text/plain" rel="author" href="https://jmthornton.net/humans.txt" />
-  <title>URL Encode/Decode | Jade Michael Thornton</title>
-  <link rel="stylesheet" href="/assets/style/main.css" type="text/css" />
-  <link rel="shortcut icon" href="/assets/images/favicon.png" />
-  <link rel="apple-itouch-icon" href="/assets/images/favicon.ico" />
-  <style>
-    textarea {
-      width: 100%;
-    }
-  </style>
-</head>
-<body>
-  <header class="sticky">
-    <span class="header-hack">
-      <a href="/" class="button" role="button">Home</a>
-			<a href="/tools/" class="button" role="button">Tools</a>
-      <a href="https://blog.jmthornton.net" class="button" role="button">Blog</a>
-    </span>
-  </header>
+	<head>
+		<meta http-equiv="content-type" content="text/html">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="Easily and quickly encode and decode URL strings online for free">
+		<meta name="robots" content="index, follow" />
+		<meta name="googlebot" content="index, follow" />
+		<meta name="google-site-verification" content="JUM1Dl9n9ic9xPMb03Nzf4NgW_-8PWZrJ4eJGC_PoYM" />
+		<meta charset="utf-8" />
+		<link type="text/plain" rel="author" href="https://jmthornton.net/humans.txt" />
+		<title>URL Encode/Decode | Jade Michael Thornton</title>
+		<link rel="stylesheet" href="/assets/style/main.css" type="text/css" />
+		<link rel="shortcut icon" href="/assets/images/favicon.png" />
+		<link rel="apple-itouch-icon" href="/assets/images/favicon.ico" />
+		<style>
+     textarea {
+       width: 100%;
+     }
+		</style>
+	</head>
+	<body>
+		<header class="sticky">
+			<span class="header-hack">
+				<a href="/" class="button" role="button">Home</a>
+				<a href="/tools/" class="button" role="button">Tools</a>
+				<a href="https://blog.jmthornton.net" class="button" role="button">Blog</a>
+			</span>
+		</header>
 
-  <main class="content">
-    <form onsubmit="return false;">
-      <h1>URL Encode/Decode Tool</h1>
+		<main class="content">
+			<form onsubmit="return false;">
+				<h1>URL Encode/Decode Tool</h1>
 
-      <textarea id="dencoder" rows="18" cols="90"></textarea>
-      <div>
-        <input class="button large" type="button" value="Encode" id="encode">
-        <input class="button large" type="button" value="Decode" id="decode">
-      </div>
+				<textarea id="dencoder" rows="18" cols="90"></textarea>
+				<div>
+					<input class="button large" type="button" value="Encode" id="encode">
+					<input class="button large" type="button" value="Decode" id="decode">
+				</div>
 
-      <ul>
-        <li>Input a string of text and encode or decode as you like</li>
-        <li>Handy for turning encoded JavaScript URLs from complete gibberish into readable gibberish</li>
-        <li>If you'd like to use this tool offline, just 'view source' and save to your computer</li>
-      </ul>
-    </form>
-  </main>
-  <footer>
-    <div class="footer-text">
-      <div class="footer-line footer-top">
-        <img src="http://creativecommons.org/images/public/somerights.gif" alt="Creative Commons License">
-        <br>
-        The URL Encode/Decode Tool is license under a Creative Commons <a href="http://creativecommons.org/licenses/by-sa/2.0/">Attribution-ShareAlike 2.0</a> License.<br>
+				<ul>
+					<li>Input a string of text and encode or decode as you like</li>
+					<li>Handy for turning encoded JavaScript URLs from complete gibberish into readable gibberish</li>
+					<li>If you'd like to use this tool offline, just 'view source' and save to your computer</li>
+				</ul>
+			</form>
+		</main>
+		<footer>
+			<div class="footer-text">
+				<div class="footer-line footer-top">
+					<img src="http://creativecommons.org/images/public/somerights.gif" alt="Creative Commons License">
+					<br>
+					The URL Encode/Decode Tool is license under a Creative Commons <a href="http://creativecommons.org/licenses/by-sa/2.0/">Attribution-ShareAlike 2.0</a> License.<br>
 
-        This tool is provided without warranty or guarantee. Keep out of the reach of children.
-      </div>
-      <br>
-      <div class="footer-text">
-        <div class="footer-line">
-          Jade Michael Thornton | <a href="https://github.com/thornjad/jmthornton">Source code</a> | <a href="/p/sitemap.xml">Sitemap</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-  <script type="text/javascript">
-    "use strict";
+					This tool is provided without warranty or guarantee. Keep out of the reach of children.
+				</div>
+				<br>
+				<div class="footer-text">
+					<div class="footer-line">
+						Jade Michael Thornton | <a href="https://github.com/thornjad/jmthornton">Source code</a> | <a href="/p/sitemap.xml">Sitemap</a>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<script type="text/javascript">
+     "use strict";
 
-    const encode = () => {
-      let dencoder = document.getElementById('dencoder');
-      const unencoded = dencoder.value;
-      dencoder.value = encodeURIComponent(unencoded).replace(/'/g, "%27").replace(/"/g, "%22");
-    };
+     const encode = () => {
+       let dencoder = document.getElementById('dencoder');
+       const unencoded = dencoder.value;
+       dencoder.value = encodeURIComponent(unencoded).replace(/'/g, "%27").replace(/"/g, "%22");
+     };
 
-    const decode = () => {
-      let dencoder = document.getElementById('dencoder');
-      const encoded = dencoder.value;
-      dencoder.value = decodeURIComponent(encoded.replace(/\+/g, " "));
-    };
+     const decode = () => {
+       let dencoder = document.getElementById('dencoder');
+       const encoded = dencoder.value;
+       dencoder.value = decodeURIComponent(encoded.replace(/\+/g, " "));
+     };
 
-    document.getElementById('encode').addEventListener('click', () => encode());
-    document.getElementById('decode').addEventListener('click', () => decode());
-  </script>
-</body>
+     document.getElementById('encode').addEventListener('click', () => encode());
+     document.getElementById('decode').addEventListener('click', () => decode());
+		</script>
+
+		<script class="matomo-analytics" type='text/javascript'>
+		 var _paq = _paq || [];
+		 _paq.push(['setDocumentTitle', document.domain + ' -/- ' + document.title]);
+		 _paq.push(['setDomains', '*.jmthornton.net']);
+		 _paq.push(['setCookieDomains', '*.jmthornton.net']);
+		 _paq.push(['trackPageView']);
+		 _paq.push(['enableLinkTracking']);
+		 void function() {
+			 var u='https://jmthornton.net/analytics/';
+			 _paq.push(['setTrackerUrl', u+'piwik.php']);
+			 _paq.push(['setSiteId', '1']);
+			 const d=document,
+						 g=d.createElement('script'),
+						 s=d.getElementsByTagName('script')[0];
+			 g.type='text/javascript';
+			 g.async=true;
+			 g.defer=true;
+			 g.src=u+'piwik.js';
+			 s.parentNode.insertBefore(g,s);
+		 }();
+		</script>
+	</body>
