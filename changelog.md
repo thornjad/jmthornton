@@ -1,10 +1,45 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-> (C A R S)
-
 ## [unreleased]
 - Nothing so far
+
+## [5.4.0] - 2020-03-10
+### Added
+- Re-added local analytics
+
+## [5.3.5] - 2020-02-21
+### Changed
+- Fixed coloring on news page
+
+## [5.3.4] - 2020-02-20
+### Changed
+- Main link colors now based on green.
+- Dark header bar
+
+### Added
+- bh endpoint
+
+## [5.3.3] - 2020-02-05
+### Added
+- Added date to Libertarian zoo. Further changes will not be tracked by
+  versioning.
+
+## [5.3.2] - 2020-02-05
+### Changed
+- Fixed tools and projects landing page spacing
+
+## [5.3.1] - 2020-02-05
+### Changed
+- Updated Libertarian zoo.
+
+## [5.3.0] - 2020-02-05
+### Changed
+- Updated build dependencies
+- Styling updates
+
+### Added
+- Libertarian zoo
 
 ## [5.2.2] - 2019-09-18
 ### Changed
