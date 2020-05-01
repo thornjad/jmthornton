@@ -2,7 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [unreleased]
-- Nothing so far
+### Changed
+- Switched to internal dark styling instead of mini.css dependency
 
 ## [5.4.0] - 2020-03-10
 ### Added
