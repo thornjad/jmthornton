@@ -2,10 +2,6 @@
   .landing-zone {
     background: url("/assets/images/background.svg") no-repeat center center;
     height: calc(100vh - 44px);
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
   }
 }
 
@@ -13,10 +9,6 @@
   .landing-zone {
     background: url("/assets/images/background-small.svg") no-repeat center center;
     height: calc(80vh - 44px);
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
   }
 }
 
@@ -26,6 +18,11 @@ section {
 
 .landing-zone {
   border-bottom: 44px solid #1b1b1b;
+	background-color: #fff;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 .contact-row {
