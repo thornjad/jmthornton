@@ -137,7 +137,6 @@ img {
 
 h1, h2, h3, h4, h5, h6 {
   line-height: $heading-line-height;
-  margin: calc(1.5 * var(#{$universal-margin-var})) var(#{$universal-margin-var});
   font-weight: $heading-font-weight;
   small {
     color: var(#{$secondary-fore-color-var});
@@ -170,10 +169,6 @@ h6 {
   font-size: calc(1rem / var(#{$heading-ratio-var}));
 }
 
-p {
-  margin: var(#{$universal-margin-var});
-}
-
 ol, ul {
   margin: var(#{$universal-margin-var});
   padding-left: calc(2 * var(#{$universal-margin-var}));
@@ -194,11 +189,14 @@ hr {
   background: linear-gradient(to right, transparent, var(#{$border-color-var}) 20%, var(#{$border-color-var}) 80%, transparent);
 }
 
+aside {
+	margin: var(#{$universal-margin-var});
+}
+
 blockquote { // Doesn't have a back color by default, can be added manually.
   display: block;
   position: relative;
   font-style: italic;
-  color: var(#{$secondary-fore-color-var});
   margin: var(#{$universal-margin-var});
   padding: calc(3 * var(#{$universal-padding-var}));
   border: $__1px solid var(#{$secondary-border-color-var});

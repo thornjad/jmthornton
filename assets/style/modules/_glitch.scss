@@ -13,13 +13,13 @@
 }
 .glitch::before {
 	left: 4px;
-	text-shadow: 10px 0px #66ffff;
+	text-shadow: 6px 0px #66ffff;
 	clip: rect(24px, 550px, 90px, 0);
 	animation: glitch-anim-2 1s infinite linear alternate-reverse;
 }
 .glitch::after {
 	left: -4px;
-	text-shadow: -8px 0 #b300fc;
+	text-shadow: -3px 0 #b300fc;
 	clip: rect(24px, 550px, 90px, 0);
 	animation: glitch-anim 2.5s infinite linear alternate-reverse;
 }
