@@ -252,6 +252,7 @@ kbd { // No border color by default, can be altered manually.
 
 pre { // Fore color is the default, can be altered manually.
   overflow: auto; // Responsiveness
+	position: relative;
   background: var(#{$secondary-back-color-var});
   padding: calc(1.5 * var(#{$universal-padding-var}));
   margin: var(#{$universal-margin-var});
@@ -261,6 +262,21 @@ pre { // Fore color is the default, can be altered manually.
   @if $universal-box-shadow != none {
     box-shadow: var(#{$universal-box-shadow-var});
   }
+
+	&[lang] {
+		padding-top: 2em;
+
+		&::before {
+			position: absolute;
+			top: 0.25rem;
+			left: 0.25rem;
+			font-size: 0.5rem;
+			font-style: italic;
+			font-weight: 700;
+			content: attr(lang);
+			color: var(#{$pre-color-var});
+		}
+	}
 }
 
 // Prevent elements from affecting the line height in all browsers.
