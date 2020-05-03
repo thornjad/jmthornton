@@ -11,7 +11,7 @@
     "test": "snyk test",
     "protect": "snyk protect --yes",
     "prepare": "npm run protect",
-		"prod-install": "npm i --only=prod --no-audit"
+		"prod-install": "rm -rf node_modules/ && npm i --only=prod --no-audit"
   },
   "repository": {
     "type": "git",
