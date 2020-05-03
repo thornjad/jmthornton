@@ -102,6 +102,11 @@ a, b, del, em, i, ins, q, span, strong, u {
   }
 }
 
+p {
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+}
+
 body {
   margin: $_body-margin;
   color: var(#{$fore-color-var});
@@ -256,12 +261,18 @@ pre { // Fore color is the default, can be altered manually.
   background: var(#{$secondary-back-color-var});
   padding: calc(1.5 * var(#{$universal-padding-var}));
   margin: var(#{$universal-margin-var});
+	margin-top: 2rem;
+	margin-bottom: 2rem;
   border: $__1px solid var(#{$secondary-border-color-var});
   border-left: 4*$__1px solid var(#{$pre-color-var});
   border-radius: 0 var(#{$universal-border-radius-var}) var(#{$universal-border-radius-var}) 0;
   @if $universal-box-shadow != none {
     box-shadow: var(#{$universal-box-shadow-var});
   }
+
+	code {
+		padding: 0;
+	}
 
 	&[lang] {
 		padding-top: 2em;

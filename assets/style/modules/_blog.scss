@@ -14,14 +14,25 @@
 
 .title h1, .post-title {
   font-size: 1.7em;
+
+	small {
+		color: inherit;
+		font-style: italic;
+		font-weight: lighter;
+	}
+
+	time {
+		float: right;
+	}
 }
 
-.post-main em {
-	margin: calc(1.5 * var(--universal-margin)) var(--universal-margin);
-}
-
-.blog-body {
+.post-main {
   padding: 4vh 0;
+
+	blockquote.post-quote {
+		margin-top: 1rem;
+		margin-bottom: 3rem;
+	}
 }
 
 .blog-conclusion-separator {
