@@ -1,13 +1,15 @@
+.landing-zone {
+  background: url("/assets/images/background.svg") no-repeat center center;
+}
+
 @media (min-width: 720px) {
   .landing-zone {
-    background: url("/assets/images/background.svg") no-repeat center center;
     height: calc(100vh - 44px);
   }
 }
 
 @media (max-width: 719px) {
   .landing-zone {
-    background: url("/assets/images/background-small.svg") no-repeat center center;
     height: calc(80vh - 44px);
   }
 }
