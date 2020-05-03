@@ -69,11 +69,11 @@
 
           <p>The first iteration I created was designed to be able to polymorphically take either a single argument (the index of the element to remove), or two arguments defining a range. It then basically concatenates the part of the array before the removed element(s) with the part of the array after the removed element(s). Here's how that took shape:</p>
 
-					<pre>const removeElement = (arr, from, to) => {
+					<pre lang="Javascript"><code>const removeElement = (arr, from, to) => {
   const rest = arr.slice(to || from);
   arr.length = from;
   return [...rest];
-}</pre>
+}</code></pre>
 
           <p>This works out pretty well, and I even started using it in a project. However, I soon came across the case where I wanted to remove the last element in an array. Sure, that's just as easy as <code>removeElement(arr, arr.length - 1)</code>, right? Well, sure, but I'm too lazy for all that typing. Ideally what I really want is negative indexing like Python allows, where <code>arr[-1] === arr[arr.length - 1]</code>.</p>
 
@@ -99,17 +99,17 @@
 
       <h4>Array.prototype.removeElement</h4>
 
-			<pre>// Array#removeElement - By Jade M Thornton (ISC Licensed)
+			<pre lang="Javascript"><code>// Array#removeElement - By Jade M Thornton (ISC Licensed)
 Array.prototype.removeElement = function(from, to) {
   const rest = this.slice((to || from) + 1 || this.length);
   this.length = from < 0 ? this.length + from : from;
   this.push(...rest);
   return this;
-}</pre>
+}</code></pre>
 
       <h4>Example usage</h4>
 
-			<pre>let a = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+			<pre lang="Javascript"><code>let a = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 // remove the element at index 1 (second element)
 a.removeElement(1);
@@ -125,18 +125,18 @@ a.removeElement(2, 4);
 
 // remove elements (-1)-(-2) (INCLUSIVE)
 a.removeElement(-1, -2);
-// a --> [1, 3]</pre>
+// a --> [1, 3]</code></pre>
 
       <h4>Explanation</h4>
 
       <p>What's that you ask? What in David Hilbert's beard are those six lines of code doing? Let's take a look at it again, along with some helpful line numbers.</p>
 
-			<pre>1 Array.prototype.removeElement = function(from, to) {
+			<pre lang="Javascript"><code>1 Array.prototype.removeElement = function(from, to) {
 2   const rest = this.slice((to || from) + 1 || this.length);
 3   this.length = from < 0 ? this.length + from : from;
 4   this.push(...rest);
 5   return this;
-6 }</pre>
+6 }</code></pre>
 
           </p>Each line is doing something important, so let's break them up and talk through what's going down.</p>
 
