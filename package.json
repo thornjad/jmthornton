@@ -7,12 +7,13 @@
     "start": "npm run build && http-server -o -c-1",
     "build": "node bin/build.js",
     "build-prod": "BABEL_ENV=production npm run build",
+    "sitemap": "node bin/sitemap.js",
     "md": "node bin/compile-md.js",
     "test": "snyk test",
     "protect": "snyk protect --yes",
     "prepare": "npm run protect",
-		"prod-install": "rm -rf node_modules/ && npm i --only=prod --no-audit",
-		"pi": "npm run-script prod-install"
+    "prod-install": "rm -rf node_modules/ && npm i --only=prod --no-audit",
+    "pi": "npm run-script prod-install"
   },
   "repository": {
     "type": "git",
@@ -38,6 +39,7 @@
     "purify-css": "^1.2.5",
     "sass": "^1.22.12",
     "shelljs": "^0.7.8",
+    "sitemap-generator": "^8.4.2",
     "snyk": "^1.130.0"
   }
 }
