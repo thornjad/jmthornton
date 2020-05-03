@@ -1,37 +1,99 @@
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://jmthornton.net/blog/</loc>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://jmthornton.net/tools/news/</loc>
+    <changefreq>yearly</changefreq>
+  </url>
   <url>
     <loc>https://jmthornton.net/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>1.00</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://jmthornton.net/tools/</loc>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://jmthornton.net/blog/recipes/</loc>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://jmthornton.net/blog/p/tmux-known-socket</loc>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://jmthornton.net/blog/p/clearnightretro</loc>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://jmthornton.net/blog/p/xmrstakcompile</loc>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://jmthornton.net/blog/p/worm-of-1988</loc>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://jmthornton.net/blog/p/array-removeelement</loc>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://jmthornton.net/blog/p/ecmascript2017</loc>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://jmthornton.net/blog/p/duplicated-ids</loc>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://jmthornton.net/blog/p/protonmail</loc>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://jmthornton.net/blog/p/switch-caps-esc</loc>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://jmthornton.net/blog/p/thunderbird-ddg</loc>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://jmthornton.net/blog/p/websitetimelapse</loc>
+    <changefreq>yearly</changefreq>
   </url>
   <url>
     <loc>https://jmthornton.net/tools/dencode</loc>
     <changefreq>yearly</changefreq>
-    <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://jmthornton.net/projects/pachyderm/pachyman</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
+    <loc>https://jmthornton.net/tools/libertarian-zoo</loc>
+    <changefreq>yearly</changefreq>
   </url>
   <url>
-    <loc>https://jmthornton.net/projects/wind-map</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
+    <loc>https://jmthornton.net/tools/query-dumper</loc>
+    <changefreq>yearly</changefreq>
   </url>
   <url>
-    <loc>https://jmthornton.net/projects/tribute</loc>
-    <changefreq>never</changefreq>
-    <priority>0.80</priority>
+    <loc>https://jmthornton.net/blog/r/speckendicken</loc>
+    <changefreq>yearly</changefreq>
   </url>
   <url>
-    <loc>https://jmthornton.net/profile</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
+    <loc>https://jmthornton.net/blog/r/damn-hot-chili</loc>
+    <changefreq>yearly</changefreq>
   </url>
   <url>
-    <loc>https://jmthornton.net/projects/help.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.64</priority>
+    <loc>https://jmthornton.net/blog/r/buffalo-chicken-chili</loc>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://jmthornton.net/blog/r/pumpkin-spice-latte</loc>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://jmthornton.net/blog/r/egg-salad</loc>
+    <changefreq>yearly</changefreq>
   </url>
 </urlset>
