@@ -1,13 +1,11 @@
 'use strict';
 
 class NewsPosts {
-  constructor() {
-    this.apiURI = 'https://hacker-news.firebaseio.com/v0/';
-    this.firstPageLoadLimit = 30;
-    this.loadMoreLoadLimit = 30;
-    this.allPosts = null;
-    this.genPost = null;
-  }
+  apiURI = 'https://hacker-news.firebaseio.com/v0/';
+  firstPageLoadLimit = 30;
+  loadMoreLoadLimit = 30;
+  allPosts = null;
+  genPost = null;
 
   async init() {
     this.allPosts = JSON.parse((await this.getTop500()));
@@ -51,19 +49,19 @@ class NewsPosts {
   }
 }
 
-const run = async () => {
+const run = async (posts) => {
   try {
     await posts.init();
-    await loadFirst();
+    await loadFirst(posts);
   } catch (e) {
     console.error(e);
     alert('An error occured. Please try again later');
   }
 };
 
-const loadFirst = async () => {
+const loadFirst = async (posts) => {
   try {
-    const list = await loadPosts(posts.firstPageLoadLimit);
+    const list = await loadPosts(posts.firstPageLoadLimit, posts);
     for (let story of list) {
       story = JSON.parse(story);
       if (story.url) {
@@ -78,10 +76,10 @@ const loadFirst = async () => {
   }
 };
 
-const loadMore = async () => {
+const loadMore = async (posts) => {
   try {
     showSpinner();
-    const list = await loadPosts(posts.loadMoreLoadLimit);
+    const list = await loadPosts(posts.loadMoreLoadLimit, posts);
     for (let story of list) {
       story = JSON.parse(story);
       if (story.url) {
@@ -107,7 +105,7 @@ const showFooter = () => {
   document.getElementById('footer').style.display = 'block';
 };
 
-const loadPosts = async numPostsToLoad => {
+const loadPosts = async (numPostsToLoad, posts) => {
   let firstPostsFuture = [];
 
   for (let i = 0; i < numPostsToLoad; i++) {
@@ -154,12 +152,16 @@ const addUpdatedMessage = () => {
   }, 300000);
 };
 
+const main = () => {
+	const posts = new NewsPosts();
+	document.addEventListener('DOMContentLoaded', run.bind(null, posts));
+	document.addEventListener('scroll', evt => {
+		if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+			loadMore(posts);
+		}
+	});
+	addUpdatedMessage();
+};
+
 // run script
-const posts = new NewsPosts();
-document.addEventListener('DOMContentLoaded', run);
-document.addEventListener('scroll', evt => {
-  if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-    loadMore();
-  }
-});
-addUpdatedMessage();
+main();
