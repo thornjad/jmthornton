@@ -63,7 +63,7 @@ const loadFirst = async (posts) => {
   try {
     const list = await loadPosts(posts.firstPageLoadLimit, posts);
     for (let story of list) {
-      story = JSON.parse(story);
+      story = JSON.parse(story) ?? {};
       if (story.url) {
         injectPost(story.title, story.url);
       } else {
