@@ -250,10 +250,10 @@
 				 dropped: false,
 			 },
 			 {
-				 name: 'None of the above',
+				 name: 'Uncommitted',
 				 pic: 'nota.png',
 				 url: '',
-				 title: '',
+				 title: 'None of the above',
 				 votes: 3469,
 				 info: 'Apparently this zoo isn\'t good enough for some people',
 				 dropped: false,
@@ -305,8 +305,8 @@
 				 const card = document.createRange().createContextualFragment(`
 					<article class="card fluid ${c.dropped ? 'dropped-out' : ''}">
 						<div class="dropped-out-overlay"></div>
-						<div class="img-container ${c.name === 'None of the above' ? 'nota' : ''}">
-							<img alt="${c.name}" src="/assets/images/zoo/${c.pic}" />
+						<div class="img-container ${c.name === 'Uncommitted' ? 'nota' : ''}">
+							<img ${i > 5 ? 'loading="lazy"' : ''} alt="${c.name}" src="/assets/images/zoo/${c.pic}" />
 						</div>
 						<h3 class="candidate-name">
 							<a href="${c.url}">${c.name}</a>
