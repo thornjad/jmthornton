@@ -1,14 +1,9 @@
 # Changelog
-All notable changes to this project will be documented in this file.
+All notable changes to this project will be documented in this file. 
 
-## [unreleased]
-- Nothing yet
+NOTE: Since v5.6, micro versions are no longer recorded.
 
-## [5.6.1] - 2020-05-03
-### Changed
-- Fixed broken header on small backgrounds
-
-## [5.6.0] - 2020-05-01
+## [5.6.X] - 2020-05-01
 ### Changed
 - Switched to internal dark styling instead of mini.css dependency
 
