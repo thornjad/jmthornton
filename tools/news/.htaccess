@@ -1,1 +1,1 @@
-Redirect 301 /tools/news/? /
+RedirectMatch 301 ^/tools/news/? https://news.jmthornton.net
