@@ -42,16 +42,18 @@ node_modules/
 
 # Restricted directories #
 ##########################
-ncarchive/
-cloud/
-cal/
-cznxtqvn/
-czcavnpx/
-czshrnw/
 analytics/
+cal/
+cloud/
+czcavnpx/
+cznxtqvn/
+czshrnw/
 feeder/
-short/
+ncarchive/
 orson/wiki/
+photos/
+short/
+skyland/
 
 # Notes file #
 ##############
