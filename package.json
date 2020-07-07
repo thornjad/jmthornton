@@ -9,10 +9,10 @@
     "build-prod": "BABEL_ENV=production npm run build",
     "sitemap": "node bin/sitemap.js",
     "md": "node bin/compile-md.js",
-    "test": "snyk test",
-    "protect": "snyk protect --yes",
+    "test": "npx snyk test",
+    "protect": "npx snyk protect --yes",
     "prepare": "npm run protect",
-    "prod-install": "rm -rf node_modules/ && npm i --only=prod --no-audit",
+    "prod-install": "ci --only=prod --no-audit",
     "pi": "npm run-script prod-install"
   },
   "repository": {
