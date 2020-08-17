@@ -127,7 +127,7 @@ $button-large-margin: var(#{$universal-margin-var});
 $header-height: 3.1875rem; // Height of the header element.
 $header-back-color: #282828; // Background color for the header element.
 $header-hover-back-color: #3f3f3f; // Background color for the header element (hover).
-$header-fore-color: #ebdbb2; // Text color for the header element.
+$header-fore-color: $fore-color; // Text color for the header element.
 $header-border-color: #282828; // Border color for the header element.
 $nav-back-color: #1b1b1b; // Background color for the nav element.
 $nav-hover-back-color: #3f3f3f; // Background color for the nav element (hover).
