@@ -2,7 +2,7 @@
   Definitions for progress elements and spinners.
 */
 $progress-back-color: #ddd !default; // Background color of <progress>.
-$progress-fore-color: #555 !default; // Foreground color of <progress>.
+$progress-fore-color: #87afaf !default; // Foreground color of <progress>.
 $progress-height: 0.75rem !default; // Height of <progress>.
 $progress-max-value: 1000 !default; // Arithmetic max value of <progress> - use integer values.
 $progress-inline-name: 'inline' !default; // Class name for inline <progress> elements.
@@ -11,8 +11,8 @@ $_include-spinner-donut: true !default; // [Hidden] Should spinner donuts be inc
 $spinner-donut-name: 'spinner' !default; // Class name for spinner donuts
 $spinner-donut-size: 1.25rem !default; // Size of the spinner donuts
 $spinner-donut-border-thickness: 0.25rem !default; // Border thickness for spinner donuts
-$spinner-donut-back-color: #ddd !default; // Background color for spinner donuts
-$spinner-donut-fore-color: #555 !default; // Foreground color for spinner donuts
+$spinner-donut-back-color: #1b1b1b !default; // Background color for spinner donuts
+$spinner-donut-fore-color: #87afaf !default; // Foreground color for spinner donuts
 // CSS variable name definitions [exercise caution if modifying these]
 $progress-back-color-var: '--progress-back-color' !default;
 $progress-fore-color-var: '--progress-fore-color' !default;

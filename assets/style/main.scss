@@ -192,15 +192,12 @@ $mark-tag-padding: calc(var(#{$universal-padding-var})/2) var(#{$universal-paddi
 $mark-tag-border-radius: 1em;
 @include make-mark-alt-size ($mark-tag-name, $mark-tag-padding, $mark-tag-border-radius);
 
-$progress-back-color: #dfdfaf; // Background color of <progress>.
 $progress-fore-color: #555; // Foreground color of <progress>.
 $progress-height: 0.75rem; // Height of <progress>.
 $progress-max-value: 1000; // Arithmetic max value of <progress> - use integer values.
 $progress-inline-width: 60%; // Width of inline <progress> elements.
 $spinner-donut-size: 1.25rem; // Size of the spinner donuts
 $spinner-donut-border-thickness: 0.25rem; // Border thickness for spinner donuts
-$spinner-donut-back-color: #1b1b1b; // Background color for spinner donuts
-$spinner-donut-fore-color: #ebdbb2; // Foreground color for spinner donuts
 
 @import './modules/progress';
 
