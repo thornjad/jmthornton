@@ -16,10 +16,24 @@
     <!-- <link rel="stylesheet" href="/assets/style/main.css" type="text/css" /> -->
 
     <style media="screen">
+     .top-row {
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+     }
+
+     button.open-all {
+       height: max-content;
+       color: white;
+     }
+
 		 .updated-message {
 			 font-style: italic;
-			 text-align: right;
 		 }
+
+     .post p {
+       padding: 0 2rem;
+     }
 
      .source {
        font-weight: normal;
@@ -50,10 +64,16 @@
         <a href="https://jmthornton.net/" class="button" role="button">Home</a>
 				<a href="https://jmthornton.net/tools/" class="button" role="button">Tools</a>
         <a href="https://blog.jmthornton.net" class="button" role="button">Blog</a>
+        <a href="https://photos.jmthornton.net" class="button" role="button">Photos</a>
       </span>
     </header>
 
     <main class="content" id="content">
+      <h1>Tech News<small>Hacker News without the clutter</small></h1>
+      <div class="top-row">
+        <button class="open-all">Open all in new tabs</button>
+        <h6 class="updated-message"></h6>
+      </div>
       <!-- posts are injected here -->
     </main>
     <div class="spinner spinner-donut large" id="spinner"></div>

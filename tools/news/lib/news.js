@@ -2,10 +2,10 @@
 
 class NewsPosts {
   apiURI = 'https://hacker-news.firebaseio.com/v0/';
-  firstPageLoadLimit = 30;
-  loadMoreLoadLimit = 30;
+  loadLimit = 30;
   allPosts = null;
   genPost = null;
+  loadedPosts = [];
 
   async init() {
     this.allPosts = JSON.parse((await this.getTop500()));
@@ -32,13 +32,18 @@ class NewsPosts {
     });
   }
 
+  recordPosted(story) {
+    this.loadedPosts.push(story);
+  }
+
   static formatLayout(title, url) {
-    return `
-      <hr>
+    const urlMatcher = /:\/\/(?:www\.)?(.[^/]+)/;
+    return `<hr>
       <p>
-        <a href="${url}">${title}</a> <span class="source">(${url ? url.match(/:\/\/(.[^/]+)/)[1] : ''})</span>
-      </p>
-    `;
+        <a href="${url}">${title}</a>
+        <br />
+        <span class="source">${url ? url.match(urlMatcher)[1] : ''}</span>
+      </p>`;
   }
 
   static *postList(lists) {
@@ -52,20 +57,22 @@ class NewsPosts {
 const run = async (posts) => {
   try {
     await posts.init();
-    await loadFirst(posts);
+    await loadSomePosts(posts);
   } catch (e) {
     console.error(e);
     alert('An error occured. Please try again later');
   }
 };
 
-const loadFirst = async (posts) => {
+const loadSomePosts = async (posts) => {
+  showSpinner();
   try {
-    const list = await loadPosts(posts.firstPageLoadLimit, posts);
+    const list = await loadPosts(posts.loadLimit, posts);
     for (let story of list) {
       story = JSON.parse(story) ?? {};
       if (story.url) {
         injectPost(story.title, story.url);
+        posts.recordPosted(story);
       } else {
         continue;
       }
@@ -73,23 +80,6 @@ const loadFirst = async (posts) => {
   } finally {
     hideSpinner();
     showFooter();
-  }
-};
-
-const loadMore = async (posts) => {
-  try {
-    showSpinner();
-    const list = await loadPosts(posts.loadMoreLoadLimit, posts);
-    for (let story of list) {
-      story = JSON.parse(story);
-      if (story.url) {
-        injectPost(story.title, story.url);
-      } else {
-        continue;
-      }
-    }
-  } finally {
-    hideSpinner();
   }
 };
 
@@ -127,14 +117,10 @@ const injectPost = (title, url) => {
 };
 
 const addUpdatedMessage = () => {
-  const msg = document.createElement('h6');
+  const msg = document.querySelector('h6.updated-message');
   window.newsUpdateTime = Date.now();
-  msg.className = 'updated-message';
   msg.innerText = 'Last updated now';
-  const main = document.querySelector('main.content');
-  if (main) {
-    main.prepend(msg);
-  }
+
   window.newsUpdateTimer = setInterval(() => {
     let timeNow = Date.now();
     let timeSince = (timeNow - window.newsUpdateTime) / 60000;
@@ -157,10 +143,13 @@ const main = () => {
 	document.addEventListener('DOMContentLoaded', run.bind(null, posts));
 	document.addEventListener('scroll', evt => {
 		if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-			loadMore(posts);
+			loadSomePosts(posts);
 		}
 	});
 	addUpdatedMessage();
+  document.querySelector('button.open-all').addEventListener('click', () => {
+    posts.loadedPosts.forEach((p) => window.open(p.url, '_blank'));
+  });
 };
 
 // run script
