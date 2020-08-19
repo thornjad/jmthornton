@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 
 NOTE: Since v5.6, micro versions are no longer recorded.
 
+## [5.7.X] - 2020-08-19
+### Changed
+- Tons of styling tweaking
+
+### Added
+- News improvements
+  - Open all button
+  - Add to pocket button
+
 ## [5.6.X] - 2020-05-01
 ### Changed
 - Switched to internal dark styling instead of mini.css dependency
