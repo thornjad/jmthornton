@@ -38,11 +38,13 @@ class NewsPosts {
 
   static formatLayout(title, url) {
     const urlMatcher = /:\/\/(?:www\.)?(.[^/]+)/;
+    const pocketUrl = `https://getpocket.com/save?url=${url}`;
     return `<hr>
       <p>
         <a href="${url}">${title}</a>
         <br />
         <span class="source">${url ? url.match(urlMatcher)[1] : ''}</span>
+        &nbsp;<a class="pocket-link" href="${pocketUrl}" target="_blank">add to pocket</a>
       </p>`;
   }
 
@@ -122,20 +124,27 @@ const addUpdatedMessage = () => {
   msg.innerText = 'Last updated now';
 
   window.newsUpdateTimer = setInterval(() => {
-    let timeNow = Date.now();
-    let timeSince = (timeNow - window.newsUpdateTime) / 60000;
+    const timeNow = Date.now();
+    const timeSince = (timeNow - window.newsUpdateTime) / 60000;
     if (timeSince < 60) {
-      msg.innerText = `Last updated ${timeSince | 0} minutes ago`;
+      const unit = timeSince === 1 ? 'minute' : 'minutes';
+      msg.innerText = `Last updated ${timeSince | 0} ${unit} ago`;
     } else {
       clearInterval(window.newsUpdateTimer);
       msg.innerText = `Last updated 1 hour ago`;
       window.newsUpdateTimer = setInterval(() => {
-        let timeNow = Date.now();
-        let timeSince = (timeNow - window.newsUpdateTime) / 3600000;
-        msg.innerText = `Last updated ${timeSince | 0} hours ago`;
+        const timeNow = Date.now();
+        const timeSince = (timeNow - window.newsUpdateTime) / 3600000;
+        const unit = timeSince === 1 ? 'hour' : 'hours';
+        msg.innerText = `Last updated ${timeSince | 0} ${unit} ago`;
       });
     }
   }, 300000);
+};
+
+const saveToPocket = (url) => {
+  const pocketUrl = `https://getpocket.com/save?url=${url}`;
+  window.open(pocketUrl, '_blank');
 };
 
 const main = () => {
