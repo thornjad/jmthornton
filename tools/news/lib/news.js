@@ -1,5 +1,9 @@
 'use strict';
 
+const disallowDomains = [
+  'medium.com',
+];
+
 class NewsPosts {
   apiURI = 'https://hacker-news.firebaseio.com/v0/';
   loadLimit = 30;
@@ -72,7 +76,9 @@ const loadSomePosts = async (posts) => {
     const list = await loadPosts(posts.loadLimit, posts);
     for (let story of list) {
       story = JSON.parse(story) ?? {};
-      if (story.url) {
+      const shortUrlMatch = (story.url ?? '').match(/:\/\/(?:www\.)?(.[^/]+)/);
+      if (story.url && shortUrlMatch.length & 2
+          && !disallowDomains.includes(shortUrlMatch[1])) {
         injectPost(story.title, story.url);
         posts.recordPosted(story);
       } else {
