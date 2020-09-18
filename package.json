@@ -25,9 +25,7 @@
     "url": "https://gitlab.com/thornjad/jmthornton/issues"
   },
   "homepage": "https://gitlab.com/thornjad/jmthornton",
-  "dependencies": {
-    "instant.page": "^1.1.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/cli": "^7.6.0",
     "@babel/core": "^7.6.0",
