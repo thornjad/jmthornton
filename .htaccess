@@ -19,6 +19,18 @@ Header set X-Download-Options "noopen"
 Header set X-Permitted-Cross-Domain-Policies "none"
 SetEnv modHeadersAvailable true
 
+<IfModule mod_headers.c>
+    # one week
+    <FilesMatch "\.(jpg|jpeg|webp|png|gif|swf)$">
+        Header set Cache-Control "max-age=604800, public"
+    </FilesMatch>
+
+    # one week
+    <FilesMatch "\.(js|css|swf)$">
+        Header set Cache-Control "max-age=604800"
+    </FilesMatch>
+</IfModule>
+
 # Allow HTML pages to load without the filename extension
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-d
