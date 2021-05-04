@@ -19,12 +19,10 @@ $secondary-border-color: #ddd !default; // Secondary border color
 $heading-line-height: 1.2 !default; // Line height for headings
 $heading-ratio: 1.19 !default; // Ratio for headings (strictly unitless)
 $subheading-font-size: 0.75em !default; // Font sizing for <small> elements in headings
-$subheading-top-margin: -0.25rem !default; // Top margin of <small> elements in headings
 $universal-margin: 0.5rem !default; // Universal margin for the most elements
 $universal-padding: 0.5rem !default; // Universal padding for the most elements
 $universal-border-radius: 0.125rem !default; // Universal border-radius for most elements
 $universal-box-shadow: none !default; // Universal box-shadow for most elements
-$small-font-size: 0.75em !default; // Font sizing for <small> elements
 $heading-font-weight: 500 !default; // Font weight for headings
 $bold-font-weight: 700 !default; // Font weight for <b> and <strong>
 $horizontal-rule-line-height: 1.25em !default; // <hr> line height
@@ -134,9 +132,6 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: $heading-font-weight;
   small {
     display: block;
-    @if $subheading-top-margin != 0 {
-      margin-top: $subheading-top-margin;
-    }
     @if $subheading-font-size != $small-font-size {
       font-size: $subheading-font-size;
     }
