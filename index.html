@@ -220,7 +220,7 @@
 		 document.addEventListener('DOMContentLoaded', async () => {
 			 const v = document.querySelector('.versioning');
 			 const res = await fetch('/package.json');
-			 v.innerHTML = `| <a href="https://gitlab.com/thornjad/jmthornton/blob/main/changelog.md">Version ${(await res.json()).version}</a>`;
+			 v.innerHTML = `| <a href="https://gitlab.com/thornjad/jmthornton">Version ${(await res.json()).version}</a>`;
 		 });
 		</script>
 
