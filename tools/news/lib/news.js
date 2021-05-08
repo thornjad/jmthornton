@@ -16,24 +16,14 @@ class NewsPosts {
     this.genPost = NewsPosts.postList(this.allPosts);
   }
 
-  getTop500() {
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.onload = data => resolve(xhr.responseText);
-      xhr.onerror = e => reject(xhr.statusText);
-      xhr.open('GET', `${this.apiURI}topstories.json`);
-      xhr.send();
-    });
+  async getTop500() {
+    const res = await fetch(`${this.apiURI}topstories.json`);
+    return await res.text();
   }
 
-  getPostData(id) {
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.onload = data => resolve(xhr.responseText);
-      xhr.onerror = e => reject(xhr.statusText);
-      xhr.open('GET', `${this.apiURI}item/${id}.json`);
-      xhr.send();
-    });
+  async getPostData(id) {
+    const res = await fetch(`${this.apiURI}item/${id}.json`);
+    return await res.text();
   }
 
   recordPosted(story) {
@@ -55,10 +45,7 @@ class NewsPosts {
   }
 
   static *postList(lists) {
-    while (lists.length > 0) {
-      yield lists[0];
-      lists = lists.removeElement(0);
-    }
+    while (lists.length) yield lists.shift();
   }
 }
 
