@@ -40,15 +40,17 @@ class NewsPosts {
     this.loadedPosts.push(story);
   }
 
-  static formatLayout(title, url) {
+  static formatLayout(title, url, id) {
     const urlMatcher = /:\/\/(?:www\.)?(.[^/]+)/;
     const pocketUrl = `https://getpocket.com/save?url=${url}`;
+    const commentsUrl = `https://news.ycombinator.com/item?id=${id}`
     return `<hr>
       <p>
         <a href="${url}">${title}</a>
         <br />
         <span class="source">${url ? url.match(urlMatcher)[1] : ''}</span>
-        &nbsp;<a class="pocket-link" href="${pocketUrl}" target="_blank">add to pocket</a>
+        &nbsp;<a class="extra-content-link" href="${pocketUrl}" target="_blank" rel="noopener noreferrer">add to pocket</a>
+        &nbsp;<a class="extra-content-link" href="${commentsUrl} target="_blank" rel="noopener noreferrer">comments</a>
       </p>`;
   }
 
@@ -79,7 +81,7 @@ const loadSomePosts = async (posts) => {
       const shortUrlMatch = (story.url ?? '').match(/:\/\/(?:www\.)?(.[^/]+)/);
       if (story.url && shortUrlMatch.length & 2
           && !disallowDomains.includes(shortUrlMatch[1])) {
-        injectPost(story.title, story.url);
+        injectPost(story.title, story.url, story.id);
         posts.recordPosted(story);
       } else {
         continue;
@@ -113,8 +115,8 @@ const loadPosts = async (numPostsToLoad, posts) => {
   return firstPostsList;
 };
 
-const injectPost = (title, url) => {
-  const layout = NewsPosts.formatLayout(title, url);
+const injectPost = (title, url, id) => {
+  const layout = NewsPosts.formatLayout(title, url, id);
   const div = document.createElement('div');
   div.className = 'post';
   div.innerHTML = layout;
