@@ -34,14 +34,13 @@ class NewsPosts {
     const urlMatcher = /:\/\/(?:www\.)?(.[^/]+)/;
     const pocketUrl = `https://getpocket.com/save?url=${url}`;
     const commentsUrl = `https://news.ycombinator.com/item?id=${id}`
-    return `<hr>
-      <p>
-        <a href="${url}">${title}</a>
-        <br />
-        <span class="source">${url ? url.match(urlMatcher)[1] : ''}</span>
-        &nbsp;<a class="extra-content-link" href="${pocketUrl}" target="_blank" rel="noopener noreferrer">add to pocket</a>
-        &nbsp;<a class="extra-content-link" href="${commentsUrl} target="_blank" rel="noopener noreferrer">comments</a>
-      </p>`;
+    return `<hr><p>
+      <a href="${url}">${title}</a>
+      <br />
+      <span class="source">${url ? url.match(urlMatcher)[1] : ''}</span>
+      &nbsp;<a class="extra-content-link" href="${pocketUrl}" target="_blank" rel="noopener noreferrer">add to pocket</a>
+      &nbsp;<a class="extra-content-link" href="${commentsUrl} target="_blank" rel="noopener noreferrer">comments</a>
+    </p>`;
   }
 
   static *postList(lists) {
