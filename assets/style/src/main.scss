@@ -1,0 +1,129 @@
+/* Main style for jmthornton.net
+ * Copyright (c) 2015-2021 Jade Michael Thornton
+ */
+
+
+// Variables
+
+// TODO choose nice font, probably Victor Mono
+$fontMain: monospace;
+$fontSecondary: sans-serif;
+$fontMono: monospace;
+
+// breakpoints
+$screen-large: 1024px;
+$screen-medium-large: 991px;
+$screen-medium: 970px;
+$screen-small: 767px;
+$screen-mobile: 480px;
+
+// heights, widths and things
+$font-size: 16px;
+$line-height: 1.2rem;
+$standard-margin: 1.4rem 0;
+$main-width: 88ch;
+
+// Colors
+$bg: #fefbf2;
+$bg-alt: #f6f3e7;
+$fg: #525C5A;
+
+$heading: #2aa198;
+$heading-marker: #AB7146;
+$anchor: #4B788D;
+$anchor-hover: #4B788D;
+
+
+// Mixins
+
+@mixin antialias {
+	-webkit-font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-smoothing: antialiased;
+	font-smooth: always;
+}
+
+
+// Main style
+
+:root {
+  font-family: $fontMain;
+  font-size: $font-size;
+  line-height: $line-height;
+  background: $bg;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+}
+
+main {
+  max-width: $main-width;
+}
+
+section {
+  margin: 4rem 0;
+}
+
+p, ul {
+  margin: $standard-margin;
+}
+
+ul, ol {
+  list-style: none;
+  padding: 0;
+
+  > li {
+    padding-left: 2ch;
+    position: relative;
+    margin: 0.15rem 0;
+  }
+
+  li::before {
+    content: '•';
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  &.dl > li p:first-child {
+    font-weight: bold;
+  }
+}
+
+a {
+  color: $anchor;
+  text-decoration: none;
+  font-style: italic;
+
+  &:hover {
+    color: $anchor-hover;
+  }
+
+  &:visited {
+    color: $anchor;
+  }
+
+  &::before {content: '[';}
+  &::after {content: ']';}
+}
+
+blockquote {
+	margin: 1.35rem 0;
+	position: relative;
+	padding-left: 2ch;
+	overflow: hidden;
+	font-style: italic;
+
+  &::after {
+	  content: ">\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>";
+	  white-space: pre;
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+  }
+}
+
+@import './modules/headings';
