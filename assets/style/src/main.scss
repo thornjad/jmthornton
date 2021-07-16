@@ -10,13 +10,6 @@ $fontMain: monospace;
 $fontSecondary: sans-serif;
 $fontMono: monospace;
 
-// breakpoints
-$screen-large: 1024px;
-$screen-medium-large: 991px;
-$screen-medium: 970px;
-$screen-small: 767px;
-$screen-mobile: 480px;
-
 // heights, widths and things
 $font-size: 16px;
 $line-height: 1.2rem;
@@ -32,6 +25,7 @@ $heading: #2aa198;
 $heading-marker: #AB7146;
 $anchor: #4B788D;
 $anchor-hover: #4B788D;
+$footer-line: $heading;
 
 
 // Mixins
@@ -57,10 +51,25 @@ $anchor-hover: #4B788D;
 body {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 main {
   max-width: $main-width;
+  margin: 0 1rem;
+}
+
+footer {
+  position: relative;
+
+  &::before {
+	  content: '- - - - - - -';
+    color: $footer-line;
+	  position: absolute;
+	  top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 
 section {
@@ -127,3 +136,41 @@ blockquote {
 }
 
 @import './modules/headings';
+
+
+// page specifics
+
+div.stats {
+  margin: 2.7rem 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+
+  img {
+    max-width: 90vw;
+  }
+}
+
+div.shield-links {
+  margin: 2.7rem 0;
+
+  a::before {content:'';}
+  a::after {content:'';}
+}
+
+div.split {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  @media (min-width: $main-width) {
+    div.left {
+      max-width: 59%;
+    }
+
+    div.right {
+      max-width: 40%
+    }
+  }
+}
