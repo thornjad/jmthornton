@@ -1,1 +1,188 @@
-@charset "UTF-8";:root{font-family:monospace;font-size:16px;line-height:1.2rem;background:#fefbf2}body{display:flex;justify-content:center}main{max-width:88ch}section{margin:4rem 0}p,ul{margin:1.4rem 0}ol,ul{list-style:none;padding:0}ol>li,ul>li{padding-left:2ch;position:relative;margin:.15rem 0}ol li::before,ul li::before{content:"•";position:absolute;top:0;left:0}ol.dl>li p:first-child,ul.dl>li p:first-child{font-weight:700}a{color:#4b788d;text-decoration:none;font-style:italic}a:hover{color:#4b788d}a:visited{color:#4b788d}a::before{content:"["}a::after{content:"]"}blockquote{margin:1.35rem 0;position:relative;padding-left:2ch;overflow:hidden;font-style:italic}blockquote::after{content:">\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>";white-space:pre;position:absolute;top:0;left:0}h1,h2,h3,h4,h5,h6{font-size:1rem;font-weight:400;line-height:1.3rem;color:#2aa198;margin:1.4rem 0}h1,h2{margin:2.7rem 0 2rem}h1{font-size:2.5rem}h2{font-size:1.75rem}h3{font-size:1.35rem}h4{font-size:1.15rem}h1::before,h2::before,h3::before,h4::before,h5::before,h6::before{color:#ab7146;margin:0}h1::before{content:"# "}h2::before{content:"## "}h3::before{content:"### "}h4::before{content:"#### "}h5::before{content:"##### "}h6::before{content:"###### "}
+@charset "UTF-8";
+/* Main style for jmthornton.net
+ * Copyright (c) 2015-2021 Jade Michael Thornton
+ */
+:root {
+  font-family: monospace;
+  font-size: 16px;
+  line-height: 1.2rem;
+  background: #fefbf2;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+main {
+  max-width: 88ch;
+  margin: 0 1rem;
+}
+
+footer {
+  position: relative;
+}
+footer::before {
+  content: "- - - - - - -";
+  color: #2aa198;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+section {
+  margin: 4rem 0;
+}
+
+p, ul {
+  margin: 1.4rem 0;
+}
+
+ul, ol {
+  list-style: none;
+  padding: 0;
+}
+ul > li, ol > li {
+  padding-left: 2ch;
+  position: relative;
+  margin: 0.15rem 0;
+}
+ul li::before, ol li::before {
+  content: "•";
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+ul.dl > li p:first-child, ol.dl > li p:first-child {
+  font-weight: bold;
+}
+
+a {
+  color: #4B788D;
+  text-decoration: none;
+  font-style: italic;
+}
+a:hover {
+  color: #4B788D;
+}
+a:visited {
+  color: #4B788D;
+}
+a::before {
+  content: "[";
+}
+a::after {
+  content: "]";
+}
+
+blockquote {
+  margin: 1.35rem 0;
+  position: relative;
+  padding-left: 2ch;
+  overflow: hidden;
+  font-style: italic;
+}
+blockquote::after {
+  content: ">\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>\a>";
+  white-space: pre;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-size: 1rem;
+  font-weight: normal;
+  line-height: 1.3rem;
+  color: #2aa198;
+  margin: 1.4rem 0;
+}
+
+h1, h2 {
+  margin: 2.7rem 0 2rem;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 1.75rem;
+}
+
+h3 {
+  font-size: 1.35rem;
+}
+
+h4 {
+  font-size: 1.15rem;
+}
+
+h1::before, h2::before, h3::before, h4::before, h5::before, h6::before {
+  color: #AB7146;
+  margin: 0;
+}
+
+h1::before {
+  content: "# ";
+}
+
+h2::before {
+  content: "## ";
+}
+
+h3::before {
+  content: "### ";
+}
+
+h4::before {
+  content: "#### ";
+}
+
+h5::before {
+  content: "##### ";
+}
+
+h6::before {
+  content: "###### ";
+}
+
+div.stats {
+  margin: 2.7rem 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+div.stats img {
+  max-width: 90vw;
+}
+
+div.shield-links {
+  margin: 2.7rem 0;
+}
+div.shield-links a::before {
+  content: "";
+}
+div.shield-links a::after {
+  content: "";
+}
+
+div.split {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+@media (min-width: 88ch) {
+  div.split div.left {
+    max-width: 59%;
+  }
+  div.split div.right {
+    max-width: 40%;
+  }
+}
+
+/*# sourceMappingURL=main.css.map */
