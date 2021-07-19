@@ -631,7 +631,7 @@ h1 .glitch::after {
 }
 .rgb-color {
   color: #525C5A;
-  animation: rgb-color-anim 10s linear infinite;
+  animation: rgb-color-anim 7s linear infinite;
 }
 
 @keyframes rgb-color-anim {
