@@ -1,9 +1,0 @@
-# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.13.3
-# ignores vulnerabilities until expiry date; change duration by modifying expiry date
-ignore:
-  'npm:open:20180512':
-    - snyk > open:
-        reason: No patch available
-        expires: '2019-03-14T14:53:33.985Z'
-patch: {}
