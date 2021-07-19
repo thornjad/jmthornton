@@ -10,7 +10,6 @@ purifycss:
 	npx purify-css --min --info assets/style/main.css $(shell find . -type f -name '*.html') --out assets/style/main.css
 
 build: sass purifycss
-	npx filefile
 
 run:
 	npx http-server -o -c-1
