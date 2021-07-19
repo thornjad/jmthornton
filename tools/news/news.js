@@ -80,15 +80,15 @@ const loadSomePosts = async (posts) => {
 };
 
 const hideSpinner = () => {
-  document.getElementById('spinner').style.display = 'none';
+  document.querySelector('#spinner').style.display = 'none';
 };
 
 const showSpinner = () => {
-  document.getElementById('spinner').style.display = 'block';
+  document.querySelector('#spinner').style.display = 'block';
 };
 
 const showFooter = () => {
-  document.getElementById('footer').style.display = 'block';
+  document.querySelector('footer').style.display = 'block';
 };
 
 const loadPosts = async (numPostsToLoad, posts) => {
@@ -106,9 +106,9 @@ const injectPost = (title, url, id) => {
   const div = document.createElement('div');
   div.className = 'post';
   div.innerHTML = layout;
-  const main = document.querySelector('main.content');
-  if (main) {
-    main.append(div);
+  const target = document.querySelector('#posts');
+  if (target) {
+    target.append(div);
   }
 };
 

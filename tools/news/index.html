@@ -12,9 +12,10 @@
     <link rel="shortcut icon" href="https://jmthornton.net/assets/images/favicon.png" />
     <link rel="apple-itouch-icon" href="https://jmthornton.net/assets/images/favicon.ico" />
 
+    <!-- TODO switch  -->
     <link rel="stylesheet" href="https://jmthornton.net/assets/style/main.css" type="text/css" />
-    <!-- <link rel="stylesheet" href="/assets/style/main.css" type="text/css" /> -->
-
+    <!-- <link rel="stylesheet" href="/assets/style/main.css" type="text/css" />
+    -->
     <style media="screen">
      .top-row {
        display: flex;
@@ -22,10 +23,19 @@
        align-items: center;
      }
 
+     .top-row h6::before {
+       content: none;
+     }
+
+     .top-row h6 {
+       margin: 0;
+     }
+
      button.open-all {
        height: max-content;
        color: white;
        margin-left: 0;
+       min-height: 0;
      }
 
 		 .updated-message {
@@ -48,7 +58,7 @@
        color: grey !important;
      }
 
-     main.content a:visited {
+     main a:visited {
        color: grey;
      }
 
@@ -65,35 +75,33 @@
     </style>
   </head>
   <body>
-    <header class="sticky">
-      <span class="header-hack">
-        <a href="https://jmthornton.net/" class="button" role="button">Home</a>
-				<a href="https://jmthornton.net/tools/" class="button" role="button">Tools</a>
-        <a href="https://blog.jmthornton.net" class="button" role="button">Blog</a>
-        <a href="https://photos.jmthornton.net" class="button" role="button">Photos</a>
-      </span>
-    </header>
+    <!-- <div class="dev-only">DEV CSS ENABLED</div> -->
+    <header><nav>
+      <a href="/">Home</a>
+      <a href="/tools">Tools</a>
+      <a href="https://blog.jmthornton.net">Blog</a>
+      <a href="https://photos.jmthornton.net">Photos</a>
+    </nav></header>
 
-    <main class="content" id="content">
-      <h1>Tech News<small>Hacker News without the clutter</small></h1>
+    <main id="content">
+      <h1>Tech news right now</h1>
       <div class="top-row">
         <button class="open-all">Open all in new tabs</button>
         <h6 class="updated-message"></h6>
       </div>
-      <!-- posts are injected here -->
+      <div class="no-md-a" id="posts">
+        <!-- posts are injected here -->
+      </div>
     </main>
+
     <div class="spinner spinner-donut large" id="spinner"></div>
 
-    <footer id="footer">
-      <div class="footer-text">
-        <div class="footer-line">
-          This page is powered by <a href="https://news.ycombinator.com">YCombinator News (Hacker News)</a>.<br><br>
-          Jade Michael Thornton | <a href="https://github.com/thornjad/jmthornton">Source code</a> | <a href="https://jmthornton.net/p/sitemap">Sitemap</a>
-        </div>
-      </div>
-    </footer>
+		<footer>
+      <p>Built by Jade Michael Thornton, powered by <a href="https://news.ycombinator.com">YCombinator News</a> | <a href="/">Home</a> | <a href="https://gitlab.com/thornjad/jmthornton">Source code</a></p>
+		</footer>
+
     <script src="https://jmthornton.net/lib/helpers.js" defer></script>
-    <script src="./lib/news.js" defer></script>
+    <script src="./news.js" defer></script>
 
 		<script class="matomo-analytics" type='text/javascript'>
 		 var _paq = window._paq || [];

@@ -8,7 +8,10 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} (.+)/$
 RewriteRule ^ %1 [R=301,L]
 
-Redirect 301 /_nsr/ https://jmthornton.net/_nsrbiz/
+RewriteRule ^/_nsr$ projects/_nsrbiz/ [R=301,QSA]
+RewriteRule ^/_nsrbiz$ projects/_nsrbiz/ [L,QSA]
+
+RewriteRule ^/p / [R=301]
 
 # Add security and privacy related headers
 Header set X-Content-Type-Options "nosniff"
@@ -21,12 +24,12 @@ SetEnv modHeadersAvailable true
 <IfModule mod_headers.c>
     # one week
     <FilesMatch "\.(jpg|jpeg|webp|png|gif|swf)$">
-        Header set Cache-Control "max-age=604800, public"
+        Header set Cache-Control "max-age=21600, public, must-revalidate"
     </FilesMatch>
 
     # one week
     <FilesMatch "\.(js|css|swf)$">
-        Header set Cache-Control "max-age=604800"
+        Header set Cache-Control "max-age=21600, must-revalidate"
     </FilesMatch>
 </IfModule>
 

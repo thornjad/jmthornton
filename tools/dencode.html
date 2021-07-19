@@ -8,7 +8,6 @@
 		<meta name="googlebot" content="index, follow" />
 		<meta name="google-site-verification" content="JUM1Dl9n9ic9xPMb03Nzf4NgW_-8PWZrJ4eJGC_PoYM" />
 		<meta charset="utf-8" />
-		<link type="text/plain" rel="author" href="https://jmthornton.net/humans.txt" />
 		<title>URL Encode/Decode | Jade Michael Thornton</title>
 		<link rel="stylesheet" href="/assets/style/main.css" type="text/css" />
 		<link rel="shortcut icon" href="/assets/images/favicon.png" />
@@ -20,65 +19,49 @@
 		</style>
 	</head>
 	<body>
-		<header class="sticky">
-			<span class="header-hack">
-				<a href="/" class="button" role="button">Home</a>
-				<a href="/tools/" class="button" role="button">Tools</a>
-				<a href="https://blog.jmthornton.net" class="button" role="button">Blog</a>
-			</span>
-		</header>
+    <header><nav>
+      <a href="/">Home</a>
+      <a href="/tools">Tools</a>
+      <a href="https://blog.jmthornton.net">Blog</a>
+      <a href="https://photos.jmthornton.net">Photos</a>
+    </nav></header>
 
-		<main class="content">
-			<form onsubmit="return false;">
-				<h1>URL Encode/Decode Tool</h1>
+		<main>
+			<h1>URL Encode/Decode Tool</h1>
 
-				<textarea id="dencoder" rows="18" cols="90"></textarea>
-				<div>
-					<input class="button large" type="button" value="Encode" id="encode">
-					<input class="button large" type="button" value="Decode" id="decode">
-				</div>
-
-				<ul>
-					<li>Input a string of text and encode or decode as you like</li>
-					<li>Handy for turning encoded JavaScript URLs from complete gibberish into readable gibberish</li>
-					<li>If you'd like to use this tool offline, just 'view source' and save to your computer</li>
-				</ul>
-			</form>
-		</main>
-		<footer>
-			<div class="footer-text">
-				<div class="footer-line footer-top">
-					<img src="http://creativecommons.org/images/public/somerights.gif" alt="Creative Commons License">
-					<br>
-					The URL Encode/Decode Tool is license under a Creative Commons <a href="http://creativecommons.org/licenses/by-sa/2.0/">Attribution-ShareAlike 2.0</a> License.<br>
-
-					This tool is provided without warranty or guarantee. Keep out of the reach of children.
-				</div>
-				<br>
-				<div class="footer-text">
-					<div class="footer-line">
-						Jade Michael Thornton | <a href="https://github.com/thornjad/jmthornton">Source code</a> | <a href="/p/sitemap.xml">Sitemap</a>
-					</div>
-				</div>
+			<textarea id="dencoder" rows="18" cols="90" placeholder="Enter text to encode or decode"></textarea>
+			<div class="action-buttons">
+        <button id="encode">Encode</button>
+        <button id="decode">Decode</button>
 			</div>
+
+			<ul>
+				<li>Input a string of text and encode or decode as you like.</li>
+				<li>Handy for turning encoded JavaScript URLs from complete gibberish into readable gibberish.</li>
+				<li>If you'd like to use this tool offline, just 'view source' and save to your computer. You can also copy/fork <a href="https://gitlab.com/thornjad/jmthornton/-/blob/main/tools/dencode.html">the source code</a>.</li>
+			</ul>
+		</main>
+
+		<footer>
+      <p>The URL Encode/Decode Tool is license under a Creative Commons <a href="http://creativecommons.org/licenses/by-sa/2.0/">Attribution-ShareAlike 2.0</a> License.<br>
+				This tool is provided without warranty or guarantee. Keep out of the reach of children.
+      </p>
+      <p>Built by Jade Michael Thornton | <a href="/">Home</a> | <a href="https://gitlab.com/thornjad/jmthornton">Source code</a></p>
 		</footer>
 		<script type="text/javascript">
-     "use strict";
-
-     const encode = () => {
-       let dencoder = document.getElementById('dencoder');
-       const unencoded = dencoder.value;
-       dencoder.value = encodeURIComponent(unencoded).replace(/'/g, "%27").replace(/"/g, "%22");
-     };
-
-     const decode = () => {
-       let dencoder = document.getElementById('dencoder');
-       const encoded = dencoder.value;
-       dencoder.value = decodeURIComponent(encoded.replace(/\+/g, " "));
-     };
-
-     document.getElementById('encode').addEventListener('click', () => encode());
-     document.getElementById('decode').addEventListener('click', () => decode());
+     const getValue = () => {
+       const dencoder = document.querySelector('#dencoder');
+       const value = dencoder.value;
+       return [dencoder, value];
+     }
+     document.querySelector('#encode').addEventListener('click', () => {
+       const [dencoder, value] = getValue();
+       dencoder.value = encodeURIComponent(value).replace(/'/g, "%27").replace(/"/g, "%22");
+     });
+     document.querySelector('#decode').addEventListener('click', () => {
+       const [dencoder, value] = getValue();
+       dencoder.value = decodeURIComponent(value.replace(/\+/g, " "));
+     });
 		</script>
 
 		<script class="matomo-analytics" type='text/javascript'>

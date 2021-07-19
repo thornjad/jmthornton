@@ -1,8 +1,8 @@
+<!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="utf-8" />
 		<title>Query parameter dumper</title>
-		<link type="text/plain" rel="author" href="https://jmthornton.net/humans.txt" />
 		<meta name="description" content="Send query parameters and see how they parse" />
 		<meta name="robots" content="index, follow" />
 		<meta name="googlebot" content="index, follow" />
@@ -19,68 +19,120 @@
 		<meta property="og:site_name" content="jmthornton.net">
 		<meta property="og:locale" content="en_US" />
 		<meta name="article:author" content="https://jmthornton.net">
-
 		<link rel="stylesheet" href="/assets/style/main.css" type="text/css" />
-		<script src="./lib/query-dumper.js" defer></script>
-
-		<style></style>
 	</head>
 	<body>
-		<header class="sticky">
-			<span class="header-hack">
-				<a href="https://jmthornton.net/" class="button" role="button">Home</a>
-				<a href="https://jmthornton.net/tools/" class="button" role="button">Tools</a>
-				<a href="https://blog.jmthornton.net" class="button" role="button">Blog</a>
-			</span>
-		</header>
+    <header><nav>
+      <a href="/">Home</a>
+      <a href="/tools">Tools</a>
+      <a href="https://blog.jmthornton.net">Blog</a>
+      <a href="https://photos.jmthornton.net">Photos</a>
+    </nav></header>
 
-		<div class="content">
-			<div class="explanation">
-				<h1>Query parameter parser and dumper
-					<small>Send query parameters and see how they parse</small>
-				</h1>
-				<hr />
-
-				<!-- TODO make this collapsed section by default -->
-				<h4>Special parameters
-					<small>Use these special keys to trigger parsing with a certain type</small>
-				</h4>
-				<ul>
-					<li><code>json</code>: Parse as JSON</li>
-					<li><code>int</code>, <code>number</code>: Parse as an integer</li>
-					<li><code>float</code>: Parse as a floating point number</li>
-					<li><code>bool</code>: Parse as boolean</li>
-				</ul>
-			</div>
-
+    <main>
+			<h1>Query parameter parser and dumper</h1>
+			<p>Send query parameters and see how they parse.</p>
 			<hr />
 
-			<div>
-				<h2>Your parameters:</h2>
-			</div>
-			<div class="display"></div>
+			<h2>Special parameters</h2>
+			<p>Use these special keys to trigger parsing with a certain type</p>
+			<ul>
+				<li><code>json</code>: Parse as JSON</li>
+				<li><code>int</code>, <code>number</code>: Parse as an integer</li>
+				<li><code>float</code>: Parse as a floating point number</li>
+				<li><code>bool</code>: Parse as boolean</li>
+			</ul>
 
-			<script class="matomo-analytics" type='text/javascript'>
-			 var _paq = window._paq || [];
-			 _paq.push(['setDocumentTitle', document.domain + ' -/- ' + document.title]);
-			 _paq.push(['setDoNotTrack', true]);
-			 _paq.push(['setCookieDomain', '*.jmthornton.net']);
-			 _paq.push(['trackPageView']);
-			 _paq.push(['enableLinkTracking']);
-			 void function() {
-				 var u='//jmthornton.net/analytics/';
-				 _paq.push(['setTrackerUrl', u+'matomo.php']);
-				 _paq.push(['setSiteId', '1']);
-				 const d=document,
-							 g=d.createElement('script'),
-							 s=d.getElementsByTagName('script')[0];
-				 g.type='text/javascript';
-				 g.async=true;
-				 g.defer=true;
-				 g.src=u+'matomo.js';
-				 s.parentNode.insertBefore(g,s);
-			 }();
-			</script>
-		</div>
+		  <hr />
+
+		  <h2>Your parameters:</h2>
+		  <div class="display"></div>
+    </main>
+
+    <script type="text/javascript">
+	   const parseParam = (k, v) => {
+		   let parsedValue = v;
+		   let parsedType = null;
+		   switch (k) {
+			   case 'json':
+				   parsedType = 'JSON';
+				   try {
+					   parsedValue = JSON.parse(v);
+					   parsedValue = JSON.stringify(parsedValue, null, '\t');
+				   } catch (e) {
+					   parsedValue = 'Invalid';
+				   }
+				   break;
+
+			   case 'number':
+			   case 'int':
+				   parsedType = 'Integer';
+				   parsedValue = parseInt(v);
+				   break;
+
+			   case 'float':
+				   parsedType = 'Float';
+				   parsedValue = parseFloat(v);
+				   break;
+
+			   case 'bool':
+				   parsedType = 'Boolean';
+				   parsedValue = !!v;
+				   break;
+		   }
+
+		   return {
+			   key: k,
+			   rawValue: v,
+			   value: parsedValue,
+			   type: parsedType,
+		   };
+	   };
+
+	   const formatParamInfo = (info) => {
+		   if (info.type) {
+			   return `Key:\t${info.key}
+Type:\t${info.type}
+Given:\t${info.rawValue}
+Parsed:\t${info.value}`;
+		   } else {
+			   return `Key:\t${info.key}
+Value:\t${info.value}`;
+		   }
+	   };
+
+	   const mount = document.querySelector('.display');
+	   const params = new URLSearchParams(window.location.search);
+
+	   params.forEach((v, k) => {
+		   const info = parseParam(k, v);
+		   const div = document.createElement('pre');
+		   div.className = 'param';
+		   div.innerHTML = formatParamInfo(info);
+		   mount.append(div);
+	   });
+    </script>
+
+		<script class="matomo-analytics" type='text/javascript'>
+		 var _paq = window._paq || [];
+		 _paq.push(['setDocumentTitle', document.domain + ' -/- ' + document.title]);
+		 _paq.push(['setDoNotTrack', true]);
+		 _paq.push(['setCookieDomain', '*.jmthornton.net']);
+		 _paq.push(['trackPageView']);
+		 _paq.push(['enableLinkTracking']);
+		 void function() {
+			 var u='//jmthornton.net/analytics/';
+			 _paq.push(['setTrackerUrl', u+'matomo.php']);
+			 _paq.push(['setSiteId', '1']);
+			 const d=document,
+						 g=d.createElement('script'),
+						 s=d.getElementsByTagName('script')[0];
+			 g.type='text/javascript';
+			 g.async=true;
+			 g.defer=true;
+			 g.src=u+'matomo.js';
+			 s.parentNode.insertBefore(g,s);
+		 }();
+		</script>
 	</body>
 </html>

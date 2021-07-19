@@ -43,39 +43,34 @@
     <meta property="article:published_time" content="2020-11-01">
   </head>
   <body>
-    <header class="sticky">
-      <span class="header-hack">
-        <a href="https://jmthornton.net/" class="button" role="button">Home</a>
-				<a href="https://jmthornton.net/tools/" class="button" role="button">Tools</a>
-        <a href="/" class="button" role="button">Blog</a>
-				<a href="https://photos.jmthornton.net/" class="button" role="button">Photos</a>
-      </span>
-    </header>
+    <header><nav>
+      <a href="https://jmthornton.net">Home</a>
+      <a href="/tools">Tools</a>
+      <a href="https://blog.jmthornton.net">Blog</a>
+      <a href="https://photos.jmthornton.net">Photos</a>
+    </nav></header>
 
-    <article class="post blog-content">
-      <h1 class="post-title">Remove (deinit) a Git submodule
-				<small>A quick reminder of how to remove a Git submodule, because I always forget</small>
+    <main>
+      <article class="post blog-content">
+        <h1 class="post-title">Remove (deinit) a Git submodule</h1>
+				<p>A quick reminder of how to remove a Git submodule, because I always forget</p>
 				<time datetime="2020-11-01">November 01, 2020</time>
-			</h1>
 
-      <div class="post-main">
-        <div class="blog-body">
-          <p>Every once in a while, I need to deinit a Git submodule, but I just cannot remember how. To deinit we can use Git's <code>submodule deinit</code> function to remove it from the database, then we remove the relevant directories from Git.</p>
-          <pre lang="zsh"><code>git submodule deinit -f path/to/submodule
+        <div class="post-main">
+          <div class="blog-body">
+            <p>Every once in a while, I need to deinit a Git submodule, but I just cannot remember how. To deinit we can use Git's <code>submodule deinit</code> function to remove it from the database, then we remove the relevant directories from Git.</p>
+            <pre lang="zsh"><code>git submodule deinit -f path/to/submodule
 rm -rf .git/modules/path/to/submodule
 git rm -f path/to/submodule</code></pre>
-          <p>After those three commands, you're free to commit the deinit. Note that this will not actually remove the submodule locally, you'll need to <code>rm -r</code> to take care of that.</p>
-          <p>To make things just a bit easier, we can stick those three lines into a script and call it with a Git alias.</p>
+            <p>After those three commands, you're free to commit the deinit. Note that this will not actually remove the submodule locally, you'll need to <code>rm -r</code> to take care of that.</p>
+            <p>To make things just a bit easier, we can stick those three lines into a script and call it with a Git alias.</p>
+          </div>
         </div>
-      </div>
-    </article>
+      </article>
+    </main>
 
     <footer>
-      <div class="footer-text">
-        <div class="footer-line">
-          Jade Michael Thornton | <a href="https://gitlab.com/thornjad/jmthornton">Source code</a> | <a href="https://jmthornton.net/p/sitemap">Sitemap</a>
-        </div>
-      </div>
+      <p>Jade Michael Thornton | <a href="https://jmthornton.net">Home</a> | <a href="https://gitlab.com/thornjad/jmthornton">Source code</a></p>
     </footer>
 
 		<script class="matomo-analytics" type='text/javascript'>

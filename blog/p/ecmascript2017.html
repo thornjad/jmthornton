@@ -43,70 +43,69 @@
     <meta property="article:published_time" content="2017-09-29">
   </head>
   <body>
-    <header class="sticky">
-      <span class="header-hack">
-        <a href="https://jmthornton.net/" class="button" role="button">Home</a>
-        <a href="https://jmthornton.net/#connect" class="button" role="button">Connect</a>
-        <a href="/" class="button" role="button">Blog</a>
-      </span>
-    </header>
+    <header><nav>
+      <a href="https://jmthornton.net">Home</a>
+      <a href="/tools">Tools</a>
+      <a href="https://blog.jmthornton.net">Blog</a>
+      <a href="https://photos.jmthornton.net">Photos</a>
+    </nav></header>
 
-    <article class="post blog-content">
-      <h1 class="post-title">What's new in ECMAScript 2017
+    <main>
+      <article class="post blog-content">
+        <h1 class="post-title">What's new in ECMAScript 2017</h1>
 				<time datetime="2017-09-29">September 29, 2017</time>
-			</h1>
 
-      <div class="post-main">
-        <div class="blog-body">
-          <p>
-            Two years ago, ES6 (retconned to ECMAScript 2015) provided a massive update to the existing and already powerful ECMAScript standard. Incredibly useful features like <code>const</code>, <code>let</code>, arrow functions and destructuring syntax were unleashed upon the world. Another big change was the new yearly release schedule based on <a href="https://github.com/tc39/proposals">proposals</a> are ready to ship as of the <a href="https://github.com/tc39">TC39</a> meeting. The next annual release, ECMAScript 2016, wasn't much to gawk at in comparison, adding only two new features&mdash;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes">Array.protoype.includes</a> and the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Arithmetic_Operators#Exponentiation_(**)">exponentiation operator</a>&mdash;and a handful of changes to the existing standard.
-          </p>
-          <p>
-            The newly released <a href="http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf">ECMAScript 2017</a> is somewhere in between, not being a massive update, but adding a sizeable number of features and changes. Let's take a look at all the new additions in this year's release.
-          </p>
+        <div class="post-main">
+          <div class="blog-body">
+            <p>
+              Two years ago, ES6 (retconned to ECMAScript 2015) provided a massive update to the existing and already powerful ECMAScript standard. Incredibly useful features like <code>const</code>, <code>let</code>, arrow functions and destructuring syntax were unleashed upon the world. Another big change was the new yearly release schedule based on <a href="https://github.com/tc39/proposals">proposals</a> are ready to ship as of the <a href="https://github.com/tc39">TC39</a> meeting. The next annual release, ECMAScript 2016, wasn't much to gawk at in comparison, adding only two new features&mdash;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes">Array.protoype.includes</a> and the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Arithmetic_Operators#Exponentiation_(**)">exponentiation operator</a>&mdash;and a handful of changes to the existing standard.
+            </p>
+            <p>
+              The newly released <a href="http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf">ECMAScript 2017</a> is somewhere in between, not being a massive update, but adding a sizeable number of features and changes. Let's take a look at all the new additions in this year's release.
+            </p>
 
-          <h4 class="hash-line-2"><a class="hash-anchor" id="values-and-entries" href="#values-and-entries">##</a>Object.values and Object.entries</h4>
-          <p>The first addition to ECMAScript 2017 liberates us from jQuery dependence when it comes to enumerating pairs of entries or values from objects. This adds two new methods to the Object prototype, complementing pre-existing methods like <code>keys()</code>. <code>values()</code> returns an array of all values, without the keys, while <code>entries()</code> returns a two dimensional array of keys and values. Let's see an example use:</p>
-          <pre>const jmthornton = {
+            <h4>Object.values and Object.entries</h4>
+            <p>The first addition to ECMAScript 2017 liberates us from jQuery dependence when it comes to enumerating pairs of entries or values from objects. This adds two new methods to the Object prototype, complementing pre-existing methods like <code>keys()</code>. <code>values()</code> returns an array of all values, without the keys, while <code>entries()</code> returns a two dimensional array of keys and values. Let's see an example use:</p>
+            <pre>const jmthornton = {
   name: 'Jade',
   writes: 'code'
 };
 
 Object.entries(jmthornton);
 // [['name', 'Jade'], ['writes', 'code']]</pre>
-          <pre>const jmthornton = {
+            <pre>const jmthornton = {
   name: 'Jade',
   writes: 'code'
 };
 
 Objects.values(jmthornton);
 // ['Jade', 'code']</pre>
-          <p>
-            Documentation:
-            <ul>
-              <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries">MDN: Object.entries()</a></li>
-              <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/values">MDN: Object.values()</a></li>
-            </ul>
-          </p>
+            <p>
+              Documentation:
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries">MDN: Object.entries()</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/values">MDN: Object.values()</a></li>
+              </ul>
+            </p>
 
-          <h4 class="hash-line-2"><a class="hash-anchor" id="string-padding" href="#string-padding">##</a>String padding</h4>
-          <p>This new feature is relatively small, but comes to the rescue of npm and Node itself. If you don't remember, March 2016 saw <a href="http://www.theregister.co.uk/2016/03/23/npm_left_pad_chaos/">a bit of a crisis</a> where a widely used package (even by Node and Babel) called <code>left-pad</code> was unpublished from npm and crippled developers everywhere. This new ECMAScript feature makes the package unneeded. You can use it to easily format string output so the string reaches the given length:</p>
-          <pre>'foobaring foo'.padStart(20);       // "       foobaring foo"
+            <h4>String padding</h4>
+            <p>This new feature is relatively small, but comes to the rescue of npm and Node itself. If you don't remember, March 2016 saw <a href="http://www.theregister.co.uk/2016/03/23/npm_left_pad_chaos/">a bit of a crisis</a> where a widely used package (even by Node and Babel) called <code>left-pad</code> was unpublished from npm and crippled developers everywhere. This new ECMAScript feature makes the package unneeded. You can use it to easily format string output so the string reaches the given length:</p>
+            <pre>'foobaring foo'.padStart(20);       // "       foobaring foo"
 'foobaring foo'.padStart(20, '#');  // "#######foobaring foo"
 
 'foobaring foo'.padEnd(20);         // "foobaring foo       "
 'foobaring foo'.padEnd(20, '#');    // "foobaring foo#######"</pre>
-          <p>
-            Documentation:
-            <ul>
-              <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padStart">MDN: String.prototype.padStart()</a></li>
-              <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padEnd">MDN: String.prototype.padEnd()</a></li>
-            </ul>
-          </p>
+            <p>
+              Documentation:
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padStart">MDN: String.prototype.padStart()</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padEnd">MDN: String.prototype.padEnd()</a></li>
+              </ul>
+            </p>
 
-          <h4 class="hash-line-2"><a class="hash-anchor" id="getownpropertydescriptors" href="#getownpropertydescriptors">##</a>Object.getOwnPropertyDescriptors</h4>
-          <p>Copying objects manually is never fun, and comes with a lot of uncertainty, and with the rising awareness and use of functional programming, immutability is very important. The new method on the <code>Object</code> prototype solves this issue once and for all. <code>Object.getOwnPropertyDescriptors</code> takes in an <code>Object</code> and returns the descriptors describing the attributes of a property (like value, if it's writable, etc.) Here's an example of how it's used:</p>
-          <pre>const source = {
+            <h4>Object.getOwnPropertyDescriptors</h4>
+            <p>Copying objects manually is never fun, and comes with a lot of uncertainty, and with the rising awareness and use of functional programming, immutability is very important. The new method on the <code>Object</code> prototype solves this issue once and for all. <code>Object.getOwnPropertyDescriptors</code> takes in an <code>Object</code> and returns the descriptors describing the attributes of a property (like value, if it's writable, etc.) Here's an example of how it's used:</p>
+            <pre>const source = {
   name: 'Jackie Smith',
   id: 555
 };
@@ -124,28 +123,28 @@ const stateClone = Object.create(
 // make changes to stateClone
 
 this.setState(stateClone);</pre>
-          <p>Documentation:
-            <ul>
-              <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor">MDN: Object.getOwnPropertyDescriptor()</a></li>
-            </ul></p>
+            <p>Documentation:
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor">MDN: Object.getOwnPropertyDescriptor()</a></li>
+              </ul></p>
 
-          <h4 class="hash-line-2"><a class="hash-anchor" id="trailing-commas" href="#trailing-commas">##</a>Trailing commas in function parameter lists and calls</h4>
-          <p>This new update is purely aesthetic, allowing trailing commas in function parameter lists and calls. For a long time, we've been able to put trailing commas in objects and arrays, so it's only fitting that parameter lists join the ranks. There's no performance or big underlying changes here, but I think it's a good addition. Example for clarity:</p>
-          <pre>function foo(
+            <h4 class="hash-line-2"><a class="hash-anchor" id="trailing-commas" href="#trailing-commas">##</a>Trailing commas in function parameter lists and calls</h4>
+            <p>This new update is purely aesthetic, allowing trailing commas in function parameter lists and calls. For a long time, we've been able to put trailing commas in objects and arrays, so it's only fitting that parameter lists join the ranks. There's no performance or big underlying changes here, but I think it's a good addition. Example for clarity:</p>
+            <pre>function foo(
     paramA,
     paramB,
     paramC,
   ) {
   console.log('No more complaints from the compiler!');
 }</pre>
-          <p>Documentation:
-          <ul>
-            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Trailing_commas">MDN: Trailing commas</a></li>
-          </ul></p>
+            <p>Documentation:
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Trailing_commas">MDN: Trailing commas</a></li>
+              </ul></p>
 
-          <h4 class="hash-line-2"><a class="hash-anchor" id="async-functions" href="#async-functions">##</a>Async functions</h4>
-          <p>A solution to chained callbacks, that all-too-common pattern especially prevalent with APIs, async functions are a bit of syntatic sugar, but they let you write promise-based code in a way that looks synchronous. As <a href="https://developers.google.com/web/fundamentals/primers/async-functions">Jake Archibald</a> puts it, it makes "your asynchronous code less 'clever' and more readable". Check out <a href="https://ponyfoo.com/articles/understanding-javascript-async-await">this excellent in-depth walk-through</a> by Nicolás Bevacqua. Here's the gist of the syntax:</p>
-          <pre>async function doTheThing(data) {
+            <h4>Async functions</h4>
+            <p>A solution to chained callbacks, that all-too-common pattern especially prevalent with APIs, async functions are a bit of syntatic sugar, but they let you write promise-based code in a way that looks synchronous. As <a href="https://developers.google.com/web/fundamentals/primers/async-functions">Jake Archibald</a> puts it, it makes "your asynchronous code less 'clever' and more readable". Check out <a href="https://ponyfoo.com/articles/understanding-javascript-async-await">this excellent in-depth walk-through</a> by Nicolás Bevacqua. Here's the gist of the syntax:</p>
+            <pre>async function doTheThing(data) {
   try {
     const valA = await anAsyncFunction(data);
     const valB = await aDifferentAsyncFunction(valA);
@@ -154,8 +153,8 @@ this.setState(stateClone);</pre>
     console.error(`Oh noes! ${err}`);
   }
 }</pre>
-          <p>And to use it with an arrow function:</p>
-          <pre>const doTheThing = async (data) => {
+            <p>And to use it with an arrow function:</p>
+            <pre>const doTheThing = async (data) => {
   try {
     const valA = await anAsyncFunction(data);
     const valB = await aDifferentAsyncFunction(valA);
@@ -164,39 +163,36 @@ this.setState(stateClone);</pre>
     console.error(`Oh noes! ${err}`);
   }
 }</pre>
-          <p>Documentation:
-          <ul>
-            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function">MDN: async function</a></li>
-          </ul></p>
+            <p>Documentation:
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function">MDN: async function</a></li>
+              </ul></p>
 
-          <h4 class="hash-line-2"><a class="hash-anchor" id="shared-memory-atomics" href="#shared-memory-atomics">##</a>Shared memory and atomics</h4>
-          <p>This new addition is a little more technical than others, but definitely one of the coolest. It adds a new <code>SharedArrayBuffer</code>, and allows the already-existing <code>TypedArray</code> and <code>DataView</code> types to be used to allocate shared memory. The associated <code>Atomics</code> object allows operations to be carried out on that shared memory. <a href="https://tc39.github.io/ecmascript_sharedmem/shmem.html">The proposal</a> states these cases for justification:</p>
-          <blockquote cite="ECMA TC39 - Lars T Hansen">
-            <ul>
-              <li>Support for threaded code in programs written in other languages that are translated to asm.js or plain JS or a combination of the two, notably C and C++ but also other, safe, languages.</li>
-              <li>Support for hand-written JS or JS+asm.js that makes use of multiprocessing facilities for select tasks, such as image processing, asset management, or game AI.</li>
-            </ul>
-          </blockquote>
-          <p>The author of the proposal, Lars T Hansen, provides a <a href="https://github.com/tc39/ecmascript_sharedmem/blob/master/TUTORIAL.md">tutorial</a> for use of shared memory, and Dr Axel Rauschmayer <a href="http://2ality.com/2017/01/shared-array-buffer.html">dives in</a> to explain it all in depth in a long form article.</p>
-          <p>Documentation:
-          <ul>
-            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Atomics">MDN: Atomics</a></li>
-            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer">MDN: SharedArrayBuffer</a></li>
-          </ul></p>
+            <h4>Shared memory and atomics</h4>
+            <p>This new addition is a little more technical than others, but definitely one of the coolest. It adds a new <code>SharedArrayBuffer</code>, and allows the already-existing <code>TypedArray</code> and <code>DataView</code> types to be used to allocate shared memory. The associated <code>Atomics</code> object allows operations to be carried out on that shared memory. <a href="https://tc39.github.io/ecmascript_sharedmem/shmem.html">The proposal</a> states these cases for justification:</p>
+            <blockquote cite="ECMA TC39 - Lars T Hansen">
+              <ul>
+                <li>Support for threaded code in programs written in other languages that are translated to asm.js or plain JS or a combination of the two, notably C and C++ but also other, safe, languages.</li>
+                <li>Support for hand-written JS or JS+asm.js that makes use of multiprocessing facilities for select tasks, such as image processing, asset management, or game AI.</li>
+              </ul>
+            </blockquote>
+            <p>The author of the proposal, Lars T Hansen, provides a <a href="https://github.com/tc39/ecmascript_sharedmem/blob/master/TUTORIAL.md">tutorial</a> for use of shared memory, and Dr Axel Rauschmayer <a href="http://2ality.com/2017/01/shared-array-buffer.html">dives in</a> to explain it all in depth in a long form article.</p>
+            <p>Documentation:
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Atomics">MDN: Atomics</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer">MDN: SharedArrayBuffer</a></li>
+              </ul></p>
 
-          <hr class="blog-conclusion-separator">
+            <hr class="blog-conclusion-separator">
 
-          <p>That's it for ECMAScript 2017! Lots of new changes, and all welcome additions to the specification. Many of these features are already supported in major browsers, and the rest are soon to follow. By now, ECMAScript 2018 is in the works and I'm excited to see what proposals make it in!</p>
+            <p>That's it for ECMAScript 2017! Lots of new changes, and all welcome additions to the specification. Many of these features are already supported in major browsers, and the rest are soon to follow. By now, ECMAScript 2018 is in the works and I'm excited to see what proposals make it in!</p>
+          </div>
         </div>
-      </div>
-    </article>
+      </article>
+    </main>
 
     <footer>
-      <div class="footer-text">
-        <div class="footer-line">
-          Jade Thornton | <a href="https://github.com/thornjad/jmthornton">Source code</a> | <a href="https://jmthornton.net/p/sitemap">Sitemap</a>
-        </div>
-      </div>
+      <p>Jade Michael Thornton | <a href="https://jmthornton.net">Home</a> | <a href="https://gitlab.com/thornjad/jmthornton">Source code</a></p>
     </footer>
 
 		<script class="matomo-analytics" type='text/javascript'>

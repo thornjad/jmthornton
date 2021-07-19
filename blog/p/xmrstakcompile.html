@@ -43,18 +43,17 @@
     <meta property="article:published_time" content="2018-02-04">
   </head>
   <body>
-    <header class="sticky">
-      <span class="header-hack">
-        <a href="https://jmthornton.net/" class="button" role="button">Home</a>
-				<a href="https://jmthornton.net/tools/" class="button" role="button">Tools</a>
-        <a href="/" class="button" role="button">Blog</a>
-      </span>
-    </header>
+    <header><nav>
+      <a href="https://jmthornton.net">Home</a>
+      <a href="/tools">Tools</a>
+      <a href="https://blog.jmthornton.net">Blog</a>
+      <a href="https://photos.jmthornton.net">Photos</a>
+    </nav></header>
 
+    <main>
     <article class="post blog-content">
-      <h1 class="post-title">I successfully compiled the xmr-stak miner with CUDA
-				<time datetime="2018-02-04">February 4, 2018</time>
-			</h1>
+      <h1 class="post-title">I successfully compiled the xmr-stak miner with CUDA</h1>
+			<time datetime="2018-02-04">February 4, 2018</time>
 
       <div class="post-main">
         <div class="blog-body">
@@ -210,13 +209,10 @@ cmake -DCMAKE_LINK_STATIC=ON -DXMR-STAK_COMPILE=generic -DCUDA_ENABLE=OFF -DOpen
         </div>
       </div>
     </article>
+    </main>
 
     <footer>
-      <div class="footer-text">
-        <div class="footer-line">
-          Jade Thornton | <a href="https://github.com/thornjad/jmthornton">Source code</a> | <a href="https://jmthornton.net/p/sitemap">Sitemap</a>
-        </div>
-      </div>
+      <p>Jade Michael Thornton | <a href="https://jmthornton.net">Home</a> | <a href="https://gitlab.com/thornjad/jmthornton">Source code</a></p>
     </footer>
 
 		<script class="matomo-analytics" type='text/javascript'>

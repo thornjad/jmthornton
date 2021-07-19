@@ -1,0 +1,66 @@
+/* Headings */
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 1rem;
+  font-weight: normal;
+  line-height: 1.3em;
+  color: $heading;
+  margin: $standard-margin;
+}
+
+h1, h2 {
+  margin: 2.7rem 0 2rem;
+}
+
+h1 {
+  font-size: 2.5rem;
+  text-indent: -2ch;
+  padding-left: 2ch;
+
+  @at-root main &:first-child {
+    margin-top: 1.5rem;
+  }
+}
+
+h2 {
+  font-size: 1.75rem;
+  text-indent: -3ch;
+  padding-left: 3ch;
+}
+
+h3 {
+  font-size: 1.35rem;
+  text-indent: -4ch;
+  padding-left: 4ch;
+}
+
+h4 {
+  font-size: 1.15rem;
+  text-indent: -5ch;
+  padding-left: 5ch;
+}
+
+h5 {
+  text-indent: -6ch;
+  padding-left: 6ch;
+}
+
+h6 {
+  text-indent: -7ch;
+  padding-left: 7ch;
+}
+
+
+// pseudo-markdown heading markers
+
+h1::before, h2::before, h3::before, h4::before, h5::before, h6::before {
+  color: $heading-marker;
+  margin: 0;
+}
+
+h1::before {content: '# ';}
+h2::before {content: '## ';}
+h3::before {content: '### ';}
+h4::before {content: '#### ';}
+h5::before {content: '##### ';}
+h6::before {content: '###### ';}

@@ -44,68 +44,64 @@
     <meta name="article:modified_time" content="2017-09-23">
   </head>
   <body>
-    <header class="sticky">
-      <span class="header-hack">
-        <a href="https://jmthornton.net/" class="button" role="button">Home</a>
-        <a href="https://jmthornton.net/#connect" class="button" role="button">Connect</a>
-        <a href="/" class="button" role="button">Blog</a>
-      </span>
-    </header>
+    <header><nav>
+      <a href="https://jmthornton.net">Home</a>
+      <a href="/tools">Tools</a>
+      <a href="https://blog.jmthornton.net">Blog</a>
+      <a href="https://photos.jmthornton.net">Photos</a>
+    </nav></header>
 
-    <article class="post blog-content">
-      <h1 class="post-title">Set DuckDuckGo as default search in Thunderbird
+    <main>
+      <article class="post blog-content">
+        <h1 class="post-title">Set DuckDuckGo as default search in Thunderbird</h1>
 				<time datetime="2017-02-27">February 27, 2017</time>
-			</h1>
 
-      <div class="post-main">
-        <div class="blog-body">
-          <p>
-            For several dwindling reasons, DuckDuckGo can still be tricky to add to some services despite being the default browser for several browsers. A couple years ago, Mozilla <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1120777">made the decision</a> to open searches from Thunderbird in your default browser, instead of using a tab in Thunderbird itself which broke the previous method of adding DuckDuckGo to the settings. They neglected to update their tutorials for adding more than the default search engines, and as of this writing neither has DuckDuckGo (though I will be contributing this tutorial to them).
-          </p>
-          <aside>
-            <em>This tutorial is working for Thunderbird 45.2 - 45.7</em>
-          </aside>
-          <p>
-            <ol>
-              <li>
-                Download and install the <a href="http://addons.mozilla.org/en-US/thunderbird/addon/google-search-for-thunderbi/">Google Search for Thunderbird</a> add-on. You can easily do this within Thunderbird by going to Tools &gt; Add-ons &gt; Get Add-ons
-              </li>
-              <li>
-                Navigate to your profile library. One way to get there is Help &gt; Troubleshooting information &gt; Application basics &gt; Profile Directory &gt; <em>Open Directory</em>
-              </li>
-              <li>
-                Navigate to the directory <em>extensions/gsearch@standard8.plus.com/searchplugins
-              </li>
-              <li>
-                Save the following file into that directory: <a href="https://duckduckgo.com/opensearch.xml">https://duckduckgo.com/opensearch.xml</a>
-              </li>
-              <li>
-                Rename the file as anything you want as long as you keep the .xml suffix
-              </li>
-              <li>
-                Make sure to leave the existing Google.xml file as is
-              </li>
-              <li>
-                Restart Thunderbird
-              </li>
-              <li>
-                Finally, go to Edit &gt; Preferences &gt; General &gt; Default Search Engine and choose DuckDuckGo! Now you’re set!
-              </li>
-            </ol>
-          </p>
-          <p>
-            You can also put any other OpenSearch XML files into that same directory if you want to add any other search engines.
-          </p>
+        <div class="post-main">
+          <div class="blog-body">
+            <p>
+              For several dwindling reasons, DuckDuckGo can still be tricky to add to some services despite being the default browser for several browsers. A couple years ago, Mozilla <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1120777">made the decision</a> to open searches from Thunderbird in your default browser, instead of using a tab in Thunderbird itself which broke the previous method of adding DuckDuckGo to the settings. They neglected to update their tutorials for adding more than the default search engines, and as of this writing neither has DuckDuckGo (though I will be contributing this tutorial to them).
+            </p>
+            <aside>
+              <em>This tutorial is working for Thunderbird 45.2 - 45.7</em>
+            </aside>
+            <p>
+              <ol>
+                <li>
+                  Download and install the <a href="http://addons.mozilla.org/en-US/thunderbird/addon/google-search-for-thunderbi/">Google Search for Thunderbird</a> add-on. You can easily do this within Thunderbird by going to Tools &gt; Add-ons &gt; Get Add-ons
+                </li>
+                <li>
+                  Navigate to your profile library. One way to get there is Help &gt; Troubleshooting information &gt; Application basics &gt; Profile Directory &gt; <em>Open Directory</em>
+                </li>
+                <li>
+                  Navigate to the directory <em>extensions/gsearch@standard8.plus.com/searchplugins</em>
+                </li>
+                <li>
+                  Save the following file into that directory: <a href="https://duckduckgo.com/opensearch.xml">https://duckduckgo.com/opensearch.xml</a>
+                </li>
+                <li>
+                  Rename the file as anything you want as long as you keep the .xml suffix
+                </li>
+                <li>
+                  Make sure to leave the existing Google.xml file as is
+                </li>
+                <li>
+                  Restart Thunderbird
+                </li>
+                <li>
+                  Finally, go to Edit &gt; Preferences &gt; General &gt; Default Search Engine and choose DuckDuckGo! Now you’re set!
+                </li>
+              </ol>
+            </p>
+            <p>
+              You can also put any other OpenSearch XML files into that same directory if you want to add any other search engines.
+            </p>
+          </div>
         </div>
-      </div>
-    </article>
+      </article>
+    </main>
 
     <footer>
-      <div class="footer-text">
-        <div class="footer-line">
-          Jade Thornton | <a href="https://github.com/thornjad/jmthornton">Source code</a> | <a href="https://jmthornton.net/p/sitemap">Sitemap</a>
-        </div>
-      </div>
+      <p>Jade Michael Thornton | <a href="https://jmthornton.net">Home</a> | <a href="https://gitlab.com/thornjad/jmthornton">Source code</a></p>
     </footer>
 
 		<script class="matomo-analytics" type='text/javascript'>

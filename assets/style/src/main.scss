@@ -1,0 +1,383 @@
+/* Main style for jmthornton.net
+ * Copyright (c) 2015-2021 Jade Michael Thornton
+ */
+
+
+// Variables
+
+// TODO choose nice font, probably Victor Mono
+$font-main: monospace;
+$font-secondary: sans-serif;
+$font-mono: monospace;
+
+// heights, widths and things
+$font-size: 16px;
+$line-height: 1.2em;
+$standard-margin: 1.4rem 0;
+$main-width: 88ch;
+
+$border-radius: 5px;
+
+// Colors
+$mint: #2aa198;
+$blue: #4B788D;
+$chocolate: #83684C;
+$orange: #AB7146;
+$gold: #fabd2f;
+$green: #8ec07c;
+$lighter-blue: #82aec5;
+$grey1: #e4e2e2;
+$grey2: #6b6b6b;
+
+$bg: #fefbf2;
+$bg-alt: #f6f3e7;
+$fg: #525C5A;
+
+$heading: $mint;
+$heading-marker: $orange;
+$anchor: $blue;
+$anchor-hover: $blue;
+$footer-line: $heading;
+$button-primary-bg: $chocolate;
+$button-primary-fg: white;
+$button-primary-bg-hover: $mint;
+$button-primary-fg-hover: white;
+$button-secondary-bg: $mint;
+$button-secondary-fg: white;
+$button-secondary-bg-hover: $mint;
+$button-secondary-fg-hover: white;
+$button-low-key-bg: $grey2;
+$button-low-key-fg: white;
+$button-low-key-bg-hover: darken($button-low-key-bg, 5%);;
+$button-low-key-fg-hover: white;
+$hr: $grey1;
+$spinner-fg: $mint;
+$pre-border: $green;
+$blockquote-bg: $gold;
+$aside-bg: $lighter-blue;
+
+
+// Mixins
+
+@mixin antialias {
+	-webkit-font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-smoothing: antialiased;
+	font-smooth: always;
+}
+
+
+// Major structural elements
+
+:root {
+  font-family: $font-main;
+  font-size: $font-size;
+  line-height: $line-height;
+  background: $bg;
+}
+
+body {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+}
+
+main {
+  width: 100%;
+  max-width: $main-width;
+  margin: 0 1rem;
+}
+
+header {
+  height: 2em;
+  position: relative;
+  width: 100%;
+  max-width: $main-width;
+
+  nav {
+    position: absolute;
+    left: 0;
+  }
+}
+
+footer {
+  position: relative;
+  margin-top: 5rem;
+
+  &::before {
+	  content: '- - - - - - -';
+    color: $footer-line;
+	  position: absolute;
+	  top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+section {
+  margin: 4rem 0;
+}
+
+
+// Other structural elements
+
+@import './modules/headings';
+
+p, ul {
+  margin: $standard-margin;
+}
+
+li > p:first-child {
+  margin-top: 0;
+}
+
+ul, ol {
+  list-style: none;
+  padding: 0;
+
+  > li {
+    padding: 0.25em 0 0.25em 2ch;
+    position: relative;
+    margin: 0.15rem 0;
+  }
+
+  li::before {
+    content: '•';
+    position: absolute;
+    top: 0.5ex;
+    left: 0;
+  }
+
+  &.dl > li p:first-child {
+    font-weight: bold;
+  }
+}
+
+a {
+  color: $anchor;
+  text-decoration: none;
+  font-style: italic;
+
+  &::before {content: '[';}
+  &::after {content: ']';}
+
+  &:hover {
+    color: $anchor-hover;
+  }
+
+  &:visited {
+    color: $anchor;
+  }
+}
+
+div.no-md-a a {
+  font-style: normal;
+  &::before {content: none;}
+  &::after {content: none;}
+}
+
+.blog-content time {
+  font-style: italic;
+
+  &::before {
+    content: '| '
+  }
+}
+
+blockquote {
+  margin: 1rem;
+	display: block;
+	position: relative;
+	font-style: italic;
+  padding: 1.5rem 1.5rem 1rem 2.5rem;
+	border-left: .375rem solid $blockquote-bg;
+	border-radius: $border-radius;
+  background: $bg-alt;
+
+  &::before {
+	  position: absolute;
+	  top: 1rem;
+	  left: 0;
+	  font-family: sans-serif;
+	  font-size: 3rem;
+	  font-weight: 700;
+	  content: "“";
+	  color: $blockquote-bg;
+  }
+
+  &[cite]::after {
+	  font-style: normal;
+	  font-size: .75em;
+	  font-weight: 700;
+	  content: "\a—  " attr(cite);
+	  white-space: pre;
+  }
+}
+
+aside {
+  margin: 1rem;
+  display: block;
+  position: relative;
+  padding: 1rem 1.5rem 1rem 2.5rem;
+	border-left: .375rem solid $aside-bg;
+	border-radius: $border-radius;
+  background: $bg-alt;
+}
+
+img {
+  border-radius: $border-radius;
+	max-width: 100%;
+	height: auto;
+}
+
+hr {
+  margin: 1em auto;
+  border: none;
+  border-top: 1px solid $hr;
+}
+
+
+// Buttons and inputs
+
+button {
+  display: inline-block;
+  padding: 10px 12px;
+  min-width: 7rem;
+  min-height: 3.5rem;
+  border-color: $button-primary-bg;
+  background-color: $button-primary-bg;
+  color: $button-primary-fg;
+  border-radius: $border-radius;
+  text-decoration: none;
+  cursor: pointer;
+  line-height: 20px;
+  text-align: center;
+  outline: 0;
+
+  &:hover {
+    background-color: $button-primary-bg-hover;
+    color: $button-primary-fg-hover;
+  }
+
+  &.secondary {
+    background-color: none;
+    border: 1px solid $button-secondary-bg;
+    color: $button-secondary-fg;
+
+    &:hover {
+      background-color: $button-secondary-bg-hover;
+      color: $button-secondary-fg-hover;
+    }
+  }
+
+  &.low-key {
+    background-color: $button-low-key-bg;
+    color: $button-low-key-fg;
+    min-height: 0;
+    height: max-content;
+    &:hover {
+      background-color: $button-low-key-bg-hover;
+      color: $button-low-key-fg-hover;
+    }
+  }
+}
+
+div.action-buttons {
+  display: flex;
+  justify-content: end;
+  width: 100%;
+
+  > button {
+    margin: 0 4px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+@import './modules/effects';
+
+
+// pre, code
+
+pre {
+	overflow: auto;
+	position: relative;
+	background: $bg-alt;
+	padding: 0.75rem;
+	margin: 0.5rem;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+	border: none;
+	border-left: .25rem solid $pre-border;
+	border-radius: $border-radius;
+}
+
+code, sub, sup {
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+
+code {
+	background: $bg-alt;
+  border: 1px solid darken($bg-alt, 10%);
+	border-radius: $border-radius;
+	padding: 0 4px;
+  font-size: 0.85em;
+
+  pre & {
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-size: inherit;
+  }
+}
+
+
+// page specifics
+
+div.stats {
+  margin: 2.7rem 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+
+  img {
+    max-width: 90vw;
+  }
+}
+
+div.shield-links {
+  margin: 2.7rem 0;
+
+  img {border-radius: 0;}
+  a::before {content:none;}
+  a::after {content:none;}
+}
+
+div.split {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  @media (min-width: $main-width) {
+    div.left {
+      max-width: 59%;
+    }
+
+    div.right {
+      max-width: 40%
+    }
+  }
+}
+
+div.dev-only {
+  padding: 1rem;
+  background: red;
+  color: white;
+}

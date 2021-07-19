@@ -2,41 +2,15 @@
   "name": "jmthornton",
   "version": "5.7.3",
   "description": "Personal website of Jade Michael Thornton",
-  "main": "index.js",
-  "scripts": {
-    "start": "npm run build && http-server -o -c-1",
-    "build": "node bin/build.js",
-    "build-prod": "BABEL_ENV=production npm run build",
-    "sitemap": "node bin/sitemap.js",
-    "md": "node bin/compile-md.js",
-    "test": "npx snyk test",
-    "protect": "npx snyk protect --yes",
-    "prepare": "npm run protect",
-    "prod-install": "ci --only=prod --no-audit",
-    "pi": "npm run-script prod-install"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://gitlab.com/thornjad/jmthornton.git"
   },
   "author": "Jade Michael Thornton",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://gitlab.com/thornjad/jmthornton/issues"
-  },
+  "license": "ISC",
   "homepage": "https://gitlab.com/thornjad/jmthornton",
   "devDependencies": {
-    "@babel/cli": "^7.6.0",
-    "@babel/core": "^7.6.0",
-    "babel-minify": "^0.5.1",
-    "fibers": "^4.0.1",
-    "filefile": "^1.0.2",
     "http-server": "^0.12.3",
-    "markdown": "^0.5.0",
-    "purify-css": "^1.2.5",
-    "sass": "^1.22.12",
-    "shelljs": "^0.7.8",
-    "sitemap-generator": "^8.4.2",
-    "snyk": "^1.130.0"
+    "purify-css": "^1.2.5"
   }
 }

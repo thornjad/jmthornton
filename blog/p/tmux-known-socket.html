@@ -43,97 +43,96 @@
 		<meta property="article:published_time" content="2020-05-03">
 	</head>
 	<body>
-		<header class="sticky">
-			<span class="header-hack">
-				<a href="https://jmthornton.net/" class="button" role="button">Home</a>
-				<a href="https://jmthornton.net/tools/" class="button" role="button">Tools</a>
-				<a href="/" class="button" role="button">Blog</a>
-			</span>
-		</header>
+    <header><nav>
+      <a href="https://jmthornton.net">Home</a>
+      <a href="/tools">Tools</a>
+      <a href="https://blog.jmthornton.net">Blog</a>
+      <a href="https://photos.jmthornton.net">Photos</a>
+    </nav></header>
 
-		<article class="post blog-content">
-			<h1 class="post-title">A Known SSH Socket for Tmux
-				<small>Using a known, shared SSH socket to enable agent forwarding
-				through an existing tmux session</small>
-				<time datetime="2020-05-03">May 03, 2020</time>
-			</h1>
+    <main>
+		  <article class="post blog-content">
+			  <h1 class="post-title">A Known SSH Socket for Tmux</h1>
+			  <p>Using a known, shared SSH socket to enable agent forwarding
+				  through an existing tmux session</p>
+			  <time datetime="2020-05-03">May 03, 2020</time>
 
-			<div class="post-main">
-				<div class="blog-body">
-					<blockquote class="post-quote" cite="Jonathan Haenchen">
-						Artisanal SSH socket remapping
-					</blockquote>
+			  <div class="post-main">
+				  <div class="blog-body">
+					  <blockquote class="post-quote" cite="Jonathan Haenchen">
+						  Artisanal SSH socket remapping
+					  </blockquote>
 
-					<p>I spend a lot of my development time working on a remote server,
-					and regularly need to connect to a number of additional servers, all
-					over SSH. Plus I often push and pull git-controlled code via SSH to
-					yet more remote servers.</p>
+					  <p>I spend a lot of my development time working on a remote server,
+					    and regularly need to connect to a number of additional servers, all
+					    over SSH. Plus I often push and pull git-controlled code via SSH to
+					    yet more remote servers.</p>
 
-					<p>To keep track of everything, I do 100% of my work within <a
-					href="https://github.com/tmux/tmux">tmux</a>. To let me chain my SSH
-					connections, nearly every connection uses <code>ForwardAgent</code>.
-					Unfortunately, this doesn't work for long. When I reconnect to a
-					server and reattach my tmux session, I am suddenly unable to chain my
-					connections!</p>
+					  <p>To keep track of everything, I do 100% of my work within <a
+					                                                                href="https://github.com/tmux/tmux">tmux</a>. To let me chain my SSH
+					    connections, nearly every connection uses <code>ForwardAgent</code>.
+					    Unfortunately, this doesn't work for long. When I reconnect to a
+					    server and reattach my tmux session, I am suddenly unable to chain my
+					    connections!</p>
 
-					<p>The problem here is that my SSH Agent has created a new socket for
-					my new connection. This works fine by itself, but when I reattach the
-					<em>already existing</em> tmux session, I no longer have any reference
-					to the new socket. Inside of tmux, SSH will try to use the socket in
-					use at the time the session was created, which probably no longer
-					exists.</p>
+					  <p>The problem here is that my SSH Agent has created a new socket for
+					    my new connection. This works fine by itself, but when I reattach the
+					    <em>already existing</em> tmux session, I no longer have any reference
+					    to the new socket. Inside of tmux, SSH will try to use the socket in
+					    use at the time the session was created, which probably no longer
+					    exists.</p>
 
-					<p>So what to do? The obvious solution is to simply close my tmux
-					session when I disconnect and create a new one with every new
-					connection. But this has problems.
-						<ul>
-							<li>First, what if I <em>accidentally</em> disconnect? Maybe I've
-							lost my network connection, or somehow accidentally hit
-							<code>~.</code>. I want to get back into my session as quickly and
-							easily as possible.</li>
-							<li>Second, what if I want to save my panes when I disconnect?
-							Maybe there's some long-running process I want to keep. Or maybe I
-							simply don't want to have to recreate my session every time I
-							connect (though some of this can be solved by a project like <a
-							href="https://github.com/tmuxinator/tmuxinator">tmuxinator</a>).</li>
-						</ul>
-					</p>
+					  <p>So what to do? The obvious solution is to simply close my tmux
+					    session when I disconnect and create a new one with every new
+					    connection. But this has problems.
+						  <ul>
+							  <li>First, what if I <em>accidentally</em> disconnect? Maybe I've
+							    lost my network connection, or somehow accidentally hit
+							    <code>~.</code>. I want to get back into my session as quickly and
+							    easily as possible.</li>
+							  <li>Second, what if I want to save my panes when I disconnect?
+							    Maybe there's some long-running process I want to keep. Or maybe I
+							    simply don't want to have to recreate my session every time I
+							    connect (though some of this can be solved by a project like <a
+							                                                                   href="https://github.com/tmuxinator/tmuxinator">tmuxinator</a>).</li>
+						  </ul>
+					  </p>
 
-					<p>Obviously, a better solution would be to just fix the problem and
-					get tmux to always use the current socket. Additionally, I want to be
-					sure to support using tmux within SSH within tmux, chained
-					arbitrarily. The answer is to always put the socket in a known
-					location and hook everything up to use it.</p>
+					  <p>Obviously, a better solution would be to just fix the problem and
+					    get tmux to always use the current socket. Additionally, I want to be
+					    sure to support using tmux within SSH within tmux, chained
+					    arbitrarily. The answer is to always put the socket in a known
+					    location and hook everything up to use it.</p>
 
-					<p>Rather than try to devise some solution to signal to tmux what the
-					current socket file is, it will be much easier to use a symbolic link.
-					Whenever we create a new socket, we'll simply override the existing
-					link with a link to the new socket.</p>
+					  <p>Rather than try to devise some solution to signal to tmux what the
+					    current socket file is, it will be much easier to use a symbolic link.
+					    Whenever we create a new socket, we'll simply override the existing
+					    link with a link to the new socket.</p>
 
-					<p>We need a name for this symbolic socket, so how about
-					<code>/tmp/ssh-agent-$USER-screen</code>. We're putting it in
-					<code>/tmp/</code> since it doesn't matter too much if this is
-					overwritten or cleaned up. We're also using the <code>USER</code>
-					environment variable to keep sockets separate for different users. At
-					the end, I'm putting <code>-screen</code> since this is sort-of more
-					general than <code>-tmux</code>, but it can really be whatever, or
-					even removed.</p>
+					  <p>We need a name for this symbolic socket, so how about
+					    <code>/tmp/ssh-agent-$USER-screen</code>. We're putting it in
+					    <code>/tmp/</code> since it doesn't matter too much if this is
+					    overwritten or cleaned up. We're also using the <code>USER</code>
+					    environment variable to keep sockets separate for different users. At
+					    the end, I'm putting <code>-screen</code> since this is sort-of more
+					    general than <code>-tmux</code>, but it can really be whatever, or
+					    even removed.</p>
 
-					<p>Now, creating a symbolic link is all fine and good, but what do we
-					actually link to? Unfortunately there's no great built-in way to grab
-					the current socket all the time. But there's no need to re-invent the
-					wheel, we can use the proven <a
-					href="https://github.com/wwalker/ssh-find-agent">ssh-find-agent</a>
-					tool. So let's put that in a useful location:</p>
+					  <p>Now, creating a symbolic link is all fine and good, but what do we
+					    actually link to? Unfortunately there's no great built-in way to grab
+					    the current socket all the time. But there's no need to re-invent the
+					    wheel, we can use the proven <a
+					                                   href="https://github.com/wwalker/ssh-find-agent">ssh-find-agent</a>
+					    tool. So let's put that in a useful location:</p>
 
-					<pre lang="bash"><code>git clone git@github.com:wwalker/ssh-find-agent.git ~/lib/ssh-find-agent</code></pre>
+					  <pre lang="bash"><code>git clone git@github.com:wwalker/ssh-find-agent.git ~/lib/ssh-find-agent</code></pre>
 
-					<p>We'll use the "automatic" <code>-a</code> option, which will find
-					the active SSH agent and store it in <code>SSH_AUTH_SOCK</code> for
-					us. But, if there is no active SSH session, nothing useful will
-					happen, so we'll want to get the SSH agent started.</p>
+					  <p>We'll use the "automatic" <code>-a</code> option, which will find
+					    the active SSH agent and store it in <code>SSH_AUTH_SOCK</code> for
+					    us. But, if there is no active SSH session, nothing useful will
+					    happen, so we'll want to get the SSH agent started.</p>
 
-					<pre lang="bash"><code># Source the script first
+					  <pre lang="bash"><code># Source the script first
 . ~/lib/ssh-find-agent/ssh-find-agent.sh
 ssh_find_agent -a
 
@@ -144,10 +143,10 @@ then
   ssh-add -l >/dev/null || alias ssh='ssh-add -l >/dev/null || ssh-add && unalias ssh; ssh'
 fi</code></pre>
 
-					<p>Now that we have the socket, we just need to make (or override)
-					that symbolic link so it can be found later.</p>
+					  <p>Now that we have the socket, we just need to make (or override)
+					    that symbolic link so it can be found later.</p>
 
-					<pre lang="bash"><code>SOCK="/tmp/ssh-agent-$USER-screen"
+					  <pre lang="bash"><code>SOCK="/tmp/ssh-agent-$USER-screen"
 if test $SSH_AUTH_SOCK && [ $SSH_AUTH_SOCK != $SOCK ]
 then
   rm -f /tmp/ssh-agent-$USER-screen
@@ -155,31 +154,31 @@ then
   export SSH_AUTH_SOCK=$SOCK
 fi</code></pre>
 
-					<p>Putting it all together, we'll find the active socket or create it,
-					then make a known symblic link. Now we just have to do this everywhere
-					the socket is needed. This is the most annoying part, though it can be
-					relieved with a tool like <a
-					href="https://github.com/danrabinowitz/sshrc">sshrc</a>. The full
-					process will need to be added to the <code>~/.bashrc</code> or
-					<code>~/.zshrc</code> on your host system, as well as every system you
-					want to chain tmux and SSH sessions from.</p>
+					  <p>Putting it all together, we'll find the active socket or create it,
+					    then make a known symblic link. Now we just have to do this everywhere
+					    the socket is needed. This is the most annoying part, though it can be
+					    relieved with a tool like <a
+					                                href="https://github.com/danrabinowitz/sshrc">sshrc</a>. The full
+					    process will need to be added to the <code>~/.bashrc</code> or
+					    <code>~/.zshrc</code> on your host system, as well as every system you
+					    want to chain tmux and SSH sessions from.</p>
 
-					<p>To be clear about where this needs to happen, if your chain looks like this:</p>
+					  <p>To be clear about where this needs to happen, if your chain looks like this:</p>
 
-					<pre>host &rarr; tmux &rarr; (remote 1) &rarr; tmux &rarr; (remote 2) &rarr; tmux &rarr; (remote 3)
+					  <pre>host &rarr; tmux &rarr; (remote 1) &rarr; tmux &rarr; (remote 2) &rarr; tmux &rarr; (remote 3)
             ↘
               (remote 4) &rarr; tmux &rarr; (remote 5)</pre>
 
-					<p>Then you would need to have this set-up on <code>host</code>,
-					<code>(remote 1)</code>, <code>(remote 2)</code> and <code>(remote
+					  <p>Then you would need to have this set-up on <code>host</code>,
+					    <code>(remote 1)</code>, <code>(remote 2)</code> and <code>(remote
 					4)</code>, but not the last two remotes. If you think of these chain
-					connections as a tree, the socket mapping is not needed on the leaves.
-					Technically it's also not needed on any nodes on which you're not
-					using tmux, provided you use <code>ForwardAgent</code>.</p>
+					    connections as a tree, the socket mapping is not needed on the leaves.
+					    Technically it's also not needed on any nodes on which you're not
+					    using tmux, provided you use <code>ForwardAgent</code>.</p>
 
-					<p>So there we have it, the SSH socket symbolically linked to a known location. After cloning ssh-find-agent, here's the complete script to add to your shell login script as required:</p>
+					  <p>So there we have it, the SSH socket symbolically linked to a known location. After cloning ssh-find-agent, here's the complete script to add to your shell login script as required:</p>
 
-					<pre lang="~/.bashrc"><code># Known SSH Socket for tmux
+					  <pre lang="~/.bashrc"><code># Known SSH Socket for tmux
 # https://blog.jmthornton.net/p/tmux-known-socket
 
 . ~/lib/ssh-find-agent/ssh-find-agent.sh
@@ -198,17 +197,14 @@ then
   ln -sf $SSH_AUTH_SOCK $SOCK
   export SSH_AUTH_SOCK=$SOCK
 fi</code></pre>
-				</div>
-			</div>
-		</article>
+				  </div>
+			  </div>
+		  </article>
+    </main>
 
-		<footer>
-			<div class="footer-text">
-				<div class="footer-line">
-					Jade Michael Thornton | <a href="https://gitlab.com/thornjad/jmthornton">Source code</a> | <a href="https://jmthornton.net/p/sitemap">Sitemap</a>
-				</div>
-			</div>
-		</footer>
+    <footer>
+      <p>Jade Michael Thornton | <a href="https://jmthornton.net">Home</a> | <a href="https://gitlab.com/thornjad/jmthornton">Source code</a></p>
+    </footer>
 
 		<script class="matomo-analytics" type='text/javascript'>
 		 var _paq = window._paq || [];
