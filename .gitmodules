@@ -1,3 +1,6 @@
 [submodule "_nsrbiz"]
 	path = p/projects/_nsrbiz
 	url = https://github.com/thornjad/_nsrbiz.git
+[submodule "p/projects/_nsrbiz"]
+	path = p/projects/_nsrbiz
+	url = git@github.com:thornjad/_nsrbiz.git
