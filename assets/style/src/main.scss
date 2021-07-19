@@ -158,7 +158,6 @@ ul, ol {
 a {
   color: $anchor;
   text-decoration: none;
-  font-style: italic;
 
   &::before {content: '[';}
   &::after {content: ']';}
