@@ -25,7 +25,7 @@
           <li>my <a href="https://github.com/thornjad">GitHub</a> and <a href="https://gitlab.com/thornjad">GitLab</a> profiles</li>
           <li>my <a href="https://blog.jmthornton.net">blog posts</a></li>
           <li>my <a href="/tools">online tools</a></li>
-          <li>my <a href="/resume.pdf">resume</a> and <a href="https://linkedin.com/in/jademichael">LinkedIn profile</a></li>
+          <li>my <a href="/resume.pdf">resume (pdf)</a> and <a href="https://linkedin.com/in/jademichael">LinkedIn profile</a></li>
           <li>my <a href="https://photos.jmthornton.net">photos</a></li>
         </ul>
 
@@ -98,7 +98,7 @@
         </ul>
         <p>I'm experienced in Javascript, Python, React.js, SQL and web development. I'm a bit rusty in Java, Clojure, OCaml, C and Rust. I've also been exploring Nix and Haskell recently.</p>
         <p>I'm currently a software engineer at <a href="https://flightaware.com">FlightAware</a>, working on the backend of a new product offering. Prior to 2018 I developed internal financial systems for <a href="https://www.thomsonreuters.com">Thomson Reuters</a> as a software engineering consultant. My computer science education was proudly learned at the <a href="https://twin-cities.umn.edu/">University of Minnesota</a>.</p>
-        <p>Check out my <a href="">resume</a> for more detailed experience information.</p>
+        <p>Check out my <a href="./p/resume.pdf">resume (pdf)</a> for more detailed experience information.</p>
 
         <div class="stats">
           <img alt="My language stats" src="https://github-readme-stats.vercel.app/api/top-langs/?username=thornjad&show_icons=true&hide_border=true&theme=jolly&hide=roff,m4,objective-c,tex,makefile,c%2B%2B,postscript,html,c%23,scss,xslt,glsl&langs_count=10&layout=compact" loading="lazy" referrerpolicy="no-referrer" />
@@ -128,7 +128,7 @@
             <!--/sse-->
           </div>
           <div class="right">
-					  <img class="stephpic" loading="lazy" src="/assets/images/stephandjade.webp" alt="And of course this site runs on love" title="And of course this site runs on love">
+					  <img class="stephpic" loading="lazy" src="/assets/images/stephandjade.webp" title="And of course this site runs on love">
           </div>
         </div>
       </section>
@@ -141,7 +141,7 @@
 		   document.addEventListener('DOMContentLoaded', async () => {
 			   const v = document.querySelector('.versioning');
 			   const res = await fetch('/package.json');
-			   v.innerHTML = `| <a href="https://gitlab.com/thornjad/jmthornton">Version ${(await res.json()).version}</a>`;
+			   v.innerHTML = `| Version ${(await res.json()).version}`;
 		   });
 		  </script>
 		</footer>
