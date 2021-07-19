@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<head>
+  <title>Weather | Jade Thornton Web Development</title>
+  <link type="text/plain" rel="author" href="https://jmthornton.net/humans.txt" />
+  <meta name="description" content="Wind map and weather provided by Windy through Jade Thornton" />
+  <meta name="robots" content="index, follow" />
+  <meta name="googlebot" content="index, follow" />
+  <meta name="google-site-verification" content="JUM1Dl9n9ic9xPMb03Nzf4NgW_-8PWZrJ4eJGC_PoYM" />
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="/assets/style/main.css">
+  <link rel="shortcut icon" href="/assets/images/favicon.png" />
+  <link rel="apple-itouch-icon" href="/assets/images/favicon.ico" />
+  <style>
+   body {
+     margin: 0;
+   }
+
+   iframe {
+     display: none;
+   }
+
+   h1 {
+     z-index: 99;
+	   font-size: 14px;
+	   text-indent: 0;
+	   position: absolute;
+	   color: white;
+	   padding-left: 0;
+	   top: 0;
+	   left: 4px;
+	   margin: 0;
+   }
+
+   h1::before {
+     content: none;
+   }
+
+   .show-on-mobile h5, .credit h5 {
+     color: #fff;
+   }
+
+   .show-on-mobile h5 a, .credit h5 a {
+     color: #333;
+   }
+
+   @media (min-width: 1100px) {
+     .show-on-mobile {
+       display: none;
+     }
+     iframe {
+       display: block;
+       border: none;
+       height: 100vh;
+       width: 100vw;
+     }
+   }
+  </style>
+</head>
+
+<body>
+  <div>
+    <h1>Weather, JMT</h1>
+    <div class="show-on-mobile">
+      <p>
+        This project is not optimized for small screens. Please view this page on a larger screen or visit <a href="https://www.windy.com">Windy</a>
+      </p>
+    </div>
+    <iframe class="map" src="https://embed.windytv.com/?40.747,-74.004,6,menu,ip,metric.temp.F" frameborder="0"></iframe>
+  </div>
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+	<script class="matomo-analytics" type='text/javascript'>
+	 var _paq = window._paq || [];
+	 _paq.push(['setDocumentTitle', document.domain + ' -/- ' + document.title]);
+	 _paq.push(['setDoNotTrack', true]);
+	 _paq.push(['setCookieDomain', '*.jmthornton.net']);
+	 _paq.push(['trackPageView']);
+	 _paq.push(['enableLinkTracking']);
+	 void function() {
+		 var u='//jmthornton.net/analytics/';
+		 _paq.push(['setTrackerUrl', u+'matomo.php']);
+		 _paq.push(['setSiteId', '1']);
+		 const d=document,
+					 g=d.createElement('script'),
+					 s=d.getElementsByTagName('script')[0];
+		 g.type='text/javascript';
+		 g.async=true;
+		 g.defer=true;
+		 g.src=u+'matomo.js';
+		 s.parentNode.insertBefore(g,s);
+	 }();
+	</script>
+</body>
+
+</html>
