@@ -13,8 +13,8 @@
   animation: spinner-donut-anim 1.2s linear infinite;
 }
 @keyframes spinner-donut-anim {
- 0% {transform:rotate(0)}
- 100% {transform:rotate(360deg)}
+  0% {transform:rotate(0)}
+  100% {transform:rotate(360deg)}
 }
 
 @keyframes hexdots-loader {
@@ -313,4 +313,27 @@
 	100% {
 		clip: rect(101px, 9999px, 32px, 0);
 	}
+}
+
+
+// rgb animation
+
+.rgb {
+  background: linear-gradient(270deg,#6fba82,#f79533,#f37055,#ef4e7b,#a166ab,#5073b8,#1098ad,#07b39b,#6fba82);
+  background-size: auto;
+  background-size: 1600% 1600%;
+  animation: rgb-anim 10s ease infinite;
+  display: inline;
+}
+
+@keyframes rgb-anim {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
 }
