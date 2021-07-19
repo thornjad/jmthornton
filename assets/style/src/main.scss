@@ -12,20 +12,43 @@ $fontMono: monospace;
 
 // heights, widths and things
 $font-size: 16px;
-$line-height: 1.2rem;
+$line-height: 1.2em;
 $standard-margin: 1.4rem 0;
 $main-width: 88ch;
 
+$border-radius: 5px;
+
 // Colors
+$mint: #2aa198;
+$blue: #4B788D;
+$chocolate: #83684C;
+$orange: #AB7146;
+$grey1: #e4e2e2;
+$grey2: #6b6b6b;
+
 $bg: #fefbf2;
 $bg-alt: #f6f3e7;
 $fg: #525C5A;
 
-$heading: #2aa198;
-$heading-marker: #AB7146;
-$anchor: #4B788D;
-$anchor-hover: #4B788D;
+$heading: $mint;
+$heading-marker: $orange;
+$anchor: $blue;
+$anchor-hover: $blue;
 $footer-line: $heading;
+$button-primary-bg: $chocolate;
+$button-primary-fg: white;
+$button-primary-bg-hover: $mint;
+$button-primary-fg-hover: white;
+$button-secondary-bg: $mint;
+$button-secondary-fg: white;
+$button-secondary-bg-hover: $mint;
+$button-secondary-fg-hover: white;
+$button-low-key-bg: $grey2;
+$button-low-key-fg: white;
+$button-low-key-bg-hover: darken($button-low-key-bg, 5%);;
+$button-low-key-fg-hover: white;
+$hr: $grey1;
+$spinner-fg: $mint;
 
 
 // Mixins
@@ -39,7 +62,7 @@ $footer-line: $heading;
 }
 
 
-// Main style
+// Major structural elements
 
 :root {
   font-family: $fontMain;
@@ -50,17 +73,32 @@ $footer-line: $heading;
 
 body {
   display: flex;
+  position: relative;
   flex-direction: column;
   align-items: center;
 }
 
 main {
+  width: 100%;
   max-width: $main-width;
   margin: 0 1rem;
 }
 
+header {
+  height: 2em;
+  position: relative;
+  width: 100%;
+  max-width: $main-width;
+
+  nav {
+    position: absolute;
+    left: 0;
+  }
+}
+
 footer {
   position: relative;
+  margin-top: 5rem;
 
   &::before {
 	  content: '- - - - - - -';
@@ -75,6 +113,11 @@ footer {
 section {
   margin: 4rem 0;
 }
+
+
+// Other structural elements
+
+@import './modules/headings';
 
 p, ul {
   margin: $standard-margin;
@@ -107,6 +150,9 @@ a {
   text-decoration: none;
   font-style: italic;
 
+  &::before {content: '[';}
+  &::after {content: ']';}
+
   &:hover {
     color: $anchor-hover;
   }
@@ -114,9 +160,12 @@ a {
   &:visited {
     color: $anchor;
   }
+}
 
-  &::before {content: '[';}
-  &::after {content: ']';}
+div.no-md-a a {
+  font-style: normal;
+  &::before {content: none;}
+  &::after {content: none;}
 }
 
 blockquote {
@@ -135,7 +184,77 @@ blockquote {
   }
 }
 
-@import './modules/headings';
+img {
+  border-radius: $border-radius;
+}
+
+hr {
+  margin: 1em auto;
+  border: none;
+  border-top: 1px solid $hr;
+}
+
+
+// Buttons and inputs
+
+button {
+  display: inline-block;
+  padding: 10px 12px;
+  min-width: 7rem;
+  min-height: 3.5rem;
+  border-color: $button-primary-bg;
+  background-color: $button-primary-bg;
+  color: $button-primary-fg;
+  border-radius: $border-radius;
+  text-decoration: none;
+  cursor: pointer;
+  line-height: 20px;
+  text-align: center;
+  outline: 0;
+
+  &:hover {
+    background-color: $button-primary-bg-hover;
+    color: $button-primary-fg-hover;
+  }
+
+  &.secondary {
+    background-color: none;
+    border: 1px solid $button-secondary-bg;
+    color: $button-secondary-fg;
+
+    &:hover {
+      background-color: $button-secondary-bg-hover;
+      color: $button-secondary-fg-hover;
+    }
+  }
+
+  &.low-key {
+    background-color: $button-low-key-bg;
+    color: $button-low-key-fg;
+    min-height: 0;
+    height: max-content;
+    &:hover {
+      background-color: $button-low-key-bg-hover;
+      color: $button-low-key-fg-hover;
+    }
+  }
+}
+
+div.action-buttons {
+  display: flex;
+  justify-content: end;
+  width: 100%;
+
+  > button {
+    margin: 0 4px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+@import './modules/effects';
 
 
 // page specifics
@@ -173,4 +292,10 @@ div.split {
       max-width: 40%
     }
   }
+}
+
+div.dev-only {
+  padding: 1rem;
+  background: red;
+  color: white;
 }
