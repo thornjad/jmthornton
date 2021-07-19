@@ -67,16 +67,20 @@
 	left: 0;
 	width: 100%;
 	height: 100%;
+
+  @at-root h1 & {
+    padding-left: 2ch;
+  }
 }
 .glitch::before {
-	left: 4px;
-	text-shadow: 6px 0px #66ffff;
+	left: 3px;
+	text-shadow: 5px 0px #66ffff;
 	clip: rect(24px, 550px, 90px, 0);
 	animation: glitch-anim-2 1s infinite linear alternate-reverse;
 }
 .glitch::after {
-	left: -4px;
-	text-shadow: -3px 0 #b300fc;
+	left: -3px;
+	text-shadow: -2px 0 #b300fc;
 	clip: rect(24px, 550px, 90px, 0);
 	animation: glitch-anim 2.5s infinite linear alternate-reverse;
 }
