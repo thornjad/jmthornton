@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="Easily and quickly encode and decode URL strings online for free">
+		<meta name="robots" content="index, follow" />
+		<meta name="googlebot" content="index, follow" />
+		<meta name="google-site-verification" content="JUM1Dl9n9ic9xPMb03Nzf4NgW_-8PWZrJ4eJGC_PoYM" />
+		<meta charset="utf-8" />
+		<title>URL Encode/Decode | Jade Michael Thornton</title>
+		<link rel="stylesheet" href="/assets/style/main.css" type="text/css" />
+		<link rel="shortcut icon" href="/assets/images/favicon.png" />
+		<link rel="apple-itouch-icon" href="/assets/images/favicon.ico" />
+		<style>
+     textarea {
+       width: 100%;
+     }
+		</style>
+	</head>
+	<body>
+    <header><nav>
+      <a href="/">Home</a>
+      <a href="/tools">Tools</a>
+      <a href="https://blog.jmthornton.net">Blog</a>
+      <a href="https://photos.jmthornton.net">Photos</a>
+    </nav></header>
+
+		<main>
+			<h1>URL Encode/Decode Tool</h1>
+
+			<textarea id="dencoder" rows="18" cols="90" placeholder="Enter text to encode or decode"></textarea>
+			<div class="action-buttons">
+        <button id="encode">Encode</button>
+        <button id="decode">Decode</button>
+			</div>
+
+			<ul>
+				<li>Input a string of text and encode or decode as you like.</li>
+				<li>Handy for turning encoded JavaScript URLs from complete gibberish into readable gibberish.</li>
+				<li>If you'd like to use this tool offline, just 'view source' and save to your computer. You can also copy/fork <a href="https://gitlab.com/thornjad/jmthornton/-/blob/main/tools/dencode.html">the source code</a>.</li>
+			</ul>
+		</main>
+
+		<footer>
+      <p>The URL Encode/Decode Tool is license under a Creative Commons <a href="http://creativecommons.org/licenses/by-sa/2.0/">Attribution-ShareAlike 2.0</a> License.<br>
+				This tool is provided without warranty or guarantee. Keep out of the reach of children.
+      </p>
+      <p>Built by Jade Michael Thornton | <a href="/">Home</a> | <a href="https://gitlab.com/thornjad/jmthornton">Source code</a></p>
+		</footer>
+		<script type="text/javascript">
+     const getValue = () => {
+       const dencoder = document.querySelector('#dencoder');
+       const value = dencoder.value;
+       return [dencoder, value];
+     }
+     document.querySelector('#encode').addEventListener('click', () => {
+       const [dencoder, value] = getValue();
+       dencoder.value = encodeURIComponent(value).replace(/'/g, "%27").replace(/"/g, "%22");
+     });
+     document.querySelector('#decode').addEventListener('click', () => {
+       const [dencoder, value] = getValue();
+       dencoder.value = decodeURIComponent(value.replace(/\+/g, " "));
+     });
+		</script>
+
+		<script class="matomo-analytics" type='text/javascript'>
+		 var _paq = window._paq || [];
+		 _paq.push(['setDocumentTitle', document.domain + ' -/- ' + document.title]);
+		 _paq.push(['setDoNotTrack', true]);
+		 _paq.push(['setCookieDomain', '*.jmthornton.net']);
+		 _paq.push(['trackPageView']);
+		 _paq.push(['enableLinkTracking']);
+		 void function() {
+			 var u='//jmthornton.net/analytics/';
+			 _paq.push(['setTrackerUrl', u+'matomo.php']);
+			 _paq.push(['setSiteId', '1']);
+			 const d=document,
+						 g=d.createElement('script'),
+						 s=d.getElementsByTagName('script')[0];
+			 g.type='text/javascript';
+			 g.async=true;
+			 g.defer=true;
+			 g.src=u+'matomo.js';
+			 s.parentNode.insertBefore(g,s);
+		 }();
+		</script>
+	</body>
