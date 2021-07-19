@@ -8,7 +8,8 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} (.+)/$
 RewriteRule ^ %1 [R=301,L]
 
-Redirect 301 /_nsr/ https://jmthornton.net/_nsrbiz/
+RewriteRule ^/_nsr$ p/projects/_nsrbiz/ [R=301,QSA]
+RewriteRule ^/_nsrbiz$ p/projects/_nsrbiz/ [L,QSA]
 
 # Add security and privacy related headers
 Header set X-Content-Type-Options "nosniff"
