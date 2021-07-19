@@ -629,23 +629,38 @@ h1 .glitch::after {
     clip: rect(101px, 9999px, 32px, 0);
   }
 }
-.rgb {
-  background: linear-gradient(270deg, #6fba82, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
-  background-size: auto;
-  background-size: 1600% 1600%;
-  animation: rgb-anim 10s ease infinite;
-  display: inline;
+.rgb-color {
+  color: #525C5A;
+  animation: rgb-color-anim 10s linear infinite;
 }
 
-@keyframes rgb-anim {
+@keyframes rgb-color-anim {
   0% {
-    background-position: 0 50%;
+    color: #2aa198;
+  }
+  12% {
+    color: #f79533;
+  }
+  25% {
+    color: #f37055;
+  }
+  37% {
+    color: #ef4e7b;
   }
   50% {
-    background-position: 100% 50%;
+    color: #a166ab;
+  }
+  62% {
+    color: #5073b8;
+  }
+  75% {
+    color: #1098ad;
+  }
+  87% {
+    color: #07b39b;
   }
   100% {
-    background-position: 0 50%;
+    color: #2aa198;
   }
 }
 pre {
