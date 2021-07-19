@@ -68,15 +68,15 @@
               First, add the folowing code to your <code>~/.Xmodmap</code> (note the capital X):
             </p>
             <pre>
-            clear Lock
-            keysym Caps_Lock = Escape
-            keysym Escape = Caps_Lock
-            add Lock = Caps_Lock</pre>
+clear Lock
+keysym Caps_Lock = Escape
+keysym Escape = Caps_Lock
+add Lock = Caps_Lock</pre>
             <p>
               Next, add the following line to your <code>~/.zshrc</code> (or <code>~/.profile</code> if you're using bash):
             </p>
             <pre>
-            xmodmap ~/.Xmodmap</pre>
+xmodmap ~/.Xmodmap</pre>
             <p>
               There you go! <code>source ~/.zshrc</code> (or logout and login again for bash) and they should switch!
             </p>

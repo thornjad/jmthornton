@@ -34,7 +34,7 @@ class NewsPosts {
     const urlMatcher = /:\/\/(?:www\.)?(.[^/]+)/;
     const pocketUrl = `https://getpocket.com/save?url=${url}`;
     const commentsUrl = `https://news.ycombinator.com/item?id=${id}`
-    return `<hr><p>
+    return `<p>
       <a href="${url}">${title}</a>
       <br />
       <span class="source">${url ? url.match(urlMatcher)[1] : ''}</span>
@@ -104,7 +104,7 @@ const loadPosts = async (numPostsToLoad, posts) => {
 const injectPost = (title, url, id) => {
   const layout = NewsPosts.formatLayout(title, url, id);
   const div = document.createElement('div');
-  div.className = 'post';
+  div.className = 'post sep-top';
   div.innerHTML = layout;
   const target = document.querySelector('#posts');
   if (target) {

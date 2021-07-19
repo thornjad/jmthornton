@@ -21,6 +21,7 @@
        display: flex;
        justify-content: space-between;
        align-items: center;
+       margin: 0 2rem;
      }
 
      .top-row h6::before {
@@ -72,6 +73,16 @@
        margin-right: auto;
        margin-top: 3em;
      }
+
+     @media (max-width: 500px) {
+       button.open-all {
+         display: none;
+       }
+
+       .top-row {
+         justify-content: end;
+       }
+     }
     </style>
   </head>
   <body>
@@ -84,7 +95,7 @@
     </nav></header>
 
     <main id="content">
-      <h1>Tech news right now</h1>
+      <h1>Tech news</h1>
       <div class="top-row">
         <button class="open-all">Open all in new tabs</button>
         <h6 class="updated-message"></h6>
