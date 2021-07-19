@@ -6,9 +6,9 @@
 // Variables
 
 // TODO choose nice font, probably Victor Mono
-$fontMain: monospace;
-$fontSecondary: sans-serif;
-$fontMono: monospace;
+$font-main: monospace;
+$font-secondary: sans-serif;
+$font-mono: monospace;
 
 // heights, widths and things
 $font-size: 16px;
@@ -23,6 +23,9 @@ $mint: #2aa198;
 $blue: #4B788D;
 $chocolate: #83684C;
 $orange: #AB7146;
+$gold: #fabd2f;
+$green: #8ec07c;
+$lighter-blue: #82aec5;
 $grey1: #e4e2e2;
 $grey2: #6b6b6b;
 
@@ -49,6 +52,9 @@ $button-low-key-bg-hover: darken($button-low-key-bg, 5%);;
 $button-low-key-fg-hover: white;
 $hr: $grey1;
 $spinner-fg: $mint;
+$pre-border: $green;
+$blockquote-bg: $gold;
+$aside-bg: $lighter-blue;
 
 
 // Mixins
@@ -65,7 +71,7 @@ $spinner-fg: $mint;
 // Major structural elements
 
 :root {
-  font-family: $fontMain;
+  font-family: $font-main;
   font-size: $font-size;
   line-height: $line-height;
   background: $bg;
@@ -128,7 +134,7 @@ ul, ol {
   padding: 0;
 
   > li {
-    padding-left: 2ch;
+    padding: 0.25em 0 0.25em 2ch;
     position: relative;
     margin: 0.15rem 0;
   }
@@ -168,24 +174,58 @@ div.no-md-a a {
   &::after {content: none;}
 }
 
-blockquote {
-	margin: 1.35rem 0;
-	position: relative;
-	padding-left: 2ch;
-	overflow: hidden;
-	font-style: italic;
+.blog-content time {
+  font-style: italic;
 
-  &::after {
-	  content: ">\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>";
-	  white-space: pre;
-	  position: absolute;
-	  top: 0;
-	  left: 0;
+  &::before {
+    content: '| '
   }
+}
+
+blockquote {
+  margin: 1rem;
+	display: block;
+	position: relative;
+	font-style: italic;
+  padding: 1.5rem 1.5rem 1rem 2.5rem;
+	border-left: .375rem solid $blockquote-bg;
+	border-radius: $border-radius;
+  background: $bg-alt;
+
+  &::before {
+	  position: absolute;
+	  top: 1rem;
+	  left: 0;
+	  font-family: sans-serif;
+	  font-size: 3rem;
+	  font-weight: 700;
+	  content: "“";
+	  color: $blockquote-bg;
+  }
+
+  &[cite]::after {
+	  font-style: normal;
+	  font-size: .75em;
+	  font-weight: 700;
+	  content: "\a—  " attr(cite);
+	  white-space: pre;
+  }
+}
+
+aside {
+  margin: 1rem;
+  display: block;
+  position: relative;
+  padding: 1rem 1.5rem 1rem 2.5rem;
+	border-left: .375rem solid $aside-bg;
+	border-radius: $border-radius;
+  background: $bg-alt;
 }
 
 img {
   border-radius: $border-radius;
+	max-width: 100%;
+	height: auto;
 }
 
 hr {
@@ -255,6 +295,36 @@ div.action-buttons {
 }
 
 @import './modules/effects';
+
+
+// pre, code
+
+pre {
+	overflow: auto;
+	position: relative;
+	background: $bg-alt;
+	padding: 0.75rem;
+	margin: 0.5rem;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+	border: none;
+	border-left: .25rem solid $pre-border;
+	border-radius: $border-radius;
+}
+
+code, sub, sup {
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+
+code {
+	background: $bg-alt;
+  border: 1px solid darken($bg-alt, 10%);
+	border-radius: $border-radius;
+	padding: 0 4px;
+  font-size: 0.85em;
+}
 
 
 // page specifics
