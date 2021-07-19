@@ -235,7 +235,6 @@ img {
 }
 
 hr {
-  margin: 1em auto;
   border: none;
   border-top: 1px solid #e4e2e2;
 }
@@ -668,6 +667,7 @@ pre code {
 div.stats {
   margin: 2.7rem 0;
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
