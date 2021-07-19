@@ -24,12 +24,12 @@ SetEnv modHeadersAvailable true
 <IfModule mod_headers.c>
     # one week
     <FilesMatch "\.(jpg|jpeg|webp|png|gif|swf)$">
-        Header set Cache-Control "max-age=604800, public"
+        Header set Cache-Control "max-age=21600, public, must-revalidate"
     </FilesMatch>
 
     # one week
     <FilesMatch "\.(js|css|swf)$">
-        Header set Cache-Control "max-age=604800"
+        Header set Cache-Control "max-age=21600, must-revalidate"
     </FilesMatch>
 </IfModule>
 

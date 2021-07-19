@@ -129,6 +129,10 @@ p, ul {
   margin: $standard-margin;
 }
 
+li > p:first-child {
+  margin-top: 0;
+}
+
 ul, ol {
   list-style: none;
   padding: 0;
@@ -142,7 +146,7 @@ ul, ol {
   li::before {
     content: '•';
     position: absolute;
-    top: 0;
+    top: 0.5ex;
     left: 0;
   }
 
@@ -324,6 +328,13 @@ code {
 	border-radius: $border-radius;
 	padding: 0 4px;
   font-size: 0.85em;
+
+  pre & {
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-size: inherit;
+  }
 }
 
 
@@ -344,8 +355,9 @@ div.stats {
 div.shield-links {
   margin: 2.7rem 0;
 
-  a::before {content:'';}
-  a::after {content:'';}
+  img {border-radius: 0;}
+  a::before {content:none;}
+  a::after {content:none;}
 }
 
 div.split {
