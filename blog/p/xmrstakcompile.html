@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Post | Blog | Jade Thornton</title>
+    <title>I successfully compiled the xmr-stak miner with CUDA | Blog | Jade Michael Thornton</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link type="text/plain" rel="author" href="https://jmthornton.net/humans.txt" />
@@ -14,7 +14,10 @@
     <link rel="apple-itouch-icon" href="https://jmthornton.net/assets/images/favicon.ico" />
     <link rel="prefetch" href="https://jmthornton.net/assets/fonts/VictorMono-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous"/><link rel="prefetch" href="https://jmthornton.net/assets/fonts/VictorMono-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous"/><link rel="prefetch" href="https://jmthornton.net/assets/fonts/VictorMono-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous"/><link rel="prefetch" href="https://jmthornton.net/assets/fonts/VictorMono-BoldItalic.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
 
+    <link href="https://jmthornton.net/assets/vendor/prism.min.css" rel="stylesheet" />
+    <!-- <link href="/assets/vendor/prism.min.css" rel="stylesheet" /> -->
     <link rel="stylesheet" href="https://jmthornton.net/assets/style/main.css" type="text/css" />
+    <!-- <link rel="stylesheet" href="/assets/style/main.css" type="text/css" /> -->
 
     <!-- twitter tags reference: https://dev.twitter.com/cards/markup -->
     <!-- opengraph tags reference: http://ogp.me -->
@@ -101,8 +104,7 @@ CUDA NOT found</pre></p>
 
           <p>Long story short, here&#39;s everything I did to make it finally work:</p>
 
-          <p><pre>
-sudo apt install cuda cuda-9-0 cuda-core-9-0 cuda-cublas-* cuda-cudart-* cuda-cufft-* cuda-documentation-9-0 cuda-runtime-9-0 cuda-nvgraph-* cuda-nvrtc-* cuda-gdb-src-9-0 --reinstall
+          <p><pre><code class="language-shell">sudo apt install cuda cuda-9-0 cuda-core-9-0 cuda-cublas-* cuda-cudart-* cuda-cufft-* cuda-documentation-9-0 cuda-runtime-9-0 cuda-nvgraph-* cuda-nvrtc-* cuda-gdb-src-9-0 --reinstall
 
 git clone https://github.com/fireice-uk/xmr-stak.git
 
@@ -116,7 +118,7 @@ export CUDA_ROOT=/usr/local/cuda
 
 cmake -DCMAKE_LINK_STATIC=ON -DXMR-STAK_COMPILE=generic -DCUDA_ENABLE=ON -DOpenCL_ENABLE=OFF -DMICROHTTPD_ENABLE=ON -DOpenSSL_ENABLE=ON ..
 
-make install -j 4</pre></p>
+make install -j 4</code></pre></p>
 
           <p>For me, at least, this finally got it to compile and I can run it now! I often leave it mining while I&#39;m sleeping or at work. The internal fans provide a nice white noise.</p>
 
@@ -134,8 +136,7 @@ make install -j 4</pre></p>
 
           <p><strong>nvidia.txt</strong></p>
 
-          <p><pre>
-&quot;gpu_threads_conf&quot; :
+          <p><pre><code class="language-json">&quot;gpu_threads_conf&quot; :
   [
     // gpu: GeForce GT 755M architecture: 30
     //      memory: 1810/1991 MiB
@@ -153,18 +154,17 @@ make install -j 4</pre></p>
     &quot;bfactor&quot; : 4, &quot;bsleep&quot; :  0,
     &quot;affine_to_cpu&quot; : false,
     },
-  ],</pre></p>
+  ],</code></pre></p>
 
           <p><strong>cpu.txt</strong></p>
 
-          <p><pre>
-&quot;cpu_threads_conf&quot; :
+          <p><pre><code class="language-json">&quot;cpu_threads_conf&quot; :
   [
     { &quot;low_power_mode&quot; : false, &quot;no_prefetch&quot; : true, &quot;affine_to_cpu&quot; : 0 },
     { &quot;low_power_mode&quot; : false, &quot;no_prefetch&quot; : true, &quot;affine_to_cpu&quot; : 1 },
     { &quot;low_power_mode&quot; : false, &quot;no_prefetch&quot; : true, &quot;affine_to_cpu&quot; : 2 },
     { &quot;low_power_mode&quot; : false, &quot;no_prefetch&quot; : true, &quot;affine_to_cpu&quot; : 3 },
-  ],</pre></p>
+  ],</code></pre></p>
 
           <p>On my system, this gets me around 600 H/s. Not bad, but low enough for me to start considering getting some old GPUs for my weakling Dell Vostro tower.</p>
 
@@ -172,39 +172,35 @@ make install -j 4</pre></p>
 
           <p>This profile is sans-GPU, if you ever want that. For this, I compiled without CUDA, using the normal install method but with this set of <code>cmake</code> flags:</p>
 
-          <p><pre>
-cmake -DCMAKE_LINK_STATIC=ON -DXMR-STAK_COMPILE=generic -DCUDA_ENABLE=OFF -DOpenCL_ENABLE=OFF -DMICROHTTPD_ENABLE=ON -DOpenSSL_ENABLE=ON ..</pre></p>
+          <p><pre><code class="language-shell">cmake -DCMAKE_LINK_STATIC=ON -DXMR-STAK_COMPILE=generic -DCUDA_ENABLE=OFF -DOpenCL_ENABLE=OFF -DMICROHTTPD_ENABLE=ON -DOpenSSL_ENABLE=ON ..</code></pre></p>
 
-          <p>Notice the <code>-DCUDA_ENABLE=OFF</code> which makes it CPU-only (on NVidia systems). Then this is my <strong>cpu.txt</strong>, same as for the all-out profile above:</p>
+          <p>Notice the <code class="language-shell">-DCUDA_ENABLE=OFF</code> which makes it CPU-only (on NVidia systems). Then this is my <strong>cpu.txt</strong>, same as for the all-out profile above:</p>
 
-          <p><pre>
-&quot;cpu_threads_conf&quot; :
+          <p><pre><code class="language-json">&quot;cpu_threads_conf&quot; :
   [
     { &quot;low_power_mode&quot; : false, &quot;no_prefetch&quot; : true, &quot;affine_to_cpu&quot; : 0 },
     { &quot;low_power_mode&quot; : false, &quot;no_prefetch&quot; : true, &quot;affine_to_cpu&quot; : 1 },
     { &quot;low_power_mode&quot; : false, &quot;no_prefetch&quot; : true, &quot;affine_to_cpu&quot; : 2 },
     { &quot;low_power_mode&quot; : false, &quot;no_prefetch&quot; : true, &quot;affine_to_cpu&quot; : 3 },
-  ],</pre></p>
+  ],</code></pre></p>
 
           <p>Running this profile gets me around 200 H/s.</p>
 
           <h4>CPU-lite</h4>
 
-          <p>Here&#39;s the one I really made the profiles for. I run this one in the background while I&#39;m doing light or moderate regular computing. I&#39;ll often run this alongside a handy <code>monerod --max-concurrency 1</code> to keep my local blockchain up to date.</p>
+          <p>Here&#39;s the one I really made the profiles for. I run this one in the background while I&#39;m doing light or moderate regular computing. I&#39;ll often run this alongside a handy <code class="language-shell">monerod --max-concurrency 1</code> to keep my local blockchain up to date.</p>
 
           <p>Compile without CUDA as with CPU-full:</p>
 
-          <p><pre>
-cmake -DCMAKE_LINK_STATIC=ON -DXMR-STAK_COMPILE=generic -DCUDA_ENABLE=OFF -DOpenCL_ENABLE=OFF -DMICROHTTPD_ENABLE=ON -DOpenSSL_ENABLE=ON ..</pre></p>
+          <pre><code class="language-shell">cmake -DCMAKE_LINK_STATIC=ON -DXMR-STAK_COMPILE=generic -DCUDA_ENABLE=OFF -DOpenCL_ENABLE=OFF -DMICROHTTPD_ENABLE=ON -DOpenSSL_ENABLE=ON ..</code></pre>
 
-          <p>Notice the <code>-DCUDA_ENABLE=OFF</code> which makes it CPU-only (on NVidia systems). Here&#39;s the <strong>cpu.txt</strong> for the lite version:</p>
+          <p>Notice the <code class="language-shell">-DCUDA_ENABLE=OFF</code> which makes it CPU-only (on NVidia systems). Here&#39;s the <strong>cpu.txt</strong> for the lite version:</p>
 
-          <p><pre>
-&quot;cpu_threads_conf&quot; :
+          <p><pre><code class="language-json">&quot;cpu_threads_conf&quot; :
   [
     { &quot;low_power_mode&quot; : true, &quot;no_prefetch&quot; : false, &quot;affine_to_cpu&quot; : false },
     { &quot;low_power_mode&quot; : true, &quot;no_prefetch&quot; : false, &quot;affine_to_cpu&quot; : false },
-  ],</pre></p>
+  ],</code></pre></p>
 
           <p>Running this profile keeps me around 60-75 H/s and doesn&#39;t drain enough CPU power for me to notice most of the time. If you&#39;re using a pool that offers a separate port for low-end CPUs, I&#39;d use that for this profile.</p>
         </div>
@@ -216,6 +212,8 @@ cmake -DCMAKE_LINK_STATIC=ON -DXMR-STAK_COMPILE=generic -DCUDA_ENABLE=OFF -DOpen
       <p>Jade Michael Thornton | <a href="https://jmthornton.net">Home</a> | <a href="https://gitlab.com/thornjad/jmthornton">Source code</a></p>
     </footer>
 
+    <script src="https://jmthornton.net/assets/vendor/prism.js" defer></script>
+    <!-- <script src="/assets/vendor/prism.js" defer></script> -->
 		<script class="matomo-analytics" type='text/javascript'>
 		 var _paq = window._paq || [];
 		 _paq.push(['setDocumentTitle', document.domain + ' -/- ' + document.title]);

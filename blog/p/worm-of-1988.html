@@ -14,7 +14,11 @@
     <link rel="apple-itouch-icon" href="https://jmthornton.net/assets/images/favicon.ico" />
     <link rel="prefetch" href="https://jmthornton.net/assets/fonts/VictorMono-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous"/><link rel="prefetch" href="https://jmthornton.net/assets/fonts/VictorMono-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous"/><link rel="prefetch" href="https://jmthornton.net/assets/fonts/VictorMono-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous"/><link rel="prefetch" href="https://jmthornton.net/assets/fonts/VictorMono-BoldItalic.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
 
+    <link href="https://jmthornton.net/assets/vendor/prism.min.css" rel="stylesheet" />
+    <!-- <link href="/assets/vendor/prism.min.css" rel="stylesheet" /> -->
     <link rel="stylesheet" href="https://jmthornton.net/assets/style/main.css" type="text/css" />
+    <!-- <link rel="stylesheet" href="/assets/style/main.css" type="text/css" />
+    -->
 
     <!-- twitter tags reference: https://dev.twitter.com/cards/markup -->
     <!-- opengraph tags reference: http://ogp.me -->
@@ -60,7 +64,7 @@
     <main>
       <article class="post blog-content">
         <h1 class="post-title">The Internet worm of 1988: A Tour of the Worm</h1>
-				<small>On the evening of November 2, 1988, a self-replicating program was released upon the Internet. Within the space of hours this program had spread across the US.</small>
+				<p>On the evening of November 2, 1988, a self-replicating program was released upon the Internet. Within the space of hours this program had spread across the US.</p>
 				<time datetime="2017-10-26">October 31, 2017</time>
 
         <div class="post-main">
@@ -460,28 +464,26 @@
               helped to bootstrap it. The worm's last act in <I>main()</I> is to call a function
               we named <I>doit()</I>, which contains the main loop of the worm.</p>
 
-            <pre>
-          doit()
-          {
-              <I>seed the random number generator with the time</I>
-              <I>attack hosts: gateways, Iocal nets, remote nets</I>
-             checkother();
-             send message();
-             for (;;)
-             {
-                cracksome();
-                other_sleep(30);
-                cracksome();
-              <I>change our process ID</I>
-              <I>attack hosts: gateways, known hosts, remote nets, local nets</I>
-                other_sleep(120);
-                if (<I>12 hours have passed</I>)
-              <I>reset hosts table</I>
-                if (pleasequit &amp;&amp; nextw &gt; 10)
-                  exit(0);
-              }
-          }
-            </pre>
+            <pre><code class="language-c">doit()
+{
+    /* seed the random number generator with the time */
+    /* attack hosts: gateways, Iocal nets, remote nets */
+    checkother();
+    send message();
+    for (;;)
+    {
+      cracksome();
+      other_sleep(30);
+      cracksome();
+      /* change our process ID */
+      /* attack hosts: gateways, known hosts, remote nets, local nets */
+      other_sleep(120);
+      if (/* 12 hours have passed */)
+      /* reset hosts table */
+      if (pleasequit &amp;&amp; nextw &gt; 10)
+        exit(0);
+    }
+}</code></pre>
             <CENTER><br>
               "C" pseudo-code for the <I>doit()</I> function
             </CENTER><br>
@@ -1328,6 +1330,8 @@
       <p>Jade Michael Thornton | <a href="https://jmthornton.net">Home</a> | <a href="https://gitlab.com/thornjad/jmthornton">Source code</a></p>
     </footer>
 
+    <script src="https://jmthornton.net/assets/vendor/prism.js" defer></script>
+    <!-- <script src="/assets/vendor/prism.js" defer></script> -->
 		<script class="matomo-analytics" type='text/javascript'>
 		 var _paq = window._paq || [];
 		 _paq.push(['setDocumentTitle', document.domain + ' -/- ' + document.title]);

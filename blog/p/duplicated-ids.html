@@ -14,7 +14,10 @@
     <link rel="apple-itouch-icon" href="https://jmthornton.net/assets/images/favicon.ico" />
     <link rel="prefetch" href="https://jmthornton.net/assets/fonts/VictorMono-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous"><link rel="prefetch" href="https://jmthornton.net/assets/fonts/VictorMono-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous"><link rel="prefetch" href="https://jmthornton.net/assets/fonts/VictorMono-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous"><link rel="prefetch" href="https://jmthornton.net/assets/fonts/VictorMono-BoldItalic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
 
+    <link href="https://jmthornton.net/assets/vendor/prism.min.css" rel="stylesheet" />
+    <!-- <link href="/assets/vendor/prism.min.css" rel="stylesheet" /> -->
     <link rel="stylesheet" href="https://jmthornton.net/assets/style/main.css" type="text/css" />
+    <!-- <link rel="stylesheet" href="/assets/style/main.css" type="text/css" /> -->
 
     <!-- twitter tags reference: https://dev.twitter.com/cards/markup -->
     <!-- opengraph tags reference: http://ogp.me -->
@@ -65,72 +68,72 @@
         <div class="post-main">
           <div class="blog-body">
             <p>
-              The <code>id</code> attribute is an often-used and useful HTML attribute. However, they're always meant to be unique. The <a href="https://www.w3.org/TR/html5/dom.html#the-id-attribute">HTML5 specification</a> explicitly says:
+              The <code class="language-html">id</code> attribute is an often-used and useful HTML attribute. However, they're always meant to be unique. The <a href="https://www.w3.org/TR/html5/dom.html#the-id-attribute">HTML5 specification</a> explicitly says:
             </p>
             <blockquote cite="W3C HTML5 Specification">
               The value must be unique amongst all the IDs in the element's home subtree
             </blockquote>
             <p>
-              The <a href="https://w3c.github.io/html/dom.html#element-attrdef-global-id">HTML 4.01 specification</a> says basically the same thing, that an <code>id</code> "must be unique in a document".
+              The <a href="https://w3c.github.io/html/dom.html#element-attrdef-global-id">HTML 4.01 specification</a> says basically the same thing, that an <code class="language-html">id</code> "must be unique in a document".
             </p>
             <p>
-              That's pretty clear, and is usually followed. When you want to use the same identifier for multiple elements, you should and probably usually do use a <code>class</code> attribute instead. But what if you do reuse the same <code>id</code>, intentionally or not? Take this example:
+              That's pretty clear, and is usually followed. When you want to use the same identifier for multiple elements, you should and probably usually do use a <code class="language-html">class</code> attribute instead. But what if you do reuse the same <code class="language-html">id</code>, intentionally or not? Take this example:
             </p>
-            <pre>&lt;!DOCTYPE html&gt;
+            <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
-&lt;head&gt;
-  &lt;meta charset=&quot;utf-8&quot;&gt;
-  &lt;title&gt;Duplicated IDs&lt;/title&gt;
-  &lt;style&gt;
-    #sec1, #sec2 {
-      color: blue;
-    }
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;title&gt;Duplicated IDs&lt;/title&gt;
+    &lt;style&gt;
+      #sec1, #sec2 {
+        color: blue;
+      }
 
-    #sec3 {
-      color: red;
-    }
-  &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;nav&gt;
-    &lt;a href=&quot;#sec1&quot;&gt;Goto 1&lt;/a&gt;
-    &lt;a href=&quot;#sec2&quot;&gt;Goto 2&lt;/a&gt;
-    &lt;a href=&quot;#sec3&quot;&gt;Goto 3&lt;/a&gt;
-    &lt;a href=&quot;#sec3&quot;&gt;Goto 4&lt;/a&gt;
-  &lt;/nav&gt;
+      #sec3 {
+        color: red;
+      }
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;nav&gt;
+      &lt;a href=&quot;#sec1&quot;&gt;Goto 1&lt;/a&gt;
+      &lt;a href=&quot;#sec2&quot;&gt;Goto 2&lt;/a&gt;
+      &lt;a href=&quot;#sec3&quot;&gt;Goto 3&lt;/a&gt;
+      &lt;a href=&quot;#sec3&quot;&gt;Goto 4&lt;/a&gt;
+    &lt;/nav&gt;
 
-  &lt;div id=&quot;sec1&quot;&gt;
-    &lt;p&gt;Section 1&lt;/p&gt;
-  &lt;/div&gt;
+    &lt;div id=&quot;sec1&quot;&gt;
+      &lt;p&gt;Section 1&lt;/p&gt;
+    &lt;/div&gt;
 
-  &lt;div id=&quot;sec2&quot;&gt;
-    &lt;p&gt;Section 2&lt;/p&gt;
-  &lt;/div&gt;
+    &lt;div id=&quot;sec2&quot;&gt;
+      &lt;p&gt;Section 2&lt;/p&gt;
+    &lt;/div&gt;
 
-  <span class="highlight-code">&lt;div id=&quot;sec3&quot;&gt;</span>
-    &lt;p&gt;Section 3&lt;/p&gt;
-  &lt;/div&gt;
+    <span class="highlight-code">&lt;div id=&quot;sec3&quot;&gt;</span>
+      &lt;p&gt;Section 3&lt;/p&gt;
+    &lt;/div&gt;
 
-  <span class="highlight-code">&lt;div id=&quot;sec3&quot;&gt;</span>
-    &lt;p&gt;Section 4&lt;/p&gt;
-  &lt;/div&gt;
+    <span class="highlight-code">&lt;div id=&quot;sec3&quot;&gt;</span>
+      &lt;p&gt;Section 4&lt;/p&gt;
+    &lt;/div&gt;
 
-  &lt;script&gt;
-    document.getElementById('sec3').innerHtml('Sup!');
-  &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;</pre>
-            <p>Notice that both 'Section 3' and 'Section 4' have the same <code>id="sec3"</code>. Oh no! The HTML police are already knocking on my door! So what actually happens when a browser comes across duplicated <code>id</code>'s? How does styling work? Document fragments? Javascript accessing the DOM?</p>
-            <p>Surprisingly, behavior is quite consistent across modern browsers as of this writing. Modern browsers&mdash;including Chrome, Firefox, Opera, etc.&mdash;are quite forgiving when it comes to some invalid HTML like duplicate <code>id</code>'s. The HTML5 specification lays out three main uses for unique identifiers, basically comprising of fragment identifiers, DOM targeting for scripting and CSS styling. The behaviors of duplication on each of these uses is different, but related.</p>
+    &lt;script&gt;
+      document.getElementById('sec3').innerHtml('Sup!');
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            <p>Notice that both 'Section 3' and 'Section 4' have the same <code class="language-html">id="sec3"</code>. Oh no! The HTML police are already knocking on my door! So what actually happens when a browser comes across duplicated <code class="language-html">id</code>'s? How does styling work? Document fragments? Javascript accessing the DOM?</p>
+            <p>Surprisingly, behavior is quite consistent across modern browsers as of this writing. Modern browsers&mdash;including Chrome, Firefox, Opera, etc.&mdash;are quite forgiving when it comes to some invalid HTML like duplicate <code class="language-html">id</code>'s. The HTML5 specification lays out three main uses for unique identifiers, basically comprising of fragment identifiers, DOM targeting for scripting and CSS styling. The behaviors of duplication on each of these uses is different, but related.</p>
             <ul>
-              <li><strong>Document fragments</strong>: The browser will navigate to the first instance of the specified <code>id</code>. In the example above, clicking on the nav links "Goto 3" and "Goto 4" will both go to "Section 3" since they both use <code>href="#sec3"</code>.</li>
-              <li><strong>Javascript targeting</strong>: Javascript will select the first instance of the <code>id</code>. In the example, the script will only change the HTML inside the "Section 3" div.</li>
-              <li><strong>Styling</strong>: All instances of the <code>id</code> are styled. In the example above, both "Section 3" and "Section 4" are styled with <code>color: red;</code>.</li>
+              <li><strong>Document fragments</strong>: The browser will navigate to the first instance of the specified <code class="language-html">id</code>. In the example above, clicking on the nav links "Goto 3" and "Goto 4" will both go to "Section 3" since they both use <code class="language-html">href="#sec3"</code>.</li>
+              <li><strong>Javascript targeting</strong>: Javascript will select the first instance of the <code class="language-html">id</code>. In the example, the script will only change the HTML inside the "Section 3" div.</li>
+              <li><strong>Styling</strong>: All instances of the <code class="language-html">id</code> are styled. In the example above, both "Section 3" and "Section 4" are styled with <code class="language-html">color: red;</code>.</li>
             </ul>
             <p>In all, document fragments and Javascript choose the first element, while CSS styles them all.</p>
-            <p>Why do all the browsers act the same, even though the specification doesn't say what to do and forbids duplicated identifiers in the first place? The specific reasons are varied, but in general browsers trend towards being developer-friendly. This means rendering bad markup by doing their best to interpret what the author means, and fail gracefully and often silently when necessary. But does this mean it's okay to duplicate <code>id</code>'s? <strong>No</strong>.</p>
-            <p>Since the HTML5 specification, as well as <a href="https://www.w3.org/TR/html51/dom.html#the-id-attribute">HTML5.1</a> and <a href="https://w3c.github.io/html/dom.html#element-attrdef-global-id">HTML5.2</a> don't dictate what browsers should do with duplicate <code>id</code>'s, nor is there any other standard which does. Therefore, <strong><em>behavior is not guaranteed</em></strong> and could change at any time.</p>
-            <p>The point of this article is that <strong><em>while browsers are forgiving of duplicated <code>id</code>'s, this behavior is not guaranteed or predictable, and should always be avoided</em></strong>. Duplicated identifiers are bad style, create confusing code, are invalid HTML and most importantly, they make me cry. Surely you don't want me to cry.</p>
+            <p>Why do all the browsers act the same, even though the specification doesn't say what to do and forbids duplicated identifiers in the first place? The specific reasons are varied, but in general browsers trend towards being developer-friendly. This means rendering bad markup by doing their best to interpret what the author means, and fail gracefully and often silently when necessary. But does this mean it's okay to duplicate <code class="language-html">id</code>'s? <strong>No</strong>.</p>
+            <p>Since the HTML5 specification, as well as <a href="https://www.w3.org/TR/html51/dom.html#the-id-attribute">HTML5.1</a> and <a href="https://w3c.github.io/html/dom.html#element-attrdef-global-id">HTML5.2</a> don't dictate what browsers should do with duplicate <code class="language-html">id</code>'s, nor is there any other standard which does. Therefore, <strong><em>behavior is not guaranteed</em></strong> and could change at any time.</p>
+            <p>The point of this article is that <strong><em>while browsers are forgiving of duplicated <code class="language-html">id</code>'s, this behavior is not guaranteed or predictable, and should always be avoided</em></strong>. Duplicated identifiers are bad style, create confusing code, are invalid HTML and most importantly, they make me cry. Surely you don't want me to cry.</p>
             <p>More often than the world should allow (which is not at all), I have come across invalid HTML like this in the professional environments. Fixing it is time consuming and typically frustrating, and it drives me to drink (coffee). The world of development is filled with invalid and unreadable code, and this is why I cry.</p>
           </div>
         </div>
@@ -141,6 +144,8 @@
       <p>Jade Michael Thornton | <a href="https://jmthornton.net">Home</a> | <a href="https://gitlab.com/thornjad/jmthornton">Source code</a></p>
     </footer>
 
+    <script src="https://jmthornton.net/assets/vendor/prism.js" defer></script>
+    <!-- <script src="/assets/vendor/prism.js" defer></script> -->
 		<script class="matomo-analytics" type='text/javascript'>
 		 var _paq = window._paq || [];
 		 _paq.push(['setDocumentTitle', document.domain + ' -/- ' + document.title]);

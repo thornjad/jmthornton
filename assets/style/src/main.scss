@@ -297,17 +297,20 @@ div.action-buttons {
 
 // pre, code
 
+// Using some important tags to override prism
 pre {
 	overflow: auto;
 	position: relative;
-	background: $bg-alt;
-	padding: 0.75rem;
-	margin: 0.5rem;
-	margin-top: 2rem;
-	margin-bottom: 2rem;
+	background: $bg-alt !important;
+	padding: 0.75rem !important;
+  margin: 2rem 0.5rem !important;
 	border: none;
 	border-left: .25rem solid $pre-border;
 	border-radius: $border-radius;
+
+  &.line-numbers {
+    padding-left: 3.8em !important;
+  }
 }
 
 code, sub, sup {
@@ -317,7 +320,7 @@ code, sub, sup {
 }
 
 code {
-	background: $bg-alt;
+	background: $bg-alt !important;
   border: 1px solid darken($bg-alt, 10%);
 	border-radius: $border-radius;
 	padding: 0 4px;
@@ -329,6 +332,66 @@ code {
     padding: 0;
     font-size: inherit;
   }
+
+  // other prism improvements
+  .token.variable, .token.important, .token.regex, .token.property {
+    color: #83684C;
+  }
+  .token.keyword, .token.selector {
+    color: #968955;
+    font-weight: bold;
+  }
+  .token.string {
+    color: #8B887D;
+    font-style: italic;
+  }
+  .token.tag, .token.attr-name {
+    color: #8B887D;
+  }
+  .token.function {
+    color: #AB7146;
+  }
+  .token.builtin {
+    color: #4B788D;
+  }
+  .token.attr-value {
+    color: inherit;
+  }
+  .token.number {
+    color: $fg;
+  }
+  .token.boolean, .token.class-name, .token.constant {
+    color: #718388;
+    font-weight: bold;
+  }
+  .token.doctype, .token.doctype * {
+    color: silver;
+  }
+}
+
+html code[class*="language-"], html pre[class*="language-"] {
+  color: $fg;
+  font-family: $font-mono;
+  text-shadow: none;
+  -moz-tab-size: 2;
+  -o-tab-size: 2;
+  tab-size: 2;
+}
+
+code[class*="language-"] {
+  font-size: 0.85em;
+
+  pre & {
+    font-size: 1em;
+  }
+}
+
+div.code-toolbar > .toolbar {
+  right: 1em;
+}
+
+.language-css .token.string, .style .token.string, .token.entity, .token.operator, .token.url {
+  background: none;
 }
 
 

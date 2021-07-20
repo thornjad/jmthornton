@@ -14,6 +14,9 @@
     <link rel="apple-itouch-icon" href="https://jmthornton.net/assets/images/favicon.ico" />
     <link rel="prefetch" href="https://jmthornton.net/assets/fonts/VictorMono-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous"><link rel="prefetch" href="https://jmthornton.net/assets/fonts/VictorMono-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous"><link rel="prefetch" href="https://jmthornton.net/assets/fonts/VictorMono-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous"><link rel="prefetch" href="https://jmthornton.net/assets/fonts/VictorMono-BoldItalic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
 
+    <link href="https://jmthornton.net/assets/vendor/prism.min.css" rel="stylesheet" />
+    <!-- <link href="/assets/vendor/prism.min.css" rel="stylesheet" />
+    -->
     <link rel="stylesheet" href="https://jmthornton.net/assets/style/main.css" type="text/css" />
 
     <!-- twitter tags reference: https://dev.twitter.com/cards/markup -->
@@ -59,8 +62,8 @@
 
         <div class="post-main">
           <div class="blog-body">
-            <p>Every once in a while, I need to deinit a Git submodule, but I just cannot remember how. To deinit we can use Git's <code>submodule deinit</code> function to remove it from the database, then we remove the relevant directories from Git.</p>
-            <pre lang="zsh"><code>git submodule deinit -f path/to/submodule
+            <p>Every once in a while, I need to deinit a Git submodule, but I just cannot remember how. To deinit we can use Git's <code class="language-shell">submodule deinit</code> function to remove it from the database, then we remove the relevant directories from Git.</p>
+            <pre lang="zsh"><code class="language-shell">git submodule deinit -f path/to/submodule
 rm -rf .git/modules/path/to/submodule
 git rm -f path/to/submodule</code></pre>
             <p>After those three commands, you're free to commit the deinit. Note that this will not actually remove the submodule locally, you'll need to <code>rm -r</code> to take care of that.</p>
@@ -74,6 +77,8 @@ git rm -f path/to/submodule</code></pre>
       <p>Jade Michael Thornton | <a href="https://jmthornton.net">Home</a> | <a href="https://gitlab.com/thornjad/jmthornton">Source code</a></p>
     </footer>
 
+    <script src="https://jmthornton.net/assets/vendor/prism.js" defer></script>
+    <!-- <script src="/assets/vendor/prism.js" defer></script> -->
 		<script class="matomo-analytics" type='text/javascript'>
 		 var _paq = window._paq || [];
 		 _paq.push(['setDocumentTitle', document.domain + ' -/- ' + document.title]);

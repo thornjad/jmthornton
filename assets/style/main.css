@@ -7,28 +7,32 @@
   src: local("VictorMono-Regular"), url(/assets/fonts/VictorMono-Regular.woff2) format("woff2");
   font-style: normal;
   font-weight: 400;
+  font-display: swap;
 }
 @font-face {
   font-family: VictorMono;
   src: local("VictorMono-Italic"), url(/assets/fonts/VictorMono-Italic.woff2) format("woff2");
   font-style: italic;
   font-weight: 400;
+  font-display: swap;
 }
 @font-face {
   font-family: VictorMono;
   src: local("VictorMono-Bold"), url(/assets/fonts/VictorMono-Bold.woff2) format("woff2");
   font-style: normal;
   font-weight: 700;
+  font-display: swap;
 }
 @font-face {
   font-family: VictorMono;
   src: local("VictorMono-BoldItalic"), url(/assets/fonts/VictorMono-BoldItalic.woff2) format("woff2");
   font-style: italic;
   font-weight: 700;
+  font-display: swap;
 }
 /* $bg: #fbfbfa; */
 :root {
-  font-family: VictorMono, monospace;
+  font-family: VictorMono, Menlo, Monaco monospace;
   font-size: 16px;
   line-height: 1.4em;
   background: #fefbf2;
@@ -202,6 +206,8 @@ div.no-md-a a::after {
 }
 .blog-content time::before {
   content: "| ";
+  font-style: normal;
+  color: #83684C;
 }
 
 blockquote {
@@ -685,14 +691,15 @@ h1 .glitch::after {
 pre {
   overflow: auto;
   position: relative;
-  background: #f6f3e7;
-  padding: 0.75rem;
-  margin: 0.5rem;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  background: #f6f3e7 !important;
+  padding: 0.75rem !important;
+  margin: 2rem 0.5rem !important;
   border: none;
   border-left: 0.25rem solid #8ec07c;
   border-radius: 5px;
+}
+pre.line-numbers {
+  padding-left: 3.8em !important;
 }
 
 code, sub, sup {
@@ -702,7 +709,7 @@ code, sub, sup {
 }
 
 code {
-  background: #f6f3e7;
+  background: #f6f3e7 !important;
   border: 1px solid #e8e0c2;
   border-radius: 5px;
   padding: 0 4px;
@@ -713,6 +720,63 @@ pre code {
   border: none;
   padding: 0;
   font-size: inherit;
+}
+code .token.variable, code .token.important, code .token.regex, code .token.property {
+  color: #83684C;
+}
+code .token.keyword, code .token.selector {
+  color: #968955;
+  font-weight: bold;
+}
+code .token.string {
+  color: #8B887D;
+  font-style: italic;
+}
+code .token.tag, code .token.attr-name {
+  color: #8B887D;
+}
+code .token.function {
+  color: #AB7146;
+}
+code .token.builtin {
+  color: #4B788D;
+}
+code .token.attr-value {
+  color: inherit;
+}
+code .token.number {
+  color: #525C5A;
+}
+code .token.boolean, code .token.class-name, code .token.constant {
+  color: #718388;
+  font-weight: bold;
+}
+code .token.doctype, code .token.doctype * {
+  color: silver;
+}
+
+html code[class*=language-], html pre[class*=language-] {
+  color: #525C5A;
+  font-family: VictorMono, Menlo, Monaco, monospace;
+  text-shadow: none;
+  -moz-tab-size: 2;
+  -o-tab-size: 2;
+  tab-size: 2;
+}
+
+code[class*=language-] {
+  font-size: 0.85em;
+}
+pre code[class*=language-] {
+  font-size: 1em;
+}
+
+div.code-toolbar > .toolbar {
+  right: 1em;
+}
+
+.language-css .token.string, .style .token.string, .token.entity, .token.operator, .token.url {
+  background: none;
 }
 
 div.stats {

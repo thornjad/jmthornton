@@ -14,7 +14,12 @@
 		<link rel="apple-itouch-icon" href="https://jmthornton.net/assets/images/favicon.ico" />
     <link rel="prefetch" href="https://jmthornton.net/assets/fonts/VictorMono-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous"/><link rel="prefetch" href="https://jmthornton.net/assets/fonts/VictorMono-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous"/><link rel="prefetch" href="https://jmthornton.net/assets/fonts/VictorMono-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous"/><link rel="prefetch" href="https://jmthornton.net/assets/fonts/VictorMono-BoldItalic.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
 
-		<link rel="stylesheet" href="https://jmthornton.net/assets/style/main.css" type="text/css" />
+    <link href="https://jmthornton.net/assets/vendor/prism.min.css" rel="stylesheet" />
+    <!-- <link href="/assets/vendor/prism.min.css" rel="stylesheet" />
+    -->
+    <link rel="stylesheet" href="https://jmthornton.net/assets/style/main.css" type="text/css" />
+    <!-- <link rel="stylesheet" href="/assets/style/main.css" type="text/css" />
+    -->
 
 		<!-- twitter tags reference: https://dev.twitter.com/cards/markup -->
 		<!-- opengraph tags reference: http://ogp.me -->
@@ -89,7 +94,7 @@
 						  <ul>
 							  <li>First, what if I <em>accidentally</em> disconnect? Maybe I've
 							    lost my network connection, or somehow accidentally hit
-							    <code>~.</code>. I want to get back into my session as quickly and
+							    <code class="language-shell">~.</code>. I want to get back into my session as quickly and
 							    easily as possible.</li>
 							  <li>Second, what if I want to save my panes when I disconnect?
 							    Maybe there's some long-running process I want to keep. Or maybe I
@@ -111,12 +116,12 @@
 					    link with a link to the new socket.</p>
 
 					  <p>We need a name for this symbolic socket, so how about
-					    <code>/tmp/ssh-agent-$USER-screen</code>. We're putting it in
+					    <code class="language-shell">/tmp/ssh-agent-$USER-screen</code>. We're putting it in
 					    <code>/tmp/</code> since it doesn't matter too much if this is
-					    overwritten or cleaned up. We're also using the <code>USER</code>
+					    overwritten or cleaned up. We're also using the <code class="language-shell">USER</code>
 					    environment variable to keep sockets separate for different users. At
-					    the end, I'm putting <code>-screen</code> since this is sort-of more
-					    general than <code>-tmux</code>, but it can really be whatever, or
+					    the end, I'm putting <code class="language-shell">-screen</code> since this is sort-of more
+					    general than <code class="language-shell">-tmux</code>, but it can really be whatever, or
 					    even removed.</p>
 
 					  <p>Now, creating a symbolic link is all fine and good, but what do we
@@ -126,14 +131,14 @@
 					                                   href="https://github.com/wwalker/ssh-find-agent">ssh-find-agent</a>
 					    tool. So let's put that in a useful location:</p>
 
-					  <pre lang="bash"><code>git clone git@github.com:wwalker/ssh-find-agent.git ~/lib/ssh-find-agent</code></pre>
+					  <pre lang="bash"><code class="language-shell">git clone git@github.com:wwalker/ssh-find-agent.git ~/lib/ssh-find-agent</code></pre>
 
-					  <p>We'll use the "automatic" <code>-a</code> option, which will find
-					    the active SSH agent and store it in <code>SSH_AUTH_SOCK</code> for
+					  <p>We'll use the "automatic" <code class="language-shell">-a</code> option, which will find
+					    the active SSH agent and store it in <code class="language-shell">SSH_AUTH_SOCK</code> for
 					    us. But, if there is no active SSH session, nothing useful will
 					    happen, so we'll want to get the SSH agent started.</p>
 
-					  <pre lang="bash"><code># Source the script first
+					  <pre lang="bash"><code class="language-shell"># Source the script first
 . ~/lib/ssh-find-agent/ssh-find-agent.sh
 ssh_find_agent -a
 
@@ -147,7 +152,7 @@ fi</code></pre>
 					  <p>Now that we have the socket, we just need to make (or override)
 					    that symbolic link so it can be found later.</p>
 
-					  <pre lang="bash"><code>SOCK="/tmp/ssh-agent-$USER-screen"
+					  <pre lang="bash"><code class="language-shell">SOCK="/tmp/ssh-agent-$USER-screen"
 if test $SSH_AUTH_SOCK && [ $SSH_AUTH_SOCK != $SOCK ]
 then
   rm -f /tmp/ssh-agent-$USER-screen
@@ -160,8 +165,8 @@ fi</code></pre>
 					    the socket is needed. This is the most annoying part, though it can be
 					    relieved with a tool like <a
 					                                href="https://github.com/danrabinowitz/sshrc">sshrc</a>. The full
-					    process will need to be added to the <code>~/.bashrc</code> or
-					    <code>~/.zshrc</code> on your host system, as well as every system you
+					    process will need to be added to the <code class="language-shell">~/.bashrc</code> or
+					    <code class="language-shell">~/.zshrc</code> on your host system, as well as every system you
 					    want to chain tmux and SSH sessions from.</p>
 
 					  <p>To be clear about where this needs to happen, if your chain looks like this:</p>
@@ -175,11 +180,11 @@ fi</code></pre>
 					4)</code>, but not the last two remotes. If you think of these chain
 					    connections as a tree, the socket mapping is not needed on the leaves.
 					    Technically it's also not needed on any nodes on which you're not
-					    using tmux, provided you use <code>ForwardAgent</code>.</p>
+					    using tmux, provided you use <code class="language-shell">ForwardAgent</code>.</p>
 
 					  <p>So there we have it, the SSH socket symbolically linked to a known location. After cloning ssh-find-agent, here's the complete script to add to your shell login script as required:</p>
 
-					  <pre lang="~/.bashrc"><code># Known SSH Socket for tmux
+					  <pre lang="~/.bashrc"><code class="language-shell"># Known SSH Socket for tmux
 # https://blog.jmthornton.net/p/tmux-known-socket
 
 . ~/lib/ssh-find-agent/ssh-find-agent.sh
@@ -207,6 +212,8 @@ fi</code></pre>
       <p>Jade Michael Thornton | <a href="https://jmthornton.net">Home</a> | <a href="https://gitlab.com/thornjad/jmthornton">Source code</a></p>
     </footer>
 
+    <script src="https://jmthornton.net/assets/vendor/prism.js" defer></script>
+    <!-- <script src="/assets/vendor/prism.js" defer></script> -->
 		<script class="matomo-analytics" type='text/javascript'>
 		 var _paq = window._paq || [];
 		 _paq.push(['setDocumentTitle', document.domain + ' -/- ' + document.title]);

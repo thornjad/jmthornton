@@ -13,9 +13,12 @@
     <link rel="shortcut icon" href="https://jmthornton.net/assets/images/favicon.png" />
     <link rel="apple-itouch-icon" href="https://jmthornton.net/assets/images/favicon.ico" />
     <link rel="prefetch" href="https://jmthornton.net/assets/fonts/VictorMono-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous"><link rel="prefetch" href="https://jmthornton.net/assets/fonts/VictorMono-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous"><link rel="prefetch" href="https://jmthornton.net/assets/fonts/VictorMono-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous"><link rel="prefetch" href="https://jmthornton.net/assets/fonts/VictorMono-BoldItalic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-
+    <link href="https://jmthornton.net/assets/vendor/prism.min.css" rel="stylesheet" />
+    <!-- <link href="/assets/vendor/prism.min.css" rel="stylesheet" />
+    -->
     <link rel="stylesheet" href="https://jmthornton.net/assets/style/main.css" type="text/css" />
-
+    <!-- <link rel="stylesheet" href="/assets/style/main.css" type="text/css" />
+    -->
     <!-- twitter tags reference: https://dev.twitter.com/cards/markup -->
     <!-- opengraph tags reference: http://ogp.me -->
 
@@ -59,21 +62,21 @@
         <div class="post-main">
           <div class="blog-body">
             <p>At <a href="https://flightaware.com">FlightAware</a>, we use Jira to track work and git for version control. To reference each other, git branch names start with the relevant issue number, taking the form</p>
-            <pre><code>${project}_${ticketNumber}_${shortDescription}</code></pre>
+            <pre><code class="language-shell">${project}_${ticketNumber}_${shortDescription}</code></pre>
             <p>Additionally, commit messages end with the same issue number in the form</p>
-            <pre><code>${project}-${ticketNumber}</code></pre>
+            <pre><code class="language-shell">${project}-${ticketNumber}</code></pre>
             <p>These conventions allow for easy referencing of issues to look for details and business decisions. Specifically, the issue number in the commit message is used by <a href="https://github.com/nugget/zeitgit">Zeitgit</a> to attribute commit statistics to issues. It's also used by <a href="https://www.jenkins.io/">Jenkins</a> to create useful links between tickets and pull requests.</p>
-            <p>It is, however, a little annoying to type the issue number in to every commit, especially when I <em>know</em> git already has this information in the branch name—git just doesn't know it. To automate this little task, I use a git hook to prepare the commit message with the issue number before it goes to <code>$EDITOR</code> (e.g. vim) for editing.</p>
+            <p>It is, however, a little annoying to type the issue number in to every commit, especially when I <em>know</em> git already has this information in the branch name—git just doesn't know it. To automate this little task, I use a git hook to prepare the commit message with the issue number before it goes to <code class="language-shell">$EDITOR</code> (e.g. vim) for editing.</p>
 
             <h2>Git hooks</h2>
             <p>Git hooks are scripts—typically written in bash, zsh or another shell—which live in the <code>.git/hooks/</code> directory of a project. These scripts provide a means of performing actions certain stages of git's behavior. By default, the hooks directory comes pre-populated with sample hooks, each ending with <code>.sample</code>. That file ending keeps them from running until the suffix is removed. Take note of their names though, git will look for these specific names (without the <code>.sample</code> ending) when looking for hooks to run.</p>
 
             <h2>The prepare-commit-msg hook</h2>
-            <p>What we need to do is edit the commit message before it goes to your <code>$EDITOR</code> for regular editing; the one we want is called <code>prepare-commit-msg</code>. This hook is called by <code>git commit</code> and is given the name of the file which has the commit message, followed by the description of the commit message's source (discussed later), and the commit's SHA-1 hash.</p>
+            <p>What we need to do is edit the commit message before it goes to your <code class="language-shell">$EDITOR</code> for regular editing; the one we want is called <code>prepare-commit-msg</code>. This hook is called by <code class="language-shell">git commit</code> and is given the name of the file which has the commit message, followed by the description of the commit message's source (discussed later), and the commit's SHA-1 hash.</p>
             <p>For the script itself, we need to get the issue number from the branch name, format it according to FlightAware conventions, then prepend it onto the commit message file, preserving git's default message if it exists (the summary of changes in the commit). My script is in Zsh, but could be in any language available on the system; Bash, Python, plain old Bourne shell, etc. would be fine. I use Zsh as my login shell, so that's what I default to.</p>
 
             <h3>Hook script in full</h3>
-            <pre lang="zsh"><code>#!/usr/bin/env zsh
+            <pre class="line-numbers" lang="zsh"><code class="language-shell">#!/usr/bin/env zsh
 COMMIT_MSG_FILE=$1
 COMMIT_SOURCE=$2
 SHA1=$3
@@ -93,7 +96,7 @@ fi</code></pre>
             <p>Now I'm a strong believer of not just executing code without understanding what's happening, so let's break it down.</p>
 
             <h2>Capturing commit information</h2>
-            <pre lang="zsh"><code>COMMIT_MSG_FILE=$1
+            <pre lang="zsh"><code class="language-shell">COMMIT_MSG_FILE=$1
 COMMIT_SOURCE=$2
 SHA1=$3</code></pre>
             <p>To keep track of the information passed to the hook script, we store the arguments in variables. Here's what we get:</p>
@@ -104,33 +107,33 @@ SHA1=$3</code></pre>
             </ol>
 
             <h2>Checking the commit source</h2>
-            <pre lang="zsh"><code>if [[ -z "$COMMIT_SOURCE" ]]</code></pre>
-            <p>Before doing any work, the script ensures there's no special commit source by ensuring it's empty with the <code>-z</code> test. This source gives us some info on why this commit is happening. It could be "merge" or "squash" or a number of other sources. In a "normal" commit, the source is just empty. We don't want to mess with any special commits (by FlightAware convention), so we can just check that it's empty.</p>
+            <pre lang="zsh"><code class="language-shell">if [[ -z "$COMMIT_SOURCE" ]]</code></pre>
+            <p>Before doing any work, the script ensures there's no special commit source by ensuring it's empty with the <code class="language-shell">-z</code> test. This source gives us some info on why this commit is happening. It could be "merge" or "squash" or a number of other sources. In a "normal" commit, the source is just empty. We don't want to mess with any special commits (by FlightAware convention), so we can just check that it's empty.</p>
 
             <h3>Getting the branch name</h3>
-            <pre lang="zsh"><code>  branch=$(git symbolic-ref --short HEAD)</code></pre>
-            <p>We also need the branch name, which (may) contain an issue number. Git's <code>symbolic-ref</code> command lets us get info about a symbolic reference, in this case <code>HEAD</code>. The <code>--short</code> option shortens the symbolic ref's path to just its name. For example, this would shorten the full path <code>refs/heads/main</code> to just the name <code>main</code>.</p>
+            <pre lang="zsh"><code class="language-shell">  branch=$(git symbolic-ref --short HEAD)</code></pre>
+            <p>We also need the branch name, which (may) contain an issue number. Git's <code>symbolic-ref</code> command lets us get info about a symbolic reference, in this case <code>HEAD</code>. The <code class="language-shell">--short</code> option shortens the symbolic ref's path to just its name. For example, this would shorten the full path <code>refs/heads/main</code> to just the name <code>main</code>.</p>
 
             <h2>Extracting the issue number</h2>
-            <pre lang="zsh"><code>  if [[ "$branch" =~ ^([a-zA-Z]+)[_-]([0-9]+).* ]]</code></pre>
-            <p>The next <code>if</code> condition performs two actions. First, it only resolves as true if there <em>is</em> an issue number in the branch name—at least of the form we use at FlightAware. Second, the <code>()</code> capture groups take the project code and ticket number and implicitly store them in the <code>$match</code> array. Any description text after the issue number is ignored.</p>
+            <pre lang="zsh"><code class="language-shell">  if [[ "$branch" =~ ^([a-zA-Z]+)[_-]([0-9]+).* ]]</code></pre>
+            <p>The next <code class="language-shell">if</code> condition performs two actions. First, it only resolves as true if there <em>is</em> an issue number in the branch name—at least of the form we use at FlightAware. Second, the <code class="language-shell">()</code> capture groups take the project code and ticket number and implicitly store them in the <code class="language-shell">$match</code> array. Any description text after the issue number is ignored.</p>
 
             <h2>Formatting the issue number</h2>
-            <pre lang="zsh"><code>    ticket="${match[1]:u}-${match[2]}"</code></pre>
-            <p><em><code>if</code></em> we find an issue number, we'll need to format it. This is necessary only because of FlightAware conventions; branch names are snake_case, while Jira issue numbers are properly TRAIN-CASE. We simply create a new variable, <code>ticket</code>, built from the capture groups stored in <code>$match</code>. We upcase the project code portion with the <code>:u</code> expansion modifier to complete the transformation. There are other ways to upcase text, but this is the cleanest in my opinion.</p>
+            <pre lang="zsh"><code class="language-shell">    ticket="${match[1]:u}-${match[2]}"</code></pre>
+            <p><em><code class="language-shell">if</code></em> we find an issue number, we'll need to format it. This is necessary only because of FlightAware conventions; branch names are snake_case, while Jira issue numbers are properly TRAIN-CASE. We simply create a new variable, <code class="language-shell">ticket</code>, built from the capture groups stored in <code class="language-shell">$match</code>. We upcase the project code portion with the <code class="language-shell">:u</code> expansion modifier to complete the transformation. There are other ways to upcase text, but this is the cleanest in my opinion.</p>
 
             <h2>Building the commit message</h2>
-            <pre lang="zsh"><code>    gitMsg=$(cat "$COMMIT_MSG_FILE")</code></pre>
-            <p>At this point, git has already created a message file and populated it with information including a diff summary. We capture all this pre-existing text into a variable, <code>gitMsg</code>. We'll need to add this back to the end of the file after overwriting the file to simulate prepending. There are other methods of prepending to a file, most interestingly by using a here-string, but this is the most straight-forward method.</p>
-            <pre lang="zsh"><code>    printf "\n\n%s\n" $ticket > "$COMMIT_MSG_FILE"
+            <pre lang="zsh"><code class="language-shell">    gitMsg=$(cat "$COMMIT_MSG_FILE")</code></pre>
+            <p>At this point, git has already created a message file and populated it with information including a diff summary. We capture all this pre-existing text into a variable, <code class="language-shell">gitMsg</code>. We'll need to add this back to the end of the file after overwriting the file to simulate prepending. There are other methods of prepending to a file, most interestingly by using a here-string, but this is the most straight-forward method.</p>
+            <pre lang="zsh"><code class="language-shell">    printf "\n\n%s\n" $ticket > "$COMMIT_MSG_FILE"
     printf "$gitMsg" >> "$COMMIT_MSG_FILE"</code></pre>
             <p>Now to build up our new message, we overwrite the existing message with a formatted string including the ticket number. This string starts with two newlines, providing space to put the substantive commit message, and ends with a newline to distance the ticket number from the git-supplied information. Finally, we append that git-supplied info to the message.</p>
-            <p>After this hook is complete, git will continue on it's merry way and (probably) open the user's <code>$EDITOR</code> as usual.</p>
+            <p>After this hook is complete, git will continue on it's merry way and (probably) open the user's <code class="language-shell">$EDITOR</code> as usual.</p>
 
             <h2>Usage</h2>
-            <p>All we need to do to use this hook is to save it as <code>.git/hooks/prepare-commit-msg</code> and make it executable (<code>chmod +x</code>), git will handle the rest!</p>
+            <p>All we need to do to use this hook is to save it as <code class="language-shell">.git/hooks/prepare-commit-msg</code> and make it executable (<code class="language-shell">chmod +x</code>), git will handle the rest!</p>
             <p>For security reasons, git doesn't allow committing hooks to a repository (nor anything inside <code>.git/</code>), so this script will have to be added to each project individually. If you'd like to add it to all projects, you can store it in a known directory and have git always look there for hooks:</p>
-            <pre lang="zsh"><code>git config --global core.hooksPath /path/to/your/hooks</code></pre>
+            <pre lang="zsh"><code class="language-shell">git config --global core.hooksPath /path/to/your/hooks</code></pre>
             <p><em>However</em>, this will stop git from looking at the local hooks directory. Unfortunately you can't have it both ways, at least as of git version 2.18.</p>
           </div>
         </div>
@@ -141,6 +144,8 @@ SHA1=$3</code></pre>
       <p>Jade Michael Thornton | <a href="https://jmthornton.net">Home</a> | <a href="https://gitlab.com/thornjad/jmthornton">Source code</a></p>
     </footer>
 
+    <script src="https://jmthornton.net/assets/vendor/prism.js" defer></script>
+    <!-- <script src="/assets/vendor/prism.js" defer></script> -->
     <script class="matomo-analytics" type='text/javascript'>
      var _paq = window._paq || [];
      _paq.push(['setDocumentTitle', document.domain + ' -/- ' + document.title]);
