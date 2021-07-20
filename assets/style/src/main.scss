@@ -172,7 +172,9 @@ div.no-md-a a {
   font-style: italic;
 
   &::before {
-    content: '| '
+    content: '| ';
+    font-style: normal;
+    color: $heading-marker;
   }
 }
 
