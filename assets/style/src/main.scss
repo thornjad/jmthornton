@@ -5,14 +5,14 @@
 
 // Variables
 
-// TODO choose nice font, probably Victor Mono
-$font-main: monospace;
+@import './modules/fontface';
+$font-main: VictorMono, monospace;
 $font-secondary: sans-serif;
-$font-mono: monospace;
+$font-mono: VictorMono, monospace;
 
 // heights, widths and things
 $font-size: 16px;
-$line-height: 1.2em;
+$line-height: 1.4em;
 $standard-margin: 1.4rem 0;
 $main-width: 88ch;
 
@@ -21,8 +21,7 @@ $border-radius: 5px;
 // Colors
 $mint: #2aa198;
 $blue: #4B788D;
-$chocolate: #83684C;
-$orange: #AB7146;
+$brown: #83684C;
 $gold: #fabd2f;
 $green: #8ec07c;
 $lighter-blue: #82aec5;
@@ -30,15 +29,16 @@ $grey1: #e4e2e2;
 $grey2: #6b6b6b;
 
 $bg: #fefbf2;
+/* $bg: #fbfbfa; */
 $bg-alt: #f6f3e7;
 $fg: #525C5A;
 
 $heading: $mint;
-$heading-marker: $orange;
-$anchor: $blue;
+$heading-marker: $brown;
+$anchor: $fg;
 $anchor-hover: $blue;
 $footer-line: $heading;
-$button-primary-bg: $chocolate;
+$button-primary-bg: $brown;
 $button-primary-fg: white;
 $button-primary-bg-hover: $mint;
 $button-primary-fg-hover: white;
@@ -151,10 +151,7 @@ ul, ol {
 
 a {
   color: $anchor;
-  text-decoration: none;
-
-  &::before {content: '[';}
-  &::after {content: ']';}
+  text-decoration-color: $mint;
 
   &:hover {
     color: $anchor-hover;

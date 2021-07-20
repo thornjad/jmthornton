@@ -2,10 +2,35 @@
 /* Main style for jmthornton.net
  * Copyright (c) 2015-2021 Jade Michael Thornton
  */
+@font-face {
+  font-family: VictorMono;
+  src: local("VictorMono-Regular"), url(/assets/fonts/VictorMono-Regular.woff2) format("woff2");
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
+  font-family: VictorMono;
+  src: local("VictorMono-Italic"), url(/assets/fonts/VictorMono-Italic.woff2) format("woff2");
+  font-style: italic;
+  font-weight: 400;
+}
+@font-face {
+  font-family: VictorMono;
+  src: local("VictorMono-Bold"), url(/assets/fonts/VictorMono-Bold.woff2) format("woff2");
+  font-style: normal;
+  font-weight: 700;
+}
+@font-face {
+  font-family: VictorMono;
+  src: local("VictorMono-BoldItalic"), url(/assets/fonts/VictorMono-BoldItalic.woff2) format("woff2");
+  font-style: italic;
+  font-weight: 700;
+}
+/* $bg: #fbfbfa; */
 :root {
-  font-family: monospace;
+  font-family: VictorMono, monospace;
   font-size: 16px;
-  line-height: 1.2em;
+  line-height: 1.4em;
   background: #fefbf2;
 }
 
@@ -96,7 +121,7 @@ h6 {
 }
 
 h1::before, h2::before, h3::before, h4::before, h5::before, h6::before {
-  color: #AB7146;
+  color: #83684C;
   margin: 0;
 }
 
@@ -152,20 +177,14 @@ ul.dl > li p:first-child, ol.dl > li p:first-child {
 }
 
 a {
-  color: #4B788D;
-  text-decoration: none;
-}
-a::before {
-  content: "[";
-}
-a::after {
-  content: "]";
+  color: #525C5A;
+  text-decoration-color: #2aa198;
 }
 a:hover {
   color: #4B788D;
 }
 a:visited {
-  color: #4B788D;
+  color: #525C5A;
 }
 
 div.no-md-a a {

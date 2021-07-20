@@ -1,0 +1,27 @@
+@font-face {
+  font-family: VictorMono;
+  src: local('VictorMono-Regular'), url(/assets/fonts/VictorMono-Regular.woff2) format("woff2");
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: VictorMono;
+  src: local('VictorMono-Italic'), url(/assets/fonts/VictorMono-Italic.woff2) format("woff2");
+  font-style: italic;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: VictorMono;
+  src: local('VictorMono-Bold'), url(/assets/fonts/VictorMono-Bold.woff2) format("woff2");
+  font-style: normal;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: VictorMono;
+  src: local('VictorMono-BoldItalic'), url(/assets/fonts/VictorMono-BoldItalic.woff2) format("woff2");
+  font-style: italic;
+  font-weight: 700;
+}
