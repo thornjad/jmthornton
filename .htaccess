@@ -8,7 +8,9 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} (.+)/$
 RewriteRule ^ %1 [R=301,L]
 
-RewriteRule &/tools/news/?& https://news.jmthornton.net [R=301,QSA]
+RewriteRule ^/tools/news/?& https://news.jmthornton.net/ [R=301,QSA]
+# Unsure why this one happens sometimes
+RewriteRule ^/tools/news/tools/news/?$ https://news.jmthornton.net/ [R=301,QSA]
 
 RewriteRule ^/_nsr/?$ projects/_nsrbiz/ [R=301,QSA]
 RewriteRule ^/_nsrbiz/?$ projects/_nsrbiz/ [L,QSA]
