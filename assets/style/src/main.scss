@@ -6,9 +6,9 @@
 // Variables
 
 @import './modules/fontface';
-$font-main: VictorMono, monospace;
+$font-main: VictorMono, Menlo, Monaco monospace;
 $font-secondary: sans-serif;
-$font-mono: VictorMono, monospace;
+$font-mono: VictorMono, Menlo, Monaco, monospace;
 
 // heights, widths and things
 $font-size: 16px;
