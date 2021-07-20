@@ -8,10 +8,12 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} (.+)/$
 RewriteRule ^ %1 [R=301,L]
 
-RewriteRule ^/_nsr$ projects/_nsrbiz/ [R=301,QSA]
-RewriteRule ^/_nsrbiz$ projects/_nsrbiz/ [L,QSA]
+RewriteRule &/tools/news/?& https://news.jmthornton.net [R=301,QSA]
 
-RewriteRule ^/p$ / [R=301]
+RewriteRule ^/_nsr/?$ projects/_nsrbiz/ [R=301,QSA]
+RewriteRule ^/_nsrbiz/?$ projects/_nsrbiz/ [L,QSA]
+
+RewriteRule ^/p/?$ / [R=301]
 
 # Add security and privacy related headers
 Header set X-Content-Type-Options "nosniff"
