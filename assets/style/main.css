@@ -265,8 +265,8 @@ hr {
 button {
   display: inline-block;
   padding: 10px 12px;
-  min-width: 7rem;
-  min-height: 3.5rem;
+  min-width: 6rem;
+  min-height: max-content;
   border-color: #83684C;
   background-color: #83684C;
   color: white;
@@ -293,8 +293,6 @@ button.secondary:hover {
 button.low-key {
   background-color: #6b6b6b;
   color: white;
-  min-height: 0;
-  height: max-content;
 }
 button.low-key:hover {
   background-color: #5e5e5e;
@@ -311,6 +309,41 @@ div.action-buttons > button {
 }
 div.action-buttons > button:last-child {
   margin-right: 0;
+}
+
+label.toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+label.toggle > span {
+  padding-right: 1em;
+  font-size: 0.85em;
+}
+label.toggle input.toggle {
+  appearance: none;
+  cursor: pointer;
+  user-select: none;
+  background-color: #83684C;
+  border: 1px solid #83684C;
+  border-radius: 5px;
+  height: 1.5em;
+  width: 3em;
+  box-shadow: -1.5em 0 0 2px #fefbf2 inset, 0 0 0 2px #fefbf2 inset, 0 0 0;
+}
+label.toggle input.toggle:not(.no-transition) {
+  transition: background, box-shadow 0.2s ease-in-out;
+}
+label.toggle input.toggle:checked {
+  box-shadow: 1.5em 0 0 2px #fefbf2 inset, 0 0 0 2px #fefbf2 inset, 0 0 0;
+  background: #2aa198;
+}
+label.toggle input.toggle:disabled {
+  cursor: not-allowed;
+  background-color: #b59b80;
+  border-color: #b59b80;
 }
 
 .spinner {

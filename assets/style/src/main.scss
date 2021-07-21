@@ -55,6 +55,7 @@ $spinner-fg: $mint;
 $pre-border: $green;
 $blockquote-bg: $gold;
 $aside-bg: $lighter-blue;
+$toggle-bg: $brown;
 
 
 // Mixins
@@ -238,8 +239,8 @@ hr {
 button {
   display: inline-block;
   padding: 10px 12px;
-  min-width: 7rem;
-  min-height: 3.5rem;
+  min-width: 6rem;
+  min-height: max-content;
   border-color: $button-primary-bg;
   background-color: $button-primary-bg;
   color: $button-primary-fg;
@@ -269,8 +270,6 @@ button {
   &.low-key {
     background-color: $button-low-key-bg;
     color: $button-low-key-fg;
-    min-height: 0;
-    height: max-content;
     &:hover {
       background-color: $button-low-key-bg-hover;
       color: $button-low-key-fg-hover;
@@ -288,6 +287,46 @@ div.action-buttons {
 
     &:last-child {
       margin-right: 0;
+    }
+  }
+}
+
+label.toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+
+  > span {
+    padding-right: 1em;
+    font-size: 0.85em;
+  }
+
+  input.toggle {
+    appearance: none;
+    cursor: pointer;
+    user-select: none;
+    background-color: $toggle-bg;
+    border: 1px solid $toggle-bg;
+    border-radius: $border-radius;
+    height: 1.5em;
+    width: 3em;
+    box-shadow: -1.5em 0 0 2px $bg inset,0 0 0 2px $bg inset,0 0 0;
+
+    &:not(.no-transition) {
+      transition: background,box-shadow 0.2s ease-in-out;
+    }
+
+    &:checked {
+      box-shadow: 1.5em 0 0 2px $bg inset,0 0 0 2px $bg inset,0 0 0;
+      background: $mint;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      background-color: lighten($toggle-bg, 20%);
+      border-color: lighten($toggle-bg, 20%);
     }
   }
 }

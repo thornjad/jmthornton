@@ -75,20 +75,24 @@ const loadSomePosts = async (posts) => {
     }
   } finally {
     hideSpinner();
+    syncLoadMoreButton();
     showFooter();
   }
 };
 
-const hideSpinner = () => {
-  document.querySelector('#spinner').style.display = 'none';
-};
+const hideSpinner = () => document.querySelector('#spinner').style.display = 'none';
+const showSpinner = () => document.querySelector('#spinner').style.display = 'block';
 
-const showSpinner = () => {
-  document.querySelector('#spinner').style.display = 'block';
-};
+const showFooter = () => document.querySelector('footer').style.display = 'block';
 
-const showFooter = () => {
-  document.querySelector('footer').style.display = 'block';
+const showLoadMore = () => document.querySelector('.load-more-container').style.display = 'flex';
+const hideLoadMore = () => document.querySelector('.load-more-container').style.display = 'none';
+const syncLoadMoreButton = () =>
+      void (window.localStorage.getItem('infiniteScroll') !== 'no'
+            ? hideLoadMore() : showLoadMore());
+
+const syncInfiniteScrollButton = () => {
+  document.querySelector('#infinite-scroll').checked = window.localStorage.getItem('infiniteScroll') !== 'no';
 };
 
 const loadPosts = async (numPostsToLoad, posts) => {
@@ -142,17 +146,45 @@ const saveToPocket = (url) => {
 };
 
 const main = () => {
-	const posts = new NewsPosts();
-	document.addEventListener('DOMContentLoaded', run.bind(null, posts));
-	document.addEventListener('scroll', evt => {
-		if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-			loadSomePosts(posts);
-		}
-	});
-	addUpdatedMessage();
-  document.querySelector('button.open-all').addEventListener('click', () => {
-    posts.loadedPosts.forEach((p) => window.open(p.url, '_blank'));
-  });
+  const posts = new NewsPosts();
+
+  const infiniteScroll = () => {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+      loadSomePosts(posts);
+    }
+  }
+
+  const loadMore = async () => {
+    hideLoadMore();
+    await loadSomePosts(posts);
+    showLoadMore()
+  }
+
+  document.addEventListener(
+    'DOMContentLoaded',
+    () => {
+      syncInfiniteScrollButton();
+      run(posts);
+      document.querySelector('#infinite-scroll').addEventListener('change', function(e) {
+        const btn = document.querySelector('#load-more');
+        btn.removeEventListener('click', loadMore);
+        document.removeEventListener('scroll', infiniteScroll);
+        if (this.checked) {
+          window.localStorage.removeItem('infiniteScroll');
+          document.addEventListener('scroll', infiniteScroll);
+        } else {
+          window.localStorage.setItem('infiniteScroll', 'no');
+          btn.addEventListener('click', loadMore);
+        }
+        syncLoadMoreButton();
+      });
+      if (window.localStorage.getItem('infiniteScroll') !== 'no') {
+        document.addEventListener('scroll', infiniteScroll);
+      } else {
+        document.querySelector('#load-more').addEventListener('click', loadMore);
+      }
+    });
+  addUpdatedMessage();
 };
 
 // run script
