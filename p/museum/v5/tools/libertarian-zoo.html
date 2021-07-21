@@ -8,8 +8,8 @@
 		<meta name="robots" content="index, follow" />
 		<meta name="googlebot" content="index, follow" />
 		<meta name="google-site-verification" content="JUM1Dl9n9ic9xPMb03Nzf4NgW_-8PWZrJ4eJGC_PoYM" />
-		<link rel="stylesheet" href="/assets/style/main.css" type="text/css" />
-		<link rel="stylesheet" href="/assets/style/page/libertarian-zoo.css" type="text/css" />
+		<link rel="stylesheet" href="../assets/style/main.css" type="text/css" />
+		<link rel="stylesheet" href="../assets/style/page/libertarian-zoo.css" type="text/css" />
 
 		<meta name="twitter:card" content="summary">
 		<meta name="twitter:site" content="@jmthorntonwhat">
@@ -34,8 +34,8 @@
 	<body>
 		<header class="sticky">
 			<span class="header-hack">
-				<a href="/" class="button" role="button">Home</a>
-				<a href="/tools/" class="button" role="button">Tools</a>
+				<a href="../index.html" class="button" role="button">Home</a>
+				<a href="index.html" class="button" role="button">Tools</a>
 				<a href="https://blog.jmthornton.net" class="button" role="button">Blog</a>
 			</span>
 		</header>
@@ -309,7 +309,7 @@
 							<img ${i > 5 ? 'loading="lazy"' : ''} alt="${c.name}" src="/assets/images/zoo/${c.pic}" />
 						</div>
 						<h3 class="candidate-name">
-							<a href="${c.url}">${c.name}</a>
+							<a href="http://localhost:8081/tools/${c.url}">${c.name}</a>
 							<small class="candidate-title"><em>
 								${c.title}
 							</em></small>
@@ -332,7 +332,7 @@
 		<footer>
 			<div class="footer-text">
 				<div class="footer-line">
-					Copyright © 2020 Jade Michael Thornton | <a href="https://gitlab.com/thornjad/jmthornton">Source code</a>
+					Copyright © 2015-2020 Jade Michael Thornton | <a href="https://gitlab.com/thornjad/jmthornton">Source code</a>
 				</div>
 			</div>
 		</footer>
@@ -359,6 +359,6 @@
 		 }();
 		</script>
 
-		<script src="/node_modules/instant.page/instantpage.js" type="module" integrity="sha384-EwBObn5QAxP8f09iemwAJljc+sU+eUXeL9vSBw1eNmVarwhKk2F9vBEpaN9rsrtp" defer></script>
+		<script src="http://localhost:8081/node_modules/instant.page/instantpage.js" type="module" integrity="sha384-EwBObn5QAxP8f09iemwAJljc+sU+eUXeL9vSBw1eNmVarwhKk2F9vBEpaN9rsrtp" defer></script>
 	</body>
 </html>

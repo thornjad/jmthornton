@@ -1,5 +1,5 @@
 /* Main style for jmthornton.net
- * Copyright (c) 2015-2021 Jade Michael Thornton
+ * Copyright (c) 2012-2021 Jade Michael Thornton
  */
 
 
@@ -169,7 +169,7 @@ div.no-md-a a {
   &::after {content: none;}
 }
 
-.blog-content time {
+time {
   font-style: italic;
 
   &::before {

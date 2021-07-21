@@ -145,13 +145,13 @@
     </main>
 
 		<footer>
-      <p>Copyright © 2015-2021 Jade Michael Thornton | <a href="https://gitlab.com/thornjad/jmthornton">Source code</a> <span class="versioning"></span></p>
+      <p>Copyright © 2012-2021 Jade Michael Thornton | <a href="https://gitlab.com/thornjad/jmthornton">Source code</a> <span class="versioning"></span>| <a href="/p/museum">Museum</a></p>
 
 		  <script>
 		   document.addEventListener('DOMContentLoaded', async () => {
 			   const v = document.querySelector('.versioning');
 			   const res = await fetch('/package.json');
-			   v.innerHTML = `| Version ${(await res.json()).version}`;
+			   v.innerHTML = `| Version ${(await res.json()).version} `;
 		   });
 		  </script>
 		</footer>
