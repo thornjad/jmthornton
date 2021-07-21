@@ -3,6 +3,7 @@
 *.o
 *.so
 a.html
+assets/style/main.css
 
 # Logs and databases #
 ######################
