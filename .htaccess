@@ -26,6 +26,8 @@ Header set X-Permitted-Cross-Domain-Policies "none"
 SetEnv modHeadersAvailable true
 
 <IfModule mod_headers.c>
+  # Dynamically allow CORS for our subdomains. The Vary Origin header is required to avoid caching
+  # problems. CC BY-SA 3.0 https://stackoverflow.com/a/27990162/5741952
   SetEnvIf Origin ^(https?://.+\.jmthornton\.net(?::\d{1,5})?)$   CORS_ALLOW_ORIGIN=$1
   Header append Access-Control-Allow-Origin  %{CORS_ALLOW_ORIGIN}e   env=CORS_ALLOW_ORIGIN
   Header merge  Vary "Origin"
