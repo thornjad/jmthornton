@@ -6,7 +6,7 @@
 // Variables
 
 @import './modules/fontface';
-$font-main: VictorMono, Menlo, Monaco monospace;
+$font-main: MetroNova, Menlo, Monaco monospace;
 $font-secondary: sans-serif;
 $font-mono: VictorMono, Menlo, Monaco, monospace;
 
@@ -56,17 +56,6 @@ $pre-border: $green;
 $blockquote-bg: $gold;
 $aside-bg: $lighter-blue;
 $toggle-bg: $brown;
-
-
-// Mixins
-
-@mixin antialias {
-	-webkit-font-smoothing: antialiased;
-	-moz-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	font-smoothing: antialiased;
-	font-smooth: always;
-}
 
 
 // Major structural elements
