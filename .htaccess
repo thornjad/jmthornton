@@ -26,15 +26,9 @@ Header set X-Permitted-Cross-Domain-Policies "none"
 SetEnv modHeadersAvailable true
 
 <IfModule mod_headers.c>
-    # one week
-    <FilesMatch "\.(jpg|jpeg|webp|png|gif|swf)$">
-        Header set Cache-Control "max-age=21600, public, must-revalidate"
-    </FilesMatch>
-
-    # one week
-    <FilesMatch "\.(js|css|swf)$">
-        Header set Cache-Control "max-age=21600, must-revalidate"
-    </FilesMatch>
+  SetEnvIf Origin ^(https?://.+\.jmthornton\.net(?::\d{1,5})?)$   CORS_ALLOW_ORIGIN=$1
+  Header append Access-Control-Allow-Origin  %{CORS_ALLOW_ORIGIN}e   env=CORS_ALLOW_ORIGIN
+  Header merge  Vary "Origin"
 </IfModule>
 
 # Allow HTML pages to load without the filename extension
