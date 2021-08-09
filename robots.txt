@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: /czshrnw/
 Disallow: /layout/
-Sitemap: https://jmthornton.net/p/sitemaps/index.xml
+Sitemap: https://jmthornton.net/p/sitemap.xml
