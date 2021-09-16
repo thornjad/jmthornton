@@ -2,6 +2,9 @@
 RewriteCond %{HTTPS} !=on
 RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R=301]
 
+# Disallow .git
+RedirectMatch 404 /\.git
+
 # Remove trailing slashes
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-d
