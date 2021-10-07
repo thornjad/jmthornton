@@ -39,7 +39,7 @@ class NewsPosts {
       <br />
       <span class="source">${url ? url.match(urlMatcher)[1] : ''}</span>
       &nbsp;<a class="extra-content-link" href="${pocketUrl}" target="_blank" rel="noopener noreferrer">add to pocket</a>
-      &nbsp;<a class="extra-content-link" href="${commentsUrl} target="_blank" rel="noopener noreferrer">comments</a>
+      &nbsp;<a class="extra-content-link" href="${commentsUrl}" target="_blank" rel="noopener noreferrer">comments</a>
     </p>`;
   }
 
