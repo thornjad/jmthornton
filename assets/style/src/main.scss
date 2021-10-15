@@ -450,6 +450,11 @@ div.shield-links {
   a::after {content:none;}
 }
 
+div.sponsor {
+  display: flex;
+  justify-content: center;
+}
+
 div.split {
   display: flex;
   justify-content: space-between;
