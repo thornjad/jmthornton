@@ -12,8 +12,9 @@ $font-mono: VictorMono, monospace;
 
 // heights, widths and things
 $font-size: 16px;
-$line-height: 1.4em;
-$standard-margin: 1.4rem 0;
+$phi: 1.618033; // the golden ratio
+$line-height: $phi + 0em;
+$standard-margin: ($phi + 0em) 0;
 $main-width: 770px; // approx. 88ch, but without the loading flash
 
 $border-radius: 5px;

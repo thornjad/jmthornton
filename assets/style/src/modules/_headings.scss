@@ -3,7 +3,7 @@
 h1, h2, h3, h4, h5, h6 {
   font-size: 1rem;
   font-weight: normal;
-  line-height: 1.3em;
+  line-height: $phi + 0em;
   color: $heading;
   margin: $standard-margin;
 
@@ -17,7 +17,7 @@ h1, h2 {
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: ($phi * $phi) + 0rem;
   text-indent: -2ch;
   padding-left: 2ch;
 
@@ -27,7 +27,7 @@ h1 {
 }
 
 h2 {
-  font-size: 1.75rem;
+  font-size: $phi + 0rem;
   text-indent: -3ch;
   padding-left: 3ch;
 }
