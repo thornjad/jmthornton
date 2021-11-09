@@ -4,9 +4,9 @@
 // spinners
 
 .spinner {
-  margin: $standard-margin;
-  border: .25rem solid $bg;
-  border-left: .25rem solid $spinner-fg;
+  margin: var(--standard-margin);
+  border: .25rem solid var(--bg);
+  border-left: .25rem solid var(--spinner-fg);
   border-radius: 50%;
   width: 1.25rem;
   height: 1.25rem;
@@ -319,12 +319,12 @@
 // rgb animation
 
 .rgb-color {
-  color: $fg;
+  color: var(--fg);
   animation: rgb-color-anim 7s linear infinite;
 }
 
 @keyframes rgb-color-anim {
-  0% {color: $mint;}
+  0% {color: var(--mint);}
   12% {color: #f79533;}
   25% {color: #f37055;}
   37% {color: #ef4e7b;}
@@ -332,5 +332,5 @@
   62% {color: #5073b8;}
   75% {color: #1098ad;}
   87% {color: #07b39b;}
-  100% {color: $mint;}
+  100% {color: var(--mint);}
 }

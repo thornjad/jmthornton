@@ -3,9 +3,9 @@
 h1, h2, h3, h4, h5, h6 {
   font-size: 1rem;
   font-weight: normal;
-  line-height: $phi + 0em;
-  color: $heading;
-  margin: $standard-margin;
+  line-height: var(--line-height);
+  color: var(--heading);
+  margin: var(--standard-margin);
 
   small {
     font-size: 0.6em;
@@ -17,7 +17,7 @@ h1, h2 {
 }
 
 h1 {
-  font-size: ($phi * $phi) + 0rem;
+  font-size: 2.618030789em;
   text-indent: -2ch;
   padding-left: 2ch;
 
@@ -27,7 +27,7 @@ h1 {
 }
 
 h2 {
-  font-size: $phi + 0rem;
+  font-size: 1.618033em;
   text-indent: -3ch;
   padding-left: 3ch;
 }
@@ -58,7 +58,7 @@ h6 {
 // pseudo-markdown heading markers
 
 h1::before, h2::before, h3::before, h4::before, h5::before, h6::before {
-  color: $heading-marker;
+  color: var(--heading-marker);
   margin: 0;
 }
 

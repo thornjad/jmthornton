@@ -6,67 +6,120 @@
 // Variables
 
 @import './modules/fontface';
-$font-main: MetroNova;
-$font-secondary: sans-serif;
-$font-mono: VictorMono, monospace;
 
-// heights, widths and things
-$font-size: 16px;
-$phi: 1.618033; // the golden ratio
-$line-height: $phi + 0em;
-$standard-margin: ($phi + 0em) 0;
-$main-width: 770px; // approx. 88ch, but without the loading flash
+:root {
+  --font-main: MetroNova;
+  --font-secondary: sans-serif;
+  --font-mono: VictorMono, monospace;
 
-$border-radius: 5px;
+  // heights, widths and things
+  --font-size: 16px;
+  --phi: 1.618033; // the golden ratio
+  --line-height: 1.618033em;
+  --standard-margin: 1.618033em 0;
+  --main-width: 770px; // approx. 88ch, but without the loading flash
 
-// Colors
-$mint: #2aa198;
-$blue: #4B788D;
-$brown: #83684C;
-$gold: #fabd2f;
-$green: #8ec07c;
-$lighter-blue: #82aec5;
-$grey1: #e4e2e2;
-$grey2: #6b6b6b;
+  --border-radius: 5px;
+}
 
-$bg: #fefbf2;
-/* $bg: #fbfbfa; */
-$bg-alt: #f6f3e7;
-$fg: #525C5A;
+@media (prefers-color-scheme: light) {
+  :root {
+    --mint: #2aa198;
+    --blue: #4B788D;
+    --brown: #83684C;
+    --gold: #fabd2f;
+    --green: #8ec07c;
+    --lighter-blue: #82aec5;
+    --grey1: #e4e2e2;
+    --grey2: #6b6b6b;
 
-$heading: $mint;
-$heading-marker: $brown;
-$anchor: $fg;
-$anchor-hover: $blue;
-$footer-line: $heading;
-$button-primary-bg: $brown;
-$button-primary-fg: white;
-$button-primary-bg-hover: $mint;
-$button-primary-fg-hover: white;
-$button-secondary-bg: $mint;
-$button-secondary-fg: white;
-$button-secondary-bg-hover: $mint;
-$button-secondary-fg-hover: white;
-$button-low-key-bg: $grey2;
-$button-low-key-fg: white;
-$button-low-key-bg-hover: darken($button-low-key-bg, 5%);;
-$button-low-key-fg-hover: white;
-$hr: $grey1;
-$spinner-fg: $mint;
-$pre-border: $green;
-$blockquote-bg: $gold;
-$aside-bg: $lighter-blue;
-$toggle-bg: $brown;
+    --bg: #fefbf2;
+    /* --bg: #fbfbfa; */
+    --bg-alt: #f6f3e7;
+    --bg-alt-darker: darken(#f6f3e7, 10%);
+    --fg: #525C5A;
+
+    --heading: var(--mint);
+    --heading-marker: var(--brown);
+    --anchor: var(--fg);
+    --anchor-hover: var(--blue);
+    --footer-line: var(--heading);
+    --button-primary-bg: var(--brown);
+    --button-primary-fg: white;
+    --button-primary-bg-hover: var(--mint);
+    --button-primary-fg-hover: white;
+    --button-secondary-bg: var(--mint);
+    --button-secondary-fg: white;
+    --button-secondary-bg-hover: var(--mint);
+    --button-secondary-fg-hover: white;
+    --button-low-key-bg: var(--grey2);
+    --button-low-key-fg: white;
+    --button-low-key-bg-hover: darken(white, 5%);;
+    --button-low-key-fg-hover: white;
+    --hr: var(--grey1);
+    --spinner-fg: var(--mint);
+    --pre-border: var(--green);
+    --blockquote-bg: var(--gold);
+    --aside-bg: var(--lighter-blue);
+    --toggle-bg: var(--brown);
+    --toggle-bg-disabled: lighten(#83684C, 20%);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --mint: #2aa198;
+    --blue: #4B788D;
+    --brown: #83684C;
+    --gold: #fabd2f;
+    --green: #8ec07c;
+    --lighter-blue: #82aec5;
+    --grey1: #e4e2e2;
+    --grey2: #6b6b6b;
+
+    --bg: #fefbf2;
+    /* --bg: #fbfbfa; */
+    --bg-alt: #f6f3e7;
+    --bg-alt-darker: darken(#f6f3e7, 10%);
+    --fg: #525C5A;
+
+    --heading: var(--mint);
+    --heading-marker: var(--brown);
+    --anchor: var(--fg);
+    --anchor-hover: var(--blue);
+    --footer-line: var(--heading);
+    --button-primary-bg: var(--brown);
+    --button-primary-fg: white;
+    --button-primary-bg-hover: var(--mint);
+    --button-primary-fg-hover: white;
+    --button-secondary-bg: var(--mint);
+    --button-secondary-fg: white;
+    --button-secondary-bg-hover: var(--mint);
+    --button-secondary-fg-hover: white;
+    --button-low-key-bg: var(--grey2);
+    --button-low-key-fg: white;
+    --button-low-key-bg-hover: darken(white, 5%);;
+    --button-low-key-fg-hover: white;
+    --hr: var(--grey1);
+    --spinner-fg: var(--mint);
+    --pre-border: var(--green);
+    --blockquote-bg: var(--gold);
+    --aside-bg: var(--lighter-blue);
+    --toggle-bg: var(--brown);
+    --toggle-bg-disabled: lighten(#83684C, 20%);
+  }
+}
+
 
 
 // Major structural elements
 
 :root {
-  font-family: $font-main;
-  font-size: $font-size;
-  line-height: $line-height;
-  background: $bg;
-  scrollbar-color: $brown transparent;
+  font-family: var(--font-main);
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  background: var(--bg);
+  scrollbar-color: var(--brown transparent);
 }
 
 body {
@@ -78,14 +131,14 @@ body {
 
 main {
   width: 100%;
-  max-width: $main-width;
+  max-width: var(--main-width);
   margin: 0 1rem;
 }
 
 header {
   height: 2em;
   width: 100%;
-  max-width: $main-width;
+  max-width: var(--main-width);
 }
 
 footer {
@@ -94,7 +147,7 @@ footer {
 
   &::before {
 	  content: '- - - - - - -';
-    color: $footer-line;
+    color: var(--footer-line);
 	  position: absolute;
 	  top: 0;
     left: 50%;
@@ -116,7 +169,7 @@ blockquote > figcaption {
 @import './modules/headings';
 
 p, ul {
-  margin: $standard-margin;
+  margin: var(--standard-margin);
 }
 
 li > p:first-child {
@@ -146,15 +199,15 @@ ul, ol {
 }
 
 a {
-  color: $anchor;
-  text-decoration-color: $mint;
+  color: var(--anchor);
+  text-decoration-color: var(--mint);
 
   &:hover {
-    color: $anchor-hover;
+    color: var(--anchor-hover);
   }
 
   &:visited {
-    color: $anchor;
+    color: var(--anchor);
   }
 }
 
@@ -170,7 +223,7 @@ time {
   &::before {
     content: '| ';
     font-style: normal;
-    color: $heading-marker;
+    color: var(--heading-marker);
   }
 }
 
@@ -179,21 +232,11 @@ blockquote {
 	display: block;
 	position: relative;
 	font-style: italic;
-  padding: 1.5rem 1.5rem 1rem 2.5rem;
-	border-left: .375rem solid $blockquote-bg;
-	border-radius: $border-radius;
-  background: $bg-alt;
-
-  &::before {
-	  position: absolute;
-	  top: 1rem;
-	  left: 0;
-	  font-family: sans-serif;
-	  font-size: 3rem;
-	  font-weight: 700;
-	  content: "“";
-	  color: $blockquote-bg;
-  }
+  padding: 0.5rem;
+  padding-left: 1rem;
+	border-left: .375rem solid var(--blockquote-bg);
+	border-radius: var(--border-radius);
+  background: var(--bg-alt);
 
   &[cite]::after {
 	  font-style: normal;
@@ -209,23 +252,23 @@ aside {
   display: block;
   position: relative;
   padding: 1rem 1.5rem 1rem 2.5rem;
-	border-left: .375rem solid $aside-bg;
-	border-radius: $border-radius;
-  background: $bg-alt;
+	border-left: .375rem solid var(--aside-bg);
+	border-radius: var(--border-radius);
+  background: var(--bg-alt);
 }
 
 img {
-  border-radius: $border-radius;
+  border-radius: var(--border-radius);
 	max-width: 100%;
 	height: auto;
 }
 
 hr {
-  border: 1px solid $hr;
+  border: 1px solid var(--hr);
 }
 
 .sep-top {
-  border-top: 1px solid $hr;
+  border-top: 1px solid var(--hr);
 }
 
 
@@ -236,10 +279,10 @@ button {
   padding: 10px 12px;
   min-width: 6rem;
   min-height: max-content;
-  border-color: $button-primary-bg;
-  background-color: $button-primary-bg;
-  color: $button-primary-fg;
-  border-radius: $border-radius;
+  border-color: var(--button-primary-bg);
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-fg);
+  border-radius: var(--border-radius);
   text-decoration: none;
   cursor: pointer;
   line-height: 20px;
@@ -247,27 +290,27 @@ button {
   outline: 0;
 
   &:hover {
-    background-color: $button-primary-bg-hover;
-    color: $button-primary-fg-hover;
+    background-color: var(--button-primary-bg-hover);
+    color: var(--button-primary-fg-hover);
   }
 
   &.secondary {
     background-color: none;
-    border: 1px solid $button-secondary-bg;
-    color: $button-secondary-fg;
+    border: 1px solid var(--button-secondary-bg);
+    color: var(--button-secondary-fg);
 
     &:hover {
-      background-color: $button-secondary-bg-hover;
-      color: $button-secondary-fg-hover;
+      background-color: var(--button-secondary-bg-hover);
+      color: var(--button-secondary-fg-hover);
     }
   }
 
   &.low-key {
-    background-color: $button-low-key-bg;
-    color: $button-low-key-fg;
+    background-color: var(--button-low-key-bg);
+    color: var(--button-low-key-fg);
     &:hover {
-      background-color: $button-low-key-bg-hover;
-      color: $button-low-key-fg-hover;
+      background-color: var(--button-low-key-bg-hover);
+      color: var(--button-low-key-fg-hover);
     }
   }
 }
@@ -302,26 +345,26 @@ label.toggle {
     appearance: none;
     cursor: pointer;
     user-select: none;
-    background-color: $toggle-bg;
-    border: 1px solid $toggle-bg;
-    border-radius: $border-radius;
+    background-color: var(--toggle-bg);
+    border: 1px solid var(--toggle-bg);
+    border-radius: var(--border-radius);
     height: 1.5em;
     width: 3em;
-    box-shadow: -1.5em 0 0 2px $bg inset,0 0 0 2px $bg inset,0 0 0;
+    box-shadow: -1.5em 0 0 2px var(--bg inset,0 0 0 2px var(--bg inset,0 0 0));
 
     &:not(.no-transition) {
       transition: background,box-shadow 0.2s ease-in-out;
     }
 
     &:checked {
-      box-shadow: 1.5em 0 0 2px $bg inset,0 0 0 2px $bg inset,0 0 0;
-      background: $mint;
+      box-shadow: 1.5em 0 0 2px var(--bg inset,0 0 0 2px var(--bg inset,0 0 0));
+      background: var(--mint);
     }
 
     &:disabled {
       cursor: not-allowed;
-      background-color: lighten($toggle-bg, 20%);
-      border-color: lighten($toggle-bg, 20%);
+      background-color: var(--toggle-bg-disabled);
+      border-color: var(--toggle-bg-disabled);
     }
   }
 }
@@ -335,12 +378,12 @@ label.toggle {
 pre {
 	overflow: auto;
 	position: relative;
-	background: $bg-alt !important;
+	background: var(--bg-alt !important);
 	padding: 0.75rem !important;
   margin: 2rem 0.5rem !important;
 	border: none;
-	border-left: .25rem solid $pre-border;
-	border-radius: $border-radius;
+	border-left: .25rem solid var(--pre-border);
+	border-radius: var(--border-radius);
 
   &.line-numbers {
     padding-left: 3.8em !important;
@@ -354,9 +397,9 @@ code, sub, sup {
 }
 
 code {
-	background: $bg-alt !important;
-  border: 1px solid darken($bg-alt, 10%);
-	border-radius: $border-radius;
+	background: var(--bg-alt !important);
+  border: 1px solid var(--bg-alt-darker);
+	border-radius: var(--border-radius);
 	padding: 0 4px;
   font-size: 0.85em;
 
@@ -392,7 +435,7 @@ code {
     color: inherit;
   }
   .token.number {
-    color: $fg;
+    color: var(--fg);
   }
   .token.boolean, .token.class-name, .token.constant {
     color: #718388;
@@ -404,8 +447,8 @@ code {
 }
 
 html code[class*="language-"], html pre[class*="language-"] {
-  color: $fg;
-  font-family: $font-mono;
+  color: var(--fg);
+  font-family: var(--font-mono);
   text-shadow: none;
   -moz-tab-size: 2;
   -o-tab-size: 2;
@@ -462,7 +505,7 @@ div.split {
   justify-content: space-between;
   flex-wrap: wrap;
 
-  @media (min-width: $main-width) {
+  @media (min-width: var(--main-width)) {
     div.left {
       max-width: 59%;
     }
