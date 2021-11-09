@@ -7,6 +7,10 @@
 
 @import './modules/fontface';
 
+$main-width: 770px; // approx. 88ch, but without the loading flash
+$phi: 1.618033; // the golden ratio
+$phi-em: 1.618033em;
+
 :root {
   --font-main: MetroNova;
   --font-secondary: sans-serif;
@@ -14,10 +18,9 @@
 
   // heights, widths and things
   --font-size: 16px;
-  --phi: 1.618033; // the golden ratio
-  --line-height: 1.618033em;
-  --standard-margin: 1.618033em 0;
-  --main-width: 770px; // approx. 88ch, but without the loading flash
+  --line-height: #{$phi-em};
+  --line-height: #{$phi-em};
+  --standard-margin: #{$phi-em} 0;
 
   --border-radius: 5px;
 }
@@ -131,14 +134,14 @@ body {
 
 main {
   width: 100%;
-  max-width: var(--main-width);
+  max-width: $main-width;
   margin: 0 1rem;
 }
 
 header {
   height: 2em;
   width: 100%;
-  max-width: var(--main-width);
+  max-width: $main-width;
 }
 
 footer {
@@ -505,7 +508,7 @@ div.split {
   justify-content: space-between;
   flex-wrap: wrap;
 
-  @media (min-width: var(--main-width)) {
+  @media (min-width: $main-width) {
     div.left {
       max-width: 59%;
     }
