@@ -353,14 +353,14 @@ label.toggle {
     border-radius: var(--border-radius);
     height: 1.5em;
     width: 3em;
-    box-shadow: -1.5em 0 0 2px var(--bg inset,0 0 0 2px var(--bg inset,0 0 0));
+    box-shadow: -1.5em 0 0 2px var(--bg) inset,0 0 0 2px var(--bg) inset,0 0 0;
 
     &:not(.no-transition) {
       transition: background,box-shadow 0.2s ease-in-out;
     }
 
     &:checked {
-      box-shadow: 1.5em 0 0 2px var(--bg inset,0 0 0 2px var(--bg inset,0 0 0));
+      box-shadow: 1.5em 0 0 2px var(--bg) inset,0 0 0 2px var(--bg) inset,0 0 0;
       background: var(--mint);
     }
 
