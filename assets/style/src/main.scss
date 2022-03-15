@@ -36,8 +36,7 @@ $phi-em: 1.618033em;
     --grey1: #e4e2e2;
     --grey2: #6b6b6b;
 
-    --bg: #fefbf2;
-    /* --bg: #fbfbfa; */
+    --bg: #fefbfa;
     --bg-alt: #f6f3e7;
     --bg-alt-darker: darken(#f6f3e7, 10%);
     --fg: #525C5A;
@@ -71,20 +70,20 @@ $phi-em: 1.618033em;
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --mint: #2aa198;
-    --blue: #4B788D;
-    --brown: #83684C;
-    --gold: #fabd2f;
-    --green: #8ec07c;
-    --lighter-blue: #82aec5;
-    --grey1: #e4e2e2;
+    --mint: #1a9188;
+    --mint-alt: #6ae1d8;
+    --blue: #5B889D;
+    --brown: #83583C;
+    --gold: #eaad1f;
+    --green: #7eb06c;
+    --lighter-blue: #729eb5;
+    --grey1: #9295a0;
     --grey2: #6b6b6b;
 
-    --bg: #fefbf2;
-    /* --bg: #fbfbfa; */
-    --bg-alt: #f6f3e7;
-    --bg-alt-darker: darken(#f6f3e7, 10%);
-    --fg: #525C5A;
+    --bg: #26282b;
+    --bg-alt: #232526;
+    --bg-alt-darker: darken(#232526, 10%);
+    --fg: #d5dae3;
 
     --heading: var(--mint);
     --heading-marker: var(--brown);
@@ -103,7 +102,7 @@ $phi-em: 1.618033em;
     --button-low-key-fg: white;
     --button-low-key-bg-hover: darken(white, 5%);;
     --button-low-key-fg-hover: white;
-    --hr: var(--grey1);
+    --hr: var(--grey2);
     --spinner-fg: var(--mint);
     --pre-border: var(--green);
     --blockquote-bg: var(--gold);
@@ -120,6 +119,7 @@ $phi-em: 1.618033em;
 :root {
   font-family: var(--font-main);
   font-size: var(--font-size);
+  color: var(--fg);
   line-height: var(--line-height);
   background: var(--bg);
   scrollbar-color: var(--brown transparent);
@@ -205,12 +205,13 @@ a {
   color: var(--anchor);
   text-decoration-color: var(--mint);
 
-  &:hover {
-    color: var(--anchor-hover);
+
+  @media (prefers-color-scheme: dark) {
+    text-decoration-color: var(--mint-alt);
   }
 
-  &:visited {
-    color: var(--anchor);
+  &:hover {
+    text-decoration-color: var(--anchor-hover);
   }
 }
 
@@ -517,6 +518,12 @@ div.split {
       max-width: 40%
     }
   }
+}
+
+textarea {
+  background-color: var(--bg-alt);
+  color: var(--fg);
+  border-color: transparent;
 }
 
 div.dev-only {

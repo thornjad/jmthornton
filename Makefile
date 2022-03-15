@@ -8,6 +8,7 @@ sass-watch:
 
 purifycss:
 	npx purify-css --min --info assets/vendor/prism.css assets/vendor/prism.js --out assets/vendor/prism.min.css
+	npx purify-css --min --info assets/vendor/prism-dark.css assets/vendor/prism.js --out assets/vendor/prism-dark.min.css
 	npx purify-css --min --info assets/style/main.css $(shell find . -type f -name '*.html') --out assets/style/main.css
 
 all: sass purifycss
