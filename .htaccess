@@ -36,6 +36,11 @@ SetEnv modHeadersAvailable true
   Header merge  Vary "Origin"
 </IfModule>
 
+# noindex PDF files
+<FilesMatch "\.pdf$">
+  header set x-robots-tag: noindex
+</FilesMatch>
+
 # Allow HTML pages to load without the filename extension
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-d

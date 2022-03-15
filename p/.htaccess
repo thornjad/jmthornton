@@ -1,0 +1,4 @@
+# noindex PDF files
+<FilesMatch "\.pdf$">
+  header set x-robots-tag: noindex
+</FilesMatch>
