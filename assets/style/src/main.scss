@@ -2,7 +2,6 @@
  * Copyright (c) 2012-2021 Jade Michael Thornton
  */
 
-
 // Variables
 
 @import './modules/fontface';
@@ -28,8 +27,8 @@ $phi-em: 1.618033em;
 @media (prefers-color-scheme: light) {
   :root {
     --mint: #2aa198;
-    --blue: #4B788D;
-    --brown: #83684C;
+    --blue: #4b788d;
+    --brown: #83684c;
     --gold: #fabd2f;
     --green: #8ec07c;
     --lighter-blue: #82aec5;
@@ -39,7 +38,7 @@ $phi-em: 1.618033em;
     --bg: #fefbfa;
     --bg-alt: #f6f3e7;
     --bg-alt-darker: darken(#f6f3e7, 10%);
-    --fg: #525C5A;
+    --fg: #525c5a;
 
     --heading: var(--mint);
     --heading-marker: var(--brown);
@@ -56,7 +55,7 @@ $phi-em: 1.618033em;
     --button-secondary-fg-hover: white;
     --button-low-key-bg: var(--grey2);
     --button-low-key-fg: white;
-    --button-low-key-bg-hover: darken(white, 5%);;
+    --button-low-key-bg-hover: darken(white, 5%);
     --button-low-key-fg-hover: white;
     --hr: var(--grey1);
     --spinner-fg: var(--mint);
@@ -64,16 +63,16 @@ $phi-em: 1.618033em;
     --blockquote-bg: var(--gold);
     --aside-bg: var(--lighter-blue);
     --toggle-bg: var(--brown);
-    --toggle-bg-disabled: lighten(#83684C, 20%);
+    --toggle-bg-disabled: lighten(#83684c, 20%);
   }
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --mint: #1a9188;
-    --mint-alt: #6ae1d8;
-    --blue: #5B889D;
-    --brown: #83583C;
+    --mint-alt: #4e7370;
+    --blue: #5b889d;
+    --brown: #83583c;
     --gold: #eaad1f;
     --green: #7eb06c;
     --lighter-blue: #729eb5;
@@ -100,7 +99,7 @@ $phi-em: 1.618033em;
     --button-secondary-fg-hover: white;
     --button-low-key-bg: var(--grey2);
     --button-low-key-fg: white;
-    --button-low-key-bg-hover: darken(white, 5%);;
+    --button-low-key-bg-hover: darken(white, 5%);
     --button-low-key-fg-hover: white;
     --hr: var(--grey2);
     --spinner-fg: var(--mint);
@@ -108,12 +107,10 @@ $phi-em: 1.618033em;
     --blockquote-bg: var(--gold);
     --aside-bg: var(--lighter-blue);
     --toggle-bg: var(--brown);
-    --toggle-bg-disabled: lighten(#83684C, 20%);
+    --toggle-bg-disabled: lighten(#83684c, 20%);
   }
 }
 
-
-
 // Major structural elements
 
 :root {
@@ -149,10 +146,10 @@ footer {
   margin-top: 5rem;
 
   &::before {
-	  content: '- - - - - - -';
+    content: '- - - - - - -';
     color: var(--footer-line);
-	  position: absolute;
-	  top: 0;
+    position: absolute;
+    top: 0;
     left: 50%;
     transform: translate(-50%, -50%);
   }
@@ -166,12 +163,12 @@ blockquote > figcaption {
   padding-top: 1em;
 }
 
-
 // Other structural elements
 
 @import './modules/headings';
 
-p, ul {
+p,
+ul {
   margin: var(--standard-margin);
 }
 
@@ -179,7 +176,8 @@ li > p:first-child {
   margin-top: 0;
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
   padding: 0;
 
@@ -205,7 +203,6 @@ a {
   color: var(--anchor);
   text-decoration-color: var(--mint);
 
-
   @media (prefers-color-scheme: dark) {
     text-decoration-color: var(--mint-alt);
   }
@@ -217,8 +214,12 @@ a {
 
 div.no-md-a a {
   font-style: normal;
-  &::before {content: none;}
-  &::after {content: none;}
+  &::before {
+    content: none;
+  }
+  &::after {
+    content: none;
+  }
 }
 
 time {
@@ -233,21 +234,21 @@ time {
 
 blockquote {
   margin: 1rem;
-	display: block;
-	position: relative;
-	font-style: italic;
+  display: block;
+  position: relative;
+  font-style: italic;
   padding: 0.5rem;
   padding-left: 1rem;
-	border-left: .375rem solid var(--blockquote-bg);
-	border-radius: var(--border-radius);
+  border-left: 0.375rem solid var(--blockquote-bg);
+  border-radius: var(--border-radius);
   background: var(--bg-alt);
 
   &[cite]::after {
-	  font-style: normal;
-	  font-size: .75em;
-	  font-weight: 700;
-	  content: "\a—  " attr(cite);
-	  white-space: pre;
+    font-style: normal;
+    font-size: 0.75em;
+    font-weight: 700;
+    content: '\a—  'attr(cite);
+    white-space: pre;
   }
 }
 
@@ -256,15 +257,15 @@ aside {
   display: block;
   position: relative;
   padding: 1rem 1.5rem 1rem 2.5rem;
-	border-left: .375rem solid var(--aside-bg);
-	border-radius: var(--border-radius);
+  border-left: 0.375rem solid var(--aside-bg);
+  border-radius: var(--border-radius);
   background: var(--bg-alt);
 }
 
 img {
   border-radius: var(--border-radius);
-	max-width: 100%;
-	height: auto;
+  max-width: 100%;
+  height: auto;
 }
 
 hr {
@@ -275,7 +276,6 @@ hr {
   border-top: 1px solid var(--hr);
 }
 
-
 // Buttons and inputs
 
 button {
@@ -354,14 +354,14 @@ label.toggle {
     border-radius: var(--border-radius);
     height: 1.5em;
     width: 3em;
-    box-shadow: -1.5em 0 0 2px var(--bg) inset,0 0 0 2px var(--bg) inset,0 0 0;
+    box-shadow: -1.5em 0 0 2px var(--bg) inset, 0 0 0 2px var(--bg) inset, 0 0 0;
 
     &:not(.no-transition) {
-      transition: background,box-shadow 0.2s ease-in-out;
+      transition: background, box-shadow 0.2s ease-in-out;
     }
 
     &:checked {
-      box-shadow: 1.5em 0 0 2px var(--bg) inset,0 0 0 2px var(--bg) inset,0 0 0;
+      box-shadow: 1.5em 0 0 2px var(--bg) inset, 0 0 0 2px var(--bg) inset, 0 0 0;
       background: var(--mint);
     }
 
@@ -375,36 +375,37 @@ label.toggle {
 
 @import './modules/effects';
 
-
 // pre, code
 
 // Using some important tags to override prism
 pre {
-	overflow: auto;
-	position: relative;
-	background: var(--bg-alt !important);
-	padding: 0.75rem !important;
+  overflow: auto;
+  position: relative;
+  background: var(--bg-alt !important);
+  padding: 0.75rem !important;
   margin: 2rem 0.5rem !important;
-	border: none;
-	border-left: .25rem solid var(--pre-border);
-	border-radius: var(--border-radius);
+  border: none;
+  border-left: 0.25rem solid var(--pre-border);
+  border-radius: var(--border-radius);
 
   &.line-numbers {
     padding-left: 3.8em !important;
   }
 }
 
-code, sub, sup {
-	line-height: 0;
-	position: relative;
-	vertical-align: baseline;
+code,
+sub,
+sup {
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
 }
 
 code {
-	background: var(--bg-alt !important);
+  background: var(--bg-alt !important);
   border: 1px solid var(--bg-alt-darker);
-	border-radius: var(--border-radius);
-	padding: 0 4px;
+  border-radius: var(--border-radius);
+  padding: 0 4px;
   font-size: 0.85em;
 
   pre & {
@@ -415,25 +416,30 @@ code {
   }
 
   // other prism improvements
-  .token.variable, .token.important, .token.regex, .token.property {
-    color: #83684C;
+  .token.variable,
+  .token.important,
+  .token.regex,
+  .token.property {
+    color: #83684c;
   }
-  .token.keyword, .token.selector {
+  .token.keyword,
+  .token.selector {
     color: #968955;
     font-weight: bold;
   }
   .token.string {
-    color: #8B887D;
+    color: #8b887d;
     font-style: italic;
   }
-  .token.tag, .token.attr-name {
-    color: #8B887D;
+  .token.tag,
+  .token.attr-name {
+    color: #8b887d;
   }
   .token.function {
-    color: #AB7146;
+    color: #ab7146;
   }
   .token.builtin {
-    color: #4B788D;
+    color: #4b788d;
   }
   .token.attr-value {
     color: inherit;
@@ -441,16 +447,20 @@ code {
   .token.number {
     color: var(--fg);
   }
-  .token.boolean, .token.class-name, .token.constant {
+  .token.boolean,
+  .token.class-name,
+  .token.constant {
     color: #718388;
     font-weight: bold;
   }
-  .token.doctype, .token.doctype * {
+  .token.doctype,
+  .token.doctype * {
     color: silver;
   }
 }
 
-html code[class*="language-"], html pre[class*="language-"] {
+html code[class*='language-'],
+html pre[class*='language-'] {
   color: var(--fg);
   font-family: var(--font-mono);
   text-shadow: none;
@@ -459,7 +469,7 @@ html code[class*="language-"], html pre[class*="language-"] {
   tab-size: 2;
 }
 
-code[class*="language-"] {
+code[class*='language-'] {
   font-size: 0.85em;
 
   pre & {
@@ -471,11 +481,14 @@ div.code-toolbar > .toolbar {
   right: 1em;
 }
 
-.language-css .token.string, .style .token.string, .token.entity, .token.operator, .token.url {
+.language-css .token.string,
+.style .token.string,
+.token.entity,
+.token.operator,
+.token.url {
   background: none;
 }
 
-
 // page specifics
 
 div.stats {
@@ -494,9 +507,15 @@ div.stats {
 div.shield-links {
   margin: 2.7rem 0;
 
-  img {border-radius: 0;}
-  a::before {content:none;}
-  a::after {content:none;}
+  img {
+    border-radius: 0;
+  }
+  a::before {
+    content: none;
+  }
+  a::after {
+    content: none;
+  }
 }
 
 div.sponsor {
@@ -515,7 +534,7 @@ div.split {
     }
 
     div.right {
-      max-width: 40%
+      max-width: 40%;
     }
   }
 }
