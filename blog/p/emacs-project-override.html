@@ -142,7 +142,7 @@
               else moving from Projectile like I am, by allowing <code>.projectile</code> to serve as a
               project root marker alongside Michael's <code>.project.el</code>.
             </p>
-            <pre lang="lisp"><code class="language-lisp">(defun aero/project-root-override (dir)
+            <pre lang="lisp"><code class="language-lisp">(defun project-root-override (dir)
   "Find DIR's project root by searching for a '.project.el' file.
 
 If this file exists, it marks the project root. For convenient compatibility
@@ -161,7 +161,7 @@ https://blog.jmthornton.net/p/emacs-project-override"
 ;; yet.
 (use-package project
   :config
-  (add-hook 'project-find-functions #'aero/project-root-override))</code></pre>
+  (add-hook 'project-find-functions #'project-root-override))</code></pre>
             <p>
               Now we can use <code>touch .project.el</code> in any directory, and <code>project.el</code> with
               recognize it as the project root!
