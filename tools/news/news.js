@@ -1,8 +1,6 @@
 'use strict';
 
-const disallowDomains = [
-  'medium.com',
-];
+const disallowDomains = ['medium.com'];
 
 class NewsPosts {
   apiURI = 'https://hacker-news.firebaseio.com/v0/';
@@ -12,7 +10,7 @@ class NewsPosts {
   loadedPosts = [];
 
   async init() {
-    this.allPosts = JSON.parse((await this.getTop500()));
+    this.allPosts = JSON.parse(await this.getTop500());
     this.genPost = NewsPosts.postList(this.allPosts);
   }
 
@@ -33,7 +31,7 @@ class NewsPosts {
   static formatLayout(title, url, id) {
     const urlMatcher = /:\/\/(?:www\.)?(.[^/]+)/;
     const pocketUrl = `https://getpocket.com/save?url=${url}`;
-    const commentsUrl = `https://news.ycombinator.com/item?id=${id}`
+    const commentsUrl = `https://news.ycombinator.com/item?id=${id}`;
     return `<p>
       <a href="${url}">${title}</a>
       <br />
@@ -65,8 +63,7 @@ const loadSomePosts = async (posts) => {
     for (let story of list) {
       story = JSON.parse(story) ?? {};
       const shortUrlMatch = (story.url ?? '').match(/:\/\/(?:www\.)?(.[^/]+)/);
-      if (story.url && shortUrlMatch.length & 2
-          && !disallowDomains.includes(shortUrlMatch[1])) {
+      if (story.url && shortUrlMatch.length & 2 && !disallowDomains.includes(shortUrlMatch[1])) {
         injectPost(story.title, story.url, story.id);
         posts.recordPosted(story);
       } else {
@@ -80,19 +77,19 @@ const loadSomePosts = async (posts) => {
   }
 };
 
-const hideSpinner = () => document.querySelector('#spinner').style.display = 'none';
-const showSpinner = () => document.querySelector('#spinner').style.display = 'block';
+const hideSpinner = () => (document.querySelector('#spinner').style.display = 'none');
+const showSpinner = () => (document.querySelector('#spinner').style.display = 'block');
 
-const showFooter = () => document.querySelector('footer').style.display = 'block';
+const showFooter = () => (document.querySelector('footer').style.display = 'block');
 
-const showLoadMore = () => document.querySelector('.load-more-container').style.display = 'flex';
-const hideLoadMore = () => document.querySelector('.load-more-container').style.display = 'none';
+const showLoadMore = () => (document.querySelector('.load-more-container').style.display = 'flex');
+const hideLoadMore = () => (document.querySelector('.load-more-container').style.display = 'none');
 const syncLoadMoreButton = () =>
-      void (window.localStorage.getItem('infiniteScroll') !== 'no'
-            ? hideLoadMore() : showLoadMore());
+  void (window.localStorage.getItem('infiniteScroll') !== 'yes' ? showLoadMore() : hideLoadMore());
 
 const syncInfiniteScrollButton = () => {
-  document.querySelector('#infinite-scroll').checked = window.localStorage.getItem('infiniteScroll') !== 'no';
+  document.querySelector('#infinite-scroll').checked =
+    window.localStorage.getItem('infiniteScroll') === 'yes';
 };
 
 const loadPosts = async (numPostsToLoad, posts) => {
@@ -152,38 +149,36 @@ const main = () => {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
       loadSomePosts(posts);
     }
-  }
+  };
 
   const loadMore = async () => {
     hideLoadMore();
     await loadSomePosts(posts);
-    showLoadMore()
-  }
+    showLoadMore();
+  };
 
-  document.addEventListener(
-    'DOMContentLoaded',
-    () => {
-      syncInfiniteScrollButton();
-      run(posts);
-      document.querySelector('#infinite-scroll').addEventListener('change', function(e) {
-        const btn = document.querySelector('#load-more');
-        btn.removeEventListener('click', loadMore);
-        document.removeEventListener('scroll', infiniteScroll);
-        if (this.checked) {
-          window.localStorage.removeItem('infiniteScroll');
-          document.addEventListener('scroll', infiniteScroll);
-        } else {
-          window.localStorage.setItem('infiniteScroll', 'no');
-          btn.addEventListener('click', loadMore);
-        }
-        syncLoadMoreButton();
-      });
-      if (window.localStorage.getItem('infiniteScroll') !== 'no') {
+  document.addEventListener('DOMContentLoaded', () => {
+    syncInfiniteScrollButton();
+    run(posts);
+    document.querySelector('#infinite-scroll').addEventListener('change', function (e) {
+      const btn = document.querySelector('#load-more');
+      btn.removeEventListener('click', loadMore);
+      document.removeEventListener('scroll', infiniteScroll);
+      if (this.checked) {
+        window.localStorage.setItem('infiniteScroll', 'yes');
         document.addEventListener('scroll', infiniteScroll);
       } else {
-        document.querySelector('#load-more').addEventListener('click', loadMore);
+        window.localStorage.setItem('infiniteScroll', 'no');
+        btn.addEventListener('click', loadMore);
       }
+      syncLoadMoreButton();
     });
+    if (window.localStorage.getItem('infiniteScroll') === 'yes') {
+      document.addEventListener('scroll', infiniteScroll);
+    } else {
+      document.querySelector('#load-more').addEventListener('click', loadMore);
+    }
+  });
   addUpdatedMessage();
 };
 
