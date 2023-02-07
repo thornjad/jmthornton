@@ -4,7 +4,7 @@
 
 // Variables
 
-@import './modules/fontface';
+@import "./modules/fontface";
 
 $main-width: 770px; // approx. 88ch, but without the loading flash
 $phi: 1.618033; // the golden ratio
@@ -36,7 +36,7 @@ $phi-em: 1.618033em;
     --grey2: #6b6b6b;
     --red: #dd8844;
 
-    --bg: #fefbfa;
+    --bg: #fbfbfb;
     --bg-alt: #f6f3e7;
     --bg-alt-darker: darken(#f6f3e7, 10%);
     --fg: #525c5a;
@@ -127,7 +127,7 @@ footer {
   margin-top: 5rem;
 
   &::before {
-    content: '- - - - - - -';
+    content: "- - - - - - -";
     color: var(--footer-line);
     position: absolute;
     top: 0;
@@ -146,7 +146,7 @@ blockquote > figcaption {
 
 // Other structural elements
 
-@import './modules/headings';
+@import "./modules/headings";
 
 p,
 ul {
@@ -169,7 +169,7 @@ ol {
   }
 
   li::before {
-    content: '•';
+    content: "•";
     position: absolute;
     top: 0.5ex;
     left: 0;
@@ -207,7 +207,7 @@ time {
   font-style: italic;
 
   &::before {
-    content: '| ';
+    content: "| ";
     font-style: normal;
     color: var(--heading-marker);
   }
@@ -228,7 +228,7 @@ blockquote {
     font-style: normal;
     font-size: 0.75em;
     font-weight: 700;
-    content: '\a—  'attr(cite);
+    content: "\a—  "attr(cite);
     white-space: pre;
   }
 }
@@ -342,7 +342,8 @@ label.toggle {
     }
 
     &:checked {
-      box-shadow: 1.5em 0 0 2px var(--bg) inset, 0 0 0 2px var(--bg) inset, 0 0 0;
+      box-shadow: 1.5em 0 0 2px var(--bg) inset, 0 0 0 2px var(--bg) inset,
+        0 0 0;
       background: var(--mint);
     }
 
@@ -354,7 +355,7 @@ label.toggle {
   }
 }
 
-@import './modules/effects';
+@import "./modules/effects";
 
 // pre, code
 
@@ -440,8 +441,8 @@ code {
   }
 }
 
-html code[class*='language-'],
-html pre[class*='language-'] {
+html code[class*="language-"],
+html pre[class*="language-"] {
   color: var(--fg);
   font-family: var(--font-mono);
   text-shadow: none;
@@ -450,7 +451,7 @@ html pre[class*='language-'] {
   tab-size: 2;
 }
 
-code[class*='language-'] {
+code[class*="language-"] {
   font-size: 0.85em;
 
   pre & {
