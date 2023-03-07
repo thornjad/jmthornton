@@ -93,7 +93,8 @@
     <meta property="og:locale" content="en_US" />
 
     <meta name="article:author" content="https://blog.jmthornton.net" />
-    <meta property="article:published_time" content="2022-05-20" />
+    <meta property="article:published_time" content="2022-04-21" />
+    <meta property="article:modified_time" content="2023-03-07" />
   </head>
   <body>
     <header>
@@ -108,7 +109,8 @@
     <main>
       <article class="post blog-content">
         <h1 class="post-title">Overriding project.el project root in Emacs</h1>
-        <time datetime="2022-05-20">May 20, 2022</time>
+        <time datetime="2023-03-07">Updated: March 7, 2023</time>
+        <time datetime="2022-04-21">Originally posted: April 21, 2022</time>
         <div class="post-main">
           <div class="blog-body">
             <p>
@@ -127,6 +129,12 @@
               looking for a <code>.projectile</code> file, which overrides detection and says "this is the
               project root". This happens to be one of the features missing in <code>project.el</code>.
             </p>
+            <hr />
+            <h3>Update</h3>
+            <p>Since the writing of this post, Emacs 29 has been released and introduces a variable which solves this same issue in a cleaner way! One need only set <code>project-vc-extra-root-markers</code> to a list of file names or glob patterns which mark a project's root in addition to the default ".git", ".hg" and other common markers.</p>
+            <p>So, the cleaner equivalent to the rest of the post is a simple <pre lang="lisp"><code class="language-lisp">(setq project-vc-extra-root-markers '(".project.el" ".projectile" ))</code></pre></p>
+            <hr />
+            <h3>Original post</h3>
             <p>
               Luckily, we can provide our own function to <code>project.el</code> which looks for a file like
               this in the current and parent directories. Even better, the excellent Emacs community has
