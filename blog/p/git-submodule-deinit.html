@@ -57,11 +57,12 @@
     <main>
       <article class="post blog-content">
         <h1 class="post-title">Remove (deinit) a Git submodule</h1>
+        <time datetime="2020-11-01">November 1, 2020</time>
 				<p>A quick reminder of how to remove a Git submodule, because I always forget</p>
 
         <div class="post-main">
           <div class="blog-body">
-            <p>Every once in a while, I need to deinit a Git submodule, but I just cannot remember how. To deinit we can use Git's <code class="language-shell">submodule deinit</code> function to remove it from the database, then we remove the relevant directories from Git.</p>
+            <p>Every once in a while, I need to deinit a Git submodule, but I just cannot get my brain to remember how, so here's my reminder:</p>
             <pre lang="zsh"><code class="language-shell">git submodule deinit -f path/to/submodule
 rm -rf .git/modules/path/to/submodule
 git rm -f path/to/submodule</code></pre>
