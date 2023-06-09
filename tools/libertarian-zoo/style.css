@@ -1,0 +1,109 @@
+p {
+	margin: 0 !important;
+  font-size: 1rem;
+}
+
+p.info {
+	padding-top: 1em;
+}
+
+section {
+	max-width: 1284px;
+	margin: auto;
+}
+
+div.container {
+	margin-top: 2em;
+	padding: 2em;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+	grid-gap: 1rem;
+}
+
+.last-updated {
+	padding-left: 2rem;
+}
+
+h3 {
+  text-indent: 0;
+}
+
+h3.candidate {
+	margin-bottom: 5rem;
+	padding: 1.25rem;
+  color: inherit;
+}
+
+h3.candidate a {
+	color: inherit;
+}
+
+h3::before {
+  content: none;
+}
+
+h1 small, h3 small {
+  display: block;
+}
+
+.img-container {
+	display: flex;
+	justify-content: center;
+	background-color: lightgrey;
+  overflow: hidden;
+}
+
+.img-container.nota, .img-container.no-photo {
+	background-color: white;
+}
+
+.img-container img {
+	height: 400px;
+	max-width: none;
+}
+
+small.popular-vote {
+	position: absolute;
+	bottom: 1.25rem;
+	right: 2rem;
+}
+
+span.position {
+	position: absolute;
+	right: 2rem;
+	bottom: 2rem;
+	font-size: 3rem;
+	color: grey;
+}
+
+article.card {
+	background: white;
+	min-height: 23em;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	border: 0;
+	box-shadow: 0 2px 2px 0 rgba(60,75,100,.14),0 3px 2px -1px rgba(60,75,100,.12),1px 2px 4px 1px rgba(60,75,100,.2);
+	border-radius: .18rem;
+}
+
+.dropped-out .dropped-out-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(128,128,128,0.30);
+}
+
+.dropped-text {
+	font-size: 0.8rem;
+	position: absolute;
+	bottom: 1.25rem;
+	left: 2rem;
+}
+
+footer > .footer-text {
+	text-align: center;
+}

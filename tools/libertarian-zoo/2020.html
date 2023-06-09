@@ -9,43 +9,37 @@
 		<meta name="googlebot" content="index, follow" />
 		<meta name="google-site-verification" content="JUM1Dl9n9ic9xPMb03Nzf4NgW_-8PWZrJ4eJGC_PoYM" />
 		<link rel="stylesheet" href="/assets/style/main.css" type="text/css" />
-		<link rel="stylesheet" href="/assets/style/page/libertarian-zoo.css" type="text/css" />
+		<link rel="stylesheet" href="./style.css" type="text/css" />
 
-		<meta name="twitter:card" content="summary">
-		<meta name="twitter:site" content="@jmthorntonwhat">
-		<meta name="twitter:creator" content="@jmthorntonwhat">
 		<meta property="og:title" content="Libertarian Zoo 2020">
-		<meta name="twitter:title" content="Libertarian Zoo 2020">
 		<meta name="description" content="A complete zoo of Libertarian candidates for US president in 2020">
 		<meta name="og:description" content="A complete zoo of Libertarian candidates for US president in 2020">
-		<meta name="twitter:description" content="A complete zoo of Libertarian candidates for US president in 2020">
 		<meta property="og:url" content="https://jmthornton.net/tools/libertarian-zoo">
 		<meta property="og:site_name" content="jmthornton.net">
 		<meta property="og:type" content="article">
 		<meta property="og:locale" content="en_US" />
 		<meta name="article:author" content="https://jmthornton.net">
 		<meta property="og:image" content="https://jmthornton.net/assets/images/zoo/vermin.jpg">
-		<meta name="twitter:image" content="https://jmthornton.net/assets/images/zoo/vermin.jpg">
 
-		<!-- TODO UPDATE ME -->
 		<meta property="article:published_time" content="2020-05-18">
 	</head>
 
 	<body>
-		<header class="sticky">
-			<span class="header-hack">
-				<a href="/" class="button" role="button">Home</a>
-				<a href="/tools/" class="button" role="button">Tools</a>
-				<a href="https://blog.jmthornton.net" class="button" role="button">Blog</a>
-			</span>
-		</header>
+    <header>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/tools">Tools</a>
+        <a href="https://blog.jmthornton.net">Blog</a>
+        <a href="https://photos.jmthornton.net">Photos</a>
+      </nav>
+    </header>
 
 		<section>
-			<h1 class="center">Libertarian Zoo 2020
+			<h1 class="post-title">Libertarian Zoo 2020
 				<small><em>Libertarian presidential candidates, ordered by popularity</em></small>
 			</h1>
+      <time datetime="2020-05-18">Last updated: May 18, 2020</time>
 			<hr />
-			<h5 class="last-updated"><em>Last updated 2020-05-18</em></h5>
 			<div id="libertarian-mount-point" class="container mount-point"></div>
 		</section>
 
@@ -306,10 +300,10 @@
 					<article class="card fluid ${c.dropped ? 'dropped-out' : ''}">
 						<div class="dropped-out-overlay"></div>
 						<div class="img-container ${c.name === 'Uncommitted' ? 'nota' : ''}">
-							<img ${i > 5 ? 'loading="lazy"' : ''} alt="${c.name}" src="/assets/images/zoo/${c.pic}" />
+              <img loading="lazy" alt="${c.name}" src="./images/2020/${c.pic ? c.pic : 'no-photo.png'}" />
 						</div>
-						<h3 class="candidate-name">
-							<a href="${c.url}">${c.name}</a>
+						<h3 class="candidate">
+							<em>${place}</em>&nbsp;<a href="${c.url}">${c.name}</a>
 							<small class="candidate-title"><em>
 								${c.title}
 							</em></small>
@@ -320,7 +314,6 @@
 							<small class="popular-vote">
 								${votes} delegates (${percent})
 							</small>
-							<span class="position"><em>${place}</em></span>
 						</h3>
 					</article>
 				 `);

@@ -1,0 +1,187 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Libertarian Zoo 2024</title>
+    <link type="text/plain" rel="author" href="https://jmthornton.net/humans.txt" />
+    <meta name="description" content="A complete zoo of Libertarian candidates for US president in 2024" />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="google-site-verification" content="JUM1Dl9n9ic9xPMb03Nzf4NgW_-8PWZrJ4eJGC_PoYM" />
+    <link rel="stylesheet" href="/assets/style/main.css" type="text/css" />
+		<link rel="stylesheet" href="./style.css" type="text/css" />
+
+    <meta property="og:title" content="Libertarian Zoo 2024">
+    <meta name="description" content="A complete zoo of Libertarian candidates for US president in 2024">
+    <meta name="og:description" content="A complete zoo of Libertarian candidates for US president in 2024">
+    <meta property="og:url" content="https://jmthornton.net/tools/libertarian-zoo">
+    <meta property="og:site_name" content="jmthornton.net">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US" />
+    <meta name="article:author" content="https://jmthornton.net">
+    <meta property="og:image" content="https://jmthornton.net/assets/images/zoo/vermin.jpg">
+
+    <!-- TODO UPDATE ME -->
+    <meta property="article:published_time" content="2022-06-09">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/tools">Tools</a>
+            <a href="https://blog.jmthornton.net">Blog</a>
+            <a href="https://photos.jmthornton.net">Photos</a>
+        </nav>
+    </header>
+
+    <section>
+        <h1 class="center">Libertarian Zoo 2024
+            <small><em>Libertarian presidential candidates, ordered by current popularity</em></small>
+        </h1>
+        <time datetime="2023-06-09">Last updated: June 9, 2023</time>
+        <hr />
+        <div id="libertarian-mount-point" class="container mount-point"></div>
+    </section>
+
+    <script>
+     // Candidate template
+     //  name: '',
+     //  sortName: '',
+     //  pic: '',
+     //  url: '',
+     //  title: '',
+     //  votes: 0,
+     //  info: '',
+     //  dropped: false,
+     const candidates = [
+       {
+         name: 'Mike ter Maat',
+         sortName: 'ter maat',
+         pic: 'termaat.jpg',
+         url: 'https://www.miketermaat.com/',
+         title: 'Cop with a Ph.D. in Economics',
+         votes: 0,
+         info: '',
+         dropped: false,
+       },
+       {
+         name: 'Joe Exotic',
+         sortName: 'exotic',
+         pic: 'exotic.jpg',
+         url: 'https://en.wikipedia.org/wiki/Joe_Exotic',
+         title: 'Convicted felon',
+         votes: 0,
+           info: 'Yes, the Tiger King, who was convicted in 2019 of hiring hitmen to murder Carole Baskin, killing tigers, trafficking tigers, and falsifying records.',
+         dropped: false,
+       },
+			 {
+				 name: 'Jacob Hornberger',
+         sortName: 'hornberger',
+				 pic: 'hornberger.jpg',
+				 url: 'https://simple.wikipedia.org/wiki/Jacob_Hornberger',
+				 title: 'Founder of a political NGO',
+				 votes: 0,
+				 info: 'Has a degree in Economics from Virginia Military Institute and a law degree from the University of Texas.',
+				 dropped: false,
+			 },
+			 {
+				 name: 'Justin Amash',
+         sortName: 'amash',
+				 pic: 'amash.jpg',
+				 url: 'https://en.wikipedia.org/wiki/Justin_Amash',
+				 title: 'Former US Representative from Michigan',
+				 votes: 0,
+				 info: 'Presumptive candidate. Polled well when running in 2020. First Republican to call for the impeachment of President Trump, which he continued calling for after leaving the party in 2019.',
+				 dropped: false,
+			 },
+			 {
+				 name: 'Dave Smith',
+         sortName: 'smith',
+				 pic: '',
+				 url: 'https://comicdavesmith.com/',
+				 title: 'Comedian',
+				 votes: 0,
+				 info: 'Has a podcast about how the government is bad and we should all feel bad.',
+				 dropped: false,
+			 },
+       {
+         name: 'Joshua Rodriguez',
+         sortName: 'rodriguez',
+         pic: 'rodriguez.png',
+         url: 'https://joshuaforunity.com/',
+         title: 'Quantum computing chemical engineer',
+         votes: 0,
+         info: 'Qualifications include (self-reported): having been born, having lost his father as a child',
+         dropped: false,
+       },
+       {
+         name: 'Lars Mapstead',
+         sortName: 'mapstead',
+         pic: 'mapstead.jpg',
+         url: 'https://www.lars24.com/',
+         title: 'Grew up very poor',
+         votes: 0,
+         info: '',
+         dropped: false,
+       },
+       {
+         name: 'Chase Oliver',
+         sortName: 'oliver',
+         pic: 'oliver.png',
+         url: 'https://votechaseoliver.com/',
+         title: 'Failed multiple elections so far',
+         votes: 0,
+         info: '',
+         dropped: false,
+       },
+     ];
+
+     const mountPoint = document.querySelector('.mount-point');
+     const votesNF = new Intl.NumberFormat();
+     const percentNF = new Intl.NumberFormat(undefined, { style: 'percent' });
+     const totalVotes = candidates.reduce((t, c) => t + c.votes, 0);
+
+     candidates
+       .sort((a, b) =>
+         // If candidate dropped, sort to bottom, else sort by votes, then name
+         (b.dropped ? -1 : b.votes) - (a.dropped ? -1 : a.votes)
+                  || a.sortName.localeCompare(b.sortName))
+       .forEach((c, i) => {
+         const votes = votesNF.format(c.votes);
+         const place = c.dropped ? '' : `#${i + 1}`;
+         const rawPercent = c.votes / totalVotes;
+         const percent = (rawPercent < 0.01 && rawPercent > 0)
+                       ? '< 1%'
+                       : percentNF.format(rawPercent);
+
+         const card = document.createRange().createContextualFragment(`
+          <article class="card fluid ${c.dropped ? 'dropped-out' : ''}">
+            <div class="dropped-out-overlay"></div>
+            <div class="img-container ${c.name === 'Uncommitted' ? 'nota' : ''} ${!c.pic && 'no-photo'}">
+              <img loading="lazy" alt="${c.name}" src="./images/2024/${c.pic ? c.pic : 'no-photo.png'}" />
+            </div>
+            <h3 class="candidate">
+              <em>${place}</em>&nbsp;<a href="${c.url}">${c.name}</a>
+              <small class="candidate-title"><em>
+                ${c.title}
+              </em></small>
+              <p class="info">${c.info}</p>
+              <small class="dropped-text"><em>
+                ${c.dropped ? 'Dropped out' : ''}
+              </em></small>
+              <small class="popular-vote">
+                ${votes} delegates ${isNaN(percent) ? '' : '(' + percent + ')'}
+              </small>
+            </h3>
+          </article>
+				 `);
+
+         mountPoint.appendChild(card);
+       });
+    </script>
+
+    <p>Previous Libertarian zoos: <a href="./2020">2020</a></p>
+</body>
+
+</html>
