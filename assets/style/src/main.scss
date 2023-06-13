@@ -490,12 +490,21 @@ div.shield-links {
 
   img {
     border-radius: 0;
+
+    &:hover {
+      transform: scale(2);
+    }
   }
-  a::before {
-    content: none;
-  }
-  a::after {
-    content: none;
+
+  a {
+    text-decoration: none;
+
+    &::before {
+      content: none;
+    }
+    &::after {
+      content: none;
+    }
   }
 }
 

@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta
       name="description"
-      content="Home site of Jade Michael Thornton, a passionate problem solver, full stack developer and software engineer with a love for technology"
+      content="Jade Michael Thornton is a senior software engineer and this is his website."
     />
     <meta name="robots" content="home, follow" />
-    <meta name="googlebot" content="noindex" />
-    <link rel="alternate" href="https://jmthornton.net" hreflang="es-us" />
+    <!-- <meta name="googlebot" content="noindex" /> -->
     <link rel="canonical" href="https://jmthornton.net" />
     <link rel="shortcut icon" href="/assets/images/favicon.png" />
     <link rel="prefetch" href="/assets/style/main.css" as="style" crossorigin />
+
     <link
       rel="prefetch"
       href="/assets/fonts/MetroNova-Regular.woff2"
@@ -45,49 +45,54 @@
     <link rel="stylesheet" href="/assets/style/main.css" type="text/css" />
   </head>
   <body>
+    <header>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/tools">Tools</a>
+        <a href="https://blog.jmthornton.net">Blog</a>
+        <a href="https://photos.jmthornton.net">Photos</a>
+      </nav>
+    </header>
     <main>
       <h1 class="rgb-color">Jade Michael Thornton</h1>
 
       <section>
         <p>
-          Hi there! I'm a passionate software engineer and aerial photographer. Here's some links you may find
-          interesting:
+          Hi there!
         </p>
+        <div class="split">
+          <div class="left">
+            <p>
+              I'm a senior software engineer, hobby aerial photographer and RC flight enthusiast. I know some things about some software, and a lot about taking care of house rabbits. My favorite language is Clojure, but I never get to work in it. I'm currently a senior software engineer and team lead at <a href="https://dronedeploy.com">DroneDeploy</a>, working on enhancing information discoverability as well as unification with a recently-acquired startup.
+            </p>
+            <p>
+              I've previously worked and studied at <a href="https://flightaware.com">FlightAware</a> (a
+              <a href="https://www.collinsaerospace.com">Collins Aerospace</a> company), <a href="https://www.thomsonreuters.com">Thomson Reuters</a>, <a href="https://www.mavericksoftware.com">Maverick Software</a>, <a href="https://www.hhh.umn.edu">Humphrey School of Public Affairs</a>, the <a href="https://www.umn.edu">University of Minnesota</a> and <a href="https://www.saintpaul.edu">Saint Paul College</a>.
+            </p>
+            <p>
+              Some other links include: my <a href="https://github.com/thornjad">GitHub</a> and <a href="https://gitlab.com/thornjad">GitLab</a> profiles, my <a href="https://blog.jmthornton.net">blog posts</a>, some <a href="/tools">online tools</a>, my <!-- <a href="/p/JadeMichaelThornton.pdf">resume [pdf]</a> and --><a href="https://linkedin.com/in/jademichael">LinkedIn profile</a>, and some <a href="https://photos.jmthornton.net">photos I took</a>.
+            </p>
+            <p>
+              Memento mori.
+            </p>
 
-        <ul>
-          <li>
-            my <a href="https://github.com/thornjad">GitHub</a> and
-            <a href="https://gitlab.com/thornjad">GitLab</a> profiles
-          </li>
-          <li>my <a href="https://blog.jmthornton.net">blog posts</a></li>
-          <li>my <a href="/tools">online tools</a></li>
-          <li>
-            my
-            <!-- <a href="/p/JadeMichaelThornton.pdf">resume [pdf]</a> and --><a
-              href="https://linkedin.com/in/jademichael"
-              >LinkedIn profile</a
-            >
-          </li>
-          <li>my <a href="https://photos.jmthornton.net">photos</a></li>
-        </ul>
-
-        <!--sse-->
-        <p>
-          If you'd like to contact me, my <a href="mailto:jademichael@jmthornton.net">email</a> is the best
-          method.
-        </p>
-        <!--/sse-->
-
-        <noscript
-          ><p>
-            Javascript disabled? Dope, I like you. There's some Javascript on this page, but it's not
-            necessary.
-          </p></noscript
-        >
+            <noscript><p>
+              Javascript disabled? Dope, I like you. The only JS on this page is for analytics, and you're not missing anything by not running it. Some other pages in this site need JS to fetch data, but you'll be fine.
+            </p></noscript>
+          </div>
+          <div class="right">
+            <img
+              class="stephpic"
+              loading="lazy"
+              src="/assets/images/stephandjade.webp"
+              title="And of course this site runs on love"
+            />
+          </div>
+        </div>
       </section>
 
       <section>
-        <h2>Projects</h2>
+        <h2>My Projects</h2>
         <blockquote>
           What I cannot create, I do not understand
           <figcaption>&mdash; Richard Feynman</figcaption>
@@ -95,27 +100,20 @@
         <p>
           All of my projects are open source and live on
           <a href="https://gitlab.com/thornjad">GitLab</a> and/or
-          <a href="https://github.com/thornjad">GitHub</a>. Here's some highlights.
+          <a href="https://github.com/thornjad">GitHub</a>. Here's some of my favorite highlights.
         </p>
 
         <ul class="dl">
           <li>
             <p>Emacs tools and configuration</p>
             <p>
-              I use Emacs every day and love it, and I've put care and effort into crafting my development
-              environment to a high level of productivity. Besides my refined
-              <a href="https://gitlab.com/thornjad/aero">Emacs configuration</a>, I authored several packages
-              such as <a href="https://gitlab.com/thornjad/el2md">el2md</a>,
-              <a href="https://gitlab.com/thornjad/rivet-mode">Rivet mode</a> and several more.
+              I use Emacs every day and love it, and I've put care and effort into crafting my development environment to a high level of productivity. Besides my refined <a href="https://gitlab.com/thornjad/aero">Emacs configuration</a>, I authored several packages such as <a href="https://gitlab.com/thornjad/el2md">el2md</a>, <a href="https://gitlab.com/thornjad/rivet-mode">Rivet mode</a> and several more.
             </p>
           </li>
           <li>
             <p>http-server and its dependencies</p>
             <p>
-              I serve as the lead developer of
-              <a href="https://github.com/http-party/http-server">http-server</a>, as well as a contributor to
-              its dependencies, including <a href="https://github.com/flatiron/union">union</a> and
-              <a href="https://github.com/http-party/node-http-proxy">http-proxy</a>.
+              I've been the de facto lead developer of <a href="https://github.com/http-party/http-server">http-server</a> for a while, though it unfortunately takes a back seat to my career and the rest of my life. I'm also a contributor to its dependencies, including <a href="https://github.com/flatiron/union">union</a> and <a href="https://github.com/http-party/node-http-proxy">http-proxy</a>.
             </p>
           </li>
           <li>
@@ -134,23 +132,16 @@
           <li>
             <p>Languages</p>
             <p>
-              I have a curiosity for esoteric languages and the lessons of language design they provide. I
-              maintain and have made minor contributions to
-              <a href="https://gitlab.com/orsonlang/orson">Orson</a>, which was created by
-              <a href="https://cse.umn.edu/cs/james-moen">James Moen</a>.
+              I have a penchant for esoteric languages and the lessons of language design they provide. I maintain and have made minor contributions to <a href="https://gitlab.com/orsonlang/orson">Orson</a>, which was created by <a href="https://cse.umn.edu/cs/james-moen">James Moen</a>.
             </p>
             <p>
-              I've also explored writing my own languages, though I've never completed one. Some of my half
-              languages include <a href="https://gitlab.com/thornjad/warbler">Warbler</a>,
-              <a href="https://gitlab.com/thornjad/brewlisp">Brewlisp</a> and
-              <a href="https://gitlab.com/thornjad/spider-lang">Spider</a>.
+              I've also explored writing my own languages, though I've never completed one. Some of my half languages include <a href="https://gitlab.com/thornjad/warbler">Warbler</a>, <a href="https://gitlab.com/thornjad/brewlisp">Brewlisp</a> and <a href="https://gitlab.com/thornjad/spider-lang">Spider</a>.
             </p>
           </li>
           <li>
             <p>Tools and utilities</p>
             <p>
-              I authored <a href="https://gitlab.com/thornjad/zpico">Zpico</a> (a tiny Zsh plugin manager) and
-              I always look out for more opportunities.
+              I authored <a href="https://gitlab.com/thornjad/zpico">Zpico</a> (a tiny Zsh plugin manager) and I always look out for more opportunities. Though I haven't published it in it's own package, my Aero Emacs configuration <a href="https://github.com/thornjad/aero/blob/main/lib/localpackages/aero-assistant/">contains a GPT Assistant mode</a>.
             </p>
           </li>
           <li>
@@ -177,106 +168,38 @@
       </section>
 
       <section>
-        <h2>Writing</h2>
-        <p>
-          My somewhat organized thoughts live in my <a href="https://blog.jmthornton.net">blog</a>. Some
-          selected pieces:
-        </p>
-        <ul>
-          <li>
-            <p><a href="https://blog.jmthornton.net/p/tmux-known-socket">A Known SSH Socket for Tmux</a></p>
-            <p>
-              Using a known, shared SSH socket to enable agent forwarding through an existing tmux session.
-            </p>
-          </li>
-          <li>
-            <p>
-              <a href="https://blog.jmthornton.net/p/clean-arch-wumpus"
-                >Halfway on Main: Thoughts on Clean Architecture</a
-              >
-            </p>
-            <p>
-              Uncle Bob ignores his own advice when considering the "Main" component, but we can improve on
-              his thoughts and learn from them.
-            </p>
-          </li>
-          <li>
-            <p>
-              <a href="https://blog.jmthornton.net/p/emacs-project-override"
-                >Overriding project.el project root in Emacs</a
-              >
-            </p>
-            <p>
-              A short function to override what project.el thinks your project root is with a hidden file.
-            </p>
-          </li>
-        </ul>
-      </section>
-
-      <section id="experience">
-        <h2>Experience</h2>
-        <p>
-          I'm experienced in Typescript/Javascript, Python, React.js, Angular, SQL and full-stack web
-          development. I'm a bit rusty in Java, Clojure (a personal favorite), OCaml, C and Nix.
-        </p>
-        <p>
-          I'm currently a senior software engineer at <a href="https://dronedeploy.com">DroneDeploy</a>,
-          working on panoramic walkthrough videos and BIM visualization. My previous experience includes
-          full-stack software engineering at <a href="https://flightaware.com">FlightAware</a> (a
-          <a href="https://www.collinsaerospace.com">Collins Aerospace</a> company), development of internal
-          financial systems for <a href="https://www.thomsonreuters.com">Thomson Reuters</a> via software
-          consulting with <a href="https://www.mavericksoftware.com">Maverick Software</a>, and building
-          custom software and providing tech support for the
-          <a href="https://www.hhh.umn.edu">Humphrey School of Public Affairs</a>.
-        </p>
-        <!-- <p>Check out my <a href="./p/JadeMichaelThornton.pdf">resume [pdf]</a> for more detailed experience information.</p>
-        -->
-      </section>
-      <section>
-        <h2>Other interests</h2>
-        <div class="split">
-          <div class="left">
-            <p>
-              I'm a hobby quadcopter pilot and aerial photographer, some of my favorite photos are available
-              at <a href="https://photos.jmthornton.net">photos.jmthornton.net</a>.
-            </p>
-            <p>
-              Since 2016, I've spent a bit of free time contributing to
-              <a href="https://openstreetmap.org">OpenStreetMap</a>, and I've recently begun organizing my
-              efforts through the excellent
-              <a href="https://tasks.hotosm.org">Humanitarian OpenStreetMap Team Tasking Manager</a>.
-            </p>
-
-            <!--sse-->
-            <div class="shield-links">
-              <a href="https://gitlab.com/thornjad">
-                <img alt="GitLab" src="/assets/images/shields/gitlab.svg" loading="lazy" />
-              </a>
-              <a href="https://github.com/thornjad">
-                <img alt="GitHub" src="/assets/images/shields/github.svg" loading="lazy" />
-              </a>
-              <a href="https://www.linkedin.com/in/jademichael/">
-                <img alt="LinkedIn" src="/assets/images/shields/linkedin.svg" loading="lazy" />
-              </a>
-              <!-- <a rel="me" href="https://mspsocial.net/@thornjad">
-                   <img alt="Mastodon" src="/assets/images/shields/mastodon.svg" loading="lazy" />
-                   </a> -->
-              <!-- <a href="https://lichess.org/@/thornjad"><img alt="Lichess" src="/assets/images/shields/lichess.svg" loading="lazy" /></a> -->
-              <a href="https://photos.jmthornton.net">
-                <img alt="Flickr" src="/assets/images/shields/flickr.svg" loading="lazy" />
-              </a>
-            </div>
-            <!--/sse-->
-          </div>
-          <div class="right">
-            <img
-              class="stephpic"
-              loading="lazy"
-              src="/assets/images/stephandjade.webp"
-              title="And of course this site runs on love"
-            />
-          </div>
+        <!--sse-->
+        <div class="shield-links">
+          <a href="https://gitlab.com/thornjad">
+            <img alt="GitLab" src="/assets/images/shields/gitlab.svg" loading="lazy" />
+          </a>
+          <a href="https://github.com/thornjad">
+            <img alt="GitHub" src="/assets/images/shields/github.svg" loading="lazy" />
+          </a>
+          <a href="https://www.linkedin.com/in/jademichael/">
+            <img alt="LinkedIn" src="/assets/images/shields/linkedin.svg" loading="lazy" />
+          </a>
+          <!-- <a rel="me" href="https://mspsocial.net/@thornjad">
+                <img alt="Mastodon" src="/assets/images/shields/mastodon.svg" loading="lazy" />
+                </a> -->
+          <!-- <a href="https://lichess.org/@/thornjad"><img alt="Lichess" src="/assets/images/shields/lichess.svg" loading="lazy" /></a> -->
+          <a href="https://photos.jmthornton.net">
+            <img alt="Flickr" title="It's just my photos" src="/assets/images/shields/flickr.svg" loading="lazy" />
+          </a>
+          <a href="https://github.com/thornjad/aero">
+            <img alt="Created with Emacs" src="/assets/images/created-emacs.jpg" loading="lazy" />
+          </a>
+          <img alt="Piracy now" title="Piracy is swag" src="/assets/images/piracy.gif" loading="lazy" />
+          <a href="https://yesterweb.org/no-to-web3">
+            <img src="/assets/images/noweb3.gif" alt="Keep the web free, Say no to Web3">
+          </a>
+          <img alt="Learn HTML today!" src="/assets/images/html.gif" loading="lazy" />
+          <img alt="Best viewed with any browser" src="/assets/images/anybrow.gif" loading="lazy" />
+          <a href="https://yesterweb.org">
+            <img src="/assets/images/yesterweb.png" alt="Yesterweb: reclaim the net">
+          </a>
         </div>
+        <!--/sse-->
       </section>
     </main>
 
