@@ -113,7 +113,7 @@ body {
 main {
   width: 100%;
   max-width: $main-width;
-  margin: 0 1rem;
+  margin: 0 2rem;
 }
 
 header {
@@ -515,8 +515,13 @@ div.sponsor {
 
 div.split {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-wrap: wrap;
+
+  div.right {
+    display: flex;
+    align-items: center;
+  }
 
   @media (min-width: $main-width) {
     div.left {
