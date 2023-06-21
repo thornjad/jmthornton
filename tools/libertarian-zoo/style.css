@@ -42,10 +42,6 @@ h3::before {
   content: none;
 }
 
-h1 small, h3 small {
-  display: block;
-}
-
 .img-container {
 	display: flex;
 	justify-content: center;
