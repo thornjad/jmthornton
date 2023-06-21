@@ -47,6 +47,7 @@ h3::before {
 	justify-content: center;
 	background-color: lightgrey;
   overflow: hidden;
+	height: 400px;
 }
 
 .img-container.nota, .img-container.no-photo {
@@ -54,7 +55,6 @@ h3::before {
 }
 
 .img-container img {
-	height: 400px;
 	max-width: none;
 }
 

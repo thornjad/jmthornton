@@ -179,7 +179,7 @@
          const card = document.createRange().createContextualFragment(`
           <article class="card fluid ${c.dropped ? 'dropped-out' : ''}">
             <div class="dropped-out-overlay"></div>
-            <div class="img-container ${c.name === 'Uncommitted' ? 'nota' : ''} ${!c.pic && 'no-photo'}">
+            <div class="img-container ${c.name === 'Uncommitted' ? 'nota' : ''} ${c.pic ? '' : 'no-photo'}">
               <img loading="lazy" alt="${c.name}" src="./images/2024/${c.pic ? c.pic : 'no-photo.png'}" />
             </div>
             <h3 class="candidate">
