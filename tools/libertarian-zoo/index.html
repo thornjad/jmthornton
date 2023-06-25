@@ -23,7 +23,7 @@
     <meta property="og:image" content="https://jmthornton.net/assets/images/zoo/vermin.jpg">
 
     <!-- TODO UPDATE ME -->
-    <meta property="article:published_time" content="2022-06-09">
+    <meta property="article:published_time" content="2022-06-25">
 </head>
 
 <body>
@@ -38,23 +38,15 @@
 
     <section>
         <h1 class="center">Libertarian Zoo 2024
-            <small><em>Libertarian presidential candidates, ordered by current popularity</em></small>
+            <small><em>Libertarian presidential candidates</em></small>
         </h1>
-        <time datetime="2023-06-09">Last updated: June 9, 2023</time>
+        <time datetime="2023-06-25">Last updated: June 25, 2023</time>
         <hr />
         <div id="libertarian-mount-point" class="container mount-point"></div>
     </section>
 
+    <script src="./zoo.js"></script>
     <script>
-     // Candidate template
-     //  name: '',
-     //  sortName: '',
-     //  pic: '',
-     //  url: '',
-     //  title: '',
-     //  votes: 0,
-     //  info: '',
-     //  dropped: false,
      const candidates = [
        {
          name: 'Mike ter Maat',
@@ -63,17 +55,18 @@
          url: 'https://www.miketermaat.com/',
          title: 'Cop with a Ph.D. in Economics',
          votes: 0,
-         info: 'Wants to allow states to secede',
+         serious: true,
+         info: 'Wants to allow states to secede, end all taxes, end social security, end the federal reserve, end public education, end investment in colleges, and withdraw from NATO. He wants to all military actions to be approved by the states, which will magically not take years.',
          dropped: false,
        },
        {
-         name: 'Joe Exotic',
+         name: 'Joe "Exotic" Maldonado',
          sortName: 'exotic',
          pic: 'exotic.jpg',
          url: 'https://en.wikipedia.org/wiki/Joe_Exotic',
          title: 'Convicted felon',
          votes: 0,
-           info: 'Yes, the Tiger King, who was convicted in 2019 of hiring hitmen to murder Carole Baskin, killing tigers, trafficking tigers, and falsifying records.',
+         info: 'Yes, the Tiger King, who was convicted in 2019 of hiring hitmen to murder Carole Baskin, killing tigers, trafficking tigers, and falsifying records. Wants to abolish the IRS with no replacement, believes all politicians are corrupt (especially the ones who believe in treating animals humanely), wants to charge illegal immigrants $50 a month to exist, and wants other NATO countries to pay us in oil for our protection.',
          dropped: false,
        },
 			 {
@@ -83,6 +76,7 @@
 				 url: 'https://simple.wikipedia.org/wiki/Jacob_Hornberger',
 				 title: 'Founder of a political NGO',
 				 votes: 0,
+         serious: true,
 				 info: 'Has a degree in Economics from Virginia Military Institute and a law degree from the University of Texas.',
 				 dropped: false,
 			 },
@@ -99,7 +93,6 @@
 			 {
 				 name: 'Dave Smith',
          sortName: 'smith',
-				 pic: '',
 				 url: 'https://comicdavesmith.com/',
 				 title: 'Comedian',
 				 votes: 0,
@@ -110,7 +103,6 @@
          name: 'Tulsi Gabbard',
          sortName: 'gabbard',
          pic: 'gabbard.jpg',
-         url: '',
          title: 'Former US representative from Hawaii, recently gone off the rails',
          votes: 0,
          info: 'Presumptive candidate. Ran for the Democratic nomination in 2020. Has recently gone off the rails, now opposes libertarian ideals. Tulsi unironically opposes women\'s rights and free speech. She now focuses her time on fighting the gravest of national threats: the concept of "woke".',
@@ -119,10 +111,7 @@
        {
          name: 'Spike Cohen',
          sortName: 'cohen',
-         pic: '',
-         url: '',
          title: 'Ran for VP in 2020',
-         votes: 0,
          info: 'Presumptive candidate.',
          dropped: false,
        },
@@ -132,74 +121,76 @@
          pic: 'rodriguez.png',
          url: 'https://joshuaforunity.com/',
          title: 'Quantum computing chemical engineer',
-         votes: 0,
          info: 'Qualifications include (self-reported): having been born, having lost his father as a child',
          dropped: false,
        },
        {
          name: 'Lars Mapstead',
          sortName: 'mapstead',
+         serious: true,
          pic: 'mapstead.jpg',
          url: 'https://www.lars24.com/',
          title: 'Grew up very poor',
-         votes: 0,
-         info: 'According to his self-written bio, Lars grew up without electricity or running water, and now believes that the best way for Libertarians to have an influence on elections is for there to be more of them, thus providing more votes for Libertarian candidates',
+         info: 'According to his self-written bio, Lars grew up without electricity or running water, and now believes that the best way for Libertarians to have an influence on elections is for there to be more of them, thus providing more votes for Libertarian candidates. Believes that political polarization is a plot by the government to distract us from taxes.',
          dropped: false,
        },
        {
          name: 'Chase Oliver',
          sortName: 'oliver',
          pic: 'oliver.png',
+         serious: true,
          url: 'https://votechaseoliver.com/',
-         title: 'Failed multiple elections so far',
-         votes: 0,
-         info: 'Strongly pro-choice, about both abortion and those damn guberment vaccines',
+         title: 'Self-proclaimed most-influential libertarian ever',
+         info: 'Strongly pro-choice, about both abortion and those damn guberment vaccines. Wants to end public education and ensure that everyone can buy guns without restrictions, as well as to magically end inflation.',
          dropped: false,
+       },
+       {
+         name: 'Aaron Avouris',
+         sortName: 'avouris',
+         title: 'Store Manager at a Walgreens',
+         pic: 'avouris.jpg',
+       },
+       {
+         name: 'Keenan Wallace Dunham',
+         sortName: 'dunham',
+         pic: 'dunham.jpg',
+         title: 'Guy from Myrtle Beach',
+         info: 'Proposed policies include legalizing gambling, creating a government social-security-number-based Bitcoin platform, and colonizing Antarctica. Keenan\'s campaign website is a 13,208-word rant about the government.',
+         url: 'https://www.dunham2024.com/',
+       },
+       {
+         name: 'Antonio Gagnon',
+         sortName: 'gagnon',
+         title: 'Guy whose LinkedIn experience is a list of ads for his business',
+       },
+       {
+         name: 'Tevin Handford ',
+         sortName: 'handford',
+         title: 'College student majoring in creative writing',
+         pic: 'handford.png',
+         info: 'Official biography is a list of words including "Immune Booster", "Military Doctors" and "For Viruses an Diseases Universal" (all sic).'
+       },
+       {
+         name: 'Beau Lindsey',
+         sortName: 'lindsey',
+         url: 'https://sites.google.com/view/beaulindsey4president/home',
+         info: 'Running on the sole platform of instituting direct democracy.'
+       },
+       {
+         name: 'Robert Milnes',
+         sortName: 'milnes',
+         title: 'Conspiracy theory blogger',
+         info: 'Believes that earthworms and slugs are the only positive forms of life, and that this shows that schools should be run more like prisons with a single guarded entrance. Believes he is immune to cancer, and that being more like earthworms and slugs cures depression. Believes that, and this is a direct quote, "all living organisms are composed of exactly 50% biological and 50% sexual energy". Believes the train crash in Ohio in 2023 was an instance of Jewish terrorism, just like 9/11 and the withdrawal of US troops in Afghanistan.'
+       },
+       {
+         name: 'Angela Walls-Windhauser',
+         sortName: 'walls-windhauser',
+         info: 'Most recent experience is as chair of a religious nonprofit which went into bankruptcy 15 years ago.',
        },
      ];
 
-     const mountPoint = document.querySelector('.mount-point');
-     const votesNF = new Intl.NumberFormat();
-     const percentNF = new Intl.NumberFormat(undefined, { style: 'percent' });
-     const totalVotes = candidates.reduce((t, c) => t + c.votes, 0);
-
-     candidates
-       .sort((a, b) =>
-         // If candidate dropped, sort to bottom, else sort by votes, then name
-         (b.dropped ? -1 : b.votes) - (a.dropped ? -1 : a.votes)
-                  || a.sortName.localeCompare(b.sortName))
-       .forEach((c, i) => {
-         const votes = votesNF.format(c.votes);
-         const place = c.dropped ? '' : `#${i + 1}`;
-         const rawPercent = c.votes / totalVotes;
-         const percent = (rawPercent < 0.01 && rawPercent > 0)
-                       ? '< 1%'
-                       : percentNF.format(rawPercent);
-
-         const card = document.createRange().createContextualFragment(`
-          <article class="card fluid ${c.dropped ? 'dropped-out' : ''}">
-            <div class="dropped-out-overlay"></div>
-            <div class="img-container ${c.name === 'Uncommitted' ? 'nota' : ''} ${c.pic ? '' : 'no-photo'}">
-              <img loading="lazy" alt="${c.name}" src="./images/2024/${c.pic ? c.pic : 'no-photo.png'}" />
-            </div>
-            <h3 class="candidate">
-              <em>${place}</em>&nbsp;<a href="${c.url}">${c.name}</a>
-              <small class="candidate-title"><em>
-                ${c.title}
-              </em></small>
-              <p class="info">${c.info}</p>
-              <small class="dropped-text"><em>
-                ${c.dropped ? 'Dropped out' : ''}
-              </em></small>
-              <small class="popular-vote">
-                ${votes} delegates ${isNaN(percent) ? '' : '(' + percent + ')'}
-              </small>
-            </h3>
-          </article>
-				 `);
-
-         mountPoint.appendChild(card);
-       });
+     const mountpoint = document.querySelector('.mount-point');
+     mountCandidates(mountpoint, candidates);
     </script>
 
     <p>Previous Libertarian zoos: <a href="./2020">2020</a></p>

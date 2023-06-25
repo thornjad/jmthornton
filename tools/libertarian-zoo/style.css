@@ -55,7 +55,9 @@ h3::before {
 }
 
 .img-container img {
-	max-width: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 small.popular-vote {
