@@ -498,6 +498,7 @@ div.shield-links {
 
   a {
     text-decoration: none;
+    background: none; // clears hover animation
 
     &::before {
       content: none;
