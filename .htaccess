@@ -17,6 +17,9 @@ RewriteRule ^/tools/news/tools/news/?$ https://news.jmthornton.net/ [R=301,QSA]
 
 RewriteRule ^/_nsr/?$ projects/_nsrbiz/ [R=301,QSA]
 RewriteRule ^/_nsrbiz/?$ projects/_nsrbiz/ [L,QSA]
+RewriteRule ^/karlsfriendship/? https://karlsfriendship.com [R=301,QSA]
+RewriteRule ^/karlsfriendshipregain/? https://tohil.org [R=301,QSA]
+RewriteRule ^/tohil/? https://tohil.org [R=301,QSA]
 
 RewriteRule ^/p/?$ / [R=301]
 
