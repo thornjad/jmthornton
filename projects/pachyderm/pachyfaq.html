@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FAQ | PachyMan | Jade Thornton Web Development</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Jade Thornton" />
+    <meta name="description" content="Help using the manual for maintaining and editing HR Pachyderm presentations at the Humphrey School of Public Affairs" />
+    <meta name="keywords" content="web development, web design, internet programming, internet development, jade thornton, hhh, humphrey school, pachyderm, human resources, university of minnesota, umn, hubert humphrey" />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="google-site-verification" content="JUM1Dl9n9ic9xPMb03Nzf4NgW_-8PWZrJ4eJGC_PoYM" />
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="/assets/style/main.css" type="text/css" />
+    <style>
+     body {
+       display: block;
+       padding-bottom: 20em;
+     }
+
+     dd {
+       padding-left: 4vw;
+     }
+
+     .basics {
+       text-align: left;
+     }
+
+     .main {
+       margin-left: 10vw;
+       margin-right: 10vw;
+       font-size: inherit;
+     }
+
+     .btn {
+       color: inherit;
+     }
+
+     .well {
+       background-color: #DEDEDE;
+       border-radius: 2%;
+     }
+
+     .phantom {
+       height: 9em;
+     }
+
+     .hr {
+       width: 20vw;
+       display: inline-block;
+     }
+
+     .main h3 {
+       margin-bottom: 3em;
+     }
+
+     .hr hr {
+       border: 1px solid #B1ADBB;
+       margin-bottom: 0.4em;
+     }
+
+     .separator hr {
+       border: 1px solid #B1ADBB;
+       margin: 10em 5vw;
+     }
+
+     .or {
+       width: 5vw;
+       display: inline-block;
+     }
+
+     .split,
+     .main,
+     .help-btn {
+       margin: 1.5em;
+     }
+
+     dt {
+       margin-top: 2em;
+     }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-fixed-top">
+      <div class="container-fluid">
+        <div>
+          <ul class="nav navbar-nav">
+            <li><a tabindex="250" href="/">Home</a></li>
+            <li><a tabindex="252" href="./help.html">Help</a></li>
+            <li><a tabindex="260" href="pachyman.html">Back to Manual</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <article class="faq">
+        <div class="phantom"></div>
+        <div class="basics">
+          <h4>FAQ</h4>
+          <dl>
+            <dt>Pachyderm is giving an error/won't let me access a screen</dt>
+            <dd>Don't panic. First, try logging out of Pachyderm, then log back in. If you can't log out, open Pachyderm in an incognito/private window, and log in again. Try going to the same screen that gave you the error. If it works just fine,
+              it means your Pachyderm login had timed out. If it still gives you the same error, email John Mehr (<a href="mailto:jmehr@umn.edu">jmehr@umn.edu</a>) and ask him to restart the Pachyderm server. We haven't been able to figure out
+              what this problem is, but turning things off and back on again solves a lot of stuff.</dd>
+            <dt>What is a tag?</dt>
+            <dd>A tag is an HTML element, and is enclosed in angle brackets (&lt;&gt;). These are what tell Pachyderm what to do with the text (or other tags) inside the tag. Almost every tag must be closed with a closing tag, which looks something
+              like &lt;/>. <a href="https://en.wikipedia.org/wiki/HTML_element">Learn more</a></dd>
+            <dt>How do I know when to close which tags?</dt>
+            <dd>This will become more intuitive with practice. Try thinking of it this way: the last tag you opened is the first tag you have to close. The exceptions are tags which don't contain any text, like <code>&lt;ht&gt;</code>. <a href="http://www.w3schools.com/html/html_elements.asp">Learn more</a></dd>
+            <div class="fake" id="access"></div>
+            <dt>What do you mean, "I've changed the rendered example"</dt>
+            <dd>When I've said this in the manual, I mean that I've added some inline CSS with a style attribute to alter the way the HTML looks. If you're feeling adventurous, take a look at the <a href="https://github.com/Raindeer44/raindeer44.github.io/tree/master/hhh/pachyman.html">HTML code for the manual</a>                        to see exactly what I wrote. Specifically, I specified the size of the image in the <a href="pachyman.html#img">Image entry</a> and I changed the size of and added a border around the text in the <a href="pachyman.html#hr">Horizontal Rule entry</a>.
+              <a href="https://en.wikipedia.org/wiki/Cascading_Style_Sheets">Learn more</a></dd>
+            <dt>Why do we use strong instead of b and em instead of i?</dt>
+            <dd>The answer is accessibility. When someone who has poor vision or is blind uses and HTML document, they are more than likely to use a screen reader. This is a computer program which reads the HTML document out loud. The screen reader
+              has no problem saying what b and i mean. However, if you're blind, how do you know what bold or italic means? When we write content, we use bold and italics to signify extra meaning in the text. This meaning is much more easily
+              conveyed when we say strong instead of bold, and emphasis instead of italicized. If you forget this rule, yes, Pachyderm will still show what you mean, but it is important to make sure all users of the presentation are able to
+              grasp the full meaning of the text. <em>Caveat: this isn't exactly the truth, but unless you're going into web development, this is all you need.</em></dd>
+          </dl>
+        </div>
+      </article>
+    </div>
+  </body>
+</html>
