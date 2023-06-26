@@ -7,7 +7,7 @@ p.info {
 	padding-top: 1em;
 }
 
-section {
+section, header {
 	max-width: 1284px;
 	margin: auto;
 }
