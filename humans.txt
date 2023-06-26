@@ -1,0 +1,13 @@
+/* TEAM */
+Primary developer: Jade Thornton
+Site: jmthornton.net
+GitHub: thornjad
+Location: US
+
+/* THANKS */
+Stephanie Shrider: all the love and support in the world
+GitHub: sshrid
+
+/* SITE */
+Standards: HTML5, CSS3
+Software: Emacs, http-server (npm)
