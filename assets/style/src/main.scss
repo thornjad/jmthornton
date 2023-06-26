@@ -206,7 +206,7 @@ div.no-md-a a {
 time {
   font-style: italic;
 
-  &::before {
+  &:not(:first-of-type)::before {
     content: "| ";
     font-style: normal;
     color: var(--heading-marker);
