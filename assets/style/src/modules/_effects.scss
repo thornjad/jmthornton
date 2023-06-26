@@ -318,6 +318,16 @@
 
 // rgb animation
 
+:root {
+  --rgb-orange: #f79533;
+  --rgb-pink: #f37055;
+  --rgb-red: #ef4e7b;
+  --rgb-purple: #a166ab;
+  --rgb-blue: #5073b8;
+  --rgb-green: #1098ad;
+  --rgb-sea-green: #07b39b;
+}
+
 .rgb-color {
   color: var(--fg);
   animation: rgb-color-anim 7s linear infinite;
@@ -325,12 +335,39 @@
 
 @keyframes rgb-color-anim {
   0% {color: var(--mint);}
-  12% {color: #f79533;}
-  25% {color: #f37055;}
-  37% {color: #ef4e7b;}
-  50% {color: #a166ab;}
-  62% {color: #5073b8;}
-  75% {color: #1098ad;}
-  87% {color: #07b39b;}
+  12% {color: var(--rgb-orange);}
+  25% {color: var(--rgb-pink);}
+  37% {color: var(--rgb-red);}
+  50% {color: var(--rgb-purple);}
+  62% {color: var(--rgb-blue);}
+  75% {color: var(--rgb-green);}
+  87% {color: var(--rgb-sea-green);}
   100% {color: var(--mint);}
+}
+
+
+// RBG on link hovers
+
+a:not(.no-rgb) {
+  text-decoration: none;
+  background:
+    linear-gradient(
+      to right,
+      var(--mint),
+      var(--mint)
+    ),
+    linear-gradient(
+      to right,
+      var(--rgb-red),
+      var(--rgb-purple),
+      var(--rgb-blue)
+    );
+  background-size: 100% 2px, 0 2px;
+  background-position: 100% 100%, 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 400ms;
+
+  &:hover {
+    background-size: 0 2px, 100% 2px;
+  }
 }
