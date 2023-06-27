@@ -4,6 +4,7 @@ function mountCandidates(mountpoint, candidates) {
   const votesNF = new Intl.NumberFormat();
   const percentNF = new Intl.NumberFormat(undefined, { style: 'percent' });
   const totalVotes = candidates.reduce((t, c) => t + c.votes, 0);
+  candidates = candidates.map(c => ({...c, rank: rank(c)}));
 
   candidates
     .sort(sortCandidates)
@@ -19,6 +20,7 @@ function mountCandidates(mountpoint, candidates) {
       } = c;
 
       const votes = votesNF.format(rawVotes);
+      const rank = votesNF.format(~~Math.round((1 - c.rank) * 50))
       const place = dropped ? '' : `#${i + 1}`;
       const rawPercent = rawVotes / totalVotes;
       const percent = (rawPercent < 0.01 && rawPercent > 0)
@@ -43,7 +45,7 @@ function mountCandidates(mountpoint, candidates) {
                 ${dropped ? 'Dropped out' : ''}
               </em></small>
               <small class="popular-vote">
-                ${votes} delegates ${isNaN(percent) ? '' : '(' + percent + ')'}
+                Zoo Ranking: ${rank} | Pledged Delegates: ${votes} ${isNaN(percent) ? '' : '(' + percent + ')'}
               </small>
             </h3>
           </article>
@@ -53,9 +55,32 @@ function mountCandidates(mountpoint, candidates) {
     });
 }
 
-const sortCandidates = (a, b) => {
-  // Dropped goes to the bottom, serious goes to the top, then sorted by votes, then alphabetically
-  return (a.dropped ? 1 : a.serious ? -1 : 1) - (b.dropped ? 1 : b.serious ? -1 : 1) || a.sortName.localeCompare(b.sortName);
+const rank = (candidate) => {
+  // Returns the relative rank for the candidate, ranging from -1 to 1, where -1 is the most
+  // favorable. Rank is penalized for dropping out, not yet having officially declared, whether the
+  // candidate is "serious", and the median poll percentage (being votes / total votes)
+  let algoRank = 0;
+  let pollRank = 0;
+  if (!candidate.serious) {
+    algoRank = 0.5;
+  }
+  if (candidate.dropped) {
+    algoRank = 0.9;
+  }
+  if (candidate.polls?.length) {
+    // convert to -1-1 scale
+    pollRank = median(candidate.polls) / 50 - 1;
+  }
+  console.log(algoRank, pollRank)
+  return (algoRank + pollRank) / 2
+};
 
-  // (b.dropped ? -1 : b.votes) - (a.dropped ? -1 : a.votes) || a.sortName.localeCompare(b.sortName)
+const sortCandidates = (a, b) => {
+  return (a.rank - b.rank) || a.sortName.localeCompare(b.sortName);
+};
+
+function median(xs) {
+  const len = xs.sort().length;
+  const half = Math.floor(len / 2);
+  return len % 2 ? xs[half] : (xs[half - 1] + xs[half]) / 2.0;
 }
