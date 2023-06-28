@@ -1,10 +1,16 @@
 'use strict';
 
-function mountCandidates(mountpoint, candidates) {
+async function mountCandidates(mountpoint) {
+  let [{candidates}, polls] = await Promise.all([
+    fetch('data/2024/candidates.json').then(r => r.json()),
+    fetch('data/2024/polls.json').then(r => r.json()),
+  ]);
+
+  candidates = candidates.map(c => ({...c, pollMedian: median(polls[c.sortName])}));
+
   const votesNF = new Intl.NumberFormat();
   const percentNF = new Intl.NumberFormat(undefined, { style: 'percent' });
   const totalVotes = candidates.reduce((t, c) => t + c.votes, 0);
-  candidates = candidates.map(c => ({...c, pollMedian: median(c.polls)}));
 
   candidates
     .sort(sortCandidates)

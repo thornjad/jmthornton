@@ -1,0 +1,148 @@
+{
+  "candidates": [
+    {
+      "name": "Mike ter Maat",
+      "sortName": "ter maat",
+      "pic": "termaat.jpg",
+      "url": "https://www.miketermaat.com/",
+      "title": "Cop with a Ph.D. in Economics",
+      "votes": 0,
+      "serious": true,
+      "info": "Wants to allow states to secede, end all taxes, end social security, end the federal reserve, end public education, end investment in colleges, and withdraw from NATO. He wants to require that all military actions to be approved by the states, which will magically somehow not take years every time.",
+      "dropped": false
+    },
+    {
+      "name": "Joe 'Exotic' Maldonado",
+      "sortName": "exotic",
+      "pic": "exotic.jpg",
+      "url": "https://en.wikipedia.org/wiki/Joe_Exotic",
+      "title": "Convicted felon",
+      "votes": 0,
+      "info": "Yes, the Tiger King, who was convicted in 2019 of hiring hitmen to murder Carole Baskin, killing tigers, trafficking tigers, and falsifying records. Wants to abolish the IRS with no replacement, believes all politicians are corrupt (especially the ones who believe in treating animals humanely), wants to charge illegal immigrants $50 a month to exist, and wants other NATO countries to pay us in oil for our protection.",
+      "dropped": false
+    },
+    {
+      "name": "Jacob Hornberger",
+      "sortName": "hornberger",
+      "pic": "hornberger.jpg",
+      "url": "https://simple.wikipedia.org/wiki/Jacob_Hornberger",
+      "title": "Founder of a political NGO",
+      "votes": 0,
+      "serious": true,
+      "info": "Has a degree in Economics from Virginia Military Institute and a law degree from the University of Texas.",
+      "dropped": false
+    },
+    {
+      "name": "Justin Amash",
+      "sortName": "amash",
+      "pic": "amash.jpg",
+      "url": "https://en.wikipedia.org/wiki/Justin_Amash",
+      "title": "Former US Representative from Michigan",
+      "votes": 0,
+      "info": "Presumptive candidate. Polled well when running in 2020. First Republican to call for the impeachment of President Trump, which he continued calling for after leaving the party in 2019.",
+      "dropped": false
+    },
+    {
+      "name": "Dave Smith",
+      "sortName": "smith",
+      "url": "https://comicdavesmith.com/",
+      "title": "Comedian",
+      "votes": 0,
+      "info": "Presumptive candidate. Has a podcast about how the government is bad and we should all feel bad. Major member of the Mises Caucus (the alt-right ultra-conservative group which has taken over the Libertarian Party).",
+      "dropped": false
+    },
+    {
+      "name": "Tulsi Gabbard",
+      "sortName": "gabbard",
+      "pic": "gabbard.jpg",
+      "title": "Former US representative from Hawaii, recently gone off the rails",
+      "votes": 0,
+      "info": "Presumptive candidate. Ran for the Democratic nomination in 2020. Has recently gone off the rails, now opposes libertarian ideals. Tulsi unironically opposes women's rights and free speech. She now focuses her time on fighting the gravest of national threats: the concept of 'woke'.",
+      "dropped": false
+    },
+    {
+      "name": "Spike Cohen",
+      "sortName": "cohen",
+      "title": "Ran for VP in 2020",
+      "info": "Presumptive candidate.",
+      "dropped": false
+    },
+    {
+      "name": "Joshua Rodriguez",
+      "sortName": "rodriguez",
+      "pic": "rodriguez.png",
+      "url": "https://joshuaforunity.com/",
+      "title": "Quantum computing chemical engineer",
+      "info": "Qualifications include (self-reported): having been born, having lost his father as a child",
+      "serious": true
+    },
+    {
+      "name": "Lars Mapstead",
+      "sortName": "mapstead",
+      "serious": true,
+      "pic": "mapstead.jpg",
+      "url": "https://www.lars24.com/",
+      "title": "Grew up very poor",
+      "info": "According to his self-written bio, Lars grew up without electricity or running water, and now believes that the best way for Libertarians to have an influence on elections is for there to be more of them, thus providing more votes for Libertarian candidates. Believes that political polarization is a plot by the government to distract us from taxes.",
+      "dropped": false
+    },
+    {
+      "name": "Chase Oliver",
+      "sortName": "oliver",
+      "pic": "oliver.png",
+      "serious": true,
+      "url": "https://votechaseoliver.com/",
+      "title": "Self-proclaimed most-influential libertarian ever",
+      "info": "Strongly pro-choice, about both abortion and those damn guberment vaccines. Wants to end public education and ensure that everyone can buy guns without restrictions, as well as to magically end inflation.",
+      "dropped": false
+    },
+    {
+      "name": "Aaron Avouris",
+      "sortName": "avouris",
+      "title": "Store Manager at a Walgreens",
+      "pic": "avouris.jpg"
+    },
+    {
+      "name": "Keenan Wallace Dunham",
+      "sortName": "dunham",
+      "pic": "dunham.jpg",
+      "title": "Guy from Myrtle Beach",
+      "info": "Proposed policies include legalizing gambling, creating a government social-security-number-based Bitcoin platform, and colonizing Antarctica. Keenan's campaign website is a 13, 208-word rant about the government.",
+      "url": "https://www.dunham2024.com/"
+    },
+    {
+      "name": "Vermin Supreme",
+      "sortName": "supreme",
+      "pic": "vermin.jpg",
+      "url": "https://en.wikipedia.org/wiki/Vermin_Supreme",
+      "title": "Performance artist and political satirist",
+      "serious": true,
+      "info": "Presumptive candidate, as he runs every year. Promises a free pony to every citizen if elected. Believes in zombie apocalypse awareness and time travel research. Will make brushing teeth required by law.",
+      "dropped": false
+    },
+    {
+      "name": "Tevin Handford ",
+      "sortName": "handford",
+      "title": "College student majoring in creative writing",
+      "pic": "handford.png",
+      "info": "Official biography is a list of words including 'Immune Booster', 'Military Doctors' and 'For Viruses an Diseases Universal' (all sic)."
+    },
+    {
+      "name": "Beau Lindsey",
+      "sortName": "lindsey",
+      "url": "https://sites.google.com/view/beaulindsey4president/home",
+      "info": "Running on the sole platform of instituting direct democracy."
+    },
+    {
+      "name": "Robert Milnes",
+      "sortName": "milnes",
+      "title": "Conspiracy theory blogger",
+      "info": "Believes that earthworms and slugs are the only positive forms of life, and that this shows that schools should be run more like prisons with a single guarded entrance. Believes he is immune to cancer, and that being more like earthworms and slugs cures depression. Believes that, and this is a direct quote, 'all living organisms are composed of exactly 50% biological and 50% sexual energy'. Believes the train crash in Ohio in 2023 was an instance of Jewish terrorism, just like 9/11 and the withdrawal of US troops in Afghanistan."
+    },
+    {
+      "name": "Angela Walls-Windhauser",
+      "sortName": "walls-windhauser",
+      "info": "Most recent experience is as chair of a religious nonprofit which went into bankruptcy 15 years ago."
+    }
+  ]
+}
