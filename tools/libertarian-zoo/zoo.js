@@ -77,3 +77,9 @@ function median(xs = []) {
   xs.sort();
   return len % 2 ? xs[half] : (xs[half - 1] + xs[half]) / 2.0;
 }
+
+
+// Main
+
+mountCandidates(document.querySelector('.mount-point'))
+  .then(() => document.querySelector('#spinner').style.display = 'none');

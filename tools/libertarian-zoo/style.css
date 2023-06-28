@@ -102,6 +102,13 @@ article.card {
 	left: 2rem;
 }
 
+.spinner-donut {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3em;
+}
+
 footer > .footer-text {
 	text-align: center;
 }
