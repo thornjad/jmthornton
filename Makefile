@@ -1,4 +1,34 @@
-.PHONY: all sass style dev prism main blog tools zoo
+.PHONY: all sass style dev prism main blog tools zoo test serve
+
+test:
+	COAST_ENV=test clj -A\:test
+
+clean:
+	rm -rf target/*
+
+uberjar:
+	clj -A\:uberjar
+
+repl:
+	clj -R:repl bin/repl.clj
+
+assets:
+	clj -m coast.assets
+
+server:
+	clj -m server
+
+db/migrate:
+	clj -m coast.migrations migrate
+
+db/rollback:
+	clj -m coast.migrations rollback
+
+db/create:
+	clj -m coast.db create
+
+db/drop:
+	clj -m coast.db drop
 
 sass:
 	sass assets/style/src/main.scss assets/style/out.css
@@ -40,8 +70,8 @@ copy-blog-fonts:
 
 all: style
 
-server:
+serve:
 	npx http-server -c-1
 
 dev: style
-	make -j4 sass-watch server
+	make -j4 sass-watch serve

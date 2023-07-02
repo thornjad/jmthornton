@@ -1,5 +1,5 @@
-# Compiled source #
-###################
+.DS_Store
+*.DS_Store
 *.o
 *.so
 a.html
@@ -12,46 +12,36 @@ blog/assets/vendor/
 tools/news/news.css
 tools/tools.css
 tools/libertarian-zoo/main.css
-
-# Logs and databases #
-######################
-*.log
-*.sqlite
-
-# OS generated files #
-######################
-.DS_Store
-*.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# Verification files #
-######################
-google*
-BingSiteAuth.xml
-
-# DNS files #
-#############
-CNAME
-
-# Development files #
-#####################
+.sass-cache/
+node_modules/
 *.old
 assets/style/out.css.map
 assets/style/main.css.map
 blog/draft/
+.lsp/
+.clj-kondo/
 
-# Development Directories #
-###########################
-.sass-cache/
-node_modules/
+*.log
+*.sqlite
 
-# Restricted directories #
-##########################
+/target
+/classes
+/checkouts
+pom.xml
+pom.xml.asc
+*.jar
+*.class
+/.lein-*
+/.nrepl-port
+*.iml
+.env
+.cpcache
+
+google*
+BingSiteAuth.xml
+CNAME
+
+# Restricted directories
 analytics/
 cal/
 cloud/
@@ -64,7 +54,3 @@ orson/wiki/
 photos/
 short/
 skyland/
-
-# Notes file #
-##############
-notes.txt
