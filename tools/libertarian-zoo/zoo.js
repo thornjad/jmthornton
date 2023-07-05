@@ -51,7 +51,7 @@ async function mountCandidates(mountpoint) {
                 ${dropped ? 'Dropped out' : ''}
               </em></small>
               <small class="popular-vote">
-                Median Polling: ${pollMedian} | Pledged Delegates: ${votes} ${isNaN(percent) ? '' : '(' + percent + ')'}
+                Median Polling: ${pollMedian}% | Pledged Delegates: ${votes} ${isNaN(percent) ? '' : '(' + percent + ')'}
               </small>
             </h3>
           </article>
@@ -62,7 +62,7 @@ async function mountCandidates(mountpoint) {
 }
 
 const sortCandidates = (a, b) => {
-  const dropped = Number(b.dropped ?? 0) - Number(a.dropped ?? 0);
+  const dropped = Number(a.dropped ?? 0) - Number(b.dropped ?? 0);
   const votes = (a.votes - b.votes) || 0;
   const serious = Number(b.serious ?? 0) - Number(a.serious ?? 0);
   const polls = b.pollMedian - a.pollMedian;
