@@ -16,5 +16,5 @@ all: sass purifycss
 run:
 	npx http-server -c-1
 
-watch:
+dev:
 	make -j2 sass-watch run
