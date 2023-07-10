@@ -369,12 +369,12 @@ a:not(.no-rgb) {
       var(--rgb-purple),
       var(--rgb-blue)
     );
-  background-size: 100% 2px, 0 2px;
+  background-size: 100% 1px, 0 1px;
   background-position: 100% 100%, 0 100%;
   background-repeat: no-repeat;
   transition: background-size 400ms;
 
   &:hover {
-    background-size: 0 2px, 100% 2px;
+    background-size: 0 1px, 100% 1px;
   }
 }
