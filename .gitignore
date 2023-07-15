@@ -12,6 +12,9 @@ blog/assets/vendor/
 tools/news/news.css
 tools/tools.css
 tools/libertarian-zoo/main.css
+.clj-kondo
+.cpcache
+.lsp
 
 # Logs and databases #
 ######################
