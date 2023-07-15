@@ -4,6 +4,17 @@
 *.so
 a.html
 assets/style/main.css
+assets/style/out.css
+assets/vendor/prism.min.css
+assets/vendor/prism-dark.min.css
+blog/assets/style/main.css
+blog/assets/vendor/
+tools/news/news.css
+tools/tools.css
+tools/libertarian-zoo/main.css
+.clj-kondo
+.cpcache
+.lsp
 
 # Logs and databases #
 ######################
@@ -33,6 +44,7 @@ CNAME
 # Development files #
 #####################
 *.old
+assets/style/out.css.map
 assets/style/main.css.map
 blog/draft/
 

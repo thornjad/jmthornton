@@ -1,71 +1,11 @@
-/* Main style for jmthornton.net
- * Copyright (c) 2012-2021 Jade Michael Thornton
+/** Main style for jmthornton.net
+ *
+ * Copyright (c) 2012-2023 Jade Michael Thornton
  */
 
 // Variables
 
-@import "./modules/fontface";
-
-$main-width: 770px; // approx. 88ch, but without the loading flash
-$phi: 1.618033; // the golden ratio
-$phi-em: 1.618033em;
-
-:root {
-  --font-main: MetroNova;
-  --font-secondary: sans-serif;
-  --font-mono: VictorMono, monospace;
-
-  // heights, widths and things
-  --font-size: 16px;
-  --line-height: #{$phi-em};
-  --line-height: #{$phi-em};
-  --standard-margin: #{$phi-em} 0;
-
-  --border-radius: 5px;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --mint: #2aa198;
-    --blue: #4b788d;
-    --brown: #83684c;
-    --gold: #fabd2f;
-    --green: #8ec07c;
-    --lighter-blue: #82aec5;
-    --grey1: #e4e2e2;
-    --grey2: #6b6b6b;
-    --red: #dd8844;
-
-    --bg: #fbfbfb;
-    --bg-alt: #f6f3e7;
-    --bg-alt-darker: darken(#f6f3e7, 10%);
-    --fg: #424c4a;
-
-    --hr: var(--grey1);
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --mint: #1a9188;
-    --mint-alt: #4e7370;
-    --blue: #5b889d;
-    --brown: #83583c;
-    --gold: #eaad1f;
-    --green: #7eb06c;
-    --lighter-blue: #729eb5;
-    --grey1: #9295a0;
-    --grey2: #6b6b6b;
-    --red: #dd8844;
-
-    --bg: #26282b;
-    --bg-alt: #434546;
-    --bg-alt-darker: darken(#232526, 10%);
-    --fg: #d5dae3;
-
-    --hr: var(--grey2);
-  }
-}
+@import "./variables";
 
 // Major structural elements
 
@@ -75,31 +15,6 @@ $phi-em: 1.618033em;
   color: var(--fg);
   line-height: var(--line-height);
   scrollbar-color: var(--brown transparent);
-
-  --error: var(--red);
-  --heading: var(--mint);
-  --heading-marker: var(--brown);
-  --anchor: var(--fg);
-  --anchor-hover: var(--blue);
-  --footer-line: var(--heading);
-  --button-primary-bg: var(--brown);
-  --button-primary-fg: white;
-  --button-primary-bg-hover: var(--mint);
-  --button-primary-fg-hover: white;
-  --button-secondary-bg: var(--mint);
-  --button-secondary-fg: white;
-  --button-secondary-bg-hover: var(--mint);
-  --button-secondary-fg-hover: white;
-  --button-low-key-bg: var(--grey2);
-  --button-low-key-fg: white;
-  --button-low-key-bg-hover: darken(white, 5%);
-  --button-low-key-fg-hover: white;
-  --spinner-fg: var(--mint);
-  --pre-border: var(--green);
-  --blockquote-bg: var(--gold);
-  --aside-bg: var(--lighter-blue);
-  --toggle-bg: var(--brown);
-  --toggle-bg-disabled: lighten(#83684c, 20%);
 }
 
 body {
@@ -146,6 +61,7 @@ blockquote > figcaption {
   padding-top: 1em;
 }
 
+
 // Other structural elements
 
 @import "./modules/headings";
@@ -205,6 +121,18 @@ div.no-md-a a {
   }
 }
 
+section.card {
+	background: var(--card-bg);
+	min-height: 23em;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	border: 0;
+	box-shadow: 0 2px 2px 0 rgba(60,75,100,.14),0 3px 2px -1px rgba(60,75,100,.12),1px 2px 4px 1px rgba(60,75,100,.2);
+	border-radius: .18rem;
+}
+
 time {
   font-style: italic;
 
@@ -259,6 +187,7 @@ hr {
   border-top: 1px solid var(--hr);
 }
 
+
 // Buttons and inputs
 
 button {
@@ -359,6 +288,7 @@ label.toggle {
 
 @import "./modules/effects";
 
+
 // pre, code
 
 // Using some important tags to override prism
