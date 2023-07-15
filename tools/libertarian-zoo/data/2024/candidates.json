@@ -19,7 +19,7 @@
       "title": "Convicted felon",
       "votes": 0,
       "info": "Yes, the Tiger King, who was convicted in 2019 of hiring hitmen to murder Carole Baskin, killing tigers, trafficking tigers, and falsifying records. Wants to abolish the IRS with no replacement, believes all politicians are corrupt (especially the ones who believe in treating animals humanely), wants to charge illegal immigrants $50 a month to exist, and wants other NATO countries to pay us in oil for our protection.",
-      "dropped": false
+      "dropped": true
     },
     {
       "name": "Jacob Hornberger",
@@ -61,16 +61,9 @@
       "dropped": false
     },
     {
-      "name": "Spike Cohen",
-      "sortName": "cohen",
-      "title": "Ran for VP in 2020",
-      "info": "Presumptive candidate.",
-      "dropped": false
-    },
-    {
       "name": "Joshua Rodriguez",
       "sortName": "rodriguez",
-      "pic": "rodriguez.png",
+      "pic": "rodriguez.jpg",
       "url": "https://joshuaforunity.com/",
       "title": "Quantum computing chemical engineer",
       "info": "Qualifications include (self-reported): having been born, having lost his father as a child",
@@ -86,14 +79,22 @@
       "info": "According to his self-written bio, Lars grew up without electricity or running water, and now believes that the best way for Libertarians to have an influence on elections is for there to be more of them, thus providing more votes for Libertarian candidates. Believes that political polarization is a plot by the government to distract us from taxes.",
       "dropped": false
     },
+		{
+      "name": "Jo Jorgensen",
+      "sortName": "jorgensen",
+      "pic": "jo.jpg",
+      "url": "https://en.wikipedia.org/wiki/Jo_Jorgensen",
+      "title": "Libertarian presidential nominee in 2020",
+      "info": "Presumptive candidate who has already appeared in polls. Won the 2020 Libertarian presidential nomination, the first woman to do so, and went on to lose the general election by a mere 72 million votes behind the runner-up (Trump). Wants to replace social security with an improved retirement account welfare system. Wants to end the war on drugs and pardon all non-violent drug offenders. Wants to demilitarize the police and reinstate a policy of armed neutrality (i.e. stop invading other countries). Would tear down Trump's border wall and make the path to citizenship easier. Criticized Trump's Covid-era corporate bailouts as anti-democratic."
+		},
     {
       "name": "Chase Oliver",
       "sortName": "oliver",
-      "pic": "oliver.png",
+      "pic": "oliver.jpg",
       "serious": true,
       "url": "https://votechaseoliver.com/",
       "title": "Self-proclaimed most-influential libertarian ever",
-      "info": "Strongly pro-choice, about both abortion and those damn guberment vaccines. Wants to end public education and ensure that everyone can buy guns without restrictions, as well as to magically end inflation.",
+      "info": "Pro-choice, but also anti-vaccine. Wants to end public education and ensure that everyone can freely buy guns without any of those damn guberment restrictions, checks or red-flag laws. If elected, Chase promises to magically end inflation.",
       "dropped": false
     },
     {
@@ -107,7 +108,7 @@
       "sortName": "dunham",
       "pic": "dunham.jpg",
       "title": "Guy from Myrtle Beach",
-      "info": "Proposed policies include legalizing gambling, creating a government social-security-number-based Bitcoin platform, and colonizing Antarctica. Keenan's campaign website is a 13, 208-word rant about the government.",
+      "info": "Proposed policies include legalizing gambling, creating a government social-security-number-based Bitcoin platform, and colonizing Antarctica. Keenan's campaign website is a 13,208-word rant about the government.",
       "url": "https://www.dunham2024.com/"
     },
     {
@@ -130,8 +131,10 @@
     {
       "name": "Beau Lindsey",
       "sortName": "lindsey",
-      "url": "https://sites.google.com/view/beaulindsey4president/home",
-      "info": "Running on the sole platform of instituting direct democracy."
+      "title": "Reddit user trying to start a literal crusade",
+      "pic": "lindsey.jpg",
+      "url": "https://sites.google.com/view/beaulindsey4president/homehttps://sites.google.com/view/beaulindsey4president/home",
+      "info": "Actively believes in 'retaking the holy land' through a new crusade, which he will lead, to remove the evil Jews from the rightful home of 'warriors in Christ' like Beau. Claims the Libertarian Party is corrupt because it supports women's rights. Spends his time spamming every political subreddit he can find with self-propaganda. Believes in the separation of church and state, except when the state takes any action contrary to the wishes of the church."
     },
     {
       "name": "Robert Milnes",

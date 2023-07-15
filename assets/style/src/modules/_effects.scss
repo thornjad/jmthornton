@@ -327,12 +327,13 @@
 
 :root {
   --rgb-orange: #f79533;
+  --rgb-lime: #aee406;
+  --rgb-sea-green: #07b39b;
+  --rgb-green: #1098ad;
+  --rgb-blue: #5073b8;
+  --rgb-purple: #a166ab;
   --rgb-pink: #f37055;
   --rgb-red: #ef4e7b;
-  --rgb-purple: #a166ab;
-  --rgb-blue: #5073b8;
-  --rgb-green: #1098ad;
-  --rgb-sea-green: #07b39b;
 }
 
 .rgb-color {
@@ -342,39 +343,36 @@
 
 @keyframes rgb-color-anim {
   0% {color: var(--mint);}
-  12% {color: var(--rgb-orange);}
-  25% {color: var(--rgb-pink);}
-  37% {color: var(--rgb-red);}
+  12.5% {color: var(--rgb-sea-green);}
+  25% {color: var(--rgb-green);}
+  37.5% {color: var(--rgb-blue);}
   50% {color: var(--rgb-purple);}
-  62% {color: var(--rgb-blue);}
-  75% {color: var(--rgb-green);}
-  87% {color: var(--rgb-sea-green);}
+  62.5% {color: var(--rgb-pink);}
+  75% {color: var(--rgb-red);}
+  87.5% {color: var(--rgb-orange);}
   100% {color: var(--mint);}
 }
 
 
 // RBG on link hovers
 
+
+@keyframes rgb-text-decoration-anim {
+  0% {text-decoration: underline var(--mint);}
+  12.5% {text-decoration: underline var(--rgb-sea-green);}
+  25% {text-decoration: underline var(--rgb-green);}
+  37.5% {text-decoration: underline var(--rgb-blue);}
+  50% {text-decoration: underline var(--rgb-purple);}
+  62.5% {text-decoration: underline var(--rgb-pink);}
+  75% {text-decoration: underline var(--rgb-red);}
+  87.5% {text-decoration: underline var(--rgb-orange);}
+  100% {text-decoration: underline var(--mint);}
+}
+
 a:not(.no-rgb) {
-  text-decoration: none;
-  background:
-    linear-gradient(
-      to right,
-      var(--mint),
-      var(--mint)
-    ),
-    linear-gradient(
-      to right,
-      var(--rgb-red),
-      var(--rgb-purple),
-      var(--rgb-blue)
-    );
-  background-size: 100% 2px, 0 2px;
-  background-position: 100% 100%, 0 100%;
-  background-repeat: no-repeat;
-  transition: background-size 400ms;
+  text-decoration: underline var(--mint);
 
   &:hover {
-    background-size: 0 2px, 100% 2px;
+    animation: rgb-text-decoration-anim 4s linear infinite;
   }
 }
