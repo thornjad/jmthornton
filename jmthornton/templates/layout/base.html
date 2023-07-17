@@ -44,7 +44,9 @@
       crossorigin="anonymous"
     />
 
-    {% block head %} {% endblock head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/main.css') }}" type="text/css" />
+
+    {% block head %}{% endblock head %}
   </head>
   <body>
     <header>
