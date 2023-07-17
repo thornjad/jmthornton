@@ -1,0 +1,93 @@
+{# -*- engine:django -*- #}
+{% extends "layout/base.html" %}
+
+{% block title %}
+	<title>Query parameter dumper</title>
+{% endblock %}
+{% block description%}
+	<meta name="description" content="Send query parameters and see how they parse" />
+{% endblock %}
+
+{% block body %}
+	<h1>Query parameter parser and dumper</h1>
+	<p>Send query parameters and see how they parse.</p>
+	<hr />
+
+	<h2>Special parameters</h2>
+	<p>Use these special keys to trigger parsing with a certain type</p>
+	<ul>
+		<li><code>json</code>: Parse as JSON</li>
+		<li><code>int</code>, <code>number</code>: Parse as an integer</li>
+		<li><code>float</code>: Parse as a floating point number</li>
+		<li><code>bool</code>: Parse as boolean</li>
+	</ul>
+
+	<hr />
+
+	<h2>Your parameters:</h2>
+	<div class="display"></div>
+{% endblock %}
+
+<script type="text/javascript">
+ const parseParam = (k, v) => {
+	 let parsedValue = v;
+	 let parsedType = null;
+	 switch (k) {
+		 case 'json':
+			 parsedType = 'JSON';
+			 try {
+				 parsedValue = JSON.parse(v);
+				 parsedValue = JSON.stringify(parsedValue, null, '\t');
+			 } catch (e) {
+				 parsedValue = 'Invalid';
+			 }
+			 break;
+
+		 case 'number':
+		 case 'int':
+			 parsedType = 'Integer';
+			 parsedValue = parseInt(v);
+			 break;
+
+		 case 'float':
+			 parsedType = 'Float';
+			 parsedValue = parseFloat(v);
+			 break;
+
+		 case 'bool':
+			 parsedType = 'Boolean';
+			 parsedValue = !!v;
+			 break;
+	 }
+
+	 return {
+		 key: k,
+		 rawValue: v,
+		 value: parsedValue,
+		 type: parsedType,
+	 };
+ };
+
+ const formatParamInfo = (info) => {
+	 if (info.type) {
+		 return `Key:\t${info.key}
+Type:\t${info.type}
+Given:\t${info.rawValue}
+Parsed:\t${info.value}`;
+	 } else {
+		 return `Key:\t${info.key}
+Value:\t${info.value}`;
+	 }
+ };
+
+ const mount = document.querySelector('.display');
+ const params = new URLSearchParams(window.location.search);
+
+ params.forEach((v, k) => {
+	 const info = parseParam(k, v);
+	 const div = document.createElement('pre');
+	 div.className = 'param';
+	 div.innerHTML = formatParamInfo(info);
+	 mount.append(div);
+ });
+</script>

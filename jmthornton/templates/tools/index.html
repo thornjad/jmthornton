@@ -1,0 +1,46 @@
+{# -*- engine:django -*- #}
+{% extends "layout/base.html" %}
+
+{% block title %}
+  <title>Tools | Jade Michael Thornton</title>
+{% endblock %}
+{% block description%}
+  <meta name="description" content="Tools and various projects by Jade Michael Thornton" />
+{% endblock %}
+
+{% block body %}
+  <h1>Tools <small>by <span class="rgb-color">Jade Michael Thornton</span></small></h1>
+
+  <section>
+    <ul class="dl">
+      <li>
+        <p><a href="{{url_for('news')}}">News</a></p>
+        <p>Hacker News, but without the clutter of comments or karma, just links</p>
+      </li>
+      <li>
+        <p><a href="{{url_for('libertarian_zoo')}}">Libertarian Zoo</a></p>
+        <p>Explore the zoo of Libertarian Party candidates for president</p>
+      </li>
+      <li>
+        <p><a href="{{url_for('dencode')}}">URL Dencoder</a></p>
+        <p>URL encoding and decoding tool</p>
+      </li>
+      <li>
+        <p><a href="{{url_for('jwt')}}">JWT Decoder</a></p>
+        <p>Simple JWT decoding tool</p>
+      </li>
+      <li>
+        <p><a href="{{url_for('sponge')}}">Make sponge text</a></p>
+        <p>EaSiLy gEnErAtE SpOnGe tExT</p>
+      </li>
+      <li>
+        <p><a href="{{url_for('query_dumper')}}">Query Dumper</a></p>
+        <p>Send query parameters and see how they parse</p>
+      </li>
+      <li>
+        <p><a href="https://karlsfriendship.com/">Karl</a> and <a href="https://tohil.org">Tohil</a></p>
+        <p>A harrowing story of heartbreak and redemption</p>
+      </li>
+    </ul>
+  </section>
+{% endblock %}
