@@ -1,0 +1,166 @@
+{# -*- engine:django -*- #}
+{% extends "layout/base.html" %}
+{% block robots %}<meta name="robots" content="home, follow" />{% endblock %}
+{% block title %}
+  <title>Jade Michael Thornton — Software Engineer</title>
+{% endblock %}
+{% block description%}
+  <meta name="description" content="Jade Michael Thornton is a senior software engineer and this is his website." />
+{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='style/main.css') }}" type="text/css" />
+  <script async src="{{url_for('static', filename='lib/oneko.js')}}"></script>
+{% endblock %}
+
+{% block body %}
+  <main>
+    <h1 class="rgb-color" style="text-align: center;">Jade Michael Thornton</h1>
+
+    <section>
+      <div class="split">
+        <div class="left">
+          <p>
+            Hi there!
+          </p>
+          <p>
+            I'm a software engineer, hobby aerial photographer and RC flight enthusiast. I know some things about some software, and a lot about taking care of house rabbits. My favorite language is Clojure, but I never get to work in it. I'm currently a senior software engineer and team lead at <a href="https://dronedeploy.com">DroneDeploy</a>, working on enhancing information discoverability as well as unification with a recently-acquired startup.
+          </p>
+          <p>
+            I've previously worked and studied at <a href="https://flightaware.com">FlightAware</a> (a
+            <a href="https://www.collinsaerospace.com">Collins Aerospace</a> company), <a href="https://www.thomsonreuters.com">Thomson Reuters</a>, <a href="https://www.mavericksoftware.com">Maverick Software</a>, the <a href="https://www.hhh.umn.edu">Humphrey School of Public Affairs</a>, the <a href="https://www.umn.edu">University of Minnesota</a> and <a href="https://www.saintpaul.edu">Saint Paul College</a>.
+          </p>
+          <p>
+            Some other links include: my <a href="https://github.com/thornjad">GitHub</a> and <a href="https://gitlab.com/thornjad">GitLab</a> profiles, my <a href="https://blog.jmthornton.net">blog posts</a>, some <a href="{{url_for('tools')}}">online tools</a>, my <!-- <a href="/p/JadeMichaelThornton.pdf">resume [pdf]</a> and --><a href="https://linkedin.com/in/jademichael">LinkedIn profile</a>, and some <a href="https://photos.jmthornton.net">photos I took</a>.
+          </p>
+          <p>
+            Memento mori.
+          </p>
+
+          <noscript><p>
+            Javascript disabled? Dope, I like you. The only feature you're missing on this page is a little cat that follows your mouse around. It's cute but you'll live.
+          </p></noscript>
+        </div>
+        <div class="right">
+          <img
+            class="stephpic"
+            loading="lazy"
+            src="{{ url_for('static', filename='images/stephandjade.webp') }}"
+            title="And of course this site runs on love"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>My Projects</h2>
+      <blockquote>
+        What I cannot create, I do not understand
+        <figcaption>&mdash; Richard Feynman</figcaption>
+      </blockquote>
+      <p>
+        All of my projects are open source and live on
+        <a href="https://gitlab.com/thornjad">GitLab</a> and/or
+        <a href="https://github.com/thornjad">GitHub</a>. Here's some of my favorite highlights.
+      </p>
+
+      <ul class="dl">
+        <li>
+          <p>Emacs tools and configuration</p>
+          <p>
+            I use Emacs every day and love it, and I've put care and effort into crafting my development environment to a high level of productivity. Besides my refined <a href="https://gitlab.com/thornjad/aero">Emacs configuration</a>, I authored several packages such as <a href="https://gitlab.com/thornjad/el2md">el2md</a>, <a href="https://gitlab.com/thornjad/rivet-mode">Rivet mode</a> and several more.
+          </p>
+        </li>
+        <li>
+          <p>http-server and its dependencies</p>
+          <p>
+            I've been the de facto lead developer of <a href="https://github.com/http-party/http-server">http-server</a> for a while, though it unfortunately takes a back seat to my career and the rest of my life. I'm also a contributor to its dependencies, including <a href="https://github.com/flatiron/union">union</a> and <a href="https://github.com/http-party/node-http-proxy">http-proxy</a>.
+          </p>
+        </li>
+        <li>
+          <p>Themes and more themes</p>
+            <p>
+              I have a desire for everything I use to look good and work well. To that end, I often create or
+              contribute to themes of various types, including
+              <a href="https://gitlab.com/thornjad/aero-theme">Aero</a> (Emacs),
+              <a href="https://gitlab.com/thornjad/vero">Vero</a> (Zsh),
+              <a href="https://github.com/ClearNight">ClearNight</a> (Atom, RIP) and
+              <a href="https://github.com/thornjad/unbroken">Unbroken</a> (GTK3). I was also part of the
+              creation of the <a href="https://minicss.org/">mini.css</a> framework.
+            </p>
+            <p>This site's design is based on my Aero Emacs theme.</p>
+        </li>
+        <li>
+          <p>Languages</p>
+          <p>
+            I have a penchant for esoteric languages and the lessons of language design they provide. I maintain and have made minor contributions to <a href="https://gitlab.com/orsonlang/orson">Orson</a>, which was created by <a href="https://cse.umn.edu/cs/james-moen">James Moen</a>.
+          </p>
+          <p>
+            I've also explored writing my own languages, though I've never completed one. Some of my half languages include <a href="https://gitlab.com/thornjad/warbler">Warbler</a>, <a href="https://gitlab.com/thornjad/brewlisp">Brewlisp</a> and <a href="https://gitlab.com/thornjad/spider-lang">Spider</a>.
+          </p>
+        </li>
+        <li>
+          <p>Tools and utilities</p>
+          <p>
+            I authored <a href="https://gitlab.com/thornjad/zpico">Zpico</a> (a tiny Zsh plugin manager) and I always look out for more opportunities. Though I haven't published it in it's own package, my Aero Emacs configuration <a href="https://github.com/thornjad/aero/blob/main/lib/localpackages/aero-assistant/">contains a GPT Assistant mode</a>.
+          </p>
+        </li>
+        <li>
+          <p>Education</p>
+          <p>
+            I enjoy teaching and mentoring new developers, and I have contributed to both
+            <a href="https://www.freecodecamp.org">FreeCodeCamp lessons</a> and
+            <a href="https://learnxinyminutes.com/">Learn X in Y minutes</a>.
+          </p>
+        </li>
+        <li>
+          <p>Other contributions</p>
+          <p>
+            Falling into the "other" category, I'm one of the authors of
+            <a href="https://github.com/remotestorage/armadietto">Armadietto</a> (a reference RemoteStorage
+            server) and a contributor to <a href="https://github.com/jkk/formative">Formative</a> (a Clojure
+            web form renderer), <a href="https://github.com/alacritty/alacritty">Alacritty</a> (a terminal
+            emulator), <a href="https://brave.com/">Brave Browser</a> (prior to the 1.0 release),
+            <a href="https://github.com/flightaware/tohil">Tohil</a> (a TCL-Python integration library) and
+            <a href="https://github.com/zplug/zplug">Zplug</a> (a Zsh plugin manager).
+          </p>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <!--sse-->
+      <div class="shield-links">
+        <a href="https://gitlab.com/thornjad">
+          <img alt="GitLab" src="{{ url_for('static', filename='images/shields/gitlab.svg') }}" loading="lazy" />
+        </a>
+        <a href="https://github.com/thornjad">
+          <img alt="GitHub" src="{{ url_for('static', filename='images/shields/github.svg') }}" loading="lazy" />
+        </a>
+        <a href="https://www.linkedin.com/in/jademichael/">
+          <img alt="LinkedIn" src="{{ url_for('static', filename='images/shields/linkedin.svg') }}" loading="lazy" />
+        </a>
+        <a rel="me" href="https://mspsocial.net/@thornjad">
+          <img alt="Mastodon" src="{{ url_for('static', filename='images/shields/mastodon.svg') }}" loading="lazy" />
+        </a>
+        <a href="https://lichess.org/@/thornjad"><img alt="Lichess" src="{{ url_for('static', filename='images/shields/lichess.svg') }}" loading="lazy" /></a>
+        <a href="https://photos.jmthornton.net">
+          <img alt="Flickr" title="It's just my photos" src="{{ url_for('static', filename='images/shields/flickr.svg') }}" loading="lazy" />
+        </a>
+        <a href="https://github.com/thornjad/aero">
+          <img alt="Created with Emacs" src="{{ url_for('static', filename='images/created-emacs.jpg') }}" loading="lazy" />
+        </a>
+        <img alt="Piracy now" title="Piracy is swag" src="{{ url_for('static', filename='images/piracy.gif') }}" loading="lazy" />
+        <a href="https://yesterweb.org/no-to-web3">
+          <img src="{{ url_for('static', filename='images/noweb3.gif') }}" alt="Keep the web free, Say no to Web3">
+        </a>
+        <img alt="Learn HTML today!" src="{{ url_for('static', filename='images/html.gif') }}" loading="lazy" />
+        <img alt="Best viewed with any browser" src="{{ url_for('static', filename='images/anybrow.gif') }}" loading="lazy" />
+        <a href="https://yesterweb.org">
+          <img src="{{ url_for('static', filename='images/yesterweb.png') }}" alt="Yesterweb: reclaim the net">
+        </a>
+      </div>
+      <!--/sse-->
+    </section>
+  </main>
+{% endblock %}

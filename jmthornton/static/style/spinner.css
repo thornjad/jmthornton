@@ -1,0 +1,58 @@
+@import url("/static/style/variables.css");
+
+.spinner {
+  margin: var(--standard-margin);
+  border: .25rem solid var(--bg);
+  border-left: .25rem solid var(--spinner-fg);
+  border-radius: 50%;
+  width: 1.25rem;
+  height: 1.25rem;
+  animation: spinner-donut-anim 1.2s linear infinite;
+}
+
+@keyframes spinner-donut-anim {
+  0% {transform:rotate(0)}
+  100% {transform:rotate(360deg)}
+}
+
+.spinner-donut {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3em;
+}
+
+@keyframes hexdots-loader {
+  0% {box-shadow: #666666 0 -30px 0 7px, #999 0 -30px 0 7px, #999 26px -15px 0 7px, #999 26px 15px 0 7px, #999 0 30px 0 7px, #999 -26px 15px 0 7px, #999 -26px -15px 0 7px;}
+  8.33% {box-shadow: #666666 26px -15px 0 7px, #999 26px -15px 0 7px, #999 26px -15px 0 7px, #999 26px 15px 0 7px, #999 0 30px 0 7px, #999 -26px 15px 0 7px, #999 -26px -15px 0 7px;}
+  16.67% {box-shadow: #666666 26px 15px 0 7px, #999 26px 15px 0 7px, #999 26px 15px 0 7px, #999 26px 15px 0 7px, #999 0 30px 0 7px, #999 -26px 15px 0 7px, #999 -26px -15px 0 7px;}
+  25% {box-shadow: #666666 0 30px 0 7px, #999 0 30px 0 7px, #999 0 30px 0 7px, #999 0 30px 0 7px, #999 0 30px 0 7px, #999 -26px 15px 0 7px, #999 -26px -15px 0 7px;}
+  33.33% {box-shadow: #666666 -26px 15px 0 7px, #999 -26px 15px 0 7px, #999 -26px 15px 0 7px, #999 -26px 15px 0 7px, #999 -26px 15px 0 7px, #999 -26px 15px 0 7px, #999 -26px -15px 0 7px;}
+  41.67% {box-shadow: #666666 -26px -15px 0 7px, #999 -26px -15px 0 7px, #999 -26px -15px 0 7px, #999 -26px -15px 0 7px, #999 -26px -15px 0 7px, #999 -26px -15px 0 7px, #999 -26px -15px 0 7px;}
+  50% {box-shadow: #666666 0 -30px 0 7px, #999 0 -30px 0 7px, #999 0 -30px 0 7px, #999 0 -30px 0 7px, #999 0 -30px 0 7px, #999 0 -30px 0 7px, #999 0 -30px 0 7px;}
+  58.33% {box-shadow: #666666 26px -15px 0 7px, #999 0 -30px 0 7px, #999 26px -15px 0 7px, #999 26px -15px 0 7px, #999 26px -15px 0 7px, #999 26px -15px 0 7px, #999 26px -15px 0 7px;}
+  66.67% {box-shadow: #666666 26px 15px 0 7px, #999 0 -30px 0 7px, #999 26px -15px 0 7px, #999 26px 15px 0 7px, #999 26px 15px 0 7px, #999 26px 15px 0 7px, #999 26px 15px 0 7px;}
+  75% {box-shadow: #666666 0 30px 0 7px, #999 0 -30px 0 7px, #999 26px -15px 0 7px, #999 26px 15px 0 7px, #999 0 30px 0 7px, #999 0 30px 0 7px, #999 0 30px 0 7px;}
+  83.33% {box-shadow: #666666 -26px 15px 0 7px, #999 0 -30px 0 7px, #999 26px -15px 0 7px, #999 26px 15px 0 7px, #999 0 30px 0 7px, #999 -26px 15px 0 7px, #999 -26px 15px 0 7px;}
+  91.67% {box-shadow: #666666 -26px -15px 0 7px, #999 0 -30px 0 7px, #999 26px -15px 0 7px, #999 26px 15px 0 7px, #999 0 30px 0 7px, #999 -26px 15px 0 7px, #999 -26px -15px 0 7px;}
+  100% {box-shadow: #666666 0 -30px 0 7px, #999 0 -30px 0 7px, #999 26px -15px 0 7px, #999 26px 15px 0 7px, #999 0 30px 0 7px, #999 -26px 15px 0 7px, #999 -26px -15px 0 7px;}
+}
+
+.hexdots-loader {
+  overflow: hidden;
+  position: relative;
+  text-indent: -9999px;
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background: transparent;
+  border-radius: 100%;
+  box-shadow: #666666 0 -30px 0 7px, #999 26px -15px 0 7px, #999 26px 15px 0 7px, #999 0 30px 0 7px, #999 0 30px 0 7px, #999 0 30px 0 7px;
+  animation: hexdots-loader 5s infinite ease-in-out;
+  transform-origin: 50% 50%;
+}
+
+.hexdots-loader-wrapper {
+  margin-left: 50%;
+  padding-top: 100px;
+}

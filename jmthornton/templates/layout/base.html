@@ -1,0 +1,68 @@
+{# -*- engine:django -*- #}
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    {% block title %}<title>Jade Michael Thornton — Software Engineer</title>{% endblock %}
+    {% block description %}
+      <meta
+        name="description"
+        content="Jade Michael Thornton is a software engineer and this is his website."
+      />
+    {% endblock %}
+    {% block robots %}<meta name="robots" content="index, follow" />{% endblock %}
+
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}" />
+    <link
+      rel="prefetch"
+      href="{{ url_for('static', filename='fonts/MetroNova-Regular.woff2') }}"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="prefetch"
+      href="{{ url_for('static', filename='fonts/MetroNova-Italic.woff2') }}"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="prefetch"
+      href="{{ url_for('static', filename='fonts/MetroNova-Bold.woff2') }}"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="prefetch"
+      href="{{ url_for('static', filename='fonts/MetroNova-BoldItalic.woff2') }}"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+
+    {% block head %} {% endblock head %}
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="/">Home</a>
+        <a href="{{ url_for('tools') }}">Tools</a>
+        <a href="https://blog.jmthornton.net">Blog</a>
+        <a href="https://photos.jmthornton.net">Photos</a>
+      </nav>
+    </header>
+
+    {% block body required %} {% endblock body %}
+
+    <footer>
+      <p>
+        Copyright © 2012-2023 Jade Michael Thornton |
+        <a href="https://github.com/thornjad/jmthornton">Source code</a>
+      </p>
+    </footer>
+  </body>
+</html>

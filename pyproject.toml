@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "jmthornton"
+version = "7.0.0"
+description = "The personal website and blog of Jade Michael Thornton"
+authors = ["Jade Michael Thornton <jademichael@jmthornton.net>"]
+readme = "README"
+license = "ISC"
+homepage = "https://jmthornton.net"
+repository = "https://github.com/thornjad/jmthornton"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+flask = "^2.3.2"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.4.1"
+black = "^23.7.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

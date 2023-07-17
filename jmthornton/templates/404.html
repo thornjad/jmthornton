@@ -1,0 +1,12 @@
+{# -*- engine:django -*- #}
+{% extends "layout/base.html" %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='style/main.css') }}" type="text/css" />
+  <script async src="{{url_for('static', filename='lib/oneko.js')}}"></script>
+{% endblock %}
+
+{% block body %}
+  <h1>Error 404 <small>Page not found</small></h1>
+  <p>This site has changed a lot over the years though, so maybe what you're looking for has moved to a new URL.</p>
+{% endblock %}
