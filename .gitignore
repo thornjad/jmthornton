@@ -15,6 +15,7 @@ tools/libertarian-zoo/main.css
 .clj-kondo
 .cpcache
 .lsp
+__pycache__/
 
 # Logs and databases #
 ######################
