@@ -1,5 +1,4 @@
 User-agent: *
 Disallow: /czshrnw/
-Disallow: /layout/
 Disallow: /p/museum/
 Sitemap: https://jmthornton.net/p/sitemap.xml

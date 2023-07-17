@@ -1,3 +1,5 @@
+FLASK_ENV ?= development
+
 .PHONY: all sass style dev prism main blog tools zoo
 
 sass:
@@ -40,8 +42,5 @@ copy-blog-fonts:
 
 all: style
 
-server:
-	npx http-server -c-1
-
-dev: style
-	make -j4 sass-watch server
+dev:
+	poetry run python3 -m flask --app jmthornton/main run --debug
