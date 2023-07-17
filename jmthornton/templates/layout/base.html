@@ -45,8 +45,13 @@
       crossorigin="anonymous"
     />
 
+	  <meta property="og:site_name" content="jmthornton.net">
+	  <meta property="og:locale" content="en_US" />
+	  <meta name="article:author" content="https://jmthornton.net">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='style/main.css') }}" type="text/css" />
 
+    {% block post_head %}{% endblock post_head %}
     {% block head %}{% endblock head %}
   </head>
   <body>
