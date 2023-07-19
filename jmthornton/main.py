@@ -2,6 +2,8 @@
 
 from flask import Flask, render_template
 
+from .news import get_news_posts
+
 app = Flask(__name__)
 
 
@@ -20,7 +22,8 @@ def tools():
 @app.route("/tools/news/")
 def news():
     """News."""
-    return render_template("tools/news.html")
+    posts = get_news_posts()
+    return render_template("tools/news/index.html", posts=posts)
 
 
 @app.route("/tools/libertarian-zoo/")
