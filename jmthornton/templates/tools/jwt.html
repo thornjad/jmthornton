@@ -1,0 +1,48 @@
+{# -*- engine:django -*- #}
+{% extends "layout/base.html" %}
+
+{% block title %}
+  <title>JWT Decode | Jade Michael Thornton</title>
+{% endblock title %}
+{% block description%}
+  <meta name="description" content="Simply decode JWT tokens" />
+{% endblock description %}
+
+{% block head %}
+  <style>
+   textarea {
+     width: 100%;
+   }
+
+   #output-wrapper {
+     display: none;
+     margin-top: 2em;
+   }
+
+   pre {
+     margin: 0;
+   }
+
+   #error {
+     display: none;
+     border-left: 0.25rem solid var(--error);
+   }
+  </style>
+{% endblock head %}
+
+{% block body %}
+  <h1>JWT Decode Tool</h1>
+  <h3>All decoding is performed in the browser, your token will not be saved nor shared in any way.</h3>
+
+  <textarea id="input" rows="1" cols="90" placeholder="Enter JWT"></textarea>
+  <button id="decode">Decode</button>
+  <pre id="error"></pre>
+  <div id="output-wrapper">
+    Header:
+    <pre id="header"></pre>
+    <br />
+    Payload:
+    <pre id="payload"></pre>
+  </div>
+  <script src="{{url_for('static', filename='lib/jwt.js')}}" defer></script>
+{% endblock body %}
