@@ -1,0 +1,35 @@
+{# -*- engine:django -*- #}
+{% extends "layout/base.html" %}
+
+{% block title %}
+  <title>Sponge Text | Jade Michael Thornton</title>
+{% endblock title %}
+{% block description%}
+  <meta name="description" content="EaSiLy gEnErAtE SpOnGe tExT" />
+{% endblock description %}
+
+{% block head %}
+	<style>
+   textarea {
+     width: 100%;
+   }
+	</style>
+{% endblock head %}
+
+{% block body %}
+  <h1>CoNvErT SpOnGe tExT</h1>
+
+  <textarea
+    id="sponger"
+    rows="18"
+    cols="90"
+    placeholder="Enter text to convert to/from sponge"
+      ></textarea>
+  <div class="action-buttons">
+    <button id="sponge">Sponge it</button>
+    <button id="desponge">De-Sponge</button>
+  </div>
+  <label><input id="startCap" type="checkbox" checked />Start with capital letter</label>
+
+  <script src="{{url_for('static', filename='lib/sponge.js')}}" defer></script>
+{% endblock body %}
