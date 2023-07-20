@@ -15,25 +15,25 @@
 
 {% block body %}
   <main id="content">
-    <main id="content">
-      <h1>Tech news</h1>
-      <div class="top-row">
-        <label class="toggle">
-          <span>Infinite scroll</span>
-          <input class="toggle" type="checkbox" id="infinite-scroll" />
-        </label>
-        <h6 class="updated-message"></h6>
+    <h1>Tech news</h1>
+    <div class="top-row">
+      <label class="toggle">
+        <span>Infinite scroll</span>
+        <input class="toggle" type="checkbox" id="infinite-scroll" />
+      </label>
+      <h6 class="updated-message"></h6>
       </div>
       <div class="no-md-a" id="posts">
         <!-- posts are injected here -->
       </div>
-    </main>
-
-    <div class="spinner spinner-donut large" id="spinner"></div>
-    <div class="load-more-container">
-      <button class="low-key" id="load-more">Load More</button>
-    </div>
   </main>
 
-  <script src="{{ url_for('static', filename='lib/news.js') }}" defer></script>
+  <div class="spinner spinner-donut large" id="spinner"></div>
+  <div class="load-more-container">
+    <button class="low-key" id="load-more">Load More</button>
+  </div>
 {% endblock %}
+
+{% block footer_script %}
+  <script src="{{ url_for('static', filename='lib/news.js') }}" defer></script>
+{% endblock footer_script %}
