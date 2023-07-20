@@ -10,28 +10,30 @@
 
 {% block head %}
   <meta name="googlebot" content="noindex" />
-  <link rel="stylesheet" href="./news.css" type="text/css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style/news.css') }}" type="text/css" />
 {% endblock %}
 
 {% block body %}
   <main id="content">
-    <h1>Tech news</h1>
-    <div class="top-row">
-      <h6 class="updated-message"></h6>
-    </div>
-    <div class="no-md-a" id="posts">
-      <!-- posts are injected here -->
-      {% for p in posts  %}
-        <p>
-          <a href="{{ p.url }}">{{  p.title }}</a>
-          <br />
-          <span class="source">{{ p.source }}</span>
-          &nbsp;
-          <a class="extra-content-link" href="{{ p.pocket_url }}" target="_blank" rel="noopener noreferrer">add to pocket</a>
-          &nbsp;
-          <a class="extra-content-link" href="{{ p.comment_url }}" target="_blank" rel="noopener noreferrer">comments</a>
-        </p>
-      {% endfor %}
+    <main id="content">
+      <h1>Tech news</h1>
+      <div class="top-row">
+        <label class="toggle">
+          <span>Infinite scroll</span>
+          <input class="toggle" type="checkbox" id="infinite-scroll" />
+        </label>
+        <h6 class="updated-message"></h6>
+      </div>
+      <div class="no-md-a" id="posts">
+        <!-- posts are injected here -->
+      </div>
+    </main>
+
+    <div class="spinner spinner-donut large" id="spinner"></div>
+    <div class="load-more-container">
+      <button class="low-key" id="load-more">Load More</button>
     </div>
   </main>
+
+  <script src="{{ url_for('static', filename='lib/news.js') }}" defer></script>
 {% endblock %}

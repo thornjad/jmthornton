@@ -4,7 +4,7 @@ const disallowDomains = ['medium.com'];
 
 class NewsPosts {
   apiURI = 'https://hacker-news.firebaseio.com/v0/';
-  loadLimit = 30;
+  loadLimit = 50;
   allPosts = null;
   genPost = null;
   loadedPosts = [];

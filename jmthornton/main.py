@@ -1,8 +1,6 @@
 """Jmthornton.net main."""
 
-from flask import Flask, render_template
-
-from .news import get_news_posts
+from flask import Flask, render_template, send_from_directory
 
 app = Flask(__name__)
 
@@ -22,8 +20,7 @@ def tools():
 @app.route("/tools/news/")
 def news():
     """News."""
-    posts = get_news_posts()
-    return render_template("tools/news/index.html", posts=posts)
+    return render_template("tools/news/index.html")
 
 
 @app.route("/tools/libertarian-zoo/")
