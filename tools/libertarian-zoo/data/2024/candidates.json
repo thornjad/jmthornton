@@ -5,6 +5,7 @@
       "sortName": "ter maat",
       "pic": "termaat.jpg",
       "url": "https://www.miketermaat.com/",
+      "state": "Florida",
       "title": "Cop with a Ph.D. in Economics",
       "votes": 0,
       "serious": true,
@@ -14,6 +15,7 @@
     {
       "name": "Joe 'Exotic' Maldonado",
       "sortName": "exotic",
+      "state": "Indiana",
       "pic": "exotic.jpg",
       "url": "https://en.wikipedia.org/wiki/Joe_Exotic",
       "title": "Convicted felon",
@@ -26,6 +28,7 @@
       "sortName": "hornberger",
       "pic": "hornberger.jpg",
       "url": "https://simple.wikipedia.org/wiki/Jacob_Hornberger",
+      "state": "Virginia",
       "title": "Founder of a political NGO",
       "votes": 0,
       "serious": true,
@@ -37,9 +40,11 @@
       "sortName": "amash",
       "pic": "amash.jpg",
       "url": "https://en.wikipedia.org/wiki/Justin_Amash",
+      "serious": true,
+      "presumptive": true,
       "title": "Former US Representative from Michigan",
       "votes": 0,
-      "info": "Presumptive candidate. Polled well when running in 2020. First Republican to call for the impeachment of President Trump, which he continued calling for after leaving the party in 2019.",
+      "info": "Polled well when running in 2020. First Republican to call for the impeachment of President Trump, which he continued calling for after leaving the party in 2019.",
       "dropped": false
     },
     {
@@ -48,7 +53,8 @@
       "url": "https://comicdavesmith.com/",
       "title": "Comedian",
       "votes": 0,
-      "info": "Presumptive candidate. Has a podcast about how the government is bad and we should all feel bad. Major member of the Mises Caucus (the alt-right ultra-conservative group which has taken over the Libertarian Party).",
+      "presumptive": true,
+      "info": "Has a podcast about how the government is bad and we should all feel bad. Major member of the Mises Caucus (the alt-right ultra-conservative group which has taken over the Libertarian Party).",
       "dropped": false
     },
     {
@@ -57,7 +63,9 @@
       "pic": "gabbard.jpg",
       "title": "Former US representative from Hawaii, recently gone off the rails",
       "votes": 0,
-      "info": "Presumptive candidate. Ran for the Democratic nomination in 2020. Has recently gone off the rails, now opposes libertarian ideals. Tulsi unironically opposes women's rights and free speech. She now focuses her time on fighting the gravest of national threats: the concept of 'woke'.",
+      "presumptive": true,
+      "serious": true,
+      "info": "Ran for the Democratic nomination in 2020. Has recently gone off the rails, now opposes libertarian ideals. Tulsi unironically opposes women's rights and free speech. She now focuses her time on fighting the gravest of national threats: the concept of 'woke'.",
       "dropped": false
     },
     {
@@ -70,7 +78,18 @@
       "serious": true
     },
     {
+      "name": "Joshua Smith",
+      "sortName": "smith",
+      "serious": true,
+      "state": "Iowa",
+      "url": "https://www.joshuasmith4potus.info/",
+      "title": "Vice Chair of the Libertarian National Committee",
+      "info": "Wants to end the federal government's ability to regulate its own currency. Wants to prosecute public health officials for crimes against humanity for their role in the \"tyranny\" of the pandemic. Wants to end public education with no replacement, believing students need only learn the free market to be successful in modern society. Believes trans rights is a mental health crisis. Believes Jews are hateful and extreme and their evil organizations must be outlawed.",
+      "pic": "smith.png"
+    },
+    {
       "name": "Lars Mapstead",
+      "state": "California",
       "sortName": "mapstead",
       "serious": true,
       "pic": "mapstead.jpg",
@@ -79,16 +98,19 @@
       "info": "According to his self-written bio, Lars grew up without electricity or running water, and now believes that the best way for Libertarians to have an influence on elections is for there to be more of them, thus providing more votes for Libertarian candidates. Believes that political polarization is a plot by the government to distract us from taxes.",
       "dropped": false
     },
-		{
+    {
       "name": "Jo Jorgensen",
       "sortName": "jorgensen",
       "pic": "jo.jpg",
       "url": "https://en.wikipedia.org/wiki/Jo_Jorgensen",
+      "serious": true,
+      "presumptive": true,
       "title": "Libertarian presidential nominee in 2020",
-      "info": "Presumptive candidate who has already appeared in polls. Won the 2020 Libertarian presidential nomination, the first woman to do so, and went on to lose the general election by a mere 72 million votes behind the runner-up (Trump). Wants to replace social security with an improved retirement account welfare system. Wants to end the war on drugs and pardon all non-violent drug offenders. Wants to demilitarize the police and reinstate a policy of armed neutrality (i.e. stop invading other countries). Would tear down Trump's border wall and make the path to citizenship easier. Criticized Trump's Covid-era corporate bailouts as anti-democratic."
-		},
+      "info": "Won the 2020 Libertarian presidential nomination, the first woman to do so, and went on to lose the general election by a mere 72 million votes behind the runner-up (Trump). Wants to replace social security with an improved retirement account welfare system. Wants to end the war on drugs and pardon all non-violent drug offenders. Wants to demilitarize the police and reinstate a policy of armed neutrality (i.e. stop invading other countries). Would tear down Trump's border wall and make the path to citizenship easier. Criticized Trump's Covid-era corporate bailouts as anti-democratic."
+    },
     {
       "name": "Chase Oliver",
+      "state": "Georgia",
       "sortName": "oliver",
       "pic": "oliver.jpg",
       "serious": true,
@@ -118,7 +140,8 @@
       "url": "https://en.wikipedia.org/wiki/Vermin_Supreme",
       "title": "Performance artist and political satirist",
       "serious": true,
-      "info": "Presumptive candidate, as he runs every year. Promises a free pony to every citizen if elected. Believes in zombie apocalypse awareness and time travel research. Will make brushing teeth required by law.",
+      "presumptive": true,
+      "info": "Not yet declared, but he runs in every election he can (and some he can't). Promises a free pony to every citizen if elected. Believes in zombie apocalypse awareness and time travel research. Will make brushing teeth required by law.",
       "dropped": false
     },
     {
@@ -131,10 +154,11 @@
     {
       "name": "Beau Lindsey",
       "sortName": "lindsey",
+      "state": "Tennessee",
       "title": "Reddit user trying to start a literal crusade",
       "pic": "lindsey.jpg",
-      "url": "https://sites.google.com/view/beaulindsey4president/homehttps://sites.google.com/view/beaulindsey4president/home",
-      "info": "Actively believes in 'retaking the holy land' through a new crusade, which he will lead, to remove the evil Jews from the rightful home of 'warriors in Christ' like Beau. Claims the Libertarian Party is corrupt because it supports women's rights. Spends his time spamming every political subreddit he can find with self-propaganda. Believes in the separation of church and state, except when the state takes any action contrary to the wishes of the church."
+      "url": "https://sites.google.com/view/beaulindsey4president/home",
+      "info": "Actively believes in 'retaking the holy land' through a new crusade—which he will lead—to remove the evil Jews from the rightful home of 'warriors in Christ' like Beau. Claims the Libertarian Party is corrupt because it supports women's rights. Spends his time spamming every political subreddit he can find with self-propaganda. Believes in the separation of church and state, except when the state takes any action contrary to the wishes of the church."
     },
     {
       "name": "Robert Milnes",

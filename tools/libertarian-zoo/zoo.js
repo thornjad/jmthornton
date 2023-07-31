@@ -21,6 +21,8 @@ async function mountCandidates(mountpoint) {
         url = '',
         title = 'Person running for president',
         info = 'No additional information available at this time',
+        state, // TODO
+        presumptive = false,
         votes: rawVotes = 0,
         dropped = false,
         pollMedian = 0,
@@ -43,10 +45,10 @@ async function mountCandidates(mountpoint) {
             </div>
             <h3 class="candidate">
               <em>${place}</em>&nbsp;<a href="${url}">${name}</a>
-              <small class="candidate-title"><em>
-                ${title}
-              </em></small>
-              <p class="info">${info}</p>
+              <small class="candidate-title">
+                <em>${title}</em>
+              </small>
+              <p class="info"><strong>${presumptive ? 'Presumptive candidate. ' : ''}</strong>${info}</p>
               <small class="dropped-text"><em>
                 ${dropped ? 'Dropped out' : ''}
               </em></small>
@@ -65,9 +67,10 @@ const sortCandidates = (a, b) => {
   const dropped = Number(a.dropped ?? 0) - Number(b.dropped ?? 0);
   const votes = (a.votes - b.votes) || 0;
   const serious = Number(b.serious ?? 0) - Number(a.serious ?? 0);
+  const presumptive = Number(a.presumptive ?? 0) - Number(b.presumptive ?? 0);
   const polls = b.pollMedian - a.pollMedian;
   // Sorting in order of importance of these various factors
-  return dropped || votes || serious || polls || a.sortName.localeCompare(b.sortName);
+  return dropped || votes || serious || presumptive || polls || a.sortName.localeCompare(b.sortName);
 };
 
 function median(xs = []) {

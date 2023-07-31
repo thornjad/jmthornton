@@ -10,13 +10,22 @@ article.card {
 	border-radius: .18rem;
 }
 
-p {
-	margin: 0 !important;
-  font-size: 1rem;
+p.intro {
+  margin-bottom: 2em;
+  font-style: italic;
 }
 
 p.info {
+	margin: 0;
+  font-size: 1rem;
 	padding-top: 1em;
+}
+
+a.footnote {
+  outline: none;
+  vertical-align: super;
+  font-size: 0.7em;
+  margin-left: 2px;
 }
 
 section, header {
