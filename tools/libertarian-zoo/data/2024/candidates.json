@@ -32,7 +32,7 @@
       "title": "Founder of a political NGO",
       "votes": 0,
       "serious": true,
-      "info": "Has a degree in Economics from Virginia Military Institute and a law degree from the University of Texas.",
+      "info": "A lawyer and author, Jacob wants to abolish ICE and make an easier path to citizenship, ending anti-immigration policies and opening free international trade. He supports LGBTQ+ rights, and would end the war on drugs and the war on terrorism. He also wants to end social security and medicare, and force retired seniors back to work. Wants to ignore his degree in economics and reinstate the gold standard, abolish the IRS, the FBI and the EPA. Would immediately withdraw from NATO and other alliances, and return to pre-WW2 isolationism.",
       "dropped": false
     },
     {
@@ -44,7 +44,7 @@
       "presumptive": true,
       "title": "Former US Representative from Michigan",
       "votes": 0,
-      "info": "Polled well when running in 2020. First Republican to call for the impeachment of President Trump, which he continued calling for after leaving the party in 2019.",
+      "info": "Polled well when running in 2020 and indicated interest in running for president during a 2022 interview. First Republican to call for the impeachment of President Trump, which he continued calling for after leaving the party in 2019. Supports legalizing cannabis and opposes government bailouts of megacorporations. One of only nine representatives to vote against including religious imagery in the US's official motto. Strongly pro-same-sex marriage, believing the government shouldn't be involved in consensual relationships at all. Believes that trans rights is a non-issue because the law shouldn't discriminate between sex or genders. However, Justin also opposes women's rights, believes abortion should be punishable with prison time, was one of only four representatives to vote against recognizing lynching as a hate crime, as well the only member of congress to vote against creating a national suicide prevention hotline.",
       "dropped": false
     },
     {
@@ -61,11 +61,11 @@
       "name": "Tulsi Gabbard",
       "sortName": "gabbard",
       "pic": "gabbard.jpg",
-      "title": "Former US representative from Hawaii, recently gone off the rails",
+      "title": "Former US representative from Hawaii",
       "votes": 0,
       "presumptive": true,
       "serious": true,
-      "info": "Ran for the Democratic nomination in 2020. Has recently gone off the rails, now opposes libertarian ideals. Tulsi unironically opposes women's rights and free speech. She now focuses her time on fighting the gravest of national threats: the concept of 'woke'.",
+      "info": "Ran for the Democratic nomination in 2020. Has recently gone off the rails, unironically opposing all libertarian ideals, as well as women's rights and free speech. Wants end immigration and ban the concept of sexuality from schools. Supports border walls and Russia's invasion of Ukraine. She now focuses her time on fighting the gravest of national threats: the concept of 'woke'.",
       "dropped": false
     },
     {
@@ -106,7 +106,7 @@
       "serious": true,
       "presumptive": true,
       "title": "Libertarian presidential nominee in 2020",
-      "info": "Won the 2020 Libertarian presidential nomination, the first woman to do so, and went on to lose the general election by a mere 72 million votes behind the runner-up (Trump). Wants to replace social security with an improved retirement account welfare system. Wants to end the war on drugs and pardon all non-violent drug offenders. Wants to demilitarize the police and reinstate a policy of armed neutrality (i.e. stop invading other countries). Would tear down Trump's border wall and make the path to citizenship easier. Criticized Trump's Covid-era corporate bailouts as anti-democratic."
+      "info": "Won the 2020 Libertarian presidential nomination, the first woman to do so, and went on to lose the general election by a mere 72 million votes. Wants to replace social security with an improved retirement account welfare system. Wants to end the war on drugs and pardon all non-violent drug offenders. Wants to demilitarize the police and reinstate a policy of armed neutrality (i.e. stop invading other countries). Would tear down Trump's border wall and make the path to citizenship easier. Criticized Trump's Covid-era corporate bailouts as anti-democratic."
     },
     {
       "name": "Chase Oliver",
@@ -149,7 +149,7 @@
       "sortName": "handford",
       "title": "College student majoring in creative writing",
       "pic": "handford.png",
-      "info": "Official biography is a list of words including 'Immune Booster', 'Military Doctors' and 'For Viruses an Diseases Universal' (all sic)."
+      "info": "Official biography is a list of words including 'Immune Booster', 'Military Doctors' and 'For Viruses an Diseases Universal' [sic]."
     },
     {
       "name": "Beau Lindsey",
@@ -169,7 +169,7 @@
     {
       "name": "Angela Walls-Windhauser",
       "sortName": "walls-windhauser",
-      "info": "Most recent experience is as chair of a religious nonprofit which went into bankruptcy 15 years ago."
+      "info": "Most recent experience was as chair of a religious nonprofit which went into bankruptcy 15 years ago."
     }
   ]
 }
