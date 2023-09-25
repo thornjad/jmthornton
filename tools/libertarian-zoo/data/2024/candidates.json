@@ -53,9 +53,8 @@
       "url": "https://comicdavesmith.com/",
       "title": "Comedian",
       "votes": 0,
-      "presumptive": true,
       "info": "Has a podcast about how the government is bad and we should all feel bad. Major member of the Mises Caucus (the alt-right ultra-conservative group which has taken over the Libertarian Party).",
-      "dropped": false
+      "dropped": true
     },
     {
       "name": "Tulsi Gabbard",
@@ -170,6 +169,25 @@
       "name": "Angela Walls-Windhauser",
       "sortName": "walls-windhauser",
       "info": "Most recent experience was as chair of a religious nonprofit which went into bankruptcy 15 years ago."
+    },
+    {
+      "name": "Michael Rectenwald",
+      "sortName": "rectenwald",
+      "title": "Anti-woke author",
+      "info": "Has written several books about how he's being oppressed by woke snowflakes and how it hurts his delicate feelings. His presidential website is just lorem ipsum, so we can't know too much about his platform.",
+      "url": "https://www.michaelrectenwald.com/president-1",
+      "pic": "rectenwald.jpg"
+    },
+    {
+      "name": "Raymond Dude Wagner",
+      "sortName": "wagner"
+    },
+    {
+      "name": "Hugo Valdez-Garcia",
+      "sortName": "garcia",
+      "url": "https://hugoforamerica.com/",
+      "title": "Pro-cars and anti-homework",
+      "info": "Would make homework illegal in schools and force colleges to remove all general education requirements. Would abolish federal prisons. Wishes to require immigrants to understand English, despite Hugo's own website being written in broken English. Would abolish all traffic speed limits and make it illegal for children to be in the road. Would revise jury trials to have the public call in their votes, thus deciding criminal cases by popular opinion regardless of facts or evidence. Wishes to add two days to the week, believing this would give everyone extra time to rest, as well as decoupling months from the seasons which would help everyone relax."
     }
   ]
 }
