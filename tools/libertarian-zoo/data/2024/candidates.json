@@ -5,7 +5,7 @@
       "sortName": "ter maat",
       "pic": "termaat.jpg",
       "url": "https://www.miketermaat.com/",
-      "state": "Florida",
+      "state": "FL",
       "title": "Cop with a Ph.D. in Economics",
       "votes": 0,
       "serious": true,
@@ -15,7 +15,7 @@
     {
       "name": "Joe 'Exotic' Maldonado",
       "sortName": "exotic",
-      "state": "Indiana",
+      "state": "IN",
       "pic": "exotic.jpg",
       "url": "https://en.wikipedia.org/wiki/Joe_Exotic",
       "title": "Convicted felon",
@@ -28,7 +28,7 @@
       "sortName": "hornberger",
       "pic": "hornberger.jpg",
       "url": "https://simple.wikipedia.org/wiki/Jacob_Hornberger",
-      "state": "Virginia",
+      "state": "VA",
       "title": "Founder of a political NGO",
       "votes": 0,
       "serious": true,
@@ -37,11 +37,12 @@
     },
     {
       "name": "Justin Amash",
+      "state": "MI",
       "sortName": "amash",
       "pic": "amash.jpg",
       "url": "https://en.wikipedia.org/wiki/Justin_Amash",
       "serious": true,
-      "presumptive": true,
+      "prospective": true,
       "title": "Former US Representative from Michigan",
       "votes": 0,
       "info": "Polled well when running in 2020 and indicated interest in running for president during a 2022 interview. First Republican to call for the impeachment of President Trump, which he continued calling for after leaving the party in 2019. Supports legalizing cannabis and opposes government bailouts of megacorporations. One of only nine representatives to vote against including religious imagery in the US's official motto. Strongly pro-same-sex marriage, believing the government shouldn't be involved in consensual relationships at all. Believes that trans rights is a non-issue because the law shouldn't discriminate between sex or genders. However, Justin also opposes women's rights, believes abortion should be punishable with prison time, was one of only four representatives to vote against recognizing lynching as a hate crime, and the only member of congress to vote against creating a national suicide prevention hotline.",
@@ -49,6 +50,7 @@
     },
     {
       "name": "Dave Smith",
+      "state": "NY",
       "sortName": "smith",
       "url": "https://comicdavesmith.com/",
       "title": "Comedian",
@@ -60,9 +62,10 @@
       "name": "Tulsi Gabbard",
       "sortName": "gabbard",
       "pic": "gabbard.jpg",
-      "title": "Former US representative from Hawaii",
+      "state": "HI",
+      "title": "Former US Representative from Hawaii",
       "votes": 0,
-      "presumptive": true,
+      "prospective": true,
       "serious": true,
       "info": "Ran for the Democratic nomination in 2020. Has recently gone off the rails, unironically opposing all libertarian ideals, such as women's rights and free speech. Wants end immigration and ban the concept of sexuality from schools. Supports border walls and Russia's invasion of Ukraine. She now focuses her time on fighting the gravest of national threats: the concept of 'woke'.",
       "dropped": false
@@ -71,6 +74,7 @@
       "name": "Joshua Rodriguez",
       "sortName": "rodriguez",
       "pic": "rodriguez.jpg",
+      "state": "CO",
       "url": "https://joshuaforunity.com/",
       "title": "Quantum computing chemical engineer",
       "info": "Qualifications include (self-reported): having been born, having lost his father as a child",
@@ -80,7 +84,7 @@
       "name": "Joshua Smith",
       "sortName": "smith",
       "serious": true,
-      "state": "Iowa",
+      "state": "IA",
       "url": "https://www.joshuasmith4potus.info/",
       "title": "Vice Chair of the Libertarian National Committee",
       "info": "Wants to end the federal government's ability to regulate its own currency. Wants to prosecute public health officials for crimes against humanity for their role in the \"tyranny\" of the pandemic. Wants to end public education with no replacement, believing students need only learn the free market to be successful in modern society. Believes trans rights is a mental health crisis. Believes Jews are hateful and extreme and their evil organizations must be outlawed.",
@@ -88,7 +92,7 @@
     },
     {
       "name": "Lars Mapstead",
-      "state": "California",
+      "state": "CA",
       "sortName": "mapstead",
       "serious": true,
       "pic": "mapstead.jpg",
@@ -99,17 +103,18 @@
     },
     {
       "name": "Jo Jorgensen",
+      "state": "SC",
       "sortName": "jorgensen",
       "pic": "jo.jpg",
       "url": "https://en.wikipedia.org/wiki/Jo_Jorgensen",
       "serious": true,
-      "presumptive": true,
+      "prospective": true,
       "title": "Libertarian presidential nominee in 2020",
       "info": "Won the 2020 Libertarian presidential nomination, the first woman to do so, and went on to lose the general election by a mere 72 million votes. Wants to replace social security with an improved retirement account welfare system. Wants to end the war on drugs and pardon all non-violent drug offenders. Wants to demilitarize the police and reinstate a policy of armed neutrality (i.e. stop invading other countries). Would tear down Trump's border wall and make the path to citizenship easier. Criticized Trump's Covid-era corporate bailouts as anti-democratic."
     },
     {
       "name": "Chase Oliver",
-      "state": "Georgia",
+      "state": "GA",
       "sortName": "oliver",
       "pic": "oliver.jpg",
       "serious": true,
@@ -130,6 +135,7 @@
       "pic": "dunham.jpg",
       "title": "Guy from Myrtle Beach",
       "info": "Proposed policies include legalizing gambling, creating a government social-security-number-based Bitcoin platform, and colonizing Antarctica. Keenan's campaign website is a 13,208-word rant about the government.",
+      "state": "SC",
       "url": "https://www.dunham2024.com/"
     },
     {
@@ -139,21 +145,23 @@
       "url": "https://en.wikipedia.org/wiki/Vermin_Supreme",
       "title": "Performance artist and political satirist",
       "serious": true,
-      "presumptive": true,
-      "info": "Not yet declared, but he runs in every election he can (and some he can't). Promises a free pony to every citizen if elected. Believes in zombie apocalypse awareness and time travel research. Will make brushing teeth required by law.",
-      "dropped": false
+      "state": "MA",
+      "info": "Has decided to run as an independent in an effort to distance himself from the increasingly insane Libertarian Party, saying he regrets ever getting involved with them, saying quote 'It has become a terrible dumpsterfire of a shitshow. I regret my involvement in such a non-functional embarrassment full of paleo dipshits, pedo apologists, and culture war fuckwads'. Came in third place in the 2020 Libertarian nomination. Promises a free pony to every citizen if elected. Believes in zombie apocalypse awareness and time travel research. Will make brushing teeth required by law.",
+      "dropped": true
     },
     {
       "name": "Tevin Handford ",
+      "url": "https://globalwwonline.com/site/profile/immune-booster/georgia/bainbridge/tevin-alexander-handford#/",
       "sortName": "handford",
       "title": "College student majoring in creative writing",
       "pic": "handford.png",
-      "info": "Official biography is a list of words including 'Immune Booster', 'Military Doctors' and 'For Viruses an Diseases Universal' [sic]."
+      "state": "GA",
+      "info": "Official biography is as follows, quote: 'Inventor- Loyal Company Product Immune Booster/ Bill or Lawmaker- Treaty Of Peace, Sex Consent Law, Criminal Charge, and Elder Abuse- Financial Exploitation- Neglect an Omission Abuse- Domestic Violence an Willful; Immune booster that can be taken in liquid, pill or needle injection (Universally produced) Product is sold in Clinics, Hospitals, Pharmacies, Military Doctors, and Mental Health Institutions. For Viruses an Diseases Universal.'"
     },
     {
       "name": "Beau Lindsey",
       "sortName": "lindsey",
-      "state": "Tennessee",
+      "state": "TN",
       "title": "Reddit user trying to start a literal crusade",
       "pic": "lindsey.jpg",
       "url": "https://sites.google.com/view/beaulindsey4president/home",
@@ -161,6 +169,7 @@
     },
     {
       "name": "Robert Milnes",
+      "state": "NJ",
       "sortName": "milnes",
       "title": "Conspiracy theory blogger",
       "info": "Believes that earthworms and slugs are the only positive forms of life, and that this shows that schools should be run more like prisons with a single guarded entrance. Believes he is immune to cancer, and that being more like earthworms and slugs cures depression. Believes that, and this is a direct quote, 'all living organisms are composed of exactly 50% biological and 50% sexual energy'. Believes the train crash in Ohio in 2023 was an instance of Jewish terrorism, just like 9/11 and the withdrawal of US troops in Afghanistan."
@@ -168,10 +177,12 @@
     {
       "name": "Angela Walls-Windhauser",
       "sortName": "walls-windhauser",
+      "state": "FL",
       "info": "Most recent experience was as chair of a religious nonprofit which went into bankruptcy 15 years ago."
     },
     {
       "name": "Michael Rectenwald",
+      "state": "PA",
       "sortName": "rectenwald",
       "title": "Anti-woke author",
       "info": "Has written several books about how he's being oppressed by woke snowflakes and how it hurts his delicate feelings. His presidential website is just lorem ipsum, so we can't know too much about his platform.",
@@ -184,6 +195,7 @@
     },
     {
       "name": "Hugo Valdez-Garcia",
+      "pic": "garcia.webp",
       "sortName": "garcia",
       "url": "https://hugoforamerica.com/",
       "title": "Pro-cars and anti-homework",
@@ -191,10 +203,29 @@
     },
     {
       "name": "Robert Sansone",
+      "state": "CO",
       "sortName": "sansone",
       "url": "https://rob2024.com/",
       "title": "Aerospace consultant",
       "info": "Wants to reform the healthcare system, without providing any details for what this means (the policy link on his website is a fake link). Robert follows suit with the rest of his platform, making broad vague statements lacking in any detail whatsoever."
+    },
+    {
+      "name": "Charles Ballay",
+      "sortName": "ballay",
+      "url": "https://www.ballay2024.com/",
+      "title": "Head and neck surgeon",
+      "state": "LA",
+      "pic": "ballay.jpg",
+      "serious": true
+    },
+    {
+      "name": "David 'Time Traveler' Dunlap",
+      "sortName": "dunlap",
+      "title": "Twitch streamer",
+      "pic": "dunlap.jpg",
+      "state": "FL",
+      "url": "https://www.trimetaveler2024.com/",
+      "info": "Primarily concerned with restructuring the Libertarian Party in order to make a bid for major party status in the future. Is calling for ranked-choice voting, a redevelopment and clarification of the core party platform, and a refocus of the party toward local elections."
     }
   ]
 }

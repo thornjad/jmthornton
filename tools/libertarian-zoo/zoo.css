@@ -1,13 +1,15 @@
 article.card {
-	background: white;
-	min-height: 23em;
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	justify-content: start;
-	border: 0;
-	box-shadow: 0 2px 2px 0 rgba(60,75,100,.14),0 3px 2px -1px rgba(60,75,100,.12),1px 2px 4px 1px rgba(60,75,100,.2);
-	border-radius: .18rem;
+  background: white;
+  min-height: 23em;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  border: 0;
+  box-shadow: 0 2px 2px 0 rgba(60, 75, 100, 0.14),
+    0 3px 2px -1px rgba(60, 75, 100, 0.12),
+    1px 2px 4px 1px rgba(60, 75, 100, 0.2);
+  border-radius: 0.18rem;
 }
 
 p.intro {
@@ -16,9 +18,9 @@ p.intro {
 }
 
 p.info {
-	margin: 0;
+  margin: 0;
   font-size: 1rem;
-	padding-top: 1em;
+  padding-top: 1em;
 }
 
 a.footnote {
@@ -28,21 +30,22 @@ a.footnote {
   margin-left: 2px;
 }
 
-section, header {
-	max-width: 1284px;
-	margin: auto;
+section,
+header {
+  max-width: 1284px;
+  margin: auto;
 }
 
 div.container {
-	margin-top: 2em;
-	padding: 2em;
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-	grid-gap: 1rem;
+  margin-top: 2em;
+  padding: 2em;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  grid-gap: 1rem;
 }
 
 .last-updated {
-	padding-left: 2rem;
+  padding-left: 2rem;
 }
 
 h3 {
@@ -50,13 +53,13 @@ h3 {
 }
 
 h3.candidate {
-	margin-bottom: 5rem;
-	padding: 1.25rem;
+  margin-bottom: 5rem;
+  padding: 1.25rem;
   color: inherit;
 }
 
 h3.candidate a {
-	color: inherit;
+  color: inherit;
 }
 
 h3::before {
@@ -64,15 +67,16 @@ h3::before {
 }
 
 .img-container {
-	display: flex;
-	justify-content: center;
-	background-color: lightgrey;
+  display: flex;
+  justify-content: center;
+  background-color: lightgrey;
   overflow: hidden;
-	height: 400px;
+  height: 400px;
 }
 
-.img-container.nota, .img-container.no-photo {
-	background-color: white;
+.img-container.nota,
+.img-container.no-photo {
+  background-color: white;
 }
 
 .img-container img {
@@ -82,35 +86,36 @@ h3::before {
 }
 
 small.popular-vote {
-	position: absolute;
-	bottom: 1.25rem;
-	right: 2rem;
+  position: absolute;
+  bottom: 1.25rem;
+  right: 2rem;
 }
 
 span.position {
-	position: absolute;
-	right: 2rem;
-	bottom: 2rem;
-	font-size: 3rem;
-	color: grey;
+  position: absolute;
+  right: 2rem;
+  bottom: 2rem;
+  font-size: 3rem;
+  color: grey;
 }
 
 .dropped-out .dropped-out-overlay {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(128,128,128,0.30);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(128, 128, 128, 0.3);
+  pointer-events: none;
 }
 
 .dropped-text {
-	font-size: 0.8rem;
-	position: absolute;
-	bottom: 1.25rem;
-	left: 2rem;
+  font-size: 0.8rem;
+  position: absolute;
+  bottom: 1.25rem;
+  left: 2rem;
 }
 
 footer > .footer-text {
-	text-align: center;
+  text-align: center;
 }
