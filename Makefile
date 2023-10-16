@@ -1,4 +1,4 @@
-.PHONY: all sass style dev prism main blog tools zoo
+.PHONY: sass style dev prism main blog tools zoo
 
 sass:
 	sass assets/style/src/main.scss assets/style/out.css
