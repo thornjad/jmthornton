@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>TodoPostTitle | Blog | Jade Michael Thornton</title>
+    <title>Best Bug Write-Ups | Blog | Jade Michael Thornton</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link type="text/plain" rel="author" href="https://jmthornton.net/humans.txt" />
@@ -43,14 +43,14 @@
 
     <link rel="stylesheet" href="/assets/style/main.css" type="text/css" />
 
-    <meta property="og:title" content="TodoPostTitle" />
+    <meta property="og:title" content="Best Bug Write-Ups" />
     <meta name="description" content="TodoPostDescription" />
     <meta property="og:url" content="https://blog.jmthornton.net/p/post" />
     <meta property="og:site_name" content="blog.jmthornton.net" />
     <meta property="og:type" content="article" />
     <meta property="og:locale" content="en_US" />
     <meta name="article:author" content="https://blog.jmthornton.net" />
-    <meta property="article:published_time" content="2023-01-01" />
+    <meta property="article:published_time" content="2023-11-20" />
   </head>
   <body>
     <header>
@@ -64,13 +64,26 @@
 
     <main>
       <article class="post blog-content">
-        <h1 class="post-title">TodoPostTitle</h1>
-        <time datetime="2023-01-01">January 01, 2023</time>
+        <h1 class="post-title">A list of the best bug write-ups I've read</h1>
+        <time datetime="2023-11-20">November 11, 2023</time>
+        <!-- <time datetime="2023-06-25">Last updated: June 25, 2023</time> -->
 
         <div class="post-main">
           <div class="blog-body">
-            <p></p>
-            <p></p>
+            <p>A modest list of interesting blog posts I've come across containing tech mystery stories exploring how a bug or mistake or other problem came about, how it was discovered, how it was fixed, and maybe some lessons to learn.</p>
+            <ul>
+              <li><a href=https://www.ibiblio.org/harris/500milemail.html"">The case of the 500-mile email</a>, by Trey Harris</li>
+              <li>
+                A three part series by James Haydon on the August 2023 UK NATS (ATC) meltdown:
+                <ol>
+                  <li><a href="https://jameshaydon.github.io/nats-fail/">UK air traffic control meltdown</a></li>
+                  <li><a href="https://jameshaydon.github.io/what-went-wrong/">UK ATC meltdown and swiss cheese</a></li>
+                  <li><a href="https://jameshaydon.github.io/programming-style-and-bugs/">Domain structured programming (UK ATC meltdown)</a></li>
+                </ol>
+              </li>
+              <li><a href="https://blog.nelhage.com/2010/02/a-very-subtle-bug/">A Very Subtle Bug</a>, by Nelson Elhage. This bug was caused by unusual behavior in Python's handling of <code>SIGPIPE</code> which was fixed in Python 2.7.</li>
+              <li><a href="https://ludic.mataroa.blog/blog/i-accidentally-saved-half-a-million-dollars/">I Accidentally Saved Half A Million Dollars</a>, by "Ludicity", although this reads as a junior engineer's perspective</li>
+            </ul>
           </div>
         </div>
       </article>

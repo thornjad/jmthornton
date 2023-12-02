@@ -1,0 +1,6 @@
+- subresource integrity
+- version number
+- gen navigation from a data list
+- generate sitemap on demand
+- generate atom feed
+- rate limit news
