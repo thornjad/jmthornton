@@ -77,8 +77,7 @@
       "state": "CO",
       "url": "https://joshuaforunity.com/",
       "title": "Quantum computing chemical engineer",
-      "info": "Qualifications include (self-reported): having been born, having lost his father as a child",
-      "serious": true
+      "info": "Self-reported qualifications include: having been born, having lost his father as a child"
     },
     {
       "name": "Joshua Smith",
@@ -98,7 +97,7 @@
       "pic": "mapstead.jpg",
       "url": "https://www.lars24.com/",
       "title": "Grew up very poor",
-      "info": "According to his self-written bio, Lars grew up without electricity or running water, and now believes that the best way for Libertarians to have an influence on elections is for there to be more of them, thus providing more votes for Libertarian candidates. Believes that political polarization is a plot by the government to distract us from taxes.",
+      "info": "According to his self-written bio, Lars grew up without electricity or running water, and now believes that the best way for Libertarians to have an influence on elections is for more people to vote for Libertarians, which is the hidden key to winning elections. Believes that political polarization is a plot by the government to distract us from taxes.",
       "dropped": false
     },
     {
@@ -109,7 +108,7 @@
       "url": "https://en.wikipedia.org/wiki/Jo_Jorgensen",
       "serious": true,
       "prospective": true,
-      "title": "Libertarian presidential nominee in 2020",
+      "title": "Only reasonable libertarian left",
       "info": "Won the 2020 Libertarian presidential nomination, the first woman to do so, and went on to lose the general election by a mere 72 million votes. Wants to replace social security with an improved retirement account welfare system. Wants to end the war on drugs and pardon all non-violent drug offenders. Wants to demilitarize the police and reinstate a policy of armed neutrality (i.e. stop invading other countries). Would tear down Trump's border wall and make the path to citizenship easier. Criticized Trump's Covid-era corporate bailouts as anti-democratic."
     },
     {
@@ -146,7 +145,7 @@
       "title": "Performance artist and political satirist",
       "serious": true,
       "state": "MA",
-      "info": "Has decided to run as an independent in an effort to distance himself from the increasingly insane Libertarian Party, saying he regrets ever getting involved with them, saying quote 'It has become a terrible dumpsterfire of a shitshow. I regret my involvement in such a non-functional embarrassment full of paleo dipshits, pedo apologists, and culture war fuckwads'. Came in third place in the 2020 Libertarian nomination. Promises a free pony to every citizen if elected. Believes in zombie apocalypse awareness and time travel research. Will make brushing teeth required by law.",
+      "info": "Has decided to run as an independent in an effort to distance himself from the increasingly insane Libertarian Party, saying he regrets ever getting involved with them, stating 'It has become a terrible dumpsterfire of a shitshow. I regret my involvement in such a non-functional embarrassment full of paleo dipshits, pedo apologists, and culture war fuckwads'. Came in third place in the 2020 Libertarian nomination. Promises a free pony to every citizen if elected. Believes in zombie apocalypse awareness and time travel research. Will make brushing teeth required by law.",
       "dropped": true
     },
     {
@@ -172,7 +171,7 @@
       "state": "NJ",
       "sortName": "milnes",
       "title": "Conspiracy theory blogger",
-      "info": "Believes that earthworms and slugs are the only positive forms of life, and that this shows that schools should be run more like prisons with a single guarded entrance. Believes he is immune to cancer, and that being more like earthworms and slugs cures depression. Believes that, and this is a direct quote, 'all living organisms are composed of exactly 50% biological and 50% sexual energy'. Believes the train crash in Ohio in 2023 was an instance of Jewish terrorism, just like 9/11 and the withdrawal of US troops in Afghanistan."
+      "info": "Believes that earthworms and slugs are the only positive forms of life, and that this shows that schools should be run more like prisons with a single guarded entrance. Believes he is immune to cancer, and that being more like earthworms and slugs cures depression. Believes that, and this is a direct quote, 'all living organisms are composed of exactly 50% biological and 50% sexual energy'. Believes the train crash in Ohio in 2023 was an instance of Jewish terrorism, as were the 9/11 attacks and the withdrawal of US troops in Afghanistan (he does not clarify how the latter is a form of terrorism)."
     },
     {
       "name": "Angela Walls-Windhauser",
@@ -217,7 +216,7 @@
       "title": "Head and neck surgeon",
       "state": "LA",
       "pic": "ballay.jpg",
-      "serious": true
+      "info": "No information could be found on Mr. Ballay, other than his picture, which looks like a stock photo of a serial killer."
     },
     {
       "name": "David 'Time Traveler' Dunlap",
@@ -227,6 +226,24 @@
       "state": "FL",
       "url": "https://www.trimetaveler2024.com/",
       "info": "Primarily concerned with restructuring the Libertarian Party in order to make a bid for major party status in the future. Is calling for ranked-choice voting, a redevelopment and clarification of the core party platform, and a refocus of the party toward local elections."
+    },
+    {
+      "name": "Art Olivier",
+      "sortName": "olivier",
+      "title": "Former mayor of Bellflower, CA, and fervent conspiracy theorist",
+      "state": "CA",
+      "url": "https://art2024.org//",
+      "pic": "olivier.jpg",
+      "info": "Wrote a book about how the Sandy Hook massacre was a conspiracy theory. Wrote another book about how 9/11 was a false flag attack by the CIA. Believes the US military has too wide of a reach around the world.",
+      "serious": true
+    },
+    {
+      "name": "None of the Above",
+      "sortName": "nota",
+      "title": "None of the candidates are any good",
+      "serious": true,
+      "pic": "nota.png",
+      "info": "This zoo still isn't good enough for some people"
     }
   ]
 }
