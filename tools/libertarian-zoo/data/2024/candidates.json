@@ -230,7 +230,7 @@
     {
       "name": "Art Olivier",
       "sortName": "olivier",
-      "title": "Former mayor of Bellflower, CA, and fervent conspiracy theorist",
+      "title": "Former mayor of Bellflower, CA, fervent conspiracy theorist",
       "state": "CA",
       "url": "https://art2024.org//",
       "pic": "olivier.jpg",
@@ -244,6 +244,15 @@
       "serious": true,
       "pic": "nota.png",
       "info": "This zoo still isn't good enough for some people"
+    },
+    {
+      "name": "Joseph Collins Jr.",
+      "sortName": "collins",
+      "pic": "collins.png",
+      "url": "https://josephcollinsjr.com/",
+      "title": "CEO of Urban TV",
+      "info": "According to his self-submitted Ballotpedia survey, Joseph's number one key message is: \"I am going to rethinkg education in America\" [sic]. Joeseph would completely close the US borders and is concerned with violence, stating \"we must give our citizens a fair trail\" [sic].",
+      "state": "CA"
     }
   ]
 }
