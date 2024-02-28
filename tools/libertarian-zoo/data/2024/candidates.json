@@ -59,18 +59,6 @@
       "dropped": true
     },
     {
-      "name": "Tulsi Gabbard",
-      "sortName": "gabbard",
-      "pic": "gabbard.jpg",
-      "state": "HI",
-      "title": "Former US Representative from Hawaii",
-      "votes": 0,
-      "prospective": true,
-      "serious": true,
-      "info": "Ran for the Democratic nomination in 2020. Has recently gone off the rails, unironically opposing all libertarian ideals, such as women's rights and free speech. Wants end immigration and ban the concept of sexuality from schools. Supports border walls and Russia's invasion of Ukraine. She now focuses her time on fighting the gravest of national threats: the concept of 'woke'.",
-      "dropped": false
-    },
-    {
       "name": "Joshua Rodriguez",
       "sortName": "rodriguez",
       "pic": "rodriguez.jpg",
@@ -109,7 +97,8 @@
       "serious": true,
       "prospective": true,
       "title": "Only reasonable libertarian left",
-      "info": "Won the 2020 Libertarian presidential nomination, the first woman to do so, and went on to lose the general election by a mere 72 million votes. Wants to replace social security with an improved retirement account welfare system. Wants to end the war on drugs and pardon all non-violent drug offenders. Wants to demilitarize the police and reinstate a policy of armed neutrality (i.e. stop invading other countries). Would tear down Trump's border wall and make the path to citizenship easier. Criticized Trump's Covid-era corporate bailouts as anti-democratic."
+      "info": "Won the 2020 Libertarian presidential nomination, the first woman to do so, and went on to lose the general election by a mere 72 million votes. Wants to replace social security with an improved retirement account welfare system. Wants to end the war on drugs and pardon all non-violent drug offenders. Wants to demilitarize the police and reinstate a policy of armed neutrality (i.e. stop invading other countries). Would tear down Trump's border wall and make the path to citizenship easier. Criticized Trump's Covid-era corporate bailouts as anti-democratic.",
+      "dropped": true
     },
     {
       "name": "Chase Oliver",
