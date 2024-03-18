@@ -1,3 +1,10 @@
+.PHONY: server
+
+server:
+	lein ring server
+
+# OLD
+
 .PHONY: sass style dev prism main blog tools zoo
 
 sass:
@@ -37,11 +44,3 @@ style: prism main blog tools zoo news
 copy-blog-fonts:
 	mkdir -p blog/assets/fonts
 	cp -r assets/fonts blog/assets/fonts
-
-all: style
-
-server:
-	npx http-server -c-1
-
-dev: style
-	make -j4 sass-watch server
