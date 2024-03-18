@@ -41,6 +41,9 @@
       crossorigin="anonymous"
     />
 
+    <link href="/assets/vendor/prism.min.css" rel="stylesheet" media="(prefers-color-scheme: light)" />
+    <link href="/assets/vendor/prism-dark.min.css" rel="stylesheet" media="(prefers-color-scheme: dark)" />
+
     <link rel="stylesheet" href="/assets/style/main.css" type="text/css" />
 
     <meta property="og:title" content="Connecting consult-line with isearch history" />
@@ -69,11 +72,10 @@
 
         <div class="post-main">
           <div class="blog-body">
-            <p>I've recently jumped on the not-so-new hotness of <a href="">Consult</a>, with its friends <a href="">Vertico</a> and <a href="">Orderless</a>, replacing the still strong but slightly slower <a href="">Counsel</a>, <a href="">Ivy</a>, <a href="">Swiper</a> and <a href="">Flx</a>. There's been a few bumps along the way to adapt these new packages to my own whims, but its all working out so far. One such issue is that after using <code>consult-line</code> to search in a buffer, I'd often like to continue my search, preferring the <code>evil-mode</code> keys <code>n</code> and <code>N</code> (<code>evil-search-next</code> and <code>evil-search-previous</code>. Unfortunately, once <code>consult-line</code> is closed, it can't be resumed without starting it again, unlike the <code>swiper</code> behavior I've come to rely on.</p>
-            <p>Now I did come across a <a href="https://github.com/minad/consult/issues/318">2021 GitHub thread about this issue</a>, but the chosen solution only works for <code>evil-search</code> as Evil's search module. This is not the default and, though I'm sure many love it, I prefer the isearch way of highlighting. So, taking inspiration from that thread, I've made my own advice for <code>consult-line</code> which instead works by connecting <code>consult</code>'s <code>consult--line-history</code> with the <code>regexp-search-ring</code> that I have <code>isearch</code> use.</p>
-            <pre><code>
-
-  (defun aero/consult-line-isearch-history (&rest _)
+            <p>I've recently jumped on the not-so-new hotness of <a href="">Consult</a>, with its friends <a href="">Vertico</a> and <a href="">Orderless</a>, replacing the still strong but slightly slower <a href="">Counsel</a>, <a href="">Ivy</a>, <a href="">Swiper</a> and <a href="">Flx</a>. There's been a few bumps along the way to adapt these new packages to my own whims, but its all working out so far.</p>
+              <p>One such issue is that after using <code>consult-line</code> to search in a buffer, I'd often like to continue my search, preferring the <code>evil-mode</code> keys <code>n</code> and <code>N</code> (<code>evil-search-next</code> and <code>evil-search-previous</code>, respectively). Unfortunately, once <code>consult-line</code> is closed, it can't be resumed without starting it again anew, unlike the <code>swiper</code> behavior I've come to rely on.</p>
+            <p>Now I did come across a <a href="https://github.com/minad/consult/issues/318">2021 GitHub thread about this issue</a>, but the chosen solution only works for <code>evil-search</code> as the search module. This is not the default and, though I'm sure many love it, I prefer the isearch way of highlighting. So, taking inspiration from that thread, I've made my own advice for <code>consult-line</code> which instead works by connecting <code>consult</code>'s <code>consult--line-history</code> with the <code>regexp-search-ring</code> that <code>isearch</code> uses.</p>
+            <pre lang="lisp"><code class="language-lisp">(defun consult-line-isearch-history (&rest _)
     "Add latest `consult-line' search pattern to the isearch history.
 
 This allows n and N to continue the search after `consult-line' exits."
@@ -87,9 +89,15 @@ This allows n and N to continue the search after `consult-line' exits."
         (add-to-history 'regexp-search-ring regexp)
         (setq evil-ex-search-pattern (evil-ex-pattern regexp t nil nil))
         (setq evil-ex-search-direction 'forward))))
-  (advice-add #'consult-line :after #'aero/consult-line-isearch-history)
-            </code></pre>
+
+  ;; Now tell consult-line to run the function after a search
+  (advice-add #'consult-line :after #'consult-line-isearch-history)</code></pre>
           </div>
+        </div>
+
+        <hr />
+        <div>
+          <p>Check out my <a href="https://github.com/thornjad/aero">full Emacs configuration</a> if you'd like to see how else I bend Emacs to my will.</p>
         </div>
       </article>
     </main>
@@ -100,5 +108,7 @@ This allows n and N to continue the search after `consult-line' exits."
         <a href="https://gitlab.com/thornjad/jmthornton">Source code</a>
       </p>
     </footer>
+
+    <script src="/assets/vendor/prism.js" defer></script>
   </body>
 </html>
