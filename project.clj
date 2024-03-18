@@ -7,7 +7,7 @@
                  [stasis "2023.11.21"]
                  [ring/ring-core "1.12.0"]
                  [hiccup "2.0.0-RC3"]]
-  :plugins [[lein-ring "0.12.6"]
-            [dev.weavejester/lein-cljfmt "0.12.0"]]
+  :profiles {:dev {:plugins [[lein-ring "0.12.6"]
+                             [dev.weavejester/lein-cljfmt "0.12.0"]]}}
   :cljfmt {:load-config-file? true}
-  :ring {:handler jmthornton.web/app})
+  :ring {:handler jmthornton.web/core})
