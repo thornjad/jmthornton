@@ -126,10 +126,10 @@ and assumes the default Org-roam naming scheme."
        "modified" (format-time-string "[%Y-%m-%d %a %H:%M]")))))</code></pre>
 
             <p>
-              The integration of these functions into your Emacs and Org-roam config ensures that every note's origins and edits are easily accessible and readable. All it takes to set up from here is adding a the functions to a couple of hooks:
+              The integration of these functions into your Emacs and Org-roam config ensures that every note's origins and edits are easily accessible and readable. To make these actually run, I set them up to run on before-save. There may be better hooks for this, but Org-roam's own hooks make it kind of difficult in my own setup, so I take the more brute force approach and it works fine for me:
             </p>
-            <pre lang="lisp"><code class="language-lisp">(add-hook 'org-roam-find-file-hook 'org-roam-insert-created-property)
-(add-hook 'before-save-hook 'org-roam-insert-modified-property)</code></pre>
+            <pre lang="lisp"><code class="language-lisp">(add-hook 'before-save-hook #'aero/org-roam-insert-created-property)
+(add-hook 'before-save-hook #'org-roam-insert-modified-property)</code></pre>
           </div>
         </div>
 
