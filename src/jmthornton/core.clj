@@ -1,10 +1,11 @@
 (ns jmthornton.core
   (:require [clojure.java.io :as io]
-            [hiccup2.core :refer [html]]
+            [hiccup.page :refer [html5]]
+            [ring.util.response :refer [response]]
             [stasis.core :as stasis]))
 
 (defn layout-page [page]
-  (html
+  (html5
    [:html
     [:head
      [:title "My new site"]
@@ -14,13 +15,12 @@
      [:h1 "Dynamically inserted stuff"]
      [:div.body page]]]))
 
-(defn about-page [request]
-  (layout-page (slurp (io/resource "partials/about.html"))))
-
-;; App
+(defn frontpage [context]
+  (response
+   (html5
+    [:div "Hello world"])))
 
 (defn get-pages []
-  (merge (stasis/slurp-directory "resources/public" #".*\.(html|css|js)$")
-         {"/about/" about-page}))
+  {"/" frontpage})
 
 (def app (stasis/serve-pages get-pages))

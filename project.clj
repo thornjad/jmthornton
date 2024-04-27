@@ -6,7 +6,7 @@
   :dependencies [[org.clojure/clojure "1.11.2"]
                  [stasis "2023.11.21"]
                  [ring "1.12.0"]
-                 [hiccup "2.0.0-RC3"]]
+                 [hiccup "1.0.5"]]
   :profiles {:dev {:plugins [[lein-ring "0.12.6"]
                              [dev.weavejester/lein-cljfmt "0.12.0"]]}}
   :cljfmt {:load-config-file? true}
