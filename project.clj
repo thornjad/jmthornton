@@ -9,5 +9,6 @@
                  [hiccup "1.0.5"]]
   :profiles {:dev {:plugins [[lein-ring "0.12.6"]
                              [dev.weavejester/lein-cljfmt "0.12.0"]]}}
+  :aliases {"build-site" ["run" "-m" "jmthornton.core/export"]}
   :cljfmt {:load-config-file? true}
   :ring {:handler jmthornton.core/app})

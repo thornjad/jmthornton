@@ -3,6 +3,9 @@
 server:
 	lein ring server
 
+export:
+	lein build-site
+
 # OLD
 
 .PHONY: sass style dev prism main blog tools zoo

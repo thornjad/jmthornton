@@ -24,3 +24,8 @@
   {"/" frontpage})
 
 (def app (stasis/serve-pages get-pages))
+
+(defn export []
+  (let [target-dir "public"]
+    (stasis/empty-directory! target-dir)
+    (stasis/export-pages (get-pages) target-dir)))
