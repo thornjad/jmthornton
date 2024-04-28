@@ -1,13 +1,10 @@
 (ns jmthornton.core
-  (:require [hiccup.page :refer [html5]]
+  (:require [jmthornton.layout :refer [site-layout-page]]
+            [jmthornton.pages.frontpage :refer [frontpage]]
             [stasis.core :as stasis]))
 
-(defn frontpage [context]
-  (html5
-   [:div "Hello world"]))
-
 (defn get-pages []
-  {"/" frontpage})
+  {"/" (site-layout-page (frontpage) "Jade Michael Thornton — Software Engineer")})
 
 (def app (stasis/serve-pages get-pages))
 
