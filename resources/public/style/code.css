@@ -1,0 +1,110 @@
+/* using important to override prism styles */
+pre {
+  overflow: auto;
+  position: relative;
+  background: var(--bg-alt) !important;
+  padding: 0.75rem !important;
+  margin: 2rem 0.5rem !important;
+  border: none;
+  border-left: 0.25rem solid var(--pre-border);
+  border-radius: var(--border-radius);
+
+  &.line-numbers {
+    padding-left: 3.8em !important;
+  }
+}
+
+code,
+sub,
+sup {
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+code {
+  background: var(--bg-alt);
+  border: 1px solid var(--bg-alt-darker);
+  border-radius: var(--border-radius);
+  padding: 0 4px;
+  font-size: 0.85em;
+
+  pre & {
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-size: inherit;
+  }
+
+  /* improvements to prism */
+  .token.variable,
+  .token.important,
+  .token.regex,
+  .token.property {
+    color: #83684c;
+  }
+  .token.keyword,
+  .token.selector {
+    color: #968955;
+    font-weight: bold;
+  }
+  .token.string {
+    color: #8b887d;
+  }
+  .token.tag,
+  .token.attr-name {
+    color: #8b887d;
+  }
+  .token.function {
+    color: #ab7146;
+  }
+  .token.builtin {
+    color: #4b788d;
+  }
+  .token.attr-value {
+    color: inherit;
+  }
+  .token.number {
+    color: var(--fg);
+  }
+  .token.boolean,
+  .token.class-name,
+  .token.constant {
+    color: #718388;
+    font-weight: bold;
+  }
+  .token.doctype,
+  .token.doctype * {
+    color: silver;
+  }
+}
+
+html code[class*="language-"],
+html pre[class*="language-"] {
+  color: var(--fg);
+  font-family: var(--font-mono);
+  text-shadow: none;
+  -moz-tab-size: 2;
+  -o-tab-size: 2;
+  tab-size: 2;
+}
+
+code[class*="language-"] {
+  font-size: 0.85em;
+
+  pre & {
+    font-size: 1em;
+  }
+}
+
+div.code-toolbar > .toolbar {
+  right: 1em;
+}
+
+.language-css .token.string,
+.style .token.string,
+.token.entity,
+.token.operator,
+.token.url {
+  background: none;
+}

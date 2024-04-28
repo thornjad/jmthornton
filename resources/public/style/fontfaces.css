@@ -1,0 +1,47 @@
+@font-face {
+  font-family: VictorMono;
+  src: local("VictorMono-Regular"), url(/fonts/VictorMono-Regular.woff2) format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: VictorMono;
+  src: local("VictorMono-Bold"), url(/fonts/VictorMono-Bold.woff2) format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: MetroNova;
+  src: local("MetroNova-Regular"), url(/fonts/MetroNova-Regular.woff2) format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: MetroNova;
+  src: local("MetroNova-Italic"), url(/fonts/MetroNova-Italic.woff2) format("woff2");
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: MetroNova;
+  src: local("MetroNova-Bold"), url(/fonts/MetroNova-Bold.woff2) format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: MetroNova;
+  src: local("MetroNova-BoldItalic"), url(/fonts/MetroNova-BoldItalic.woff2) format("woff2");
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+}

@@ -1,6 +1,6 @@
 # Compiled source #
 ###################
-public/
+dist/
 *.o
 *.so
 a.html

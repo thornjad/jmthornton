@@ -1,12 +1,12 @@
 (ns jmthornton.layout
-  (:require [hiccup.page :refer [html5]]))
+  (:require []
+            [hiccup.page :refer [html5]]))
 
-;; TODO optimus.link
 (defn site-layout-page [& {:keys [title content head-content head-scripts]
                            :or {title "Jade Michael Thornton — Software Engineer"
-                                content []
-                                head-content []
-                                head-scripts []}}]
+                                content [:p "Page has no content"]
+                                head-content nil
+                                head-scripts nil}}]
   (html5
    [:html
     [:head {:lang "en-US"}
@@ -50,12 +50,15 @@
              :type "font/woff2"
              :crossorigin "anonymous"}]
 
+     (html5 head-content)
+
      [:link {:rel "stylesheet"
-             :href "/assets/style/main.css"
+             :href "/style/main.css"
              :type "text/css"}]
      [:script {:async true
-               :src "/lib/oneko.js"}]]
+               :src "/lib/oneko.js"}]
+     (html5 head-scripts)]
 
     [:body
      [:h1 "Dynamically inserted stuff"]
-     content]]))
+     (html5 content)]]))
