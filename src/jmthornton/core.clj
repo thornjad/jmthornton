@@ -14,14 +14,17 @@
                        [#"/style/.+\.css"
                         #"/fonts/.+\.(woff2|woff)"
                         #"/images/.*"
-                        #"/vendor/.*"])))
+                        #"/lib/.+\.js"])))
 
 (defn get-pages []
   {"/" (site-layout-page (frontpage))})
 
 (def app (->
           (stasis/serve-pages get-pages)
-          (optimus/wrap get-assets optimizations/all serve-live-assets)))
+          (optimus/wrap
+           get-assets optimizations/all serve-live-assets
+           {:uglify-js {:mangle-names true
+                        :transpile-es6? true}})))
 
 (defn export []
   (let [assets (optimizations/all (get-assets) {})
