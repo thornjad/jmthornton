@@ -1,11 +1,14 @@
 (ns jmthornton.layout
   (:require [hiccup.page :refer [html5]]))
 
-(defn site-layout-page [& {:keys [title description content head-content head-scripts]
+(defn get-version []
+  (nth (read-string (slurp "project.clj")) 2 "ALPHA"))
+
+(defn site-layout-page [& {:keys [title description content head-content footer-content]
                            :or {title "Jade Michael Thornton — Software Engineer"
                                 content [:p "Page has no content"]
                                 head-content nil
-                                head-scripts nil
+                                footer-content nil
                                 description "Jade Michael Thornton is a senior software engineer and this is his website."}}]
   (html5
    [:html
@@ -47,10 +50,15 @@
 
      [:link {:rel "stylesheet"
              :href "/style/main.css"
-             :type "text/css"}]
-     (html5 head-scripts)]
+             :type "text/css"}]]
 
-    [:body content]]))
+    [:body
+     (html5 content)
+     [:p
+      [:span "Copyright © 2012-2024 Jade Michael Thornton | "
+       [:a {:href "https://github.com/thornjad/jmthornton"} "Browse the source code"]
+       " | Version " (get-version)]
+      (html5 footer-content)]]]))
 
 (defn nav-header []
   (html5
