@@ -56,7 +56,9 @@
      (html5 content)
      [:p
       [:span "Copyright © 2012-2024 Jade Michael Thornton | "
-       [:a {:href "https://github.com/thornjad/jmthornton"} "Browse the source code"]
+       [:a {:href "https://jmthornton.net"} "Home"]
+       " | "
+       [:a {:href "https://github.com/thornjad/jmthornton"} "Browse the source"]
        " | Version " (get-version)]
       (html5 footer-content)]]]))
 
