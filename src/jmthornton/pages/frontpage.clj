@@ -15,7 +15,7 @@
        [:p
         "I'm a software engineer, hobby aerial photographer and RC flight enthusiast. I know some things about some software, and a lot about taking care of house rabbits. My favorite language is Clojure, but I never get to work in it. I'm currently a senior software engineer and team lead at " [:a {:href "https://dronedeploy.com"} "DroneDeploy"] ", working on orthographic maps generated from 360 video captures, as well as unification with a recently-acquired startup."]
        [:p
-        "I've previously worked and studied at " [:a {:href "https://flightaware.com"} "FlightAware"] " (a"
+        "I've previously worked and studied at " [:a {:href "https://flightaware.com"} "FlightAware"] " (a "
         [:a {:href "https://www.collinsaerospace.com"} "Collins Aerospace"] " company), "
         [:a {:href "https://www.thomsonreuters.com"} "Thomson Reuters"] ", "
         [:a {:href "https://www.mavericksoftware.com"} "Maverick Software"] ", the "
@@ -143,15 +143,7 @@ emulator), " [:a {:href "https://brave.com/"} " Brave Browser"] " (prior to the 
              :loading "lazy"}]
       [:a {:href "https://yesterweb.org"}
        [:img {:src "/images/yesterweb.png"
-              :alt "Yesterweb: reclaim the net"}]]]
-     "This site is part of the" [:br]
-     [:a {:class "no-a"
-          :href "http://info.cern.ch/hypertext/WWW/TheProject.html"}
-      [:img {:src "/images/www_badge.gif"
-             :width "91"
-             :height "100"
-             :title "World Wide Web"
-             :alt "World Wide Web"}]] "of interconnected sites."]]))
+              :alt "Yesterweb: reclaim the net"}]]]]]))
 
 (defn frontpage []
   {:title "Jade Michael Thornton — Software Engineer"

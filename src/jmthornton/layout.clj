@@ -57,6 +57,9 @@
    [:header
     [:nav
      [:a {:href "/"} "Home"]
+     "&nbsp;"
      [:a {:href "/tools"} "Tools"]
-     [:a {:href "/blog"} "Blog"]
+     "&nbsp;"
+     [:a {:href "https://blog.jmthornton.net"} "Blog"]
+     "&nbsp;"
      [:a {:href "https://photos.jmthornton.net"} "Photos"]]]))
