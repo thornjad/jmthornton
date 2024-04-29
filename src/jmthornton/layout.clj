@@ -1,11 +1,12 @@
 (ns jmthornton.layout
   (:require [hiccup.page :refer [html5]]))
 
-(defn site-layout-page [& {:keys [title content head-content head-scripts]
+(defn site-layout-page [& {:keys [title description content head-content head-scripts]
                            :or {title "Jade Michael Thornton — Software Engineer"
                                 content [:p "Page has no content"]
                                 head-content nil
-                                head-scripts nil}}]
+                                head-scripts nil
+                                description "Jade Michael Thornton is a senior software engineer and this is his website."}}]
   (html5
    [:html
     [:head {:lang "en-US"}
@@ -14,37 +15,30 @@
              :content "JUM1Dl9n9ic9xPMb03Nzf4NgW_-8PWZrJ4eJGC_PoYM"}]
      [:title title]
      [:meta {:name "description"
-             :content "Jade Michael Thornton is a senior software engineer and this is his website."}]
-
-     [:meta {:name "robots"
-             :content "home, follow"}]
-     [:link {:rel "canonical"
-             :href "https://jmthornton.net"}]
-     [:link {:rel "shortcut icon"
-             :href "/assets/images/favicon.png"}]
+             :content description}]
 
      [:link {:rel "prefetch"
-             :href "/assets/style/main.css"
+             :href "/style/main.css"
              :as "style"
              :crossorigin true}]
 
      [:link {:rel "prefetch"
-             :href "/assets/fonts/MetroNova-Regular.woff2"
+             :href "/fonts/MetroNova-Regular.woff2"
              :as "font"
              :type "font/woff2"
              :crossorigin "anonymous"}]
      [:link {:rel "prefetch"
-             :href "/assets/fonts/MetroNova-Italic.woff2"
+             :href "/fonts/MetroNova-Italic.woff2"
              :as "font"
              :type "font/woff2"
              :crossorigin "anonymous"}]
      [:link {:rel "prefetch"
-             :href "/assets/fonts/MetroNova-Bold.woff2"
+             :href "/fonts/MetroNova-Bold.woff2"
              :as "font"
              :type "font/woff2"
              :crossorigin "anonymous"}]
      [:link {:rel "prefetch"
-             :href "/assets/fonts/MetroNova-BoldItalic.woff2"
+             :href "/fonts/MetroNova-BoldItalic.woff2"
              :as "font"
              :type "font/woff2"
              :crossorigin "anonymous"}]
@@ -54,10 +48,15 @@
      [:link {:rel "stylesheet"
              :href "/style/main.css"
              :type "text/css"}]
-     [:script {:async true
-               :src "/lib/oneko.js"}]
      (html5 head-scripts)]
 
-    [:body
-     [:h1 "Dynamically inserted stuff"]
-     (html5 content)]]))
+    [:body content]]))
+
+(defn nav-header []
+  (html5
+   [:header
+    [:nav
+     [:a {:href "/"} "Home"]
+     [:a {:href "/tools"} "Tools"]
+     [:a {:href "/blog"} "Blog"]
+     [:a {:href "https://photos.jmthornton.net"} "Photos"]]]))
