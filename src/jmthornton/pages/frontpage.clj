@@ -44,8 +44,8 @@
       "What I cannot create, I do not understand"
       [:figcaption "&mdash; Richard Feynman"]]
      [:p
-      "All of my projects are open source and live on"
-      [:a {:href "https://gitlab.com/thornjad"} "GitLab"] " and/or"
+      "All of my projects are open source and live on "
+      [:a {:href "https://gitlab.com/thornjad"} "GitLab"] " and/or "
       [:a {:href "https://github.com/thornjad"} "GitHub"] ". Here's some of my favorite highlights."]
      [:ul {:class "dl"}
       [:li
@@ -60,10 +60,10 @@
        [:p "Themes and more themes"]
        [:p
         "I have a desire for everything I use to look good and work well. To that end, I often create or
-contribute to themes of various types, including"
+contribute to themes of various types, including "
         [:a {:href "https://gitlab.com/thornjad/aero-theme"} "Aero"] " (Emacs), "
         [:a {:href "https://gitlab.com/thornjad/vero"} "Vero"] " (Zsh), "
-        [:a {:href "https://github.com/ClearNight"} "ClearNight"] " (Atom, RIP) and"
+        [:a {:href "https://github.com/ClearNight"} "ClearNight"] " (Atom, RIP) and "
         [:a {:href "https://github.com/thornjad/unbroken"} "Unbroken"] " (GTK3). I was also part of the
 creation of the " [:a {:href "https://minicss.org/"} "mini.css"] " framework."]
        [:p "This site's design is based on my Aero Emacs theme."]]
@@ -80,18 +80,18 @@ creation of the " [:a {:href "https://minicss.org/"} "mini.css"] " framework."]
       [:li
        [:p "Education"]
        [:p
-        "I enjoy teaching and mentoring new developers, and I have contributed to both"
-        [:a {:href "https://www.freecodecamp.org"} "FreeCodeCamp lessons"] " and"
+        "I enjoy teaching and mentoring new developers, and I have contributed to both "
+        [:a {:href "https://www.freecodecamp.org"} "FreeCodeCamp lessons"] " and "
         [:a {:href "https://learnxinyminutes.com/"} "Learn X in Y minutes"] "."]]
       [:li
        [:p "Other contributions"]
        [:p
-        "Falling into the \"other\" category, I'm one of the authors of"
+        "Falling into the \"other\" category, I'm one of the authors of "
         [:a {:href "https://github.com/remotestorage/armadietto"} "Armadietto"] " (a reference RemoteStorage
 server) and a contributor to " [:a {:href "https://github.com/jkk/formative"} "Formative"] " (a Clojure
 web form renderer), " [:a {:href "https://github.com/alacritty/alacritty"} "Alacritty"] " (a terminal
-emulator), " [:a {:href "https://brave.com/"} " Brave Browser"] " (prior to the 1.0 release),"
-        [:a {:href "https://github.com/flightaware/tohil"} "Tohil"] " (a TCL-Python integration library) and"
+emulator), " [:a {:href "https://brave.com/"} " Brave Browser"] " (prior to the 1.0 release), "
+        [:a {:href "https://github.com/flightaware/tohil"} "Tohil"] " (a TCL-Python integration library) and "
         [:a {:href "https://github.com/zplug/zplug"} "Zplug"] " (a Zsh plugin manager)."]]]]
     [:section
      [:div {:class "counter"}
@@ -154,7 +154,6 @@ emulator), " [:a {:href "https://brave.com/"} " Brave Browser"] " (prior to the 
                   [:link {:rel "canonical"
                           :href "https://jmthornton.net"}]
                   [:link {:rel "shortcut icon"
-                          :href "/images/favicon.png"}])
-   :head-scripts (html5
+                          :href "/images/favicon.png"}]
                   [:script {:async true
                             :src "/lib/oneko.js"}])})
