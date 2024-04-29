@@ -8,10 +8,10 @@ pre {
   border: none;
   border-left: 0.25rem solid var(--pre-border);
   border-radius: var(--border-radius);
+}
 
-  &.line-numbers {
-    padding-left: 3.8em !important;
-  }
+pre.line-numbers {
+  padding-left: 3.8em !important;
 }
 
 code,
@@ -28,55 +28,63 @@ code {
   border-radius: var(--border-radius);
   padding: 0 4px;
   font-size: 0.85em;
+}
 
-  pre & {
-    background: transparent;
-    border: none;
-    padding: 0;
-    font-size: inherit;
-  }
+pre code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+}
 
-  /* improvements to prism */
-  .token.variable,
-  .token.important,
-  .token.regex,
-  .token.property {
-    color: #83684c;
-  }
-  .token.keyword,
-  .token.selector {
-    color: #968955;
-    font-weight: bold;
-  }
-  .token.string {
-    color: #8b887d;
-  }
-  .token.tag,
-  .token.attr-name {
-    color: #8b887d;
-  }
-  .token.function {
-    color: #ab7146;
-  }
-  .token.builtin {
-    color: #4b788d;
-  }
-  .token.attr-value {
-    color: inherit;
-  }
-  .token.number {
-    color: var(--fg);
-  }
-  .token.boolean,
-  .token.class-name,
-  .token.constant {
-    color: #718388;
-    font-weight: bold;
-  }
-  .token.doctype,
-  .token.doctype * {
-    color: silver;
-  }
+code .token.variable,
+code .token.important,
+code .token.regex,
+code .token.property {
+  color: #83684c;
+}
+
+code .token.keyword,
+code .token.selector {
+  color: #968955;
+  font-weight: bold;
+}
+
+code .token.string {
+  color: #8b887d;
+}
+
+code .token.tag,
+code .token.attr-name {
+  color: #8b887d;
+}
+
+code .token.function {
+  color: #ab7146;
+}
+
+code .token.builtin {
+  color: #4b788d;
+}
+
+code .token.attr-value {
+  color: inherit;
+}
+
+code .token.number {
+  color: var(--fg);
+}
+
+code .token.boolean,
+code .token.class-name,
+code .token.constant {
+  color: #718388;
+  font-weight: bold;
+}
+
+code .token.doctype,
+code .token.doctype * {
+  color: silver;
 }
 
 html code[class*="language-"],
@@ -91,10 +99,10 @@ html pre[class*="language-"] {
 
 code[class*="language-"] {
   font-size: 0.85em;
+}
 
-  pre & {
-    font-size: 1em;
-  }
+code[class*="language-"] pre {
+  font-size: 1em;
 }
 
 div.code-toolbar > .toolbar {
