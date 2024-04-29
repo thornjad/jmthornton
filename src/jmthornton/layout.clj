@@ -1,6 +1,5 @@
 (ns jmthornton.layout
-  (:require []
-            [hiccup.page :refer [html5]]))
+  (:require [hiccup.page :refer [html5]]))
 
 (defn site-layout-page [& {:keys [title content head-content head-scripts]
                            :or {title "Jade Michael Thornton — Software Engineer"
