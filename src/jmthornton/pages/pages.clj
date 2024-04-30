@@ -1,4 +1,4 @@
-(ns jmthornton.pages.frontpage
+(ns jmthornton.pages.pages
   (:require [hiccup.page :refer [html5]]
             [jmthornton.layout :as layout]))
 

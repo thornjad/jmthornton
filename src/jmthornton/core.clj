@@ -1,11 +1,10 @@
 (ns jmthornton.core
   (:require [jmthornton.layout :refer [site-layout-page]]
-            [jmthornton.pages :refer [frontpage]]
             [jmthornton.pages.blog :as blog]
+            [jmthornton.pages.pages :as pages]
             [optimus.assets :as assets]
             [optimus.export]
             [optimus.optimizations :as optimizations]
-
             [optimus.prime :as optimus]
             [optimus.strategies :refer [serve-live-assets]]
             [stasis.core :as stasis]))
@@ -19,7 +18,7 @@
                         #"/lib/.+\.js"])))
 
 (defn get-pages []
-  {"/" (site-layout-page (frontpage))
+  {"/" (site-layout-page (pages/frontpage))
    "/blog/" (site-layout-page (blog/index))})
 
 (def app (->
