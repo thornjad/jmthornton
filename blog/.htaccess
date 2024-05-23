@@ -12,6 +12,9 @@ RewriteCond %{REQUEST_URI} (.+)/$
 RewriteRule ^ %1 [R=301,L]
 
 Redirect 301 /_nsr/ https://jmthornton.net/_nsrbiz/
+Redirect 301 /feed/jade.atom https://blog.jmthornton.net/feed.xml
+Redirect 301 /feed/ https://blog.jmthornton.net/feed.xml
+Redirect 301 /rss/ https://blog.jmthornton.net/feed.xml
 
 # Add security and privacy related headers
 Header set X-Content-Type-Options "nosniff"
