@@ -12,3 +12,12 @@
                           :content "home, follow"}]
                   [:script {:async true
                             :src "/lib/oneko.js"}])})
+
+(defn tools []
+  {:title "Tools | Jade Michael Thornton"
+   :content (html5
+             (layout/nav-header)
+             (slurp "resources/partials/tools.html"))
+   :head-content (html5
+                  [:meta {:name "robots"
+                          :content "noindex"}])})
