@@ -1,0 +1,55 @@
+.top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 2rem 2rem;
+}
+
+.top-row h6::before {
+  content: none;
+}
+
+.top-row h6 {
+  margin: 0;
+}
+
+.updated-message {
+  font-style: italic;
+}
+
+.post p {
+  padding: 0 2rem;
+}
+
+.source {
+  font-weight: normal;
+  font-size: 0.7em;
+  letter-spacing: 1px;
+  font-style: italic;
+}
+
+.pocket-link,
+.extra-content-link {
+  font-size: 0.7em;
+  color: grey !important;
+}
+
+main a:visited {
+  color: grey;
+}
+
+footer {
+  display: none;
+}
+
+.load-more-container {
+  display: none;
+  justify-content: center;
+  margin-top: 4rem;
+}
+
+@media (max-width: 500px) {
+  .top-row {
+    justify-content: end;
+  }
+}

@@ -73,14 +73,11 @@ const loadSomePosts = async (posts) => {
   } finally {
     hideSpinner();
     syncLoadMoreButton();
-    showFooter();
   }
 };
 
 const hideSpinner = () => (document.querySelector('#spinner').style.display = 'none');
 const showSpinner = () => (document.querySelector('#spinner').style.display = 'block');
-
-const showFooter = () => (document.querySelector('footer').style.display = 'block');
 
 const showLoadMore = () => (document.querySelector('.load-more-container').style.display = 'flex');
 const hideLoadMore = () => (document.querySelector('.load-more-container').style.display = 'none');

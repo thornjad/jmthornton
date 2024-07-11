@@ -21,7 +21,8 @@
 (defn get-pages []
   {"/" (site-layout-page (pages/frontpage))
    "/blog/" (site-layout-page (blog/index))
-   "/tools/" (site-layout-page (pages/tools))})
+   "/tools/" (site-layout-page (pages/tools))
+   "/tools/news/" (site-layout-page (pages/news))})
 
 (def app (->
           (stasis/serve-pages get-pages)
