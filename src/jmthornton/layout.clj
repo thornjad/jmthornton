@@ -23,6 +23,9 @@
      [:meta {:name "description"
              :content description}]
 
+     [:link {:rel "shortcut icon"
+             :href "/images/favicon.png"}]
+
      [:link {:rel "prefetch"
              :href "/style/main.css"
              :as "style"
@@ -58,23 +61,22 @@
     [:body
      (html5 content)
      [:p
-      [:span (list "Copyright © 2012-" (current-year) " Jade Michael Thornton, ")
-       [:a {:href "https://jmthornton.net/LICENSE"} "ISC License"]
-       " | "
+      [:span (list "Copyright © 2012-" (current-year) " Jade Michael Thornton")
+       "  |  "
        [:a {:href "https://jmthornton.net"} "Home"]
-       " | "
+       "  |  "
        [:a {:href "https://github.com/thornjad/jmthornton"} "Browse the source"]
-       " | Version " (get-version)]
+       "  |  Version " (get-version)]
       (html5 footer-content)]]]))
 
 (defn nav-header []
   (html5
    [:header
     [:nav
-     [:a {:href "/"} "Home"]
+     [:a {:href "https://jmthornton.net"} "Home"]
      "&nbsp;"
-     [:a {:href "/tools"} "Tools"]
+     [:a {:href "https://jmthornton.net/tools"} "Tools"]
      "&nbsp;"
      [:a {:href "https://blog.jmthornton.net"} "Blog"]
      "&nbsp;"
-     [:a {:href "https://photos.jmthornton.net"} "Photos"]]]))
+     [:a {:href "https://jmthornton.net/photos"} "Photos"]]]))
