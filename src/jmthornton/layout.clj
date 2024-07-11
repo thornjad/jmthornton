@@ -4,6 +4,9 @@
 (defn get-version []
   (nth (read-string (slurp "project.clj")) 2 "ALPHA"))
 
+(defn- current-year []
+  (+ 1900 (.getYear (java.util.Date.))))
+
 (defn site-layout-page [& {:keys [title description content head-content footer-content]
                            :or {title "Jade Michael Thornton — Software Engineer"
                                 content [:p "Page has no content"]
@@ -55,7 +58,9 @@
     [:body
      (html5 content)
      [:p
-      [:span "Copyright © 2012-2024 Jade Michael Thornton | "
+      [:span (list "Copyright © 2012-" (current-year) " Jade Michael Thornton, ")
+       [:a {:href "https://jmthornton.net/LICENSE"} "ISC License"]
+       " | "
        [:a {:href "https://jmthornton.net"} "Home"]
        " | "
        [:a {:href "https://github.com/thornjad/jmthornton"} "Browse the source"]
