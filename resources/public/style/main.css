@@ -3,10 +3,10 @@
  * Copyright (c) 2012-2024 Jade Michael Thornton
  */
 
-@import url('variables.css');
-@import url('fontfaces.css');
-@import url('effects.css');
-@import url('code.css');
+@import url('modules/variables.css');
+@import url('modules/fontfaces.css');
+@import url('modules/effects.css');
+@import url('modules/code.css');
 
 :root {
   font-family: var(--font-main);
