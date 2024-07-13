@@ -7,12 +7,13 @@
 (defn- current-year []
   (+ 1900 (.getYear (java.util.Date.))))
 
-(defn site-layout-page [& {:keys [title description content head-content footer-content]
+(defn site-layout-page [& {:keys [title description content head-content footer-content nav-section]
                            :or {title "Jade Michael Thornton — Software Engineer"
-                                content [:p "Page has no content"]
+                                content [:p "Page exists but has no content"]
                                 head-content nil
                                 footer-content nil
-                                description "Jade Michael Thornton is a senior software engineer and this is his website."}}]
+                                description "Jade Michael Thornton is a senior software engineer and this is his website."
+                                nav-section true}}]
   (html5
    [:html
     [:head {:lang "en-US"}
@@ -59,7 +60,20 @@
              :type "text/css"}]]
 
     [:body
+     (when nav-section
+       [:header
+        [:nav
+         [:a {:href "https://jmthornton.net"} "Home"]
+         "&nbsp;"
+         [:a {:href "https://jmthornton.net/tools"} "Tools"]
+         "&nbsp;"
+         [:a {:href "https://blog.jmthornton.net"} "Blog"]
+         "&nbsp;"
+         [:a {:href "https://jmthornton.net/photos"} "Photos"]]])
+
+     ;; main content
      (html5 content)
+
      [:p
       [:span (list "Copyright © 2012-" (current-year) " Jade Michael Thornton")
        "  |  "
@@ -67,16 +81,5 @@
        "  |  "
        [:a {:href "https://github.com/thornjad/jmthornton"} "Browse the source"]
        "  |  Version " (get-version)]
-      (html5 footer-content)]]]))
 
-(defn nav-header []
-  (html5
-   [:header
-    [:nav
-     [:a {:href "https://jmthornton.net"} "Home"]
-     "&nbsp;"
-     [:a {:href "https://jmthornton.net/tools"} "Tools"]
-     "&nbsp;"
-     [:a {:href "https://blog.jmthornton.net"} "Blog"]
-     "&nbsp;"
-     [:a {:href "https://jmthornton.net/photos"} "Photos"]]]))
+      (html5 footer-content)]]]))

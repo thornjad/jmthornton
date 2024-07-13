@@ -18,11 +18,16 @@
                         #"/images/.*"
                         #"/lib/.+\.js"])))
 
+;; TODO double check each page
+;; TODO subdomains? make sure that's still working
+;; TODO slurp pages like LICENSE etc.
 (defn get-pages []
   {"/" (site-layout-page (pages/frontpage))
    "/blog/" (site-layout-page (blog/index))
    "/tools/" (site-layout-page (pages/tools))
-   "/tools/news/" (site-layout-page (pages/news))})
+   "/tools/news/" (site-layout-page (pages/news))
+   "/tools/dencode/" (site-layout-page (pages/dencode))
+   "/tools/jwt/" (site-layout-page (pages/jwt))})
 
 (def app (->
           (stasis/serve-pages get-pages)
