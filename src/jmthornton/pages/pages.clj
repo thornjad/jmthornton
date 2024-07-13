@@ -98,3 +98,36 @@
                   [:link {:rel "stylesheet"
                           :type "text/css"
                           :href "/style/resume.css"}])})
+
+(defn weather []
+  {:title-crumbs ["Weather"]
+   :description "Wind map and weather provided by Windy through Jade Thornton"
+   :head-content (html5
+                  [:link {:rel "stylesheet"
+                          :type "text/css"
+                          :href "/style/weather.css"}])
+   :content (html5 [:div
+                    [:h1 "Weather JMThornton.net"]
+                    [:div {:class "show-on-mobile"}
+                     [:p "This project is not optimized for small screens."]]
+                    [:noscript "This page requires Javascript"]
+                    [:iframe
+                     {:src "https://embed.windy.com/embed2.html?lat=39.011&lon=-75.256&detailLat=40.513&detailLon=-74.620&width=650&height=450&zoom=6&level=surface&overlay=radar&product=radar&menu=&message=true&marker=&calendar=now&pressure=true&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1"
+                      :width 650
+                      :height 450
+                      :frameborder "0"
+                      :referrerpolicy "no-referrer"}]])})
+
+(defn every-city []
+  {:title-crumbs ["Every city I've been to"]
+   :description "A basic map showing every city I've ever been to, at least to my own memory."
+   :content (html5
+             [:iframe {:src "https://www.google.com/maps/d/u/0/embed?mid=1Mg5rPq4u03WqQnuHxvSxTyrr_k-1XbkB&ehbc=2E312F"
+                       :width "640"
+                       :height "480"
+                       :frameborder "0"
+                       :referrerpolicy "no-referrer"}])
+   :head-content (html5
+                  [:link {:rel "stylesheet"
+                          :type "text/css"
+                          :href "/style/every-city.css"}])})

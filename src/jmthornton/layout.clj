@@ -91,3 +91,26 @@
          "  |  Version " (get-version)]
 
         (html5 footer-content)]]])))
+
+(defn site-layout-basic [& {:keys [title description content head-content]
+                            :or {title "Jade Michael Thornton"
+                                 description "Jade Michael Thornton is a senior software engineer and this is his website."
+                                 content [:p "Page exists but has no content"]
+                                 head-content nil}}]
+  (html5
+   [:html
+    [:head {:lang "en-US"}
+     [:meta {:charset "utf-8"}]
+     [:meta {:name "google-site-verification"
+             :content "JUM1Dl9n9ic9xPMb03Nzf4NgW_-8PWZrJ4eJGC_PoYM"}]
+     [:meta {:name "made-with"
+             :content "love"}]
+     [:title title]
+     [:meta {:name "description"
+             :content description}]
+
+     [:link {:rel "shortcut icon"
+             :href "/images/favicon.png"}]
+     (html5 head-content)]
+
+    [:body (html5 content)]]))

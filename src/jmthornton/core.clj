@@ -1,6 +1,6 @@
 (ns jmthornton.core
   (:require
-   [jmthornton.layout :refer [site-layout-page]]
+   [jmthornton.layout :refer [site-layout-basic site-layout-page]]
    [jmthornton.pages.blog :as blog]
    [jmthornton.pages.pages :as pages]
    [optimus.assets :as assets]
@@ -8,7 +8,7 @@
    [optimus.optimizations :as optimizations]
    [optimus.prime :as optimus]
    [optimus.strategies :refer [serve-live-assets]]
-   [stasis.core :as stasis :refer [slurp-directory]]))
+   [stasis.core :as stasis]))
 
 ;; TODO make sure js mime type is right for export
 (defn get-assets []
@@ -43,6 +43,10 @@
    ;; zoo
    "/tools/libertarian-zoo/2020/" (site-layout-page (pages/zoo-2020))
    "/tools/libertarian-zoo/2024/" (site-layout-page (pages/zoo-2024))
+
+   ;; projects
+   "/projects/weather/" (site-layout-basic (pages/weather))
+   "/projects/every-city/" (site-layout-basic (pages/every-city))
 
    ;; other pages
    "/p/resume/" (site-layout-page (pages/resume))})

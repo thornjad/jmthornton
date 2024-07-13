@@ -1,0 +1,43 @@
+body {
+  margin: 0;
+}
+
+iframe {
+  display: none;
+}
+
+h1 {
+  z-index: 99;
+	font-size: 14px;
+	text-indent: 0;
+	position: absolute;
+	color: white;
+	padding-left: 0;
+	top: 0;
+	left: 4px;
+	margin: 0;
+}
+
+h1::before {
+  content: none;
+}
+
+.show-on-mobile h5, .credit h5 {
+  color: #fff;
+}
+
+.show-on-mobile h5 a, .credit h5 a {
+  color: #333;
+}
+
+@media (min-width: 1100px) {
+  .show-on-mobile {
+    display: none;
+  }
+  iframe {
+    display: block;
+    border: none;
+    height: 100vh;
+    width: 100vw;
+  }
+}

@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+  height: calc(100vh - 5px);
+  padding: 5px 0 0;
+}
+
+iframe {
+  display: block;
+  border: none;
+  height: 100%;
+  width: 100%;
+}
