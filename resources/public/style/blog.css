@@ -1,0 +1,21 @@
+.subscribe-btn {
+  margin-top: 2.1em;
+}
+
+@media (min-width: 768px) {
+  .subscribe-btn {
+    text-align: right;
+  }
+}
+
+h1 .glitch {
+  padding-left: 2ch;
+}
+
+.listing time {
+  font-size: 0.7em;
+}
+
+.listing time:first-of-type {
+  padding-left: 1.5em;
+}

@@ -26,30 +26,30 @@
 ;; TODO slurp htaccess
 ;; TODO redirect subdomains back
 (defn get-pages []
-  {"/" (site-layout-page (pages/frontpage))
+  (merge
+   {"/" (site-layout-page (pages/frontpage))
 
-   ;; blog
-   "/blog/" (site-layout-page (blog/index))
+    ;; tools
+    "/tools/" (site-layout-page (pages/tools))
+    "/tools/news/" (site-layout-page (pages/news))
+    "/tools/dencode/" (site-layout-page (pages/dencode))
+    "/tools/jwt/" (site-layout-page (pages/jwt))
+    "/tools/sponge/" (site-layout-page (pages/sponge))
+    "/tools/query-dumper/" (site-layout-page (pages/query-dumper))
+    "/tools/savings-transfer/" (site-layout-page (pages/savings-transfer))
 
-   ;; tools
-   "/tools/" (site-layout-page (pages/tools))
-   "/tools/news/" (site-layout-page (pages/news))
-   "/tools/dencode/" (site-layout-page (pages/dencode))
-   "/tools/jwt/" (site-layout-page (pages/jwt))
-   "/tools/sponge/" (site-layout-page (pages/sponge))
-   "/tools/query-dumper/" (site-layout-page (pages/query-dumper))
-   "/tools/savings-transfer/" (site-layout-page (pages/savings-transfer))
+    ;; zoo
+    "/tools/libertarian-zoo/2020/" (site-layout-page (pages/zoo-2020))
+    "/tools/libertarian-zoo/2024/" (site-layout-page (pages/zoo-2024))
 
-   ;; zoo
-   "/tools/libertarian-zoo/2020/" (site-layout-page (pages/zoo-2020))
-   "/tools/libertarian-zoo/2024/" (site-layout-page (pages/zoo-2024))
+    ;; projects
+    "/projects/weather/" (site-layout-basic (pages/weather))
+    "/projects/every-city/" (site-layout-basic (pages/every-city))
 
-   ;; projects
-   "/projects/weather/" (site-layout-basic (pages/weather))
-   "/projects/every-city/" (site-layout-basic (pages/every-city))
+    ;; other pages
+    "/p/resume/" (site-layout-page (pages/resume))}
 
-   ;; other pages
-   "/p/resume/" (site-layout-page (pages/resume))})
+   (blog/all)))
 
 (def app (->
           (stasis/serve-pages get-pages)
