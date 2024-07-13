@@ -8,7 +8,7 @@
    [optimus.optimizations :as optimizations]
    [optimus.prime :as optimus]
    [optimus.strategies :refer [serve-live-assets]]
-   [stasis.core :as stasis]))
+   [stasis.core :as stasis :refer [slurp-directory]]))
 
 ;; TODO make sure js mime type is right for export
 (defn get-assets []
@@ -42,7 +42,10 @@
 
    ;; zoo
    "/tools/libertarian-zoo/2020/" (site-layout-page (pages/zoo-2020))
-   "/tools/libertarian-zoo/2024/" (site-layout-page (pages/zoo-2024))})
+   "/tools/libertarian-zoo/2024/" (site-layout-page (pages/zoo-2024))
+
+   ;; other pages
+   "/p/resume/" (site-layout-page (pages/resume))})
 
 (def app (->
           (stasis/serve-pages get-pages)

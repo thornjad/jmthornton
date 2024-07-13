@@ -89,3 +89,12 @@
    :footer-content (html5
                     [:script {:async true
                               :src "/lib/zoo.js"}])})
+
+(defn resume []
+  {:title-crumbs ["Resume"]
+   :description "Jade Michael Thornton is a senior software engineer and this is his resume."
+   :content (html5 (slurp "resources/partials/resume.html"))
+   :head-content (html5
+                  [:link {:rel "stylesheet"
+                          :type "text/css"
+                          :href "/style/resume.css"}])})

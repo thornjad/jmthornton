@@ -1,0 +1,30 @@
+:is(h1, h2, h3, h4, h5) a {
+  text-decoration: none;
+}
+
+h2, h4, h5 {
+  color: var(--fg);
+}
+
+h3 {
+  margin: 1em 0 0;
+
+  small {
+    color: var(--fg);
+  }
+}
+
+h4 {
+  margin: 1em 0;
+  font-weight: bold;
+  font-size: 1.05rem;
+
+  small {
+    font-weight: normal;
+  }
+}
+
+ul {
+  margin-top: 0;
+  margin-bottom: 2em;
+}
