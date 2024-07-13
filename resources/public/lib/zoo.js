@@ -2,8 +2,8 @@
 
 async function mountCandidates(mountpoint) {
   let [{ candidates }, polls] = await Promise.all([
-    fetch('data/2024/candidates.json').then((r) => r.json()),
-    fetch('data/2024/polls.json').then((r) => r.json()),
+    fetch('/data/2024/candidates.json').then((r) => r.json()),
+    fetch('/data/2024/polls.json').then((r) => r.json()),
   ]);
 
   candidates = candidates.map((c) => ({ ...c, pollMedian: median(polls[c.sortName]) }));
@@ -37,7 +37,7 @@ async function mountCandidates(mountpoint) {
           <article class="card fluid ${dropped ? 'dropped-out' : ''}">
             <div class="dropped-out-overlay"></div>
             <div class="img-container ${uncommitted ? 'nota' : ''} ${noPhoto ? '' : 'no-photo'}">
-              <img loading="lazy" alt="${name}" src="./images/2024/${pic}" />
+              <img loading="lazy" alt="${name}" src="/images/zoo/2024/${pic}" />
             </div>
             <h3 class="candidate">
               <em>${place}</em>&nbsp;<a href="${url}">${name}</a>

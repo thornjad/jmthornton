@@ -1,0 +1,28 @@
+section, div#cd-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+
+  div.actions {
+    margin-top: 2em;
+  }
+
+  span {
+    display: flex;
+    gap: 0.5em;
+    line-height: 1.5em;
+  }
+}
+
+input {
+  text-align: right;
+}
+
+button {
+  width: 6em;
+
+  &#add-cd:not(:hover) {
+    background-color: transparent;
+    color: inherit;
+  }
+}

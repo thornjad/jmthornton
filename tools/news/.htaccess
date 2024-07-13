@@ -1,7 +1,0 @@
-# Redirect HTTP to HTTPS
-RewriteCond %{HTTPS} !=on
-RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R=301]
-
-# Unsure why this one happens sometimes
-RewriteRule ^/tools/news/?& https://news.jmthornton.net/ [R=301,QSA]
-RewriteRule ^/tools/news/tools/news/?$ https://news.jmthornton.net/ [R=301,QSA]

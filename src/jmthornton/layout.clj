@@ -61,23 +61,23 @@
                :type "font/woff2"
                :crossorigin "anonymous"}]
 
-       (html5 head-content)
-
        [:link {:rel "stylesheet"
                :href "/style/main.css"
-               :type "text/css"}]]
+               :type "text/css"}]
+
+       (html5 head-content)]
 
       [:body
        (when nav-section
          [:header
           [:nav
-           [:a {:href "https://jmthornton.net"} "Home"]
+           [:a {:href "/"} "Home"]
            "&nbsp;"
-           [:a {:href "https://jmthornton.net/tools"} "Tools"]
+           [:a {:href "/tools"} "Tools"]
            "&nbsp;"
-           [:a {:href "https://blog.jmthornton.net"} "Blog"]
+           [:a {:href "/blog"} "Blog"]
            "&nbsp;"
-           [:a {:href "https://jmthornton.net/photos"} "Photos"]]])
+           [:a {:href "/photos"} "Photos"]]])
 
       ;; main content
        (html5 content)
