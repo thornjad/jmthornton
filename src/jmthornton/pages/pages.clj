@@ -108,7 +108,7 @@
                           :href "/style/weather.css"}])
    :content (html5 [:div
                     [:h1 "Weather JMThornton.net"]
-                    [:div {:class "show-on-mobile"}
+                    [:div.show-on-mobile
                      [:p "This project is not optimized for small screens."]]
                     [:noscript "This page requires Javascript"]
                     [:iframe

@@ -7,7 +7,8 @@
                  [stasis "2023.11.21"]
                  [ring "1.12.0"]
                  [optimus "2023.11.21"]
-                 [hiccup "1.0.5"]]
+                 [hiccup "1.0.5"]
+                 [markdown-clj "1.12.1"]]
   :profiles {:dev {:plugins [[lein-ring "0.12.6"]
                              [dev.weavejester/lein-cljfmt "0.12.0"]]}}
   :aliases {"build-site" ["run" "-m" "jmthornton.core/export"]}
