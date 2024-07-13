@@ -1,0 +1,54 @@
+<main>
+  <h1>JWT Decode Tool</h1>
+  <h3>All decoding is performed in the browser, your token will not be saved nor shared in any way.</h3>
+
+  <noscript>Sorry, this tool requires Javascript.</noscript>
+
+  <textarea id="input" rows="1" cols="90" placeholder="Enter JWT" style="width:100%;"></textarea>
+  <button id="decode">Decode</button>
+  <pre id="error" style="display:none; border-left: 0.25rem solid var(--error);"></pre>
+  <div id="output-wrapper" style="display:none; margin-top:2em;">
+    Header:
+    <pre id="header" style="margin:0;"></pre>
+    <br />
+    Payload:
+    <pre id="payload" style="margin:0;"></pre>
+  </div>
+</main>
+
+<script>
+ 'use strict';
+
+ function decode(string) {
+   const b64 = string.replace(/-/g, '+').replace(/_/g, '/');
+   const json = JSON.parse(
+     decodeURIComponent(
+       atob(b64)
+         .split('')
+         .map((c) => '%' + `00${c.charCodeAt(0).toString(16)}`.slice(-2))
+         .join(''),
+     ),
+   );
+   return JSON.stringify(json, undefined, 2);
+ }
+
+ document.querySelector('#decode').addEventListener('click', () => {
+   const token = document.querySelector('#input').value;
+   const headerOutput = document.querySelector('#header');
+   const payloadOutput = document.querySelector('#payload');
+
+   try {
+     error.style.display = 'none';
+     const [header, payload] = token.split('.');
+     const [prettyHeader, prettyPayload] = [header, payload].map(decode);
+     headerOutput.innerText = `${prettyHeader}`;
+     payloadOutput.innerText = `${prettyPayload}`;
+     document.querySelector('#output-wrapper').style.display = 'block';
+   } catch (e) {
+     document.querySelector('#output-wrapper').style.display = 'none';
+     const error = document.querySelector('#error');
+     error.innerText = `Error: Could not parse JWT:\n${e}`;
+     error.style.display = 'block';
+   }
+ });
+</script>
