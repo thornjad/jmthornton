@@ -4,7 +4,7 @@
   <link rel="self" href="https://blog.jmthornton.net/feed.xml" />
 	<link rel="alternate" type="text/html" href="https://blog.jmthornton.net/" />
 	<id>https://blog.jmthornton.net/</id>
-	<updated>2024-09-13T00:00:01Z</updated>
+	<updated>2024-09-13T00:00:03Z</updated>
   <author>
     <name>Jade Michael Thornton</name>
   </author>
@@ -105,6 +105,395 @@
     <title>Halfway on Main: Thoughts on Clean Architecture</title>
     <published>2021-04-18T00:00:00Z</published>
     <summary>Uncle Bob ignores his own advice when considering the "Main" component, but we can improve on his thoughts and learn from them</summary>
+    <content type="html">
+      <![CDATA[
+            <p>
+              Chapter 26 is a short section of Uncle Bob Martin&#39;s classic, Clean Architecture. It
+              discusses the necessary evil of creating a <code class="language-java">Main</code> component
+              which handles the dirty work and initializes the rest of the program. This component necessarily
+              breaks rules to get the show running and provide an interface with the non-clean world which is
+              our reality. The <code class="language-java">Main</code> component takes care of setting up
+              globals and may enter the program into an infinite loop to keep it running forever.
+            </p>
+
+            <p>
+              Uncle Bob gives a lengthy yet incomplete example of a
+              <code class="language-java">Main</code> class component for a hypothetical game of &quot;Hunt
+              the Wumpus&quot;. The game is a text-based somewhat-roguelite dungeon-crawler in which you seek
+              out the Wumpus and avoid traps. A simple game concept, well within the wheelhouse of a
+              first-year computer science student, and Uncle Bob&#39;s code looks the part. For an otherwise
+              insightful book about how to separate concerns, Martin seems to give up when it comes to this
+              component, relegating it to be &quot;the dirtiest of all the dirty components&quot; without any
+              effort to find a better way. The example class he presents is needlessly brittle and repetitive.
+            </p>
+
+            <p>
+              Here is that entire <code class="language-java">Main</code> class, as presented in the book.
+              Note that the book contains the comment at the end (<code class="language-java"
+                >much code removed...</code
+              >), it wasn&#39;t added here.
+            </p>
+
+            <pre
+              class="line-numbers"
+              lang="java"
+            ><code class="language-java">public class Main implements HtwMessageReceiver {
+  private static HuntTheWumpus game;
+  private static int hitPoints = 10;
+  private static final List&lt;String&gt; caverns = new ArrayList&lt;&gt;();
+  private static final String[] environments = new String[]{
+    &quot;bright&quot;,
+    &quot;humid&quot;,
+    &quot;dry&quot;,
+    &quot;creepy&quot;,
+    &quot;ugly&quot;,
+    &quot;foggy&quot;,
+    &quot;hot&quot;,
+    &quot;cold&quot;,
+    &quot;drafty&quot;,
+    &quot;dreadful&quot;
+  };
+
+  private static final String[] shapes = new String[] {
+    &quot;round&quot;,
+    &quot;square&quot;,
+    &quot;oval&quot;,
+    &quot;irregular&quot;,
+    &quot;long&quot;,
+    &quot;craggy&quot;,
+    &quot;rough&quot;,
+    &quot;tall&quot;,
+    &quot;narrow&quot;
+  };
+
+  private static final String[] cavernTypes = new String[] {
+    &quot;cavern&quot;,
+    &quot;room&quot;,
+    &quot;chamber&quot;,
+    &quot;catacomb&quot;,
+    &quot;crevasse&quot;,
+    &quot;cell&quot;,
+    &quot;tunnel&quot;,
+    &quot;passageway&quot;,
+    &quot;hall&quot;,
+    &quot;expanse&quot;
+  };
+
+  private static final String[] adornments = new String[] {
+    &quot;smelling of sulfur&quot;,
+    &quot;with engravings on the walls&quot;,
+    &quot;with a bumpy floor&quot;,
+    &quot;&quot;,
+    &quot;littered with garbage&quot;,
+    &quot;spattered with guano&quot;,
+    &quot;with piles of Wumpus droppings&quot;,
+    &quot;with bones scattered around&quot;,
+    &quot;with a corpse on the floor&quot;,
+    &quot;that seems to vibrate&quot;,
+    &quot;that feels stuffy&quot;,
+    &quot;that fills you with dread&quot;
+  };
+
+  public static void main(String[] args) throws IOException {
+    game = HtwFactory.makeGame(&quot;htw.game.HuntTheWumpusFacade&quot;, new Main());
+    createMap();
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    game.makeRestCommand().execute();
+    while (true) {
+      System.out.println(game.getPlayerCavern());
+      System.out.println(&quot;Health: &quot; + hitPoints + &quot; arrows: &quot; + game.getQuiver());
+      HuntTheWumpus.Command c = game.makeRestCommand();
+      System.out.println(&quot;&gt;&quot;);
+      String command = br.readLine();
+      if (command.equalsIgnoreCase(&quot;e&quot;))
+        c = game.makeMoveCommand(EAST);
+      else if (command.equalsIgnoreCase(&quot;w&quot;))
+        c = game.makeMoveCommand(WEST);
+      else if (command.equalsIgnoreCase(&quot;n&quot;))
+        c = game.makeMoveCommand(NORTH);
+      else if (command.equalsIgnoreCase(&quot;s&quot;))
+        c = game.makeMoveCommand(SOUTH);
+      else if (command.equalsIgnoreCase(&quot;r&quot;))
+        c = game.makeRestCommand();
+      else if (command.equalsIgnoreCase(&quot;sw&quot;))
+        c = game.makeShootCommand(WEST);
+      else if (command.equalsIgnoreCase(&quot;se&quot;))
+        c = game.makeShootCommand(EAST);
+      else if (command.equalsIgnoreCase(&quot;sn&quot;))
+        c = game.makeShootCommand(NORTH);
+      else if (command.equalsIgnoreCase(&quot;ss&quot;))
+        c = game.makeShootCommand(SOUTH);
+      else if (command.equalsIgnoreCase(&quot;q&quot;))
+        return;
+      c.execute();
+    }
+  }
+
+  private static void createMap() {
+    int nCaverns = (int) (Math.random() * 30.0 + 10.0);
+    while (nCaverns-- &gt; 0)
+      caverns.add(makeName());
+
+    for (String cavern : caverns) {
+      maybeConnectCavern(cavern, NORTH);
+      maybeConnectCavern(cavern, SOUTH);
+      maybeConnectCavern(cavern, EAST);
+      maybeConnectCavern(cavern, WEST);
+    }
+
+    String playerCavern = anyCavern();
+    game.setPlayerCavern(playerCavern);
+    game.setWumpusCavern(anyOther(playerCavern));
+    game.addBatCavern(anyOther(playerCavern));
+    game.addBatCavern(anyOther(playerCavern));
+    game.addBatCavern(anyOther(playerCavern));
+    game.addPitCavern(anyOther(playerCavern));
+    game.addPitCavern(anyOther(playerCavern));
+    game.addPitCavern(anyOther(playerCavern));
+    game.setQuiver(5);
+  }
+
+  // much code removed...
+}</code></pre>
+
+            <h2>User command parsing</h2>
+
+            <p>
+              Let&#39;s start with the low-hanging fruit: repetitive statements. The
+              <code class="language-java">main</code> method contains the primary game loop, which runs
+              forever until the user enters <code class="language-java">&quot;q&quot;</code>. Most of this is
+              <em>fine</em>, but the long block of <code class="language-java">else if</code>&#39;s are not
+              only difficult to read, they&#39;re needlessly inefficient. We must test input against every
+              statement in sequence until one turns up true or there are no statements left to test. Further,
+              if the user enters a command which matches none of the conditions (necessitating a complete
+              run-through of them all), the game executes a &quot;rest&quot; command, declared outside the set
+              of conditions, which could easily come back to bite an unsuspecting developer in the future.
+            </p>
+
+            <p>
+              Whenever there is a set of three or more distinct conditions to test, it&#39;s almost always a
+              better bet to use a <code class="language-java">switch</code>,
+              <code class="language-java">case</code> or best of all (if the language supports it), pattern
+              matching. The game loop cleans up a bit if we use this advice. We can also take advantage of the
+              fact that when comparing strings, the <code class="language-java">switch</code> statement acts
+              as if we&#39;re calling the <code class="language-java">String.equals</code> method, so as long
+              as we convert the command to lower case, it&#39;ll act identically to calling
+              <code class="language-java">String.equalsIgnoreCase</code> repeatedly.
+            </p>
+
+            <pre lang="java"><code class="language-java">while (true) {
+  System.out.println(game.getPlayerCavern());
+  System.out.println(&quot;Health: &quot; + hitPoints + &quot; arrows: &quot; + game.getQuiver());
+  System.out.println(&quot;&gt;&quot;);
+
+  String command = br.readLine();
+  HuntTheWumpus.Command c;
+  switch (command.toLowerCase()) {
+    case &quot;e&quot;: c = game.makeMoveCommand(EAST);
+      break;
+    case &quot;w&quot;: c = game.makeMoveCommand(WEST);
+      break;
+    case &quot;n&quot;: c = game.makeMoveCommand(NORTH);
+      break;
+    case &quot;s&quot;: c = game.makeMoveCommand(SOUTH);
+      break;
+    case &quot;se&quot;: c = game.makeShootCommand(EAST);
+      break;
+    case &quot;sw&quot;: c = game.makeShootCommand(WEST);
+      break;
+    case &quot;sn&quot;: c = game.makeShootCommand(NORTH);
+      break;
+    case &quot;ss&quot;: c = game.makeShootCommand(SOUTH);
+      break;
+    case &quot;q&quot;: return;
+    default: c = game.makeRestCommand();
+  }
+  c.execute();
+}</code></pre>
+
+            <p>
+              These conditions are now, in my opinion, more readable, and operate in O(1) time. Additionally,
+              the command parsing is visually separated from the user output (which is a sort of UI).
+            </p>
+
+            <p>
+              Rather than making the command matches here, the architecture would benefit even more from
+              taking Martin&#39;s advice from his own book, and moving the UI elements to their own component.
+              If we wish to implement a more complex UI in the future, even a GUI, only the dedicated
+              component will need to change considerably. In the shorter-term, perhaps we&#39;ll want to add
+              an explicit <code class="language-java">&quot;i&quot;</code> command which prints this out. It
+              would be nice to separate this concern from the &quot;dirty&quot;
+              <code class="language-java">Main</code> component.
+            </p>
+
+            <p>
+              The main game loop could still live in a clean <code class="language-java">main</code> method,
+              but we should restrict it to only getting the command and executing it. This leaves the looping
+              action at this, the lowest &quot;dirtiest&quot; level, while abstracting away the complications
+              of interpreting user input. Here&#39;s how well we clean it up by separating the concerns via
+              abstraction:
+            </p>
+
+            <pre lang="java"><code class="language-java">while (true) {
+  GameUI.displayUserStatus();
+  HuntTheWumpus.Command c = GameUI.getUserCommand();
+  c.execute();
+}</code></pre>
+
+            <h2>Map generation</h2>
+
+            <p>
+              The <code class="language-java">createMap</code> method may indeed be at home in the
+              <code class="language-java">Main</code> class, but surely we can clean it up. Uncle Bob leaves
+              needless repetition in the same method where he used a loop to avoid it.
+            </p>
+
+            <p>
+              First, let&#39;s look at the cavern connection block, which uses some not-printed method to
+              dynamically generate connections between caverns. This isn&#39;t so bad, but a nested loop could
+              abstract it a little better, especially if we wanted to change the cavern geometry in the future
+              (I&#39;m thinking hexagons, which are the <a href="https://youtu.be/thOifuHs6eY">bestagons</a>).
+              We&#39;ll make the further improvement of moving our directions into an enum, which we&#39;ll
+              simply call <code class="language-java">Direction</code>.
+            </p>
+
+            <pre lang="java"><code class="language-java">for (String cavern : caverns) {
+  for (Direction direction : Direction.values()) {
+    maybeConnectCavern(cavern, direction);
+  }
+}</code></pre>
+
+            <p>
+              Next, we have a block which spawns the characters, some bats and some pits into presumably
+              random unique caverns. Placing the player and the Wumpus are single statements and probably
+              always will be, but we don&#39;t need to repeat ourselves thrice for bats and pits each.
+              Let&#39;s also rename the <code class="language-java">anyOther</code> method to
+              <code class="language-java">anyOtherCavern</code> to reduce ambiguity.
+            </p>
+
+            <p>
+              Along with populating caverns, our map generation block gives the player a quiver of arrows?
+              This has nothing to do with creating the map! Let&#39;s move that to a method called
+              <code class="language-java">createPlayer</code>, which we&#39;ll relegate to the &quot;much code
+              removed...&quot; section.
+            </p>
+
+            <pre lang="java"><code class="language-java">String playerCavern = anyCavern();
+game.setPlayerCavern(playerCavern);
+game.setWumpusCavern(anyOther(playerCavern));
+IntStream.range(0, 3).forEach(() -&gt; game.addBatCavern(anyOtherCavern(playerCavern)));
+IntStream.range(0, 3).forEach(() -&gt; game.addPitCavern(anyOtherCavern(playerCavern)));</code></pre>
+
+            <p>
+              Using <code class="language-java">IntStream.range</code> is about the closest we can get to a
+              proper range loop like Python&#39;s <code class="language-java">for x in range(i, j)</code>, and
+              I much prefer it to <code class="language-java">for</code> loops.
+            </p>
+
+            <p>
+              Why did I leave the bat and pit cavern population loops separated? Because they&#39;re not
+              inherently linked, and we may reasonably wish to change the frequency of one without changing
+              the other.
+            </p>
+
+            <h2>Hard-coded values</h2>
+
+            <p>
+              When an application hard-codes values as severely as this example, it&#39;s hard to avoid
+              cringing at the looming technical debt. The severity we see here would be perfectly acceptable
+              in an early computer science course, but a real-world system would struggle to keep up with
+              changing requirements. A simple typo in a string, an additional witty cavern description or the
+              substitution of localized languages should not require code changes.
+            </p>
+
+            <p>
+              Similarly, values such as the initial player HP, the number of arrows in the player&#39;s
+              quiver, the seed for the randomly generated number of caverns, and the number of bat and pit
+              caverns, all should be configurable with ease. Perhaps we wish to introduce difficulty levels
+              which change the balance of these values. Perhaps we find we&#39;ve given the player too much HP
+              for a fair fight. We&#39;ll undoubtedly need to balance these values, and so we&#39;ll be better
+              off storing them in an configurable but immutable data structure.
+            </p>
+
+            <p>
+              As detailed in previous chapters of Clean Architecture, the data structure to house these values
+              shouldn&#39;t matter to our <code class="language-java">Main</code> component. They could reside
+              in a key-value store, a database of any kind, a CSV or TSV, or even a well formatted plain text
+              file. As far as this component knows, they&#39;re all just an interface. For our purposes
+              we&#39;ll call the interface <code class="language-java">GameConfiguration</code>, which is
+              responsible for loading and providing the configured values.
+            </p>
+
+            <p>
+              Putting all our changes together with the interface-provided configuration, we arrive at a much
+              cleaner architecture than Uncle Bob presents.
+            </p>
+
+            <pre
+              class="line-numbers"
+              lang="java"
+            ><code class="language-java">public class Main implements HtwMessageReceiver {
+  private static HuntTheWumpus game;
+  private static final List&lt;String&gt; caverns = new ArrayList&lt;&gt;();
+
+  private static int hitPoints;
+  private static int quiver;
+  private static String[] environments, shapes, cavernTypes, adornments;
+
+  public static void main(String[] args) throws IOException {
+    environments = GameConfiguration.get(&quot;environments&quot;);
+    shapes = GameConfiguration.get(&quot;shapes&quot;);
+    cavernTypes = GameConfiguration.get(&quot;cavernTypes&quot;);
+    adornments = GameConfiguration.get(&quot;adornments&quot;);
+    hitPoints = GameConfiguration.get(&quot;hitPoints&quot;);
+    quiver = GameConfiguration.get(&quot;quiver&quot;);
+
+    game = HtwFactory.makeGame(&quot;htw.game.HuntTheWumpusFacade&quot;, new Main());
+    createMap();
+    createPlayer();
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    game.makeRestCommand().execute();
+
+    while (true) {
+      GameUI.displayUserStatus();
+      HuntTheWumpus.Command c = GameUI.getUserCommand();
+      c.execute();
+    }
+  }
+
+  private static void createMap() {
+    int nCaverns = (int) (Math.random()
+                          * GameConfiguration.get(&quot;cavernSeed&quot;)
+                          + GameConfiguration.get(&quot;cavernMinimum&quot;));
+    while (nCaverns-- &gt; 0)
+      caverns.add(makeName());
+
+    for (String cavern : caverns) {
+      for (Direction direction : Direction.values()) {
+        maybeConnectCavern(cavern, direction);
+      }
+    }
+
+    String playerCavern = anyCavern();
+    game.setPlayerCavern(playerCavern);
+    game.setWumpusCavern(anyOther(playerCavern));
+    IntStream.range(0, GameConfiguration.get(&quot;batCaverns&quot;))
+      .forEach(() -&gt; game.addBatCavern(anyOtherCavern(playerCavern)));
+    IntStream.range(0, GameConfiguration.get(&quot;pitCaverns&quot;))
+      .forEach(() -&gt; game.addPitCavern(anyOtherCavern(playerCavern)));
+  }
+
+  // much code removed...
+}</code></pre>
+
+            <p>
+              The resulting code is more terse, hardy and generally cleaner. Is some of this overkill for a
+              small pet or student project? It probably is, but Uncle Bob presents this as a contrived but
+              real-world example in a printed book about code design, and should have taken the time to apply
+              his own principles to his examples.
+            </p>
+        ]]>
+    </content>
   </entry>
   <entry>
     <id>https://blog.jmthornton.net/p/emacs-project-override</id>
@@ -112,6 +501,92 @@
     <title>Overriding project.el project root in Emacs</title>
     <published>2022-04-21T00:00:00Z</published>
     <summary>A short function to override what project.el thinks your project root is with a hidden file</summary>
+    <content type="html">
+      <![CDATA[
+            <p>
+              I've recently been experimenting with replacing
+              <a href="https://projectile.mx/">Projectile</a> with the built-in <code>project.el</code>, and
+              so far it has impressed me. Not only are all of Projectile's useful features available, but for
+              me
+              <code>project.el</code>
+              runs significantly faster in large repositories. If you're not familiar, both of these packages
+              provide functions to search and operate on files and directories in the same project. If you're
+              using Git, a "project" is probably synonymous with a repository.
+            </p>
+            <p>
+              Unfortunately, project detection is not always as easy as looking for a
+              <code>.git/</code> nearby, and sometimes Emacs gets it wrong. Projectile solves this by also
+              looking for a <code>.projectile</code> file, which overrides detection and says "this is the
+              project root". This happens to be one of the features missing in <code>project.el</code>.
+            </p>
+            <hr />
+            <h3>Update</h3>
+            <p>Since the writing of this post, Emacs 29 has been released and introduces a variable which solves this same issue in a cleaner way! Unfortunately it doesn't appear to work for me. Still it may be worth a shot for you: set <code>project-vc-extra-root-markers</code> to a list of file names or glob patterns which mark a project's root in addition to the default ".git", ".hg" and other common markers.</p>
+            <p>So, the cleaner equivalent to the rest of the post, if it works, is a simple <pre lang="lisp"><code class="language-lisp">(setq project-vc-extra-root-markers '(".project.el" ".projectile" ))</code></pre></p>
+            <p>If, however, you're like me and can't seem to get this to do anything, the original post still works:</p>
+            <hr />
+            <h3>Original post</h3>
+            <p>
+              Luckily, we can provide our own function to <code>project.el</code> which looks for a file like
+              this in the current and parent directories. Even better, the excellent Emacs community has
+              already jumped on this, and a splendid solution was
+              <a href="https://michael.stapelberg.ch/posts/2021-04-02-emacs-project-override/"
+                >provided by Michael Stapelberg</a
+              >.
+            </p>
+            <p>
+              Alas, Michael couldn't have forseen that Emacs would change the project root data format in
+              Emacs 29, so the provided function only works in earlier versions. However, adding in forward
+              compatibility isn't much trouble. And while we're at it, we can also provide support for anyone
+              else moving from Projectile like I am, by allowing <code>.projectile</code> to serve as a
+              project root marker alongside Michael's <code>.project.el</code>.
+            </p>
+            <pre lang="lisp"><code class="language-lisp">(defun project-root-override (dir)
+  "Find DIR's project root by searching for a '.project.el' file.
+
+If this file exists, it marks the project root. For convenient compatibility
+with Projectile, '.projectile' is also considered a project root marker.
+
+https://blog.jmthornton.net/p/emacs-project-override"
+  (let ((root (or (locate-dominating-file dir ".project.el")
+                  (locate-dominating-file dir ".projectile")))
+        (backend (ignore-errors (vc-responsible-backend dir))))
+    (when root (if (version<= emacs-version "28")
+                    (cons 'vc root)
+                  (list 'vc backend root)))))
+
+;; Note that we cannot use :hook here because `project-find-functions' doesn't
+;; end in "-hook", and we can't use this in :init because it won't be defined
+;; yet.
+(use-package project
+  :config
+  (add-hook 'project-find-functions #'project-root-override))</code></pre>
+            <p>
+              Now we can use <code>touch .project.el</code> in any directory, and <code>project.el</code> with
+              recognize it as the project root!
+            </p>
+            <p>
+              By the way, the snippet above makes use of
+              <a href="https://github.com/jwiegley/use-package">use-package</a> which provides fantastic
+              package configuration and loading ability. John Wiegley is currently
+              <a href="https://github.com/jwiegley/use-package/issues/282"
+                >working on adding it into Emacs itself</a
+              >, so it shouldn't be long before this code snippet is fully native!
+            </p>
+            <p>
+              One note, in an ideal world, I'd prefer the root marker to be just <code>.project</code> instead
+              of <code>.project.el</code>, but this is already widely used by other tools like Eclipse and I'd
+              rather not cause conflicts. If you'd like to use this in your own Emacs, obviously you can
+              change the function to check for anything you want.
+            </p>
+            <aside>
+              <em>Pro tip:</em> If you'd like to use a project root marker like this, but you don't want other
+              developers to have to worry about it (i.e. you don't want to commit it nor add it to the
+              <code>.gitignore</code>), you can always add locally-ignored files to
+              <code>.git/info/exclude</code>.
+            </aside>
+        ]]>
+    </content>
   </entry>
   <entry>
     <id>https://blog.jmthornton.net/p/fav-lesser-known-packages</id>
@@ -119,6 +594,36 @@
     <title>Some favorite lesser-known Emacs packages</title>
     <published>2023-05-07T00:00:00Z</published>
     <summary>A few of my favorite lesser-known Emacs packages which don't usually make the top lists</summary>
+    <content type="html">
+      <![CDATA[
+            <p>
+              When it comes to Emacs packages, there are a few "must-have" selections that always appear on popular lists, from <a href="https://magit.vc/">Magit</a> to <a href="https://emacs-helm.github.io/helm/">Helm</a> and/or <a href="https://github.com/abo-abo/swiper">Ivy</a>, and the necessity of the sane person: <a href="https://github.com/emacs-evil/evil">Evil</a>. But for the more experienced Emacs user, finding lesser-known packages can add powerful new functionality and streamline day-to-day working methods. Here are several of my favorite Emacs packages that don't always make the most popular lists, in no particular order.
+            </p>
+            <h3><a href="https://gitlab.com/ideasman42/emacs-virtual-comment">Virtual Comment</a></h3>
+            <p>
+              An unusual yet surprisingly helpful package. It allows you to
+            create a "virtual" comment on a line of code, without altering the original code on disk at all. The comment is then
+            displayed above the line instead of cluttering the main Emacs buffer. This is incredibly useful for exploring complex
+            new code, reviewing changes and even quick prototyping.
+            </p>
+            <h3><a href="https://github.com/bnbeckwith/writegood-mode">Writegood Mode</a></h3>
+            <p>
+              A tool that combats common writing pitfalls in everything from documentation to code comments. With helpful (if sometimes annoying) features such as highlighting weasel words, passive voice or repeated phrases, it helps users tighten their writing style and produce more concise, high-quality documents. Truly a must-have for anyone who deals with documentation or coding comments on a regular basis.
+            </p>
+            <h3><a href="https://github.com/Lautaro-Garcia/counsel-spotify">Counsel-Spotify</a></h3>
+            <p>
+              If you're a fan of Counsel and Ivy, and you use Spotify, then maybe a package putting them together deserves some attention. This utility allows you to control Spotify playback without leaving Emacs, effectively turning Emacs into a somewhat-awkward-but-functional Spotify remote. While it doesn't provide access to all of Spotify's catalog functions, it's a great tool for quickly pausing, skipping or adjusting volume settings during a work session. It can even browse songs, albums and artists, though I haven't found this particularly useful myself.
+            </p>
+            <h3><a href="https://github.com/arthurcgusmao/unmodified-buffer">Unmodified Buffer</a></h3>
+            <p>
+              This one is a small yet compelling package. It resets the "modified" flag on a buffer automatically if the new buffer content matches the content of the file on disk. This means that you won't accidentally overwrite a previously saved copy of a file with identical buffer content, saving you time and headaches in the long run. Honestly this should be the default behavior in core Emacs.
+            </p>
+            <h3><a href="">ToDo Light</a></h3>
+            <p>
+              Okay, this one is a bit of a personal plug, but it’s made a noticeable impact in streamlining my Emacs workflow. It highlights keywords such as TODO, FIXME and TEMP, helping users quickly locate areas in a project that need attention. It's easy to customize, so you can add as many keywords or phrases as you would like.
+            </p>
+        ]]>
+    </content>
   </entry>
   <entry>
     <id>https://blog.jmthornton.net/p/snyk-ls-emacs</id>
@@ -126,6 +631,82 @@
     <title>Snyk Language Server in Emacs</title>
     <published>2023-06-01T00:00:00Z</published>
     <summary>Setting up the Snyk Language Server for use in Emacs by defining a custom server connection in LSP Mode</summary>
+    <content type="html">
+      <![CDATA[
+            <p>
+              Keeping code secure is more important than ever, especially as tools like GitHub Copilot make it easy to incorporate complex code snippets without fully understanding their implications. These tools have a minor but real tendency to introduce security vulnerabilities that can be difficult to catch when you're not writing the code yourself. That's where tools like Snyk come in, helping to find and fix these vulnerabilities in both your code and dependencies.
+            </p>
+            <p>
+              However, there's no official package for using the Snyk language server in Emacs. So, driven by the need to ensure the security of code generated by Copilot at my job, I dove into making Snyk and Emacs get along nicely, a feat which returns exactly zero search results as of the writing of this post. I finally got it working, and I hope this helps anyone else looking for a solution to the same issue.
+            </p>
+            <p>
+              Before we start, you should already:
+              <ul>
+                <li>
+                  Be somewhat familiar with Emacs Lisp since these steps don't explain a whole lot and you should always be wary of copying code off the Internet.
+                </li>
+                <li>
+                  Be using <a href="https://emacs-lsp.github.io/lsp-mode/">LSP Mode</a>&mdash;as of right now, the built-in Eglot (in v29+) can't run add-on servers in parallel, so LSP Mode is the only option.
+                </li>
+              </ul>
+            </p>
+            <h3>Snyk Language Server Setup</h3>
+            <p>
+              Since no one seems to have written about this before, this may not be a perfect approach, but this is the workflow I've found to be effective. The <a href="https://docs.snyk.io/integrations/ide-tools/language-server">official IDE integration documentation</a> is a bit outdated, so the following steps reference <a href="https://github.com/snyk/snyk-ls">the current server documentation</a>.
+            </p>
+            <ol>
+              <li>
+                First, install the server using the bash installer script provided by Snyk: <a href="https://github.com/snyk/snyk-ls/blob/main/getLanguageServer.sh">snyk/snyk-ls/main/getLanguageServer.sh</a>. This is basically a fancy wrapper around a curl call, but <strong>don't blindly run scripts from the Internet</strong>. Please do take a look at what this script is doing before you run it on your own system.
+              </li>
+              <li>
+                Install the Snyk CLI (<code class="language-shell">brew tap snyk/tap && brew install snyk</code>). This step lets you get your authentication token. Since the Snyk language server supports automatic authentication, this shouldn't actually be necessary, but I had issues with excessively repeated re-authentication, so the token provides a workaround.
+              </li>
+              <li>
+                Run <code class="language-shell">snyk config get api</code> to actually get your token after authenticating in your browser. Especially if your config is version-controlled, <strong>do not</strong> commit the token; load it from an external source (my <code>init.el</code> loads a git-ignored <code>init.local.el</code> if it exists, that's one place to put such a token).
+              </li>
+              <li>
+                Finally, register the LSP client with LSP Mode:
+              </li>
+            </ol>
+            <pre lang="lisp"><code class="language-lisp">(lsp-register-client
+ (make-lsp-client
+  :server-id 'snyk-ls
+
+  ;; The "-o" option specifies the issue format, I prefer markdown over HTML
+  :new-connection (lsp-stdio-connection '("snyk-ls" "-o" "md"))
+
+  ;; Change this to the modes you want this in; you may want to include the
+  ;; treesitter versions if you're using them
+  :major-modes '(python-mode typescript-mode)
+
+  ;; Allow running in parallel with other servers. This is why Eglot isn't an
+  ;; option right now
+  :add-on? t
+
+  :initialization-options
+  `(:integrationName "Emacs"
+    :integrationVersion ,emacs-version
+
+    ;; GET THIS FROM SOMEWHERE ELSE, don't hardcode it
+    :token ,snyk-ls-token
+
+    ;; Enable these features only if available for your organization.
+    ;; Note: these are strings, not booleans; that's what the server
+    ;; expects for whatever reason
+    :activateSnykCodeSecurity "true"
+    :activateSnykCodeQuality "true"
+
+    ;; List trusted folders here to avoid repeated permission requests
+    :trustedFolders [])))</code></pre>
+            <h3>Using Snyk in Emacs</h3>
+            <p>
+              After setting everything up, simply open a file using one of the major modes you configured above. If it's not in one of the <code class="language-lisp">:trustedFolders</code>, Snyk will ask you if you'd like to trust the one you're in. Keep in mind that Snyk takes a few seconds to start once you open the first file in a project. So, if you don't see it right away, just be patient.
+            </p>
+            <p>
+              And there you have it! You can now use the Snyk language server in Emacs to keep your code secure and free of vulnerabilities as you write bugs.
+            </p>
+        ]]>
+    </content>
   </entry>
   <entry>
     <id>https://blog.jmthornton.net/p/bug-posts</id>
@@ -133,6 +714,25 @@
     <title>A list of the best bug write-ups I've read</title>
     <published>2023-11-20T00:00:00Z</published>
     <summary>A modest list of interesting blog posts I've come across containing tech mystery stories exploring how a bug or mistake or other problem came about, how it was discovered, how it was fixed, and maybe some lessons to learn.</summary>
+    <content type="html">
+      <![CDATA[
+            <p>A modest list of interesting blog posts I've come across containing tech mystery stories exploring how a bug or mistake or other problem came about, how it was discovered, how it was fixed, and maybe some lessons to learn.</p>
+            <ul>
+              <li><a href=https://www.ibiblio.org/harris/500milemail.html"">The case of the 500-mile email</a>, by Trey Harris</li>
+              <li>
+                A three part series by James Haydon on the August 2023 UK NATS (ATC) meltdown:
+                <ol>
+                  <li><a href="https://jameshaydon.github.io/nats-fail/">UK air traffic control meltdown</a></li>
+                  <li><a href="https://jameshaydon.github.io/what-went-wrong/">UK ATC meltdown and swiss cheese</a></li>
+                  <li><a href="https://jameshaydon.github.io/programming-style-and-bugs/">Domain structured programming (UK ATC meltdown)</a></li>
+                </ol>
+              </li>
+              <li><a href="https://blog.nelhage.com/2010/02/a-very-subtle-bug/">A Very Subtle Bug</a>, by Nelson Elhage. This bug was caused by unusual behavior in Python's handling of <code>SIGPIPE</code> which was fixed in Python 2.7.</li>
+              <li><a href="https://www.gamedeveloper.com/programming/my-hardest-bug-ever">My Hardest Bug Ever</a>, by Dave Baggett. Unlike almost every bug you'll ever come across, Dave was eventually forced to blame the hardware.</li>
+              <li><a href="https://ludic.mataroa.blog/blog/i-accidentally-saved-half-a-million-dollars/">I Accidentally Saved Half A Million Dollars</a>, by "Ludicity", although this reads as a junior engineer's perspective</li>
+            </ul>
+        ]]>
+    </content>
   </entry>
   <entry>
     <id>https://blog.jmthornton.net/p/consult-line-isearch-history</id>
@@ -140,6 +740,37 @@
     <title>Connecting consult-line with isearch history</title>
     <published>2024-01-17T00:00:00Z</published>
     <summary>Adding the latest consult-line search term to isearch history for easy search continuation</summary>
+    <content type="html">
+      <![CDATA[
+            <p>I've recently jumped on the not-so-new hotness of <a href="">Consult</a>, with its friends <a href="">Vertico</a> and <a href="">Orderless</a>, replacing the still strong but slightly slower <a href="">Counsel</a>, <a href="">Ivy</a>, <a href="">Swiper</a> and <a href="">Flx</a>. There's been a few bumps along the way to adapt these new packages to my own whims, but its all working out so far.</p>
+              <p>One such issue is that after using <code>consult-line</code> to search in a buffer, I'd often like to continue my search, preferring the <code>evil-mode</code> keys <code>n</code> and <code>N</code> (<code>evil-search-next</code> and <code>evil-search-previous</code>, respectively). Unfortunately, once <code>consult-line</code> is closed, it can't be resumed without starting it again anew, unlike the <code>swiper</code> behavior I've come to rely on.</p>
+            <p>Now I did come across a <a href="https://github.com/minad/consult/issues/318">2021 GitHub thread about this issue</a>, but the chosen solution only works for <code>evil-search</code> as the search module. This is not the default and, though I'm sure many love it, I prefer the isearch way of highlighting. So, taking inspiration from that thread, I've made my own advice for <code>consult-line</code> which instead works by connecting <code>consult</code>'s <code>consult--line-history</code> with the <code>regexp-search-ring</code> that <code>isearch</code> uses.</p>
+            <pre lang="lisp"><code class="language-lisp">(defun consult-line-isearch-history (&rest _)
+    "Add latest `consult-line' search pattern to the isearch history.
+
+This allows n and N to continue the search after `consult-line' exits."
+    (when (and (bound-and-true-p evil-mode)
+               (eq evil-search-module 'isearch)
+               consult--line-history)
+      (let* ((pattern (car consult--line-history))
+             (regexp (if (string-prefix-p "\\_" pattern)
+                         (substring pattern 2)
+                       pattern)))
+        (add-to-history 'regexp-search-ring regexp)
+        (setq evil-ex-search-pattern (evil-ex-pattern regexp t nil nil))
+        (setq evil-ex-search-direction 'forward))))
+
+  ;; Now tell consult-line to run the function after a search
+  (advice-add #'consult-line :after #'consult-line-isearch-history)</code></pre>
+          </div>
+        </div>
+
+        <hr />
+        <div>
+          <p>Check out my <a href="https://github.com/thornjad/aero">full Emacs configuration</a> if you'd like to see how else I bend Emacs to my will.</p>
+        </div>
+        ]]>
+    </content>
   </entry>
   <entry>
     <id>https://blog.jmthornton.net/p/org-roam-created-modified-dates</id>
@@ -147,6 +778,68 @@
     <title>Org-roam: Automatically Set Node Created and Modified Dates</title>
     <published>2024-03-18T00:00:00Z</published>
     <summary>Enhancing Org-roam nodes with auto-updating created and modified properties.</summary>
+    <content type="html">
+      <![CDATA[
+            <p>
+              <a href="https://www.orgroam.com/">Org-roam</a> is an Emacs package for non-hierarchical note-taking, and it does a brilliant job at organizing these thoughts but does not include automatic timestamping. By default, Org-roam does include the creation timestamp in the file name, but that's not easily read by a human.
+            </p>
+            <p>
+              To add this generally useful information, I automatically add a <code>:created:</code> property when visiting a node if it doesn't already exist, and a <code>:modified:</code> property when saving a node. This way, I can see when a note was created and when it was last modified.
+            </p>
+            <p>
+              Note that the <code>:created:</code> property parses the timestamp from the filename and relies on Org-roam's default naming scheme. If you use a different naming scheme, you'll need to modify the <code>org-roam-extract-timestamp-from-filepath</code> function to match your scheme.
+            </p>
+            <hr />
+            <h3>Automating Creation Dates</h3>
+            <pre lang="lisp"><code class="language-lisp">(defun org-roam-insert-created-property ()
+  "Insert :created: property for an Org-roam node.
+
+Does not override the property if it already exists.
+
+Calculation of the creation date is based on the filename of the note,
+and assumes the default Org-roam naming scheme."
+  (interactive)
+  (when (org-roam-file-p)
+    ;; Don't update if the created property already exists
+    (unless (org-entry-get (point-min) "created" t)
+      (let ((creation-time (org-roam-extract-timestamp-from-filepath
+                            (buffer-file-name))))
+        ;; Don't error if the filename doesn't contain a timestamp
+        (when creation-time
+          (save-excursion
+            ;; Ensure point is at the beginning of the buffer
+            (goto-char (point-min))
+            (org-set-property "created" creation-time)))))))</code></pre>
+
+            <h3>Extracting Timestamps from Filenames</h3>
+            <pre lang="lisp"><code class="language-lisp">(defun org-roam-extract-timestamp-from-filepath (filepath)
+  "Extract timestamp from the Org-roam FILEPATH assuming it follows the default naming scheme."
+  (let ((filename (file-name-nondirectory filepath)))
+    (when (string-match "\\([0-9]\\{8\\}\\)\\([0-9]\\{4\\}\\)" filename)
+      (let ((year (substring filename (match-beginning 1) (+ (match-beginning 1) 4)))
+            (month (substring filename (+ (match-beginning 1) 4) (+ (match-beginning 1) 6)))
+            (day (substring filename (+ (match-beginning 1) 6) (+ (match-beginning 1) 8)))
+            (hour (substring filename (match-beginning 2) (+ (match-beginning 2) 2)))
+            (minute (substring filename (+ (match-beginning 2) 2) (+ (match-beginning 2) 4))))
+        (format "[%s-%s-%s %s:%s]" year month day hour minute)))))</code></pre>
+
+            <h3>Keeping Modification Dates Current</h3>
+            <pre lang="lisp"><code class="language-lisp">(defun org-roam-insert-modified-property ()
+  "Update the :modified: property for an Org-roam node upon saving."
+  (when (org-roam-file-p)
+    (save-excursion
+      ;; Ensure property is applied to the whole file
+      (goto-char (point-min))
+      (org-set-property
+       "modified" (format-time-string "[%Y-%m-%d %a %H:%M]")))))</code></pre>
+
+            <p>
+              The integration of these functions into your Emacs and Org-roam config ensures that every note's origins and edits are easily accessible and readable. To make these actually run, I set them up to run on before-save. There may be better hooks for this, but Org-roam's own hooks make it kind of difficult in my own setup, so I take the more brute force approach and it works fine for me:
+            </p>
+            <pre lang="lisp"><code class="language-lisp">(add-hook 'before-save-hook #'aero/org-roam-insert-created-property)
+(add-hook 'before-save-hook #'org-roam-insert-modified-property)</code></pre>
+      ]]>
+    </content>
   </entry>
   <entry>
     <id>https://blog.jmthornton.net/p/cave-chains</id>
