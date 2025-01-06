@@ -1,5 +1,6 @@
 # Compiled source #
 ###################
+dist/
 *.o
 *.so
 a.html
@@ -16,21 +17,11 @@ tools/libertarian-zoo/main.css
 .cpcache
 .lsp
 
-# Logs and databases #
-######################
-*.log
-*.sqlite
-
 # OS generated files #
 ######################
 .DS_Store
 *.DS_Store
 .DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
 
 # Verification files #
 ######################
@@ -71,3 +62,17 @@ skyland/
 # Notes file #
 ##############
 notes.txt
+
+# Clojure files #
+#################
+/target
+/classes
+/checkouts
+profiles.clj
+pom.xml
+pom.xml.asc
+*.jar
+*.class
+/.lein-*
+/.nrepl-port
+/.prepl-port
