@@ -3,5 +3,5 @@ RewriteCond %{HTTPS} !=on
 RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R=301]
 
 # Unsure why this one happens sometimes
-RewriteRule ^/tools/news/?& https://news.jmthornton.net/ [R=301,QSA]
-RewriteRule ^/tools/news/tools/news/?$ https://news.jmthornton.net/ [R=301,QSA]
+RewriteRule ^/tools/news/?& https://jmthornton.net/tools/news/ [R=301,QSA]
+RewriteRule ^/tools/news/tools/news/?$ https://jmthornton.net/tools/news/ [R=301,QSA]

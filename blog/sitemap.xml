@@ -5,102 +5,102 @@
   xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
          http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
-    <loc>https://blog.jmthornton.net/</loc>
+    <loc>https://jmthornton.net/blog/</loc>
     <lastmod>2021-08-04T17:00:03+00:00</lastmod>
     <priority>1.00</priority>
   </url>
   <url>
-    <loc>https://blog.jmthornton.net/recipes/</loc>
+    <loc>https://jmthornton.net/blog/recipes/</loc>
     <lastmod>2021-08-02T14:54:24+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://blog.jmthornton.net/p/clean-arch-wumpus</loc>
+    <loc>https://jmthornton.net/blog/p/clean-arch-wumpus</loc>
     <lastmod>2021-08-02T14:54:24+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://blog.jmthornton.net/p/git-submodule-deinit</loc>
+    <loc>https://jmthornton.net/blog/p/git-submodule-deinit</loc>
     <lastmod>2021-08-02T14:54:24+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://blog.jmthornton.net/p/jira-commit-msg</loc>
+    <loc>https://jmthornton.net/blog/p/jira-commit-msg</loc>
     <lastmod>2021-08-02T14:54:24+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://blog.jmthornton.net/p/tmux-known-socket</loc>
+    <loc>https://jmthornton.net/blog/p/tmux-known-socket</loc>
     <lastmod>2021-08-02T14:54:24+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://blog.jmthornton.net/p/clearnightretro</loc>
+    <loc>https://jmthornton.net/blog/p/clearnightretro</loc>
     <lastmod>2021-08-02T14:54:24+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://blog.jmthornton.net/p/xmrstakcompile</loc>
+    <loc>https://jmthornton.net/blog/p/xmrstakcompile</loc>
     <lastmod>2021-08-02T14:54:24+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://blog.jmthornton.net/p/worm-of-1988</loc>
+    <loc>https://jmthornton.net/blog/p/worm-of-1988</loc>
     <lastmod>2021-08-02T14:54:24+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://blog.jmthornton.net/p/array-removeelement</loc>
+    <loc>https://jmthornton.net/blog/p/array-removeelement</loc>
     <lastmod>2021-08-02T14:54:24+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://blog.jmthornton.net/p/ecmascript2017</loc>
+    <loc>https://jmthornton.net/blog/p/ecmascript2017</loc>
     <lastmod>2021-08-02T14:54:24+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://blog.jmthornton.net/p/duplicated-ids</loc>
+    <loc>https://jmthornton.net/blog/p/duplicated-ids</loc>
     <lastmod>2021-08-02T14:54:24+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://blog.jmthornton.net/p/protonmail</loc>
+    <loc>https://jmthornton.net/blog/p/protonmail</loc>
     <lastmod>2021-08-02T14:54:24+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://blog.jmthornton.net/p/switch-caps-esc</loc>
+    <loc>https://jmthornton.net/blog/p/switch-caps-esc</loc>
     <lastmod>2021-08-02T14:54:24+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://blog.jmthornton.net/p/thunderbird-ddg</loc>
+    <loc>https://jmthornton.net/blog/p/thunderbird-ddg</loc>
     <lastmod>2021-08-02T14:54:24+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://blog.jmthornton.net/p/websitetimelapse</loc>
+    <loc>https://jmthornton.net/blog/p/websitetimelapse</loc>
     <lastmod>2021-08-02T14:54:24+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://blog.jmthornton.net/recipes/r/speckendicken</loc>
+    <loc>https://jmthornton.net/blog/recipes/r/speckendicken</loc>
     <lastmod>2021-08-02T14:54:24+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>https://blog.jmthornton.net/recipes/r/buffalo-chicken-chili</loc>
+    <loc>https://jmthornton.net/blog/recipes/r/buffalo-chicken-chili</loc>
     <lastmod>2021-08-02T14:54:24+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>https://blog.jmthornton.net/recipes/r/pumpkin-spice-latte</loc>
+    <loc>https://jmthornton.net/blog/recipes/r/pumpkin-spice-latte</loc>
     <lastmod>2021-08-02T14:54:24+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>https://blog.jmthornton.net/recipes/r/egg-salad</loc>
+    <loc>https://jmthornton.net/blog/recipes/r/egg-salad</loc>
     <lastmod>2021-08-02T14:54:24+00:00</lastmod>
     <priority>0.64</priority>
   </url>

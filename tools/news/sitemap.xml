@@ -5,7 +5,7 @@
   xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
          http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
-    <loc>http://news.jmthornton.net/</loc>
+    <loc>http://jmthornton.net/tools/news/</loc>
     <changefreq>always</changefreq>
     <lastmod>2021-08-02T14:54:24+00:00</lastmod>
   </url>

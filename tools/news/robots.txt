@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: https://news.jmthornton.net/sitemap.xml
+Sitemap: https://jmthornton.net/tools/news/sitemap.xml
