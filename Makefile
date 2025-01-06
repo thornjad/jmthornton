@@ -17,7 +17,7 @@ prism:
 
 # Purify all CSS referencing all usage except blog
 main: sass
-	npx purify-css --min --info assets/style/out.css $(shell find . -type d \( -path ./blog -o -path ./node_modules -o -path ./p/museum -o -path ./tools \) -prune -o -type f -name '*.html' -print) --out assets/style/main.css
+	npx purify-css --min --info assets/style/out.css $(shell find . -type d \( -path ./blog -o -path ./node_modules -o -path ./tools \) -prune -o -type f -name '*.html' -print) --out assets/style/main.css
 
 blog: sass
 	mkdir -p blog/assets/style

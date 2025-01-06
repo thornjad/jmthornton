@@ -15,16 +15,6 @@
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://jmthornton.net/p/JadeMichaelThornton.pdf</loc>
-    <lastmod>2021-09-29T21:00:03+00:00</lastmod>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://jmthornton.net/p/museum/</loc>
-    <lastmod>2021-08-02T17:27:41+00:00</lastmod>
-    <priority>0.10</priority>
-  </url>
-  <url>
     <loc>https://jmthornton.net/tools/dencode</loc>
     <lastmod>2021-08-02T14:54:24+00:00</lastmod>
     <priority>0.64</priority>
@@ -33,45 +23,5 @@
     <loc>https://jmthornton.net/tools/query-dumper</loc>
     <lastmod>2021-08-02T14:54:24+00:00</lastmod>
     <priority>0.64</priority>
-  </url>
-  <url>
-    <loc>https://jmthornton.net/p/museum/initial/</loc>
-    <lastmod>2021-07-21T03:52:54+00:00</lastmod>
-    <priority>0.14</priority>
-  </url>
-  <url>
-    <loc>https://jmthornton.net/p/museum/v0.1.0-alpha/</loc>
-    <lastmod>2021-07-21T03:52:54+00:00</lastmod>
-    <priority>0.14</priority>
-  </url>
-  <url>
-    <loc>https://jmthornton.net/p/museum/v0.6.4/</loc>
-    <lastmod>2021-07-21T03:52:54+00:00</lastmod>
-    <priority>0.14</priority>
-  </url>
-  <url>
-    <loc>https://jmthornton.net/p/museum/v0.7.1/</loc>
-    <lastmod>2021-07-21T03:52:54+00:00</lastmod>
-    <priority>0.14</priority>
-  </url>
-  <url>
-    <loc>https://jmthornton.net/p/museum/v2/</loc>
-    <lastmod>2021-07-21T03:52:54+00:00</lastmod>
-    <priority>0.14</priority>
-  </url>
-  <url>
-    <loc>https://jmthornton.net/p/museum/v3/</loc>
-    <lastmod>2021-07-21T03:52:55+00:00</lastmod>
-    <priority>0.14</priority>
-  </url>
-  <url>
-    <loc>https://jmthornton.net/p/museum/v4/</loc>
-    <lastmod>2021-07-21T03:52:55+00:00</lastmod>
-    <priority>0.64</priority>
-  </url>
-  <url>
-    <loc>https://jmthornton.net/p/museum/v5/</loc>
-    <lastmod>2021-07-21T03:52:55+00:00</lastmod>
-    <priority>0.14</priority>
   </url>
 </urlset>
