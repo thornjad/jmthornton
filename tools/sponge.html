@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html" />
@@ -6,7 +6,10 @@
     <meta name="description" content="EaSiLy gEnErAtE SpOnGe tExT" />
     <meta name="robots" content="index, follow" />
     <meta name="googlebot" content="index, follow" />
-    <meta name="google-site-verification" content="JUM1Dl9n9ic9xPMb03Nzf4NgW_-8PWZrJ4eJGC_PoYM" />
+    <meta
+      name="google-site-verification"
+      content="JUM1Dl9n9ic9xPMb03Nzf4NgW_-8PWZrJ4eJGC_PoYM"
+    />
     <meta charset="utf-8" />
     <title>Sponge Text | Jade Michael Thornton</title>
     <link
@@ -37,7 +40,7 @@
       type="font/woff2"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="/tools/tools.css" type="text/css" />
+    <link rel="stylesheet" href="/assets/style/main.css" type="text/css" />
     <link rel="shortcut icon" href="/assets/images/favicon.png" />
     <link rel="apple-itouch-icon" href="/assets/images/favicon.ico" />
     <style>
@@ -72,29 +75,34 @@
         <button id="sponge">Sponge it</button>
         <button id="desponge">De-Sponge</button>
       </div>
-      <label><input id="startCap" type="checkbox" checked />Start with capital letter</label>
+      <label
+        ><input id="startCap" type="checkbox" checked />Start with capital
+        letter</label
+      >
     </main>
     <script type="text/javascript">
       let startCap = true;
 
       const getValue = () => {
-        const sponger = document.querySelector('#sponger');
+        const sponger = document.querySelector("#sponger");
         return [sponger, sponger.value];
       };
 
-      document.querySelector('#sponge').addEventListener('click', () => {
+      document.querySelector("#sponge").addEventListener("click", () => {
         const [sponger, value] = getValue();
         sponger.value = (startCap ? value.toUpperCase() : value.toLowerCase())
-          .split('')
-          .map((l, i) => (i % 2 === 1 ? (startCap ? l.toLowerCase() : l.toUpperCase()) : l))
-          .join('');
+          .split("")
+          .map((l, i) =>
+            i % 2 === 1 ? (startCap ? l.toLowerCase() : l.toUpperCase()) : l,
+          )
+          .join("");
       });
-      document.querySelector('#desponge').addEventListener('click', () => {
+      document.querySelector("#desponge").addEventListener("click", () => {
         const [sponger, value] = getValue();
         sponger.value = value.toLowerCase();
       });
 
-      document.querySelector('#startCap').addEventListener('change', (e) => {
+      document.querySelector("#startCap").addEventListener("change", (e) => {
         startCap = e.target.checked;
       });
     </script>

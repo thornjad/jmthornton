@@ -8,6 +8,7 @@
     <meta name="robots" content="index, follow" />
     <meta name="googlebot" content="noindex" />
     <link rel="shortcut icon" href="/assets/images/favicon.png" />
+    <link rel="preload" href="/assets/style/main.css" as="style" />
     <link
       rel="preload"
       href="/assets/fonts/MetroNova-Regular.woff2"
@@ -36,14 +37,14 @@
       type="font/woff2"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="/tools/tools.css" type="text/css" />
+    <link rel="stylesheet" href="/assets/style/main.css" type="text/css" />
   </head>
   <body>
     <header>
       <nav>
         <a href="/">Home</a>
         <a href="/tools">Tools</a>
-        <a href="https://jmthornton.net/blog">Blog</a>
+        <a href="/blog">Blog</a>
         <a href="https://photos.jmthornton.net">Photos</a>
       </nav>
     </header>
@@ -53,8 +54,8 @@
       <section>
         <ul class="dl">
           <li>
-            <p><a href="https://jmthornton.net/tools/news">News</a></p>
             <p>Hacker News, but without the clutter of comments or karma, just links</p>
+            <p><a href="/tools/news">News</a></p>
           </li>
           <li>
             <p><a href="./dencode">URL Dencoder</a></p>

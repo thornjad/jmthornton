@@ -1,121 +1,167 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8" />
-		<title>Query parameter dumper</title>
-		<meta name="description" content="Send query parameters and see how they parse" />
-		<meta name="robots" content="index, follow" />
-		<meta name="googlebot" content="index, follow" />
-		<meta name="google-site-verification" content="JUM1Dl9n9ic9xPMb03Nzf4NgW_-8PWZrJ4eJGC_PoYM" />
-		<meta name="twitter:card" content="summary">
-		<meta name="twitter:site" content="@jmthorntonwhat">
-		<meta name="twitter:creator" content="@jmthorntonwhat">
-		<meta property="og:title" content="Query parameter dumper">
-		<meta name="twitter:title" content="Query parameter dumper">
-		<meta name="description" content="Send query parameters and see how they parse">
-		<meta name="og:description" content="Send query parameters and see how they parse">
-		<meta name="twitter:description" content="Send query parameters and see how they parse">
-		<meta property="og:url" content="https://jmthornton.net/tools/query-dumper">
-		<meta property="og:site_name" content="jmthornton.net">
-		<meta property="og:locale" content="en_US" />
-		<meta name="article:author" content="https://jmthornton.net">
-    <link rel="prefetch" href="/assets/fonts/MetroNova-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous"><link rel="prefetch" href="/assets/fonts/MetroNova-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous"><link rel="prefetch" href="/assets/fonts/MetroNova-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous"><link rel="prefetch" href="/assets/fonts/MetroNova-BoldItalic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-		<link rel="stylesheet" href="/tools/tools.css" type="text/css" />
-	</head>
-	<body>
-    <header><nav>
-      <a href="/">Home</a>
-      <a href="/tools">Tools</a>
-      <a href="https://jmthornton.net/blog">Blog</a>
-      <a href="https://photos.jmthornton.net">Photos</a>
-    </nav></header>
+  <head>
+    <meta charset="utf-8" />
+    <title>Query parameter dumper</title>
+    <meta
+      name="description"
+      content="Send query parameters and see how they parse"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+    <meta
+      name="google-site-verification"
+      content="JUM1Dl9n9ic9xPMb03Nzf4NgW_-8PWZrJ4eJGC_PoYM"
+    />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@jmthorntonwhat" />
+    <meta name="twitter:creator" content="@jmthorntonwhat" />
+    <meta property="og:title" content="Query parameter dumper" />
+    <meta name="twitter:title" content="Query parameter dumper" />
+    <meta
+      name="description"
+      content="Send query parameters and see how they parse"
+    />
+    <meta
+      name="og:description"
+      content="Send query parameters and see how they parse"
+    />
+    <meta
+      name="twitter:description"
+      content="Send query parameters and see how they parse"
+    />
+    <meta
+      property="og:url"
+      content="https://jmthornton.net/tools/query-dumper"
+    />
+    <meta property="og:site_name" content="jmthornton.net" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="article:author" content="https://jmthornton.net" />
+    <link
+      rel="prefetch"
+      href="/assets/fonts/MetroNova-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="prefetch"
+      href="/assets/fonts/MetroNova-Italic.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="prefetch"
+      href="/assets/fonts/MetroNova-Bold.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="prefetch"
+      href="/assets/fonts/MetroNova-BoldItalic.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/assets/style/main.css" type="text/css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/tools">Tools</a>
+        <a href="https://jmthornton.net/blog">Blog</a>
+        <a href="https://photos.jmthornton.net">Photos</a>
+      </nav>
+    </header>
 
     <main>
-			<h1>Query parameter parser and dumper</h1>
-			<p>Send query parameters and see how they parse.</p>
+      <h1>Query parameter parser and dumper</h1>
+      <p>Send query parameters and see how they parse.</p>
 
       <noscript>Sorry, this tool requires Javascript.</noscript>
 
-			<hr />
+      <hr />
 
-			<h2>Special parameters</h2>
-			<p>Use these special keys to trigger parsing with a certain type</p>
-			<ul>
-				<li><code>json</code>: Parse as JSON</li>
-				<li><code>int</code>, <code>number</code>: Parse as an integer</li>
-				<li><code>float</code>: Parse as a floating point number</li>
-				<li><code>bool</code>: Parse as boolean</li>
-			</ul>
+      <h2>Special parameters</h2>
+      <p>Use these special keys to trigger parsing with a certain type</p>
+      <ul>
+        <li><code>json</code>: Parse as JSON</li>
+        <li><code>int</code>, <code>number</code>: Parse as an integer</li>
+        <li><code>float</code>: Parse as a floating point number</li>
+        <li><code>bool</code>: Parse as boolean</li>
+      </ul>
 
-		  <hr />
+      <hr />
 
-		  <h2>Your parameters:</h2>
-		  <div class="display"></div>
+      <h2>Your parameters:</h2>
+      <div class="display"></div>
     </main>
 
     <script type="text/javascript">
-	   const parseParam = (k, v) => {
-		   let parsedValue = v;
-		   let parsedType = null;
-		   switch (k) {
-			   case 'json':
-				   parsedType = 'JSON';
-				   try {
-					   parsedValue = JSON.parse(v);
-					   parsedValue = JSON.stringify(parsedValue, null, '\t');
-				   } catch (e) {
-					   parsedValue = 'Invalid';
-				   }
-				   break;
+      const parseParam = (k, v) => {
+        let parsedValue = v;
+        let parsedType = null;
+        switch (k) {
+          case "json":
+            parsedType = "JSON";
+            try {
+              parsedValue = JSON.parse(v);
+              parsedValue = JSON.stringify(parsedValue, null, "\t");
+            } catch (e) {
+              parsedValue = "Invalid";
+            }
+            break;
 
-			   case 'number':
-			   case 'int':
-				   parsedType = 'Integer';
-				   parsedValue = parseInt(v);
-				   break;
+          case "number":
+          case "int":
+            parsedType = "Integer";
+            parsedValue = parseInt(v);
+            break;
 
-			   case 'float':
-				   parsedType = 'Float';
-				   parsedValue = parseFloat(v);
-				   break;
+          case "float":
+            parsedType = "Float";
+            parsedValue = parseFloat(v);
+            break;
 
-			   case 'bool':
-				   parsedType = 'Boolean';
-				   parsedValue = !!v;
-				   break;
-		   }
+          case "bool":
+            parsedType = "Boolean";
+            parsedValue = !!v;
+            break;
+        }
 
-		   return {
-			   key: k,
-			   rawValue: v,
-			   value: parsedValue,
-			   type: parsedType,
-		   };
-	   };
+        return {
+          key: k,
+          rawValue: v,
+          value: parsedValue,
+          type: parsedType,
+        };
+      };
 
-	   const formatParamInfo = (info) => {
-		   if (info.type) {
-			   return `Key:\t${info.key}
+      const formatParamInfo = (info) => {
+        if (info.type) {
+          return `Key:\t${info.key}
 Type:\t${info.type}
 Given:\t${info.rawValue}
 Parsed:\t${info.value}`;
-		   } else {
-			   return `Key:\t${info.key}
+        } else {
+          return `Key:\t${info.key}
 Value:\t${info.value}`;
-		   }
-	   };
+        }
+      };
 
-	   const mount = document.querySelector('.display');
-	   const params = new URLSearchParams(window.location.search);
+      const mount = document.querySelector(".display");
+      const params = new URLSearchParams(window.location.search);
 
-	   params.forEach((v, k) => {
-		   const info = parseParam(k, v);
-		   const div = document.createElement('pre');
-		   div.className = 'param';
-		   div.innerHTML = formatParamInfo(info);
-		   mount.append(div);
-	   });
+      params.forEach((v, k) => {
+        const info = parseParam(k, v);
+        const div = document.createElement("pre");
+        div.className = "param";
+        div.innerHTML = formatParamInfo(info);
+        mount.append(div);
+      });
     </script>
-
-	</body>
+  </body>
 </html>
