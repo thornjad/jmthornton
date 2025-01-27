@@ -4,7 +4,6 @@ dist/
 *.o
 *.so
 a.html
-assets/style/main.css
 assets/style/out.css
 assets/vendor/prism.min.css
 assets/vendor/prism-dark.min.css
