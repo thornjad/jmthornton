@@ -194,8 +194,13 @@ section {
   margin: 4rem 0;
 }
 
+figure {
+  text-align: center;
+}
+
 figcaption {
   padding-top: 1em;
+  font-style: italic;
 }
 
 /* Other elements */
@@ -476,11 +481,17 @@ pre {
 }
 
 code,
-sub,
-sup {
+sub {
   line-height: 0;
   position: relative;
   vertical-align: baseline;
+}
+
+sup {
+  line-height: 0;
+  position: relative;
+  vertical-align: super;
+  font-size: 0.7em;
 }
 
 code {
