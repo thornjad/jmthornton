@@ -1,9 +1,32 @@
 #!/usr/bin/env python3
 
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta, time
 from bs4 import BeautifulSoup
 from feedgen.feed import FeedGenerator
 from pathlib import Path
+
+# Define Central Time zone offset
+CENTRAL_TZ = timezone(timedelta(hours=-6))  # CST is UTC-6
+
+
+def parse_date_to_9am_cst(date_str=None, fallback_timestamp=None):
+    """
+    Parse a date string or timestamp into a datetime at 9:00 AM CST.
+    If date_str is None, uses fallback_timestamp.
+    If both are None, returns None.
+    """
+    if date_str:
+        try:
+            dt = datetime.strptime(date_str, '%Y-%m-%d').replace(tzinfo=CENTRAL_TZ)
+            return dt.replace(hour=9, minute=0, second=0, microsecond=0)
+        except ValueError:
+            pass
+
+    if fallback_timestamp is not None:
+        dt = datetime.fromtimestamp(fallback_timestamp, tz=CENTRAL_TZ)
+        return dt.replace(hour=9, minute=0, second=0, microsecond=0)
+
+    return None
 
 
 def parse_html_file(file_path):
@@ -19,25 +42,19 @@ def parse_html_file(file_path):
     else:
         title = title_tag.text.strip()
 
-    # Get dates - try meta tags first, then time element, then file modification time
+    # Get dates - try meta tags first, then time element, then Unix epoch
     published_date = None
     modified_date = None
 
     # Try article:published_time meta tag
     published_meta = soup.find('meta', attrs={'property': 'article:published_time'})
     if published_meta and 'content' in published_meta.attrs:
-        try:
-            published_date = datetime.strptime(published_meta['content'], '%Y-%m-%d').replace(tzinfo=timezone.utc)
-        except ValueError:
-            pass
+        published_date = parse_date_to_9am_cst(published_meta['content'])
 
     # Try article:modified_time meta tag
     modified_meta = soup.find('meta', attrs={'property': 'article:modified_time'})
     if modified_meta and 'content' in modified_meta.attrs:
-        try:
-            modified_date = datetime.strptime(modified_meta['content'], '%Y-%m-%d').replace(tzinfo=timezone.utc)
-        except ValueError:
-            pass
+        modified_date = parse_date_to_9am_cst(modified_meta['content'])
 
     # If no published time from meta, try modified time
     if not published_date and modified_date:
@@ -47,14 +64,11 @@ def parse_html_file(file_path):
     if not published_date:
         time_tag = soup.find('time')
         if time_tag and 'datetime' in time_tag.attrs:
-            try:
-                published_date = datetime.strptime(time_tag['datetime'], '%Y-%m-%d').replace(tzinfo=timezone.utc)
-            except ValueError:
-                pass
+            published_date = parse_date_to_9am_cst(time_tag['datetime'])
 
     # If still no published date, use file modification time
     if not published_date:
-        published_date = datetime.fromtimestamp(file_path.stat().st_mtime, tz=timezone.utc)
+        published_date = parse_date_to_9am_cst(fallback_timestamp=0)
 
     # If no modified date, use published date
     if not modified_date:
