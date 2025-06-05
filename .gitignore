@@ -38,6 +38,7 @@ CNAME
 assets/style/out.css.map
 assets/style/main.css.map
 blog/draft/
+blog/feed.xml
 
 # Development Directories #
 ###########################
