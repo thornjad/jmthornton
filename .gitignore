@@ -3,6 +3,7 @@
 dist/
 *.o
 *.so
+__pycache__
 a.html
 assets/style/out.css
 assets/vendor/prism.min.css
