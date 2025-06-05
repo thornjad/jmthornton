@@ -22,7 +22,7 @@ def parse_html_file(file_path):
     # Get dates - try meta tags first, then time element, then file modification time
     published_date = None
     modified_date = None
-    
+
     # Try article:published_time meta tag
     published_meta = soup.find('meta', attrs={'property': 'article:published_time'})
     if published_meta and 'content' in published_meta.attrs:
@@ -82,7 +82,7 @@ def parse_html_file(file_path):
         'description': description,
         'content': content_html,
         'url': url,
-        'id': url
+        'id': url,
     }
 
 
@@ -100,11 +100,19 @@ def main():
     blog_dir = Path('blog/p')
     html_files = sorted(blog_dir.glob('*.html'), key=lambda x: x.stat().st_mtime, reverse=True)
 
+    # Track the most recent date across all posts
+    most_recent_date = None
+
     # Process each file
     for file_path in html_files:
         try:
             post_data = parse_html_file(file_path)
-            
+
+            # Update most recent date if this post has a more recent date
+            post_date = max(post_data['published_date'], post_data['modified_date'])
+            if most_recent_date is None or post_date > most_recent_date:
+                most_recent_date = post_date
+
             # Create feed entry
             fe = fg.add_entry()
             fe.title(post_data['title'])
@@ -122,10 +130,9 @@ def main():
         print("No items were processed successfully!")
         return
 
-    # Update feed's updated time to most recent modified date
-    if html_files:
-        most_recent = parse_html_file(html_files[0])
-        fg.updated(most_recent['modified_date'])
+    # Set feed's updated time to the most recent date across all posts
+    if most_recent_date:
+        fg.updated(most_recent_date)
 
     # Write feed to file
     fg.atom_file('blog/feed.xml', pretty=True)
