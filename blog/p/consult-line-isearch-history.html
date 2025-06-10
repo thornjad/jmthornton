@@ -90,8 +90,8 @@ This allows n and N to continue the search after `consult-line' exits."
         (setq evil-ex-search-pattern (evil-ex-pattern regexp t nil nil))
         (setq evil-ex-search-direction 'forward))))
 
-  ;; Now tell consult-line to run the function after a search
-  (advice-add #'consult-line :after #'consult-line-isearch-history)</code></pre>
+;; Now tell consult-line to run the function after a search
+(advice-add #'consult-line :after #'consult-line-isearch-history)</code></pre>
           </div>
         </div>
 
