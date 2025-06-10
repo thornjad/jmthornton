@@ -96,7 +96,7 @@
             </p>
             <hr />
             <h3>Update</h3>
-            <p>Since the writing of this post, Emacs 29 has been released and introduces a variable which solves this same issue in a cleaner way! Unfortunately it doesn't appear to work for me. Still it may be worth a shot for you: set <code>project-vc-extra-root-markers</code> to a list of file names or glob patterns which mark a project's root in addition to the default ".git", ".hg" and other common markers.</p>
+            <p>Since the writing of this post, Emacs 29 has been released and introduces a variable which may solve this same issue in a cleaner way! Unfortunately it doesn't appear to work for me, but some folks on Reddit commented that it seems to function as expected. So, it may be worth a shot for you: set <code>project-vc-extra-root-markers</code> to a list of file names or glob patterns which mark a project's root in addition to the default ".git", ".hg" and other common markers.</p>
             <p>So, the cleaner equivalent to the rest of the post, if it works, is a simple <pre lang="lisp"><code class="language-lisp">(setq project-vc-extra-root-markers '(".project.el" ".projectile" ))</code></pre></p>
             <p>If, however, you're like me and can't seem to get this to do anything, the original post still works:</p>
             <hr />
