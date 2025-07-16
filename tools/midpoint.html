@@ -1,0 +1,266 @@
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Calculate the midpoint between two or more lat/lon coordinates"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+    <meta
+      name="google-site-verification"
+      content="JUM1Dl9n9ic9xPMb03Nzf4NgW_-8PWZrJ4eJGC_PoYM"
+    />
+    <meta charset="utf-8" />
+    <title>Midpoint Calculator | Jade Michael Thornton</title>
+    <link
+      rel="prefetch"
+      href="/assets/fonts/MetroNova-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="prefetch"
+      href="/assets/fonts/MetroNova-Italic.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="prefetch"
+      href="/assets/fonts/MetroNova-Bold.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="prefetch"
+      href="/assets/fonts/MetroNova-BoldItalic.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/assets/style/main.css" type="text/css" />
+    <link rel="shortcut icon" href="/assets/images/favicon.png" />
+    <link rel="apple-itouch-icon" href="/assets/images/favicon.ico" />
+    <style>
+      section {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+      }
+
+      span {
+        display: flex;
+        gap: 0.5em;
+        line-height: 1.5em;
+      }
+
+      input {
+        text-align: right;
+      }
+
+      button {
+        width: 6em;
+
+        &#add-point:not(:hover) {
+          background-color: transparent;
+          color: inherit;
+        }
+
+        &.remove-point {
+          padding: 2px 8px;
+          width: auto;
+        }
+      }
+
+      div.action-buttons {
+        justify-content: start;
+        margin-top: 2em;
+      }
+
+      .remove-point {
+        margin-left: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/blog">Blog</a>
+        <a href="/tools">Tools</a>
+        <a href="https://weather.jmthornton.net">Weather</a>
+        <a href="https://photos.jmthornton.net">Photos</a>
+        <a href="https://emacs.jmthornton.net">Emacs</a>
+      </nav>
+    </header>
+
+    <main>
+      <h1>Midpoint Calculator</h1>
+      <h3>Calculate the midpoint between two or more lat/lon coordinates</h3>
+
+      <noscript>Sorry, this tool requires Javascript.</noscript>
+
+      <section>
+        <div id="coordinates-container">
+          <p><strong>Point 1:</strong></p>
+          <span>
+            <input
+              type="number"
+              step="any"
+              placeholder="e.g. 40.7128"
+              class="lat-input"
+            />
+            <label>Latitude</label>
+          </span>
+          <span>
+            <input
+              type="number"
+              step="any"
+              placeholder="e.g. -74.0060"
+              class="lon-input"
+            />
+            <label>Longitude</label>
+          </span>
+
+          <p>
+            <strong>Point 2:</strong>
+          </p>
+          <span>
+            <input
+              type="number"
+              step="any"
+              placeholder="e.g. 34.0522"
+              class="lat-input"
+            />
+            <label>Latitude</label>
+          </span>
+          <span>
+            <input
+              type="number"
+              step="any"
+              placeholder="e.g. -118.2437"
+              class="lon-input"
+            />
+            <label>Longitude</label>
+          </span>
+        </div>
+
+        <div class="action-buttons">
+          <button id="calculate">Calculate</button>
+          <button id="add-point">Add Point</button>
+        </div>
+      </section>
+
+      <div id="error"></div>
+
+      <blockquote id="output-wrapper" style="display: none">
+        <h3>Midpoint Result:</h3>
+        <p>Latitude: <span id="midpoint-lat"></span></p>
+        <p>Longitude: <span id="midpoint-lon"></span></p>
+      </blockquote>
+    </main>
+
+    <script type="text/javascript">
+      "use strict";
+
+      let pointCounter = 3;
+
+      function addPoint() {
+        const container = document.getElementById("coordinates-container");
+        const newPoint = document.createElement("div");
+        newPoint.innerHTML = `
+          <p><strong>Point ${pointCounter}:</strong> <button class="remove-point" onclick="removePoint(this)">Remove</button></p>
+          <span>
+            <input type="number" step="any" placeholder="e.g. 40.7128" class="lat-input" />
+            <label>Latitude</label>
+          </span>
+          <span>
+            <input type="number" step="any" placeholder="e.g. -74.0060" class="lon-input" />
+            <label>Longitude</label>
+          </span>
+        `;
+        container.appendChild(newPoint);
+        pointCounter++;
+      }
+
+      function removePoint(button) {
+        const pointDiv = button.parentElement.parentElement;
+        if (document.querySelectorAll(".remove-point").length > 1) {
+          pointDiv.remove();
+          // update labels
+          const points = document.querySelectorAll(".remove-point");
+          points.forEach((point, index) => {
+            const label = point.parentElement.querySelector("strong");
+            label.textContent = `Point ${index + 2}:`;
+          });
+          pointCounter--;
+        }
+      }
+
+      function calculateMidpoint() {
+        const latInputs = document.querySelectorAll(".lat-input");
+        const lonInputs = document.querySelectorAll(".lon-input");
+        const error = document.getElementById("error");
+        const outputWrapper = document.getElementById("output-wrapper");
+
+        // hide previous results
+        error.style.display = "none";
+        outputWrapper.style.display = "none";
+
+        const lats = [];
+        const lons = [];
+
+        // collect valid coordinates
+        for (let i = 0; i < latInputs.length; i++) {
+          const lat = parseFloat(latInputs[i].value);
+          const lon = parseFloat(lonInputs[i].value);
+
+          if (isNaN(lat) || isNaN(lon)) {
+            continue; // skip empty inputs
+          }
+
+          if (lat < -90 || lat > 90) {
+            error.innerHTML = `Error: Latitude must be between -90 and 90 degrees (found ${lat})`;
+            error.style.display = "block";
+            return;
+          }
+
+          if (lon < -180 || lon > 180) {
+            error.innerHTML = `Error: Longitude must be between -180 and 180 degrees (found ${lon})`;
+            error.style.display = "block";
+            return;
+          }
+
+          lats.push(lat);
+          lons.push(lon);
+        }
+
+        if (lats.length < 2) {
+          error.innerHTML =
+            "Error: Please enter at least 2 valid coordinate pairs";
+          error.style.display = "block";
+          return;
+        }
+
+        // calculate midpoint
+        const avgLat = lats.reduce((sum, lat) => sum + lat, 0) / lats.length;
+        const avgLon = lons.reduce((sum, lon) => sum + lon, 0) / lons.length;
+
+        // display result
+        document.getElementById("midpoint-lat").textContent = avgLat.toFixed(6);
+        document.getElementById("midpoint-lon").textContent = avgLon.toFixed(6);
+        outputWrapper.style.display = "block";
+      }
+
+      document.getElementById("add-point").addEventListener("click", addPoint);
+      document
+        .getElementById("calculate")
+        .addEventListener("click", calculateMidpoint);
+    </script>
+  </body>
+</html>
