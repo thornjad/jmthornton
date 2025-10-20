@@ -67,9 +67,7 @@
           <code><span class="js-galaxy-orbits"></span></code>
           orbits around the Milky Way. The Moon has orbited Earth
           <code><span class="js-moon-orbits"></span></code>
-          times, and if I were a Martian, I'd be
-          <code><span class="js-mars-years"></span></code>
-          years old. The universe has expanded by
+          times, the universe has expanded by
           <code><span class="js-universe-expansion"></span>%</code> since I was
           born and approximately
           <code><span class="js-neutrinos"></span></code> neutrinos have passed
@@ -194,8 +192,6 @@
       );
       const GALAXY_ORBIT_YEARS = 230000000; // years for solar system to orbit galaxy
       const MOON_ORBITS_PER_YEAR = 13.3687; // moon orbits per Earth year
-      const MARS_YEAR_DAYS = 687; // days in a Martian year
-      const MARS_YEARS_PER_EARTH_YEAR = 365.25 / MARS_YEAR_DAYS;
       const HUBBLE_CONSTANT_PER_YEAR = 7.16e-11; // universe expansion rate per year
       const NEUTRINOS_PER_SECOND = 1.8e15; // neutrinos passing through body per second
       const NEUTRINOS_PER_YEAR = NEUTRINOS_PER_SECOND * 60 * 60 * 24 * 365.25;
@@ -208,7 +204,6 @@
         const earthMiles = ageInYears * EARTH_GALACTIC_MILES_PER_YEAR;
         const galaxyOrbits = ageInYears / GALAXY_ORBIT_YEARS;
         const moonOrbits = ageInYears * MOON_ORBITS_PER_YEAR;
-        const marsYears = ageInYears / (MARS_YEAR_DAYS / 365.25);
         const universeExpansionPercent =
           ageInYears * HUBBLE_CONSTANT_PER_YEAR * 100;
         const neutrinos = ageInYears * NEUTRINOS_PER_YEAR;
@@ -221,8 +216,6 @@
           galaxyOrbits.toFixed(16);
         document.querySelector(".js-moon-orbits").textContent =
           moonOrbits.toFixed(7);
-        document.querySelector(".js-mars-years").textContent =
-          marsYears.toFixed(9);
         document.querySelector(".js-universe-expansion").textContent =
           universeExpansionPercent.toFixed(15);
         const neutrinosExp = neutrinos.toExponential(13).split("e+");
