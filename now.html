@@ -42,6 +42,14 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="/assets/style/main.css" type="text/css" />
+    <style>
+      .js-out-of-date {
+        display: none;
+      }
+      .js-out-of-date.show {
+        display: inline;
+      }
+    </style>
   </head>
   <body>
     <header>
@@ -56,6 +64,23 @@
     </header>
     <main>
       <h1 style="text-align: center">Now</h1>
+
+      <p>
+        <small
+        ><em>Last updated <time class="js-last-updated"></time>.<span class="js-out-of-date"> It is always now, but sometimes now is out of date.</span></em></small
+                                                                     >
+      </p>
+
+      <p>
+        <em
+        >This is a <a href="https://nownownow.com/p/cjhc">now page</a>, learn <a href="https://nownownow.com/about">why</a>. You
+          can see its
+          <a
+            href="https://github.com/thornjad/jmthornton/commits/main/now.html"
+          >update history on GitHub</a
+                                   >.</em
+                                     >
+      </p>
 
       <section>
         <p class="js-age-container" style="display: none">
@@ -109,14 +134,9 @@
           </p>
 
           <p>
-            <strong>Planning</strong> my first long-distance train trip in
-            October, the Amtrak Cardinal, from NYC to Chicago.
-          </p>
-
-          <p>
-            <strong>Satiating</strong> my rabbit Amelia's appetite for
-            destruction. I'm planning out a fourth iteration of her custom litter
-            box to give her more space.
+            <strong>Building</strong> the fourth iteration of my rabbit Amelia's
+            custom litter box to give her more space and satiate her appetite for
+            destruction.
           </p>
 
           <p>
@@ -137,23 +157,6 @@
               href="https://www.barnesandnoble.com/w/cloud-warriors-thomas-e-weber/1145317374"
             >Cloud Warriors by Thomas Weber</a
                                            >.
-          </p>
-
-          <p>
-            <em
-            >This is a <a href="https://nownownow.com/p/cjhc">now page</a>, learn <a href="https://nownownow.com/about">why</a>. You
-              can see its
-              <a
-                href="https://github.com/thornjad/jmthornton/commits/main/now.html"
-              >update history on GitHub</a
-                                       >.</em
-                                         >
-          </p>
-
-          <p>
-            <small
-            ><em>Last updated <time class="js-last-updated"></time>.</em></small
-                                                                         >
           </p>
         </section>
     </main>
@@ -234,6 +237,16 @@
      document
        .querySelector(".js-last-updated")
        .setAttribute("datetime", lastUpdated.toISOString());
+
+     // check if page is out of date (more than 30 days old)
+     const now = new Date();
+     const daysSinceUpdate = Math.floor((now - lastUpdated) / (1000 * 60 * 60 * 24));
+     const outOfDateElement = document.querySelector(".js-out-of-date");
+     if (daysSinceUpdate > 30) {
+       outOfDateElement.classList.add("show");
+     } else {
+       outOfDateElement.classList.remove("show");
+     }
     </script>
   </body>
 </html>
