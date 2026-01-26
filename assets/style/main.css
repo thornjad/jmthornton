@@ -627,7 +627,7 @@ div.sponsor {
 
 div.split {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-wrap: wrap;
 
   div.right {
