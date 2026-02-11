@@ -190,8 +190,7 @@
      const GALAXY_ORBIT_YEARS = 230000000; // years for solar system to orbit galaxy
      const MOON_ORBITS_PER_YEAR = 13.3687; // moon orbits per Earth year
      const HUBBLE_CONSTANT_PER_YEAR = 7.16e-11; // universe expansion rate per year
-     const NEUTRINOS_PER_SECOND = 1.8e15; // neutrinos passing through body per second
-     const NEUTRINOS_PER_YEAR = NEUTRINOS_PER_SECOND * 60 * 60 * 24 * 365.25;
+     const NEUTRINOS_PER_MS = 1800000000000n; // neutrinos passing through body per ms
 
      function updateAge() {
        const now = new Date();
@@ -203,7 +202,6 @@
        const moonOrbits = ageInYears * MOON_ORBITS_PER_YEAR;
        const universeExpansionPercent =
          ageInYears * HUBBLE_CONSTANT_PER_YEAR * 100;
-       const neutrinos = ageInYears * NEUTRINOS_PER_YEAR;
 
        // format numbers with appropriate precision
        document.querySelector(".js-age").textContent = ageInYears.toFixed(9);
@@ -215,15 +213,23 @@
          moonOrbits.toFixed(7);
        document.querySelector(".js-universe-expansion").textContent =
          universeExpansionPercent.toFixed(15);
-       const neutrinosExp = neutrinos.toExponential(13).split("e+");
-       document.querySelector(".js-neutrinos").innerHTML =
-         neutrinosExp[0] + " × 10<sup>" + neutrinosExp[1] + "</sup>";
+       // higher-order digits are accurate via BigInt ms precision; the last
+       // 11 digits are randomized since ms resolution can't measure them, but
+       // they convey the real effect of rapid counting at this scale
+       const neutrinosBig = BigInt(now.getTime() - birthDate.getTime()) * NEUTRINOS_PER_MS;
+       const nStr = neutrinosBig.toString();
+       const precise = nStr.slice(0, -11);
+       let fuzz = '';
+       for (let i = 0; i < 11; i++) fuzz += (Math.random() * 10) | 0;
+       document.querySelector(".js-neutrinos").textContent =
+         (precise + fuzz).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+       requestAnimationFrame(updateAge);
      }
 
      // show the age container now that JS is enabled
      document.querySelector(".js-age-container").style.display = "block";
      updateAge();
-     setInterval(updateAge, 1000 / 60);
+     requestAnimationFrame(updateAge);
 
      // last updated timestamp
      const lastUpdated = new Date("2026-01-25T00:00:00-06:00");
