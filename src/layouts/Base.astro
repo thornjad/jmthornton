@@ -1,0 +1,57 @@
+---
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import FontPreload from '../components/FontPreload.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  robots?: string;
+  canonical?: string;
+  footerVariant?: 'standard' | 'blog' | 'recipe';
+  fontStrategy?: 'preload' | 'prefetch';
+  includeOneko?: boolean;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  robots,
+  canonical,
+  footerVariant = 'standard',
+  fontStrategy = 'preload',
+  includeOneko = false,
+  noindex = false,
+} = Astro.props;
+
+const robotsContent = noindex ? 'noindex' : (robots ?? 'index, follow');
+---
+
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    {description && <meta name="description" content={description} />}
+    <meta name="robots" content={robotsContent} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="shortcut icon" href="/assets/images/favicon.png" />
+    <link rel="preload" href="/assets/style/main.css" as="style" crossorigin />
+    <FontPreload strategy={fontStrategy} />
+    <link rel="stylesheet" href="/assets/style/main.css" type="text/css" />
+    {includeOneko && <script async src="/lib/oneko.js"></script>}
+    <slot name="head" />
+  </head>
+  <body>
+    <Nav />
+    <main>
+      <slot />
+    </main>
+    <Footer variant={footerVariant}>
+      <slot name="footer-extra" slot="footer-extra" />
+    </Footer>
+    <slot name="body-end" />
+  </body>
+</html>

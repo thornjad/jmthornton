@@ -1,0 +1,56 @@
+---
+import BlogPost from '../../../layouts/BlogPost.astro';
+---
+
+<BlogPost
+  title="Vero: A Simple Zsh Theme"
+  description="Announcing the release of Vero, a simple and informative theme for Zsh with git status, version managers, and more."
+  slug="vero-zsh-theme"
+  publishedDate="2017-02-09"
+>
+  <h1 class="post-title">Vero: A Simple Zsh Theme</h1>
+  <time datetime="2017-02-09">February 09, 2017</time>
+
+  <div class="post-main">
+    <div class="blog-body">
+      <p>
+        I'm excited to announce the release of <strong>Vero</strong>, a simple and informative theme for Zsh. After using various themes over the years, I decided to create one that focuses on providing essential information without clutter.
+      </p>
+
+      <h2>Features</h2>
+
+      <p>Vero includes all the information I need in my daily terminal work:</p>
+
+      <ul>
+        <li>Current versions for <code>nvm</code> and <code>pyenv</code></li>
+        <li>Git branch and status</li>
+        <li>Timestamp</li>
+        <li>SSH indication</li>
+        <li>Current user</li>
+        <li>Current working directory</li>
+      </ul>
+
+      <h2>Preview</h2>
+
+      <p align="center">
+        <img src="/assets/images/vero-preview.png" alt="Preview of Vero" style="border-radius: 3px; max-width: 100%; height: auto;" />
+      </p>
+
+      <p>
+        As you can see, Vero provides a clean, informative prompt that shows everything you need to know about your current environment. The theme is designed to be fast and lightweight while remaining highly functional.
+      </p>
+
+      <h2>Installation</h2>
+
+      <p>
+        Vero is available on <a href="https://github.com/thornjad/vero">GitHub</a> and can be installed using <a href="https://gitlab.com/thornjad/zpico">ZPico</a>:
+      </p>
+
+      <pre><code class="language-bash">zpico add thornjad/vero source:gitlab</code></pre>
+
+      <p>
+        The theme is released under a permissive license, so feel free to use, modify, and distribute it as needed. I hope you find it as useful as I do!
+      </p>
+    </div>
+  </div>
+</BlogPost>

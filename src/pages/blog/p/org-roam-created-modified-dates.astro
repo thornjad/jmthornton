@@ -1,0 +1,81 @@
+---
+import BlogPost from '../../../layouts/BlogPost.astro';
+---
+
+<BlogPost
+  title="Org-roam: Automatically Set Node Created and Modified Dates"
+  description="Enhancing Org-roam nodes with auto-updating created and modified properties."
+  slug="org-roam-created-modified-dates"
+  publishedDate="2024-03-18"
+  hasPrism={true}
+>
+  <h1 class="post-title">Org-roam: Automatically Set Node Created and Modified Dates</h1>
+  <time datetime="2024-03-18">March 18, 2024</time>
+  <div class="post-main">
+    <div class="blog-body">
+      <p>
+        <a href="https://www.orgroam.com/">Org-roam</a> is an Emacs package for non-hierarchical note-taking, and it does a brilliant job at organizing these thoughts but does not include automatic timestamping. By default, Org-roam does include the creation timestamp in the file name, but that's not easily read by a human.
+      </p>
+      <p>
+        To add this generally useful information, I automatically add a <code>:created:</code> property when visiting a node if it doesn't already exist, and a <code>:modified:</code> property when saving a node. This way, I can see when a note was created and when it was last modified.
+      </p>
+      <p>
+        Note that the <code>:created:</code> property parses the timestamp from the filename and relies on Org-roam's default naming scheme. If you use a different naming scheme, you'll need to modify the <code>org-roam-extract-timestamp-from-filepath</code> function to match your scheme.
+      </p>
+      <hr />
+      <h3>Automating Creation Dates</h3>
+      <pre lang="lisp"><code class="language-lisp">(defun org-roam-insert-created-property ()
+  "Insert :created: property for an Org-roam node.
+
+Does not override the property if it already exists.
+
+Calculation of the creation date is based on the filename of the note,
+and assumes the default Org-roam naming scheme."
+  (interactive)
+  (when (org-roam-file-p)
+    ;; Don't update if the created property already exists
+    (unless (org-entry-get (point-min) "created" t)
+      (let ((creation-time (org-roam-extract-timestamp-from-filepath
+                            (buffer-file-name))))
+        ;; Don't error if the filename doesn't contain a timestamp
+        (when creation-time
+          (save-excursion
+            ;; Ensure point is at the beginning of the buffer
+            (goto-char (point-min))
+            (org-set-property "created" creation-time)))))))</code></pre>
+
+      <h3>Extracting Timestamps from Filenames</h3>
+      <pre lang="lisp"><code class="language-lisp">(defun org-roam-extract-timestamp-from-filepath (filepath)
+  "Extract timestamp from the Org-roam FILEPATH assuming it follows the default naming scheme."
+  (let ((filename (file-name-nondirectory filepath)))
+    (when (string-match "\\([0-9]\\{8\\}\\)\\([0-9]\\{4\\}\\)" filename)
+      (let ((year (substring filename (match-beginning 1) (+ (match-beginning 1) 4)))
+            (month (substring filename (+ (match-beginning 1) 4) (+ (match-beginning 1) 6)))
+            (day (substring filename (+ (match-beginning 1) 6) (+ (match-beginning 1) 8)))
+            (hour (substring filename (match-beginning 2) (+ (match-beginning 2) 2)))
+            (minute (substring filename (+ (match-beginning 2) 2) (+ (match-beginning 2) 4))))
+        (format "[%s-%s-%s %s:%s]" year month day hour minute)))))</code></pre>
+
+      <h3>Keeping Modification Dates Current</h3>
+      <pre lang="lisp"><code class="language-lisp">(defun org-roam-insert-modified-property ()
+  "Update the :modified: property for an Org-roam node upon saving."
+  (when (org-roam-file-p)
+    (save-excursion
+      ;; Ensure property is applied to the whole file
+      (goto-char (point-min))
+      (org-set-property
+       "modified" (format-time-string "[%Y-%m-%d %a %H:%M]")))))</code></pre>
+
+      <p>
+        The integration of these functions into your Emacs and Org-roam config ensures that every note's origins and edits are easily accessible and readable. To make these actually run, I set them up to run on before-save. There may be better hooks for this, but Org-roam's own hooks make it kind of difficult in my own setup, so I take the more brute force approach and it works fine for me:
+      </p>
+      <pre lang="lisp"><code class="language-lisp">(add-hook 'before-save-hook #'aero/org-roam-insert-created-property)
+(add-hook 'before-save-hook #'org-roam-insert-modified-property)</code></pre>
+    </div>
+  </div>
+
+  <hr />
+  <div>
+    <p>Check out my <a href="https://github.com/thornjad/aero">full Emacs configuration</a> if you'd like to see how else I bend Emacs to my will.</p>
+  </div>
+</BlogPost>

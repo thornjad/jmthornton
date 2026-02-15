@@ -1,0 +1,51 @@
+---
+import BlogPost from '../../../layouts/BlogPost.astro';
+---
+
+<BlogPost
+  title="A Few Lesser-Known Emacs Packages"
+  description="A continually updating list of my favorite lesser-known Emacs packages"
+  slug="fav-lesser-known-packages"
+  publishedDate="2023-05-07"
+  modifiedDate="2023-06-25"
+>
+  <h1 class="post-title">A few of the best lesser-known Emacs packages</h1>
+  <time datetime="2023-05-07">First posted: May 7, 2023</time>&nbsp;
+  <time datetime="2023-06-25">Last updated: June 25, 2023</time>
+
+  <div class="post-main">
+    <div class="blog-body">
+      <p>
+        When it comes to Emacs packages, there are a few "must-have" selections that always appear on popular lists, from <a href="https://magit.vc/">Magit</a> to <a href="https://emacs-helm.github.io/helm/">Helm</a> and/or <a href="https://github.com/abo-abo/swiper">Ivy</a>, and the necessity of the sane person: <a href="https://github.com/emacs-evil/evil">Evil</a>. But for the more experienced Emacs user, finding lesser-known packages can add powerful new functionality and streamline day-to-day working methods. Here are several of my favorite Emacs packages that don't always make the most popular lists, in no particular order.
+      </p>
+      <h3><a href="https://gitlab.com/ideasman42/emacs-virtual-comment">Virtual Comment</a></h3>
+      <p>
+        An unusual yet surprisingly helpful package. It allows you to
+      create a "virtual" comment on a line of code, without altering the original code on disk at all. The comment is then
+      displayed above the line instead of cluttering the main Emacs buffer. This is incredibly useful for exploring complex
+      new code, reviewing changes and even quick prototyping.
+      </p>
+      <h3><a href="https://github.com/bnbeckwith/writegood-mode">Writegood Mode</a></h3>
+      <p>
+        A tool that combats common writing pitfalls in everything from documentation to code comments. With helpful (if sometimes annoying) features such as highlighting weasel words, passive voice or repeated phrases, it helps users tighten their writing style and produce more concise, high-quality documents. Truly a must-have for anyone who deals with documentation or coding comments on a regular basis.
+      </p>
+      <h3><a href="https://github.com/Lautaro-Garcia/counsel-spotify">Counsel-Spotify</a></h3>
+      <p>
+        If you're a fan of Counsel and Ivy, and you use Spotify, then maybe a package putting them together deserves some attention. This utility allows you to control Spotify playback without leaving Emacs, effectively turning Emacs into a somewhat-awkward-but-functional Spotify remote. While it doesn't provide access to all of Spotify's catalog functions, it's a great tool for quickly pausing, skipping or adjusting volume settings during a work session. It can even browse songs, albums and artists, though I haven't found this particularly useful myself.
+      </p>
+      <h3><a href="https://github.com/arthurcgusmao/unmodified-buffer">Unmodified Buffer</a></h3>
+      <p>
+        This one is a small yet compelling package. It resets the "modified" flag on a buffer automatically if the new buffer content matches the content of the file on disk. This means that you won't accidentally overwrite a previously saved copy of a file with identical buffer content, saving you time and headaches in the long run. Honestly this should be the default behavior in core Emacs.
+      </p>
+      <h3><a href="">ToDo Light</a></h3>
+      <p>
+        Okay, this one is a bit of a personal plug, but it's made a noticeable impact in streamlining my Emacs workflow. It highlights keywords such as TODO, FIXME and TEMP, helping users quickly locate areas in a project that need attention. It's easy to customize, so you can add as many keywords or phrases as you would like.
+      </p>
+    </div>
+  </div>
+
+  <hr />
+  <div>
+    <p>Check out my <a href="https://github.com/thornjad/aero">full Emacs configuration</a> if you'd like to see how else I bend Emacs to my will.</p>
+  </div>
+</BlogPost>

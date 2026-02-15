@@ -1,18 +1,19 @@
 # Compiled source #
 ###################
 dist/
+.astro/
 *.o
 *.so
 __pycache__
 a.html
-assets/style/out.css
-assets/vendor/prism.min.css
-assets/vendor/prism-dark.min.css
-blog/assets/style/main.css
-blog/assets/vendor/
-tools/news/news.css
-tools/tools.css
-tools/libertarian-zoo/main.css
+public/assets/style/out.css
+public/assets/vendor/prism.min.css
+public/assets/vendor/prism-dark.min.css
+public/blog/assets/style/main.css
+public/blog/assets/vendor/
+public/tools/news/news.css
+public/tools/tools.css
+public/tools/libertarian-zoo/main.css
 .clj-kondo
 .cpcache
 .lsp
@@ -35,10 +36,10 @@ CNAME
 # Development files #
 #####################
 *.old
-assets/style/out.css.map
-assets/style/main.css.map
-blog/draft/
-blog/feed.xml
+public/assets/style/out.css.map
+public/assets/style/main.css.map
+public/blog/draft/
+public/blog/feed.xml
 
 # Development Directories #
 ###########################

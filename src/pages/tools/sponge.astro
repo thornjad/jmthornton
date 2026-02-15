@@ -1,0 +1,63 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base
+  title="Sponge Text | Jade Michael Thornton"
+  description="EaSiLy gEnErAtE SpOnGe tExT"
+  fontStrategy="prefetch"
+>
+  <Fragment slot="head">
+    <style>
+      textarea {
+        width: 100%;
+      }
+    </style>
+  </Fragment>
+
+  <h1>CoNvErT SpOnGe tExT</h1>
+
+  <noscript>Sorry, this tool requires jAvAsCrIpT.</noscript>
+
+  <textarea
+    id="sponger"
+    rows="18"
+    cols="90"
+    placeholder="Enter text to convert to/from sponge"
+  ></textarea>
+  <div class="action-buttons">
+    <button id="sponge">Sponge it</button>
+    <button id="desponge">De-Sponge</button>
+  </div>
+  <label
+    ><input id="startCap" type="checkbox" checked />Start with capital
+    letter</label
+  >
+
+  <script is:inline>
+    let startCap = true;
+
+    const getValue = () => {
+      const sponger = document.querySelector("#sponger");
+      return [sponger, sponger.value];
+    };
+
+    document.querySelector("#sponge").addEventListener("click", () => {
+      const [sponger, value] = getValue();
+      sponger.value = (startCap ? value.toUpperCase() : value.toLowerCase())
+        .split("")
+        .map((l, i) =>
+          i % 2 === 1 ? (startCap ? l.toLowerCase() : l.toUpperCase()) : l,
+        )
+        .join("");
+    });
+    document.querySelector("#desponge").addEventListener("click", () => {
+      const [sponger, value] = getValue();
+      sponger.value = value.toLowerCase();
+    });
+
+    document.querySelector("#startCap").addEventListener("change", (e) => {
+      startCap = e.target.checked;
+    });
+  </script>
+</Base>

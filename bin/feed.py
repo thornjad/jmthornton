@@ -110,8 +110,8 @@ def main():
     fg.language('en-US')
     fg.author({'name': 'Jade Michael Thornton'})
 
-    # Get all HTML files in blog/p directory
-    blog_dir = Path('blog/p')
+    # Get all HTML files from built output
+    blog_dir = Path('dist/blog/p')
     html_files = sorted(blog_dir.glob('*.html'), key=lambda x: x.stat().st_mtime, reverse=True)
 
     # Track the most recent date across all posts
@@ -149,7 +149,7 @@ def main():
         fg.updated(most_recent_date)
 
     # Write feed to file
-    fg.atom_file('blog/feed.xml', pretty=True)
+    fg.atom_file('dist/blog/feed.xml', pretty=True)
 
 
 if __name__ == '__main__':

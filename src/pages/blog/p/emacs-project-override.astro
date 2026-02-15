@@ -1,0 +1,88 @@
+---
+import BlogPost from '../../../layouts/BlogPost.astro';
+---
+
+<BlogPost
+  title="Overriding project.el project root in Emacs"
+  description="A short function to override what project.el thinks your project root is with a hidden file"
+  slug="emacs-project-override"
+  publishedDate="2022-04-21"
+  modifiedDate="2023-03-07"
+  hasPrism={true}
+>
+  <h1 class="post-title">Overriding project.el project root in Emacs</h1>
+  <time datetime="2023-03-07">Updated: March 7, 2023</time>&nbsp;
+  <time datetime="2022-04-21">Originally posted: April 21, 2022</time>
+  <div class="post-main">
+    <div class="blog-body">
+      <p>
+        I've recently been experimenting with replacing
+        <a href="https://projectile.mx/">Projectile</a> with the built-in <code>project.el</code>, and
+        so far it has impressed me. Not only are all of Projectile's useful features available, but for
+        me
+        <code>project.el</code>
+        runs significantly faster in large repositories. If you're not familiar, both of these packages
+        provide functions to search and operate on files and directories in the same project. If you're
+        using Git, a "project" is probably synonymous with a repository.
+      </p>
+      <p>
+        Unfortunately, project detection is not always as easy as looking for a
+        <code>.git/</code> nearby, and sometimes Emacs gets it wrong. Projectile solves this by also
+        looking for a <code>.projectile</code> file, which overrides detection and says "this is the
+        project root". This happens to be one of the features missing in <code>project.el</code>.
+      </p>
+      <hr />
+      <h3>Update</h3>
+      <p>Since the writing of this post, Emacs 29 has been released and introduces a variable which may solve this same issue in a cleaner way! Unfortunately it doesn't appear to work for me, but some folks on Reddit commented that it seems to function as expected. So, it may be worth a shot for you: set <code>project-vc-extra-root-markers</code> to a list of file names or glob patterns which mark a project's root in addition to the default ".git", ".hg" and other common markers.</p>
+      <p>So, the cleaner equivalent to the rest of the post, if it works, is a simple <pre lang="lisp"><code class="language-lisp">{"(setq project-vc-extra-root-markers '(\".project.el\" \".projectile\" ))"}</code></pre></p>
+      <p>If, however, you're like me and can't seem to get this to do anything, the original post still works:</p>
+      <hr />
+      <h3>Original post</h3>
+      <p>
+        Luckily, we can provide our own function to <code>project.el</code> which looks for a file like
+        this in the current and parent directories. Even better, the excellent Emacs community has
+        already jumped on this, and a splendid solution was
+        <a href="https://michael.stapelberg.ch/posts/2021-04-02-emacs-project-override/"
+          >provided by Michael Stapelberg</a
+        >.
+      </p>
+      <p>
+        Alas, Michael couldn't have forseen that Emacs would change the project root data format in
+        Emacs 29, so the provided function only works in earlier versions. However, adding in forward
+        compatibility isn't much trouble. And while we're at it, we can also provide support for anyone
+        else moving from Projectile like I am, by allowing <code>.projectile</code> to serve as a
+        project root marker alongside Michael's <code>.project.el</code>.
+      </p>
+      <pre lang="lisp"><code class="language-lisp">{"(defun project-root-override (dir)\n  \"Find DIR's project root by searching for a '.project.el' file.\n\nIf this file exists, it marks the project root. For convenient compatibility\nwith Projectile, '.projectile' is also considered a project root marker.\n\nhttps://jmthornton.net/blog/p/emacs-project-override\"\n  (let ((root (or (locate-dominating-file dir \".project.el\")\n                  (locate-dominating-file dir \".projectile\")))\n        (backend (ignore-errors (vc-responsible-backend dir))))\n    (when root (if (version<= emacs-version \"28\")\n                    (cons 'vc root)\n                  (list 'vc backend root)))))\n\n;; Note that we cannot use :hook here because `project-find-functions' doesn't\n;; end in \"-hook\", and we can't use this in :init because it won't be defined\n;; yet.\n(use-package project\n  :config\n  (add-hook 'project-find-functions #'project-root-override))"}</code></pre>
+      <p>
+        Now we can use <code>touch .project.el</code> in any directory, and <code>project.el</code> with
+        recognize it as the project root!
+      </p>
+      <p>
+        By the way, the snippet above makes use of
+        <a href="https://github.com/jwiegley/use-package">use-package</a> which provides fantastic
+        package configuration and loading ability. John Wiegley is currently
+        <a href="https://github.com/jwiegley/use-package/issues/282"
+          >working on adding it into Emacs itself</a
+        >, so it shouldn't be long before this code snippet is fully native!
+      </p>
+      <p>
+        One note, in an ideal world, I'd prefer the root marker to be just <code>.project</code> instead
+        of <code>.project.el</code>, but this is already widely used by other tools like Eclipse and I'd
+        rather not cause conflicts. If you'd like to use this in your own Emacs, obviously you can
+        change the function to check for anything you want.
+      </p>
+      <aside>
+        <em>Pro tip:</em> If you'd like to use a project root marker like this, but you don't want other
+        developers to have to worry about it (i.e. you don't want to commit it nor add it to the
+        <code>.gitignore</code>), you can always add locally-ignored files to
+        <code>.git/info/exclude</code>.
+      </aside>
+    </div>
+  </div>
+
+  <hr />
+  <div>
+    <p>Check out my <a href="https://emacs.jmthornton.net">full Emacs configuration</a> if you'd like to see how else I bend Emacs to my will.</p>
+  </div>
+</BlogPost>

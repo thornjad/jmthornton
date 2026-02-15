@@ -1,0 +1,92 @@
+---
+import Base from '../../../layouts/Base.astro';
+---
+
+<Base
+  title="Family Recipes"
+  description="No essays, no ads, just good recipes from the family of Jade Michael Thornton"
+  fontStrategy="prefetch"
+  footerVariant="recipe"
+>
+  <Fragment slot="head">
+    <link type="text/plain" rel="author" href="https://jmthornton.net/humans.txt" />
+    <meta name="googlebot" content="noindex" />
+    <style>
+      .subscribe-btn {
+        margin-top: 2.1em;
+      }
+
+      @media (min-width: 768px) {
+        .subscribe-btn {
+          text-align: right;
+        }
+      }
+    </style>
+  </Fragment>
+
+  <div class="no-md-a">
+    <div class="title blog-title">
+      <br />
+      <h1>Family Recipes</h1>
+      <p>No essays, no ads, just good recipes from the Thornton-Shrider family</p>
+      <br />
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="./r/speckendicken">Speckendicken</a>
+        <br />
+        Traditional German New Year Cakes, a recipe from my great-great-grandmother Baumann
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="./r/pumpkin-doughnut">Pumpkin Doughnuts</a>
+        <br />
+        It's not fall until my grandma's pumpkin doughnuts are made.
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="./r/rhubarb-pie">Rhubarb Pie</a>
+        <br />
+        The most delicious pie on the planet
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="./r/eine-schmarren">Eine Schmarren (Egg-up-on, or Egg-a-pond)</a>
+        <br />
+        Traditional dinner made by my great-great-grandpa Carl Wilhelm Baumann on wash day.
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="./r/russian-tea">Russian Tea</a>
+        <br />
+        A drink of my childhood, popular in the family since the craze in the 70s
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="./r/glorified-rice">Glorified Rice</a>
+        <br />
+        The lovely Midwestern dessert, recipe from my great-grandma Lena Baumann, as kept by my great-aunt
+        Marnalee
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="./r/rhubarb-strawberry-jam">Rhubarb-Strawberry Jam</a>
+        <br />
+        Delicious jam, good all year round
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="./r/pumpkin-spice-latte">Homemade Pumpkin Spice Latte</a>
+        <br />
+        Make your own semi-traditional pumpkin spice latte at home
+      </p>
+    </div>
+  </div>
+</Base>

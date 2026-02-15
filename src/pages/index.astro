@@ -1,0 +1,238 @@
+---
+import Base from '../layouts/Base.astro';
+import pkg from '../../package.json';
+---
+
+<Base
+  title="Jade Michael Thornton — Jade Thornton | Manager and Software Engineer"
+  description="Jade Michael Thornton is a manager of software engineering and this is his website."
+  robots="home, follow"
+  canonical="https://jmthornton.net"
+  includeOneko
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Jade Michael Thornton",
+      "alternateName": "Jade Thornton",
+      "url": "https://jmthornton.net",
+      "sameAs": [
+        "https://linkedin.com/in/jademichael",
+        "https://github.com/thornjad",
+        "https://gitlab.com/thornjad",
+        "https://www.youtube.com/@jmichaelthornton",
+        "https://mspsocial.net/@thornjad",
+        "https://wellfound.com/u/jade-thornton-1"
+      ]
+    })} />
+  </Fragment>
+
+  <h1 class="rgb-color" style="text-align: center">
+    Jade Michael Thornton
+  </h1>
+
+  <section>
+    <div class="split">
+      <div class="left">
+        <p>
+          I'm Jade Thornton, an engineering manager, software engineer and
+          weather enthusiast in the Twin Cities, Minnesota. I know some
+          things about some software, and a lot about taking care of house
+          rabbits. My favorite language is Clojure, but I never get to work
+          in it. I work as a manager of software engineering at
+          <a href="https://dronedeploy.com">DroneDeploy</a>, leading our
+          Enterprise Growth engineering team. Learn more about
+          <a href="/now">what I'm doing now</a>.
+        </p>
+        <p>
+          I've previously worked at
+          <a href="https://flightaware.com">FlightAware</a> (acquired by
+          <a href="https://www.collinsaerospace.com">Collins Aerospace</a>),
+          <a href="https://www.thomsonreuters.com">Thomson Reuters</a>,
+          <a href="https://www.mavericksoftware.com">Maverick Software</a>,
+          and the
+          <a href="https://www.hhh.umn.edu"
+            >Humphrey School of Public Affairs</a
+          >. I've previously studied computer science at the
+          <a href="https://www.umn.edu">University of Minnesota</a> and
+          <a href="https://www.saintpaul.edu">Saint Paul College</a>, and
+          I'm currently furthering my computer science and philosophy
+          education through part-time study at the University of Minnesota.
+        </p>
+        <p>
+          Some other links include: my
+          <a href="https://github.com/thornjad">GitHub</a> and
+          <a href="https://gitlab.com/thornjad">GitLab</a> profiles, my
+          <a href="https://www.youtube.com/@jmichaelthornton"
+            >miniscule YouTube channel</a
+          >, my <a href="https://jmthornton.net/blog">blog posts</a>, some
+          <a href="/tools">online tools</a>, my
+          <!-- <a href="/p/JadeMichaelThornton.pdf">resume [pdf]</a> and --><a
+            href="https://linkedin.com/in/jademichael"
+            >LinkedIn profile</a
+          >, and some
+          <a href="https://photos.jmthornton.net">photos I took</a>.
+        </p>
+        <p>Memento mori.</p>
+
+        <noscript
+          ><p>
+            Javascript disabled? Dope, I like you. The only JS on this page
+            animates a little cat sprite that follows your cursor, and a
+            little snippet that looks up the current site version number. So
+            you're not missing much. Blog posts also use JS for code block
+            syntax highlighting. Some tools pages need JS to work, but those
+            should be pretty obvious.
+          </p></noscript
+        >
+      </div>
+      <div class="right">
+        <img
+          class="stephpic"
+          loading="lazy"
+          src="/assets/images/stephandjade.webp"
+          alt="Jade Thornton and his partner"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>My Projects</h2>
+    <p>
+      All open source on
+      <a href="https://gitlab.com/thornjad">GitLab</a> and
+      <a href="https://github.com/thornjad">GitHub</a>.
+    </p>
+
+    <p>
+      <em>Emacs:</em>
+      <a href="https://emacs.jmthornton.net">My Emacs literate config</a>,
+      <a href="https://github.com/thornjad/emacs-jest">emacs-jest</a>,
+      <a href="https://github.com/thornjad/el2md">el2md</a>,
+      <a href="https://github.com/thornjad/rivet-mode">Rivet mode</a>,
+      <a href="https://github.com/thornjad/pomp">pomp</a>
+    </p>
+    <p>
+      <em>Theming & Shell:</em>
+      <a href="https://github.com/thornjad/aero-theme">Aero (Emacs)</a>,
+      <a href="https://github.com/thornjad/vero">Vero (Zsh)</a>,
+      <a href="https://github.com/ClearNight">ClearNight (Atom, RIP)</a>,
+      <a href="https://github.com/thornjad/unbroken">Unbroken (GTK3)</a>,
+      <a href="https://minicss.org/">mini.css</a>,
+      <a href="https://github.com/thornjad/zpico">zpico (Zsh)</a>
+    </p>
+    <p>
+      <em>Languages I haven't completed:</em>
+      <a href="https://github.com/thornjad/warbler">Warbler</a>,
+      <a href="https://github.com/thornjad/brewlisp">Brewlisp</a>,
+      <a href="https://github.com/thornjad/spider-lang">Spider</a>
+    </p>
+    <p>
+      <em>Fun:</em>
+      <a href="https://weather.jmthornton.net">WeatherStar4k</a>,
+      <a href="/tools/weather-haiku">Weather Haiku</a>,
+      <a href="/tools/news">News</a>
+    </p>
+    <p>
+      <em>Contributions:</em>
+      <a href="https://github.com/remotestorage/armadietto">Armadietto</a>,
+      <a href="https://github.com/http-party/http-server">http-server</a>,
+      <a href="https://github.com/alacritty/alacritty">Alacritty</a>,
+      <a href="https://brave.com/">Brave Browser</a>,
+      <a href="https://github.com/flightaware/tohil">Tohil</a>,
+      <a href="https://github.com/jkk/formative">Formative</a>,
+      <a href="https://github.com/zplug/zplug">Zplug</a>,
+      <a href="https://www.freecodecamp.org">FreeCodeCamp</a>,
+      <a href="https://learnxinyminutes.com/">Learn X in Y</a>
+    </p>
+  </section>
+
+  <section>
+    <!--sse-->
+    <div class="shield-links">
+      <a href="https://gitlab.com/thornjad">
+        <img
+          alt="GitLab"
+          src="/assets/images/shields/gitlab.svg"
+          loading="lazy"
+        />
+      </a>
+      <a href="https://github.com/thornjad">
+        <img
+          alt="GitHub"
+          src="/assets/images/shields/github.svg"
+          loading="lazy"
+        />
+      </a>
+      <a href="https://www.linkedin.com/in/jademichael/">
+        <img
+          alt="LinkedIn"
+          src="/assets/images/shields/linkedin.svg"
+          loading="lazy"
+        />
+      </a>
+      <a href="https://wellfound.com/u/jade-thornton-1">
+        <img
+          alt="Wellfound"
+          src="/assets/images/shields/angellist.svg"
+          loading="lazy"
+        />
+      </a>
+      <a rel="me" href="https://mspsocial.net/@thornjad">
+        <img
+          alt="Mastodon"
+          src="/assets/images/shields/mastodon.svg"
+          loading="lazy"
+        />
+      </a>
+      <a href="https://www.youtube.com/@jmichaelthornton">
+        <img
+          alt="YouTube"
+          title="It's not much"
+          src="/assets/images/shields/youtube.svg"
+          loading="lazy"
+        />
+      </a>
+      <a href="https://photos.jmthornton.net">
+        <img
+          alt="Flickr"
+          title="It's just my photos"
+          src="/assets/images/shields/flickr.svg"
+          loading="lazy"
+        />
+      </a>
+      <a href="https://github.com/thornjad/aero">
+        <img
+          alt="Created with Emacs"
+          src="/assets/images/created-emacs.jpg"
+          loading="lazy"
+        />
+      </a>
+      <img
+        alt="Piracy now"
+        title="Piracy is swag"
+        src="/assets/images/piracy.gif"
+        loading="lazy"
+      />
+      <img
+        alt="Learn HTML today!"
+        src="/assets/images/html.gif"
+        loading="lazy"
+      />
+      <img
+        alt="Best viewed with any browser"
+        src="/assets/images/anybrow.gif"
+        loading="lazy"
+      />
+      <a href="https://yesterweb.org">
+        <img
+          src="/assets/images/yesterweb.png"
+          alt="Yesterweb: reclaim the net"
+        />
+      </a>
+    </div>
+    <!--/sse-->
+  </section>
+</Base>

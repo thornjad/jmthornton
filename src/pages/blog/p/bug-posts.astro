@@ -1,0 +1,35 @@
+---
+import BlogPost from '../../../layouts/BlogPost.astro';
+---
+
+<BlogPost
+  title="A list of the best bug write-ups I've read"
+  description="TodoPostDescription"
+  slug="bug-posts"
+  publishedDate="2023-11-20"
+>
+  <h1 class="post-title">A list of the best bug write-ups I've read</h1>
+  <time datetime="2023-11-20">November 11, 2023</time>
+  <time datetime="2025-04-23">Last updated: April 23, 2025</time>
+
+  <div class="post-main">
+    <div class="blog-body">
+      <p>A modest list of interesting blog posts I've come across containing tech mystery stories exploring how a bug or mistake or other problem came about, how it was discovered, how it was fixed, and maybe some lessons to learn.</p>
+      <ul>
+        <li><a href={'https://www.ibiblio.org/harris/500milemail.html"'}>The case of the 500-mile email</a>, by Trey Harris</li>
+        <li>
+          A three part series by James Haydon on the August 2023 UK NATS (ATC) meltdown:
+          <ol>
+            <li><a href="https://jameshaydon.github.io/nats-fail/">UK air traffic control meltdown</a></li>
+            <li><a href="https://jameshaydon.github.io/what-went-wrong/">UK ATC meltdown and swiss cheese</a></li>
+            <li><a href="https://jameshaydon.github.io/programming-style-and-bugs/">Domain structured programming (UK ATC meltdown)</a></li>
+          </ol>
+        </li>
+        <li><a href="https://blog.nelhage.com/2010/02/a-very-subtle-bug/">A Very Subtle Bug</a>, by Nelson Elhage. This bug was caused by unusual behavior in Python's handling of <code>SIGPIPE</code> which was fixed in Python 2.7.</li>
+        <li><a href="https://www.gamedeveloper.com/programming/my-hardest-bug-ever">My Hardest Bug Ever</a>, by Dave Baggett. Unlike almost every bug you'll ever come across, Dave was eventually forced to blame the hardware.</li>
+        <li><a href="https://ludic.mataroa.blog/blog/i-accidentally-saved-half-a-million-dollars/">I Accidentally Saved Half A Million Dollars</a>, by "Ludicity", although this reads as a junior engineer's perspective</li>
+        <li><a href="https://www.clientserver.dev/p/war-story-the-hardest-bug-i-ever">The hardest bug I ever debugged</a>, by Jacob Voytko</li>
+      </ul>
+    </div>
+  </div>
+</BlogPost>

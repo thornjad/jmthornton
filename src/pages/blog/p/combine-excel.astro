@@ -1,0 +1,80 @@
+---
+import BlogPost from '../../../layouts/BlogPost.astro';
+---
+
+<BlogPost
+  title="Combine multiple Excel workbooks into sheets in a single workbook"
+  description="A quick VBA subroutine for combining multiple Excel workbooks into a single workbook, making ingestion into Tableau easier"
+  slug="combine-excel"
+  publishedDate="2016-11-19"
+  modifiedDate="2023-06-27"
+  hasPrism={true}
+>
+  <h1 class="post-title">Combine multiple Excel workbooks into sheets in a single workbook</h1>
+  <time datetime="2016-11-19">November 19, 2016</time>
+
+  <div class="post-main">
+    <div class="blog-body">
+      <p>
+        It may be useful to have multiple source workbooks which can be individually updated and replaced, then combine them into a single combined workbook for actual use. In my case, the combined workbook is used as a data source in Tableau, with each sheet acting as a table.
+      </p>
+      <p>
+        Below is a VBA subroutine which can be run in Excel (in the workbook which will be the combined file). The subroutine assumes that all the new, updated files are in a <code>source/</code> directory which is in the combined file's directory.
+      </p>
+      <p>
+        Importantly, this subroutine only copies visible sheets (ignoring hidden and very hidden sheets).
+      </p>
+      <p>
+        <strong>Caution:</strong> For this script to work, the sheet name in the source files _must_ match the corresponding sheet name in the combined file.
+      </p>
+      <pre lang="vba"><code class="language-vba">Sub UpdateSheetsFromSourceFiles()
+
+'Disable alerts to delete silently
+Application.DisplayAlerts=FALSE
+
+'We assume source files are in the source\ directory
+path = ActiveWorkbook.Path & "\source\"
+filename = Dir(path & "*.xlsx")
+  Do While filename <> ""
+    Workbooks.Open Filename:=path & filename, ReadOnly:=True
+    For Each Sheet In ActiveWorkbook.Sheets
+      If Sheet.Visible = -1 Then 'Only if sheet is visible
+        'Remove old version of sheet to update, then pull in the updated version
+        ThisWorkbook.Sheets(Sheet.Name).Delete
+        Sheet.Copy After:=ThisWorkbook.Sheets(ThisWorkbook.Worksheets.Count)
+      End If
+    Next Sheet
+    Workbooks(filename).Close
+    filename = Dir()
+  Loop
+
+'Re-enable alerts
+Application.DisplayAlerts=TRUE
+
+End Sub</code></pre>
+      <h4>How it works</h4>
+      <ul>
+        <li>
+          First, we disable alerts. This allows us to delete files without asking for confimation from the user, making it nice and silent.
+        </li>
+        <li>
+          The path is determined from the <code>ActiveWorkbook</code>, which in this case is the combined file where the subroutine is running. Using the <code>Dir</code> function, we get the first <code>xlsx</code> file in the <code>source\</code> directory.
+        </li>
+        <li>
+          Looping through each sheet in the workbook, we first check to see if the sheet is visible (<code>Visible = -1</code>). If it is, we get to the real workhorse of the function:
+          <ul>
+            <li>
+              In the combined file (<code>ThisWorkbook</code>), the matching sheet is deleted, then:
+            </li>
+            <li>
+              The sheet from the source file is copied in. It's placed at the end of the list of sheets. Since we're looping through the directory, this has the side-effect of alphabetizing the worksheets.
+            </li>
+          </ul>
+        </li>
+        <li>
+          Once all the sheets in a workbook have been looped through, we close it and move on to the next file which matches the string we gave at the start (calling <code>Dir</code> with no arguments returns the next matching file).
+        </li>
+      </ul>
+    </div>
+  </div>
+</BlogPost>

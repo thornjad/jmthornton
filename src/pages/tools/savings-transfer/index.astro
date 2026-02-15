@@ -1,0 +1,92 @@
+---
+import Base from '../../../layouts/Base.astro';
+---
+
+<Base
+  title="Savings Transfer Calculator | Jade Michael Thornton"
+  description="Simple savings account transfer calculator"
+  fontStrategy="prefetch"
+  noindex={true}
+>
+  <Fragment slot="head">
+    <style>
+      section,
+      div#cd-section {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+
+        div.actions {
+          margin-top: 2em;
+        }
+
+        span {
+          display: flex;
+          gap: 0.5em;
+          line-height: 1.5em;
+        }
+      }
+
+      input {
+        text-align: right;
+      }
+
+      button {
+        width: 6em;
+
+        &#add-cd:not(:hover) {
+          background-color: transparent;
+          color: inherit;
+        }
+      }
+    </style>
+  </Fragment>
+
+  <h1>Savings Balance Transfer Calculator</h1>
+
+  <noscript>Sorry, this tool requires Javascript.</noscript>
+
+  <p>
+    This is a very simple tool for calculating a transfer required to keep a
+    savings account reconciled with a budgeted amount, optionally taking CDs
+    into effect. This tool is custom-made for my own budgeting system (using
+    <a href="https://ynab.com/referral/?ref=5q8xNua5jL0I0_Of">YNAB</a>
+    [contains referral code]) in which the budget specifies the total amount
+    which should be in savings accounts generally, but is agnostic toward
+    the actual allocation between high-yield savings and CDs. This tool
+    allows me to quickly calculate it all in a customized way, saving a
+    little time versus using a normal calculator, mostly due to all the CDs
+    to add together. It also generates a human-readable summary in the
+    format I use to keep records of why I transferred X amount to my savings
+    account.
+  </p>
+  <p>
+    All calculations are performed in your browser. Inputs and calculations
+    are never saved nor sent to any server. Analytics will show a visit to
+    this page, but do not track any interaction or data inputs.
+  </p>
+
+  <section>
+    <span>
+      <input type="currency" name="budget" placeholder="Budgeted Savings" />
+      <label for="budget">Budgeted Savings</label>
+    </span>
+    <span>
+      <input type="currency" name="savings" placeholder="Current Savings" />
+      <label for="savings">Current Savings Account Balance</label>
+    </span>
+
+    <div id="cd-section"></div>
+
+    <div class="actions">
+      <button id="calculate">Calculate</button>
+      <button id="add-cd">Add CD</button>
+    </div>
+  </section>
+  <section>
+    <div id="transfer-output"></div>
+    <div id="transfer-summary"></div>
+  </section>
+
+  <script is:inline src="/tools/savings-transfer/savings-transfer.js" async></script>
+</Base>

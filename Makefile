@@ -1,15 +1,18 @@
-.PHONY: all prism style server feed
+.PHONY: all prism style dev build feed
 
-all: feed style
+all: style build feed
 
 prism:
-	npx purify-css --min --info assets/vendor/prism.css assets/vendor/prism.js --out assets/vendor/prism.min.css
-	npx purify-css --min --info assets/vendor/prism-dark.css assets/vendor/prism.js --out assets/vendor/prism-dark.min.css
+	npx purify-css --min --info public/assets/vendor/prism.css public/assets/vendor/prism.js --out public/assets/vendor/prism.min.css
+	npx purify-css --min --info public/assets/vendor/prism-dark.css public/assets/vendor/prism.js --out public/assets/vendor/prism-dark.min.css
 
 style: prism
 
-server:
-	npx http-server -c-1
+dev:
+	npm run dev
+
+build:
+	npm run build
 
 feed:
 	pip3 install feedgen bs4

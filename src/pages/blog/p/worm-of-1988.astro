@@ -1,0 +1,361 @@
+---
+import BlogPost from '../../../layouts/BlogPost.astro';
+---
+
+<BlogPost
+  title="1988: A Tour of the Worm"
+  description="On the evening of November 2, 1988, a self-replicating program was released upon the Internet. Within the space of hours this program had spread across the US."
+  slug="worm-of-1988"
+  publishedDate="2017-10-31"
+  hasPrism={true}
+>
+  <h1 class="post-title">The Internet worm of 1988: A Tour of the Worm</h1>
+  <p>On the evening of November 2, 1988, a self-replicating program was released upon the Internet. Within the space of hours this program had spread across the US.</p>
+  <time datetime="2017-10-26">October 31, 2017</time>
+
+  <div class="post-main">
+    <aside class="intro">
+      <em>
+        <p>The paper I've archived below is the story of the 1988 Internet worm that shut down the existing Internet, and an analysis of its reverse-engineered clone. I am not the author of this text&mdash;in fact I hadn't yet been born when these events took place. When I was just starting out exploring computers, I came across this paper and it has stuck with me. Recently, I finally found a copy of it and I want to put it up here for the world to read and remember.</p>
+
+        <p>The formatting has been slightly modified such that it displays correctly in modern browsers and integrates with this blog's styling rules. The content is un-modified in its entirety.</p>
+      </em>
+    </aside>
+    <br><hr><br>
+
+    <div class="blog-body">
+      <article class="post blog-content">
+        <h1 class="post-title">The Internet worm of 1988: A Tour of the Worm</h1>
+				<p>On the evening of November 2, 1988, a self-replicating program was released upon the Internet. Within the space of hours this program had spread across the US.</p>
+				<time datetime="2017-10-26">October 31, 2017</time>
+
+        <div class="post-main">
+          <aside class="intro">
+            <em>
+              <p>The paper I've archived below is the story of the 1988 Internet worm that shut down the existing Internet, and an analysis of its reverse-engineered clone. I am not the author of this text&mdash;in fact I hadn't yet been born when these events took place. When I was just starting out exploring computers, I came across this paper and it has stuck with me. Recently, I finally found a copy of it and I want to put it up here for the world to read and remember.</p>
+
+              <p>The formatting has been slightly modified such that it displays correctly in modern browsers and integrates with this blog's styling rules. The content is un-modified in its entirety.</p>
+            </em>
+          </aside>
+          <br><hr><br>
+
+          <div class="blog-body">
+            <center><h3>A Tour of the Worm</h3><br><br>
+
+              <em>Donn Seeley</em><br>
+              Department of Computer Science<br>
+              University of Utah<br><br><br><br>
+
+              <em>ABSTRACT</em><br><br>
+            </center>
+            <em>
+              On the evening of November 2, 1988, a self-replicating program was released
+              upon the Internet (<A NAME="rf1" HREF="#f1">1</a>) This program (a worm) invaded VAX and Sun-3 computers
+              running versions of Berkeley UNIX, and used their resources to attack still
+              more computers (<A NAME="rf2" HREF="#f2">2</a>). Within the space of hours this program had spread across
+              the U.S., infecting hundreds or thousands of computers and making many of
+              them unusable due to the burden of its activity. This paper provides a
+              chronology for the outbreak and presents a detailed description of the
+              internals of the worm, based on a C version produced by decompiling.
+            </em><br>
+            <br><hr><br>
+            <strong>Table of contents:</strong>
+            <dl>
+              <DT>1. <a href="#p1">Introduction</a></dt>
+              <DT>2. <a href="#p2">Chronology</a></dt>
+              <DT>3. <a href="#p3">Overview</a></dt>
+              <DT>4. <a href="#p4">Internals</a></dt>
+              <DL>
+                <DT>4.1. <a href="#p4.1">The thread of control</a></dt>
+                <DT>4.2. <a href="#p4.2">Data structures</a></dt>
+                <DT>4.3. <a href="#p4.3">Population growth</a></dt>
+                <DT>4.4. <a href="#p4.4">Locating new hosts to infect</a></dt>
+                <DT>4.5. <a href="#p4.5">Security holes</a></dt>
+                <DL>
+                  <DT>4.5.1. <a href="#p4.5.1"><I>Rsh</I> and <I>rexec</I></a></dt>
+                  <DT>4.5.2. <a href="#p4.5.2"><I>Finger</I></a></dt>
+                  <DT>4.5.3. <a href="#p4.5.3"><I>Sendmail</I></a></dt>
+                </DL>
+                <DT>4.6. <a href="#p4.6">Infection</a></dt>
+                <DT>4.7. <a href="#p4.7">Password cracking</a></dt>
+                <DL>
+                  <DT>4.7.1. <a href="#p4.7.1">Guessing passwords</a></dt>
+                  <DT>4.7.2. <a href="#p4.7.2">Faster password encryption</a></dt>
+                </DL>
+              </DL>
+              <DT>5. <a href="#p5">Opinions</a></dt>
+              <DT>6. <a href="#p6">Conclusion</a></dt>
+              <DT><a href="#ack">Acknowledgments</a></dt>
+            </dl>
+            <br><hr><br>
+
+            <a NAME="p1"></a>
+            <H2>1. Introduction</H2>
+
+            <BLOCKQUOTE cite="Grampp and Morris, 'UNIX Operating System Security'">
+              There is a fine line between helping administrators protect their systems
+              and providing a cookbook for bad guys.
+            </BLOCKQUOTE>
+
+            <p>November 3, 1988 is already coming to be known as Black Thursday. System
+              administrators around the country came to work on that day and discovered
+              that their networks of computers were laboring under a huge load. If they
+              were able to log in and generate a system status listing, they saw what
+              appeared to be dozens or hundreds of "shell" (command interpreter) processes.
+              If they tried to kill the processes, they found that new processes appeared
+              faster than they could kill them. Rebooting the computer seemed to have no
+              effect within minutes after starting up again, the machine was overloaded
+              by these mysterious processes.</p>
+
+            <p>These systems had been invaded by a <I>worm</I>. A worm is a program that propagates
+              itself across a network, using resources on one machine to attack other
+              machines. (A worm is not quite the same as a <I>virus</I>, which is a program
+              fragment that inserts itself into other programs.) The worm had taken
+              advantage of lapses in security on systems that were running 4.2 or 4.3 BSD
+              UNIX or derivatives like SunOS. These lapses allowed it to connect to
+              machines across a network, bypass their login authentication, copy itself
+              and then proceed to attack still more machines. The massive system load was
+              generated by multitudes of worms trying to propagate the epidemic.</p>
+
+            <p>The Internet had never been attacked in this way before, although there had
+              been plenty of speculation that an attack was in store. Most system
+              administrators were unfamiliar with the concept of worms (as opposed to
+              viruses, which are a major affliction of the PC world) and it took some time
+              before they were able to establish what was going on and how to deal with it.
+              This paper is intended to let people know exactly what happened and how it
+              came about, so that they will be better prepared when it happens the next
+              time. The behavior of the worm will be examined in detail, both to show
+              exactly what it did and didn't do, and to show the dangers of future worms.
+              The epigraph above is now ironic, for the author of the worm used information
+              in that paper to attack systems. Since the information is now well known, by
+              virtue of the fact that thousands of computers now have copies of the worm,
+              it seems unlikely that this paper can do similar damage, but it is definitely
+              a troubling thought. Opinions on this and other matters will be offered
+              below.</p>
+
+            <a NAME="p2"></a>
+            <H2>2. Chronology</H2>
+
+            <BLOCKQUOTE cite="Dennis Miller, on NBC's Saturday Night Live">
+              Remember, when you connect with another computer, you're connecting to every
+              computer that computer has connected to.
+            </BLOCKQUOTE>
+
+            <blockquote cite="Andy Sudduth on behalf of the worm's author">
+              Here is the gist of a message I got: I'm sorry.
+            </blockquote>
+
+            <p>Many details of the chronology of the attack are not yet available. The
+              following list represents dates and times that we are currently aware of.
+              Times have all been rendered in Pacific Standard Time for convenience.</p>
+
+            <DL>
+              <DT>11/2:1800 (approx.)</dt>
+              <DD>This date and time were seen on worm files found on <i>prep.ai.mit.edu</i>,
+                a VAX 11/750 at the MIT Artificial Intelligence Laboratory. The files
+                were removed later, and the precise time was lost. System logging on
+                <I>prep</I> had been broken for two weeks. The system doesn't run accounting
+                and the disks aren't backed up to tape: a perfect target. A number of
+                "tourist" users (individuals using public accounts) were reported to be
+                active that evening. These users would have appeared in the session logging,
+                but see below.</dd><br>
+
+                <DT>11/2:1824</dt>
+                <DD>First known West Coast infection: <I>rand.org</I> at Rand Corp. in Santa
+                  Monica.</dd><br>
+
+                <DT>11/2:1904</dt>
+                <DD><I>csgw.berkeley.edu</I> is infected. This machine is a major network
+                  gateway at UC Berkeley. Mike Karels and Phil Lapsley discover the infection
+                  shortly afterward.</dd><br>
+
+                <DT>11/2:1954</dt>
+                <DD><I>mimsy.umd.edu</I> is attacked through its <I>finger</I> server. This machine is at the
+                  University of Maryland College Park Computer Science Department.</dd><br>
+
+                <DT>11/2: 2000 (approx.)</dt>
+                <DD>Suns at the MIT AI Lab are attacked.</dd><br>
+
+                <DT>11/2: 2028</dt>
+                <DD>First <I>sendmail</I> attack on <i>mimsy</I>.</dd><br>
+
+                <DT>11/2: 2040</dt>
+                <dd>Berkeley staff figure out the <I>sendmail</I> and <I>rsh</I> attacks,
+                  notice <I>telnet</I> and <I>finger</I> peculiarities, and start shutting
+                  these services off.</dd><br>
+
+                <DT>11/2: 2049</dt>
+                <DD><I>cs.utah.edu</I> is infected. This VAX 8600 is the central Computer
+                  Science Department machine at the University of Utah. The next several entries
+                  follow documented events at Utah and are representative of other infections
+                  around the country.</dd><br>
+
+                <DT>11/2: 2109</dt>
+                <DD>First <I>sendmail</I> attack at <I>cs.utah.edu</I>.</dd><br>
+
+                <DT>11/2: 2121</dt>
+                <DD>The load average on <I>cs.utah.edu</I> reaches 5. The "load average" is a
+                  system-generated value that represents the average number of jobs in the run
+                  queue over the last minute; a load of 5 on a VAX 8600 noticeably degrades
+                  response times, while a load over 20 is a drastic degradation. At 9 PM, the
+                  load is typically between 0.5 and 2.</dd><br>
+
+                <DT>11/2: 2141</dt>
+                <DD>The load average on <I>cs.utah.edu</I> reaches 7.</dd><br>
+
+                <DT>11/2: 2201</dt>
+                <DD>The load average on <I>cs.utah.edu</I> reaches 16.</dd><br>
+
+                <DT>11/2: 2206</dt>
+                <DD>The maximum number of distinct runnable processes (100) is reached on
+                  <I>cs.utah.edu</I>; the system is unusable.</dd><br>
+
+                  <DT>11/2: 2220</dt>
+                  <DD>Jeff Forys at Utah kills off worms on <I>cs.utah.edu</I>. Utah Sun clusters are
+                    infected. 11/2: 2241 Re-infestation causes the load average to reach 27 on
+                    <I>cs.utah.edu</I>.</dd><br>
+
+                    <DT>11/2: 2249</dt>
+                    <DD>Forys shuts down <I>cs.utah.edu</I>.</dd><br>
+
+                    <DT>11/3: 2321</dt>
+                    <DD>Re-infestation causes the load average to reach 37 on <I>cs.utah.edu</I>, despite
+                      continuous efforts by Forys to kill worms.</dd><br>
+
+                    <DT>11/2: 2328</dt>
+                    <DD>Peter Yee at NASA Ames Research Center posts a warning to the
+                      TCP-IP mailing list: "We are currently under attack from an Internet VIRUS.
+                      It has hit UC Berkeley, UC San Diego, Lawrence Livermore, Stanford, and NASA
+                      Ames." He suggests turning off <I>telnet</I>, <I>ftp</I>, <I>finger</I>, <I>rsh</I> and SMTP services.
+                      He does not mention <I>rexec</I>. Yee is actually at Berkeley working with Keith
+                      Bostic, Mike Karels and Phil Lapsley.</dd><br>
+
+                    <DT>11/3: 0034</dt>
+                    <DD>At another's prompting, Andy Sudduth of Harvard anonymously posts a warning
+                      to the TCP-IP list: "There may be a virus loose on the internet." This is
+                      the first message that (briefly) describes how the <I>finger</I> attack works,
+                      describes how to defeat the SMTP attack by rebuilding <I>sendmail</I>, and
+                      explicitly mentions the <I>rexec</I> attack. Unfortunately Sudduth's message is
+                      blocked at relay.cs.net while that gateway is shut down to combat the worm,
+                      and it does not get delivered for almost two days. Sudduth acknowledges
+                      authorship of the message in a subsequent message to TCP-IP on Nov. 5.</dd><br>
+
+                    <DT>11/3: 0254</dt>
+                    <DD>Keith Bostic sends a fix for <I>sendmail</I> to the newsgroup
+                      comp.bugs.4bsd.ucb-fixes and to the TCP-IP mailing list. These fixes (and
+                      later ones) are also mailed directly to important system administrators
+                      around the country.</dd><br>
+
+                    <DT>11/3: early morning</dt>
+                    <DD>The wtmp session log is mysteriously removed on prep.ai.mit.edu.</dd><br>
+
+                    <DT>11/3: 0507</dt>
+                    <DD>Edward Wang at Berkeley figures out and reports the <I>finger</I> attack, but his
+                      message doesn't come to Mike Karels' attention for 12 hours.</dd><br>
+
+                    <DT>11/3: 0900</dt>
+                    <DD>The annual Berkeley Unix Workshop commences at UC Berkeley. 40 or so
+                      important system administrators and backers are in town to attend, while
+                      disaster erupts at home. Several people who had planned to fly in on
+                      Thursday morning are trapped by the crisis. Keith Bostic spends much of
+                      the day on the phone at the Computer Systems Research Group offices answering
+                      calls from panicked system administrators from around the country.</dd><br>
+
+                    <DT>11/3 :1500 (approx.)</dt>
+                    <DD>The team at MIT Athena calls Berkeley with an example of how the <I>finger</I>
+                      server bug works.</dd><br>
+
+                    <DT>11/3:1626</dt>
+                    <DD>Dave Pare arrives at Berkeley CSRG offices;
+                      disassembly and decompiling start shortly afterward using Pare's special
+                      tools.</dd><br>
+
+                    <DT>11/3:1800 (approx.)</dt>
+                    <DD>The Berkeley group sends out for calzones. People arrive and leave;
+                      the offices are crowded, there's plenty of excitement. Parallel work is in
+                      progress at MIT Athena; the two groups swap code.</dd><br>
+
+                    <DT>11/3:1918</dt>
+                    <DD>Keith Bostic posts a fix for the <I>finger</I> server.</dd><br>
+
+                    <DT>11/4: 0600</dt>
+                    <DD>Members of the Berkeley team, with the worm almost completely disassembled
+                      and largely decompiled, finally take off for a couple hours' sleep before
+                      returning to the workshop.</dd><br>
+
+                    <DT>11/4: 1236</dt>
+                    <DD>Theodore Ts'o of Project Athena at MIT publicly announces that MIT and
+                      Berkeley have completely disassembled the worm.</dd><br>
+
+                    <DT>11/4:1700 (approx.)</dt>
+                    <DD>A short presentation on the worm is made at the end of the Berkeley UNIX
+                      Workshop.</dd><br>
+
+                    <DT>11/8:</dt>
+                    <DD>National Computer Security Center meeting to discuss the worm. There are
+                      about 50 attendees.</dd><br>
+
+                    <DT>11/11: 0038</dt>
+                    <DD>Fully decompiled and commented worm source is installed at Berkeley.</dd>
+
+            </DL>
+
+            <a NAME="p3"></a>
+            <H2>3. Overview</H2>
+
+            <p>What exactly did the worm do that led it to cause an epidemic? The worm
+              consists of a 99-line bootstrap program written in the C language, plus a
+              large relocatable object file that comes in VAX and Sun-3 flavors. Internal
+              evidence showed that the object file was generated from C sources, so it was
+              natural to decompile the binary machine language into C; we now have over
+              3200 lines of commented C code which recompiles and is mostly complete. We
+              shall start the tour of the worm with a quick overview of the basic goals of
+              the worm, followed by discussion in depth of the worm's various behaviors as
+              revealed by decompilation.</p>
+
+            <p>The activities of the worm break down into the categories of attack and
+              defense. Attack consists of locating hosts (and accounts) to penetrate, then
+              exploiting security holes on remote systems to pass across a copy of the worm
+              and run it. The worm obtains host addresses by examining the system tables
+              <I>/etc/hosts.equiv</I> and <I>/.rhosts</I>, user files like <I>.forward</I> and. rhosts, dynamic
+              routing information produced by the netstat program, and finally randomly
+              generated host addresses on local networks. It ranks these by order of
+              preference, trying a file like <I>/etc/hosts.equiv</I> first because it contains
+              names of local machines that are likely to permit unauthenticated connections.
+              Penetration of a remote system can be accomplished in any of three ways. The
+              worm can take advantage of a bug in the <I>finger</I> server that allows it to
+              download code in place of a <I>finger</I> request and trick the server into
+              executing it. The worm can use a "trap door" in the <I>sendmail</I> SMTP mail
+              service, exercising a bug in the debugging code that allows it to execute a
+              command interpreter and download code across a mail connection. If the worm
+              can penetrate a local account by guessing its password, it can use the <I>rexec</I>
+              and <I>rsh</I> remote command interpreter services to attack hosts that share that
+              account. In each case the worm arranges to get a remote command interpreter
+              which it can use to copy over, compile and execute the 99-line bootstrap.
+              The bootstrap sets up its own network connection with the local worm and
+              copies over the other files it needs, and using these pieces a remote worm
+              is built and the infection procedure starts over again. Defense tactics fall
+              into three categories: preventing the detection of intrusion, inhibiting the
+              analysis of the program, and authenticating other worms. The worm's simplest
+              means of hiding itself is to change its name. When it starts up, it clears
+              its argument list and sets its zeroth argument to <I>sh</I>, allowing it to
+              masquerade as an innocuous command interpreter. It uses <I>fork()</I> to change its
+              process I.D., never staying too long at one I.D. These two tactics are
+              intended to disguise the worm's presence on system status listings. The worm
+              tries to leave as little trash lying around as it can, so at start-up it
+              reads all its support files into memory and deletes the tell-tale filesystem
+              copies. It turns off the generation of <I>core</I> files, so if the worm makes a
+              mistake, it doesn't leave evidence behind in the form of <I>core</I> dumps.
+              The latter tactic is also designed to block analysis of the program-it prevents
+              an administrator from sending a software signal to the worm to force it to
+              dump a <I>core</I> file. There are other ways to get a <I>core</I> file, however, so the
+              worm carefully alters character data in memory to prevent it from being
+              extracted easily. Copies of disk files are encoded by repeatedly
+              exclusive-or'ing a ten-byte code sequence; static strings are encoded
+              byte-by-byte by exclusive-or'ing with the hexadecimal value 81, except for
+              a private word list which is encoded with hexadecimal 80 instead. If the
+              worm's files are somehow captured before the worm can delete them, the
+              object files have been loaded in such a way as to remove most non-essential
+    </div>
+  </div>
+</BlogPost>
