@@ -8,7 +8,7 @@ import Base from '../../layouts/Base.astro';
   fontStrategy="prefetch"
 >
   <Fragment slot="head">
-    <style>
+    <style is:global>
       section {
         display: flex;
         flex-direction: column;
@@ -86,7 +86,7 @@ import Base from '../../layouts/Base.astro';
           <span>
             <input
               type="text"
-              placeholder="e.g. New York, NY"
+              placeholder="e.g. Minneapolis, MN"
               class="city-input"
             />
             <button onclick="lookupCity(this)">Lookup</button>
@@ -97,7 +97,7 @@ import Base from '../../layouts/Base.astro';
             <input
               type="number"
               step="any"
-              placeholder="e.g. 40.7128"
+              placeholder="e.g. 44.9778"
               class="lat-input"
             />
             <label>Latitude</label>
@@ -106,7 +106,7 @@ import Base from '../../layouts/Base.astro';
             <input
               type="number"
               step="any"
-              placeholder="e.g. -74.0060"
+              placeholder="e.g. -93.2650"
               class="lon-input"
             />
             <label>Longitude</label>
@@ -126,7 +126,7 @@ import Base from '../../layouts/Base.astro';
           <span>
             <input
               type="text"
-              placeholder="e.g. Los Angeles, CA"
+              placeholder="e.g. Chicago, IL"
               class="city-input"
             />
             <button onclick="lookupCity(this)">Lookup</button>
@@ -137,7 +137,7 @@ import Base from '../../layouts/Base.astro';
             <input
               type="number"
               step="any"
-              placeholder="e.g. 34.0522"
+              placeholder="e.g. 41.8781"
               class="lat-input"
             />
             <label>Latitude</label>
@@ -146,7 +146,7 @@ import Base from '../../layouts/Base.astro';
             <input
               type="number"
               step="any"
-              placeholder="e.g. -118.2437"
+              placeholder="e.g. -87.6298"
               class="lon-input"
             />
             <label>Longitude</label>
