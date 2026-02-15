@@ -6,7 +6,4 @@ export default defineConfig({
   adapter: cloudflare(),
   prefetch: true,
   outDir: 'dist',
-  redirects: {
-    '/p': '/',
-  },
 });

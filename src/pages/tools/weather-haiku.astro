@@ -1,22 +1,21 @@
----
-import Base from '../../layouts/Base.astro';
----
-
-<Base
-  title="Weather Haiku | Jade Michael Thornton"
-  description="A haiku for your weather"
-  fontStrategy="prefetch"
->
-  <Fragment slot="head">
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>Weather Haiku | Jade Michael Thornton</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="A haiku for your weather" />
+    <meta name="robots" content="index, follow" />
+    <link rel="shortcut icon" href="/assets/images/favicon.png" />
     <link
-      rel="preload"
+      rel="prefetch"
       href="/assets/fonts/MetroNova-Regular.woff2"
       as="font"
       type="font/woff2"
       crossorigin="anonymous"
     />
     <link
-      rel="preload"
+      rel="prefetch"
       href="/assets/fonts/MetroNova-Italic.woff2"
       as="font"
       type="font/woff2"
@@ -81,21 +80,15 @@ import Base from '../../layouts/Base.astro';
         font-size: 1rem;
       }
 
-      header,
-      nav,
-      footer {
-        display: none;
-      }
-
       .refresh-hint {
         font-size: 0.8rem;
         color: #a0aec0;
         margin-top: 2rem;
       }
     </style>
-  </Fragment>
-
-  <div class="container">
+  </head>
+  <body>
+    <div class="container">
     <div class="location" id="location">Finding your location...</div>
     <div class="haiku loading" id="haiku">
       Waiting for the sky To reveal its gentle mood Patience brings wisdom
@@ -297,4 +290,5 @@ import Base from '../../layouts/Base.astro';
 
     init();
   </script>
-</Base>
+  </body>
+</html>
