@@ -34,9 +34,9 @@ import BlogPost from '../../../layouts/BlogPost.astro';
       </center>
       <em>
         On the evening of November 2, 1988, a self-replicating program was released
-        upon the Internet (<A NAME="rf1" HREF="#f1">1</a>) This program (a worm) invaded VAX and Sun-3 computers
+        upon the Internet (<a NAME="rf1" HREF="#f1">1</a>) This program (a worm) invaded VAX and Sun-3 computers
         running versions of Berkeley UNIX, and used their resources to attack still
-        more computers (<A NAME="rf2" HREF="#f2">2</a>). Within the space of hours this program had spread across
+        more computers (<a NAME="rf2" HREF="#f2">2</a>). Within the space of hours this program had spread across
         the U.S., infecting hundreds or thousands of computers and making many of
         them unusable due to the burden of its activity. This paper provides a
         chronology for the outbreak and presents a detailed description of the
@@ -45,41 +45,41 @@ import BlogPost from '../../../layouts/BlogPost.astro';
       <br><hr><br>
       <strong>Table of contents:</strong>
       <dl>
-        <DT>1. <a href="#p1">Introduction</a></dt>
-        <DT>2. <a href="#p2">Chronology</a></dt>
-        <DT>3. <a href="#p3">Overview</a></dt>
-        <DT>4. <a href="#p4">Internals</a></dt>
-        <DL>
-          <DT>4.1. <a href="#p4.1">The thread of control</a></dt>
-          <DT>4.2. <a href="#p4.2">Data structures</a></dt>
-          <DT>4.3. <a href="#p4.3">Population growth</a></dt>
-          <DT>4.4. <a href="#p4.4">Locating new hosts to infect</a></dt>
-          <DT>4.5. <a href="#p4.5">Security holes</a></dt>
-          <DL>
-            <DT>4.5.1. <a href="#p4.5.1"><I>Rsh</I> and <I>rexec</I></a></dt>
-            <DT>4.5.2. <a href="#p4.5.2"><I>Finger</I></a></dt>
-            <DT>4.5.3. <a href="#p4.5.3"><I>Sendmail</I></a></dt>
-          </DL>
-          <DT>4.6. <a href="#p4.6">Infection</a></dt>
-          <DT>4.7. <a href="#p4.7">Password cracking</a></dt>
-          <DL>
-            <DT>4.7.1. <a href="#p4.7.1">Guessing passwords</a></dt>
-            <DT>4.7.2. <a href="#p4.7.2">Faster password encryption</a></dt>
-          </DL>
-        </DL>
-        <DT>5. <a href="#p5">Opinions</a></dt>
-        <DT>6. <a href="#p6">Conclusion</a></dt>
-        <DT><a href="#ack">Acknowledgments</a></dt>
+        <dt>1. <a href="#p1">Introduction</a></dt>
+        <dt>2. <a href="#p2">Chronology</a></dt>
+        <dt>3. <a href="#p3">Overview</a></dt>
+        <dt>4. <a href="#p4">Internals</a></dt>
+        <dl>
+          <dt>4.1. <a href="#p4.1">The thread of control</a></dt>
+          <dt>4.2. <a href="#p4.2">Data structures</a></dt>
+          <dt>4.3. <a href="#p4.3">Population growth</a></dt>
+          <dt>4.4. <a href="#p4.4">Locating new hosts to infect</a></dt>
+          <dt>4.5. <a href="#p4.5">Security holes</a></dt>
+          <dl>
+            <dt>4.5.1. <a href="#p4.5.1"><i>Rsh</i> and <i>rexec</i></a></dt>
+            <dt>4.5.2. <a href="#p4.5.2"><i>Finger</i></a></dt>
+            <dt>4.5.3. <a href="#p4.5.3"><i>Sendmail</i></a></dt>
+          </dl>
+          <dt>4.6. <a href="#p4.6">Infection</a></dt>
+          <dt>4.7. <a href="#p4.7">Password cracking</a></dt>
+          <dl>
+            <dt>4.7.1. <a href="#p4.7.1">Guessing passwords</a></dt>
+            <dt>4.7.2. <a href="#p4.7.2">Faster password encryption</a></dt>
+          </dl>
+        </dl>
+        <dt>5. <a href="#p5">Opinions</a></dt>
+        <dt>6. <a href="#p6">Conclusion</a></dt>
+        <dt><a href="#ack">Acknowledgments</a></dt>
       </dl>
       <br><hr><br>
 
       <a NAME="p1"></a>
-      <H2>1. Introduction</H2>
+      <h2>1. Introduction</h2>
 
-      <BLOCKQUOTE cite="Grampp and Morris, 'UNIX Operating System Security'">
+      <blockquote cite="Grampp and Morris, 'UNIX Operating System Security'">
         There is a fine line between helping administrators protect their systems
         and providing a cookbook for bad guys.
-      </BLOCKQUOTE>
+      </blockquote>
 
       <p>November 3, 1988 is already coming to be known as Black Thursday. System
         administrators around the country came to work on that day and discovered
@@ -91,9 +91,9 @@ import BlogPost from '../../../layouts/BlogPost.astro';
         effect within minutes after starting up again, the machine was overloaded
         by these mysterious processes.</p>
 
-      <p>These systems had been invaded by a <I>worm</I>. A worm is a program that propagates
+      <p>These systems had been invaded by a <i>worm</i>. A worm is a program that propagates
         itself across a network, using resources on one machine to attack other
-        machines. (A worm is not quite the same as a <I>virus</I>, which is a program
+        machines. (A worm is not quite the same as a <i>virus</i>, which is a program
         fragment that inserts itself into other programs.) The worm had taken
         advantage of lapses in security on systems that were running 4.2 or 4.3 BSD
         UNIX or derivatives like SunOS. These lapses allowed it to connect to
@@ -118,12 +118,12 @@ import BlogPost from '../../../layouts/BlogPost.astro';
         below.</p>
 
       <a NAME="p2"></a>
-      <H2>2. Chronology</H2>
+      <h2>2. Chronology</h2>
 
-      <BLOCKQUOTE cite="Dennis Miller, on NBC's Saturday Night Live">
+      <blockquote cite="Dennis Miller, on NBC's Saturday Night Live">
         Remember, when you connect with another computer, you're connecting to every
         computer that computer has connected to.
-      </BLOCKQUOTE>
+      </blockquote>
 
       <blockquote cite="Andy Sudduth on behalf of the worm's author">
         Here is the gist of a message I got: I'm sorry.
@@ -133,159 +133,159 @@ import BlogPost from '../../../layouts/BlogPost.astro';
         following list represents dates and times that we are currently aware of.
         Times have all been rendered in Pacific Standard Time for convenience.</p>
 
-      <DL>
-        <DT>11/2:1800 (approx.)</dt>
-        <DD>This date and time were seen on worm files found on <i>prep.ai.mit.edu</i>,
+      <dl>
+        <dt>11/2:1800 (approx.)</dt>
+        <dd>This date and time were seen on worm files found on <i>prep.ai.mit.edu</i>,
           a VAX 11/750 at the MIT Artificial Intelligence Laboratory. The files
           were removed later, and the precise time was lost. System logging on
-          <I>prep</I> had been broken for two weeks. The system doesn't run accounting
+          <i>prep</i> had been broken for two weeks. The system doesn't run accounting
           and the disks aren't backed up to tape: a perfect target. A number of
           "tourist" users (individuals using public accounts) were reported to be
           active that evening. These users would have appeared in the session logging,
           but see below.</dd><br>
 
-          <DT>11/2:1824</dt>
-          <DD>First known West Coast infection: <I>rand.org</I> at Rand Corp. in Santa
+          <dt>11/2:1824</dt>
+          <dd>First known West Coast infection: <i>rand.org</i> at Rand Corp. in Santa
             Monica.</dd><br>
 
-          <DT>11/2:1904</dt>
-          <DD><I>csgw.berkeley.edu</I> is infected. This machine is a major network
+          <dt>11/2:1904</dt>
+          <dd><i>csgw.berkeley.edu</i> is infected. This machine is a major network
             gateway at UC Berkeley. Mike Karels and Phil Lapsley discover the infection
             shortly afterward.</dd><br>
 
-          <DT>11/2:1954</dt>
-          <DD><I>mimsy.umd.edu</I> is attacked through its <I>finger</I> server. This machine is at the
+          <dt>11/2:1954</dt>
+          <dd><i>mimsy.umd.edu</i> is attacked through its <i>finger</i> server. This machine is at the
             University of Maryland College Park Computer Science Department.</dd><br>
 
-          <DT>11/2: 2000 (approx.)</dt>
-          <DD>Suns at the MIT AI Lab are attacked.</dd><br>
+          <dt>11/2: 2000 (approx.)</dt>
+          <dd>Suns at the MIT AI Lab are attacked.</dd><br>
 
-          <DT>11/2: 2028</dt>
-          <DD>First <I>sendmail</I> attack on <i>mimsy</I>.</dd><br>
+          <dt>11/2: 2028</dt>
+          <dd>First <i>sendmail</i> attack on <i>mimsy</i>.</dd><br>
 
-          <DT>11/2: 2040</dt>
-          <dd>Berkeley staff figure out the <I>sendmail</I> and <I>rsh</I> attacks,
-            notice <I>telnet</I> and <I>finger</I> peculiarities, and start shutting
+          <dt>11/2: 2040</dt>
+          <dd>Berkeley staff figure out the <i>sendmail</i> and <i>rsh</i> attacks,
+            notice <i>telnet</i> and <i>finger</i> peculiarities, and start shutting
             these services off.</dd><br>
 
-          <DT>11/2: 2049</dt>
-          <DD><I>cs.utah.edu</I> is infected. This VAX 8600 is the central Computer
+          <dt>11/2: 2049</dt>
+          <dd><i>cs.utah.edu</i> is infected. This VAX 8600 is the central Computer
             Science Department machine at the University of Utah. The next several entries
             follow documented events at Utah and are representative of other infections
             around the country.</dd><br>
 
-          <DT>11/2: 2109</dt>
-          <DD>First <I>sendmail</I> attack at <I>cs.utah.edu</I>.</dd><br>
+          <dt>11/2: 2109</dt>
+          <dd>First <i>sendmail</i> attack at <i>cs.utah.edu</i>.</dd><br>
 
-          <DT>11/2: 2121</dt>
-          <DD>The load average on <I>cs.utah.edu</I> reaches 5. The "load average" is a
+          <dt>11/2: 2121</dt>
+          <dd>The load average on <i>cs.utah.edu</i> reaches 5. The "load average" is a
             system-generated value that represents the average number of jobs in the run
             queue over the last minute; a load of 5 on a VAX 8600 noticeably degrades
             response times, while a load over 20 is a drastic degradation. At 9 PM, the
             load is typically between 0.5 and 2.</dd><br>
 
-          <DT>11/2: 2141</dt>
-          <DD>The load average on <I>cs.utah.edu</I> reaches 7.</dd><br>
+          <dt>11/2: 2141</dt>
+          <dd>The load average on <i>cs.utah.edu</i> reaches 7.</dd><br>
 
-          <DT>11/2: 2201</dt>
-          <DD>The load average on <I>cs.utah.edu</I> reaches 16.</dd><br>
+          <dt>11/2: 2201</dt>
+          <dd>The load average on <i>cs.utah.edu</i> reaches 16.</dd><br>
 
-          <DT>11/2: 2206</dt>
-          <DD>The maximum number of distinct runnable processes (100) is reached on
-            <I>cs.utah.edu</I>; the system is unusable.</dd><br>
+          <dt>11/2: 2206</dt>
+          <dd>The maximum number of distinct runnable processes (100) is reached on
+            <i>cs.utah.edu</i>; the system is unusable.</dd><br>
 
-            <DT>11/2: 2220</dt>
-            <DD>Jeff Forys at Utah kills off worms on <I>cs.utah.edu</I>. Utah Sun clusters are
+            <dt>11/2: 2220</dt>
+            <dd>Jeff Forys at Utah kills off worms on <i>cs.utah.edu</i>. Utah Sun clusters are
               infected. 11/2: 2241 Re-infestation causes the load average to reach 27 on
-              <I>cs.utah.edu</I>.</dd><br>
+              <i>cs.utah.edu</i>.</dd><br>
 
-              <DT>11/2: 2249</dt>
-              <DD>Forys shuts down <I>cs.utah.edu</I>.</dd><br>
+              <dt>11/2: 2249</dt>
+              <dd>Forys shuts down <i>cs.utah.edu</i>.</dd><br>
 
-              <DT>11/3: 2321</dt>
-              <DD>Re-infestation causes the load average to reach 37 on <I>cs.utah.edu</I>, despite
+              <dt>11/3: 2321</dt>
+              <dd>Re-infestation causes the load average to reach 37 on <i>cs.utah.edu</i>, despite
                 continuous efforts by Forys to kill worms.</dd><br>
 
-              <DT>11/2: 2328</dt>
-              <DD>Peter Yee at NASA Ames Research Center posts a warning to the
+              <dt>11/2: 2328</dt>
+              <dd>Peter Yee at NASA Ames Research Center posts a warning to the
                 TCP-IP mailing list: "We are currently under attack from an Internet VIRUS.
                 It has hit UC Berkeley, UC San Diego, Lawrence Livermore, Stanford, and NASA
-                Ames." He suggests turning off <I>telnet</I>, <I>ftp</I>, <I>finger</I>, <I>rsh</I> and SMTP services.
-                He does not mention <I>rexec</I>. Yee is actually at Berkeley working with Keith
+                Ames." He suggests turning off <i>telnet</i>, <i>ftp</i>, <i>finger</i>, <i>rsh</i> and SMTP services.
+                He does not mention <i>rexec</i>. Yee is actually at Berkeley working with Keith
                 Bostic, Mike Karels and Phil Lapsley.</dd><br>
 
-              <DT>11/3: 0034</dt>
-              <DD>At another's prompting, Andy Sudduth of Harvard anonymously posts a warning
+              <dt>11/3: 0034</dt>
+              <dd>At another's prompting, Andy Sudduth of Harvard anonymously posts a warning
                 to the TCP-IP list: "There may be a virus loose on the internet." This is
-                the first message that (briefly) describes how the <I>finger</I> attack works,
-                describes how to defeat the SMTP attack by rebuilding <I>sendmail</I>, and
-                explicitly mentions the <I>rexec</I> attack. Unfortunately Sudduth's message is
+                the first message that (briefly) describes how the <i>finger</i> attack works,
+                describes how to defeat the SMTP attack by rebuilding <i>sendmail</i>, and
+                explicitly mentions the <i>rexec</i> attack. Unfortunately Sudduth's message is
                 blocked at relay.cs.net while that gateway is shut down to combat the worm,
                 and it does not get delivered for almost two days. Sudduth acknowledges
                 authorship of the message in a subsequent message to TCP-IP on Nov. 5.</dd><br>
 
-              <DT>11/3: 0254</dt>
-              <DD>Keith Bostic sends a fix for <I>sendmail</I> to the newsgroup
+              <dt>11/3: 0254</dt>
+              <dd>Keith Bostic sends a fix for <i>sendmail</i> to the newsgroup
                 comp.bugs.4bsd.ucb-fixes and to the TCP-IP mailing list. These fixes (and
                 later ones) are also mailed directly to important system administrators
                 around the country.</dd><br>
 
-              <DT>11/3: early morning</dt>
-              <DD>The wtmp session log is mysteriously removed on prep.ai.mit.edu.</dd><br>
+              <dt>11/3: early morning</dt>
+              <dd>The wtmp session log is mysteriously removed on prep.ai.mit.edu.</dd><br>
 
-              <DT>11/3: 0507</dt>
-              <DD>Edward Wang at Berkeley figures out and reports the <I>finger</I> attack, but his
+              <dt>11/3: 0507</dt>
+              <dd>Edward Wang at Berkeley figures out and reports the <i>finger</i> attack, but his
                 message doesn't come to Mike Karels' attention for 12 hours.</dd><br>
 
-              <DT>11/3: 0900</dt>
-              <DD>The annual Berkeley Unix Workshop commences at UC Berkeley. 40 or so
+              <dt>11/3: 0900</dt>
+              <dd>The annual Berkeley Unix Workshop commences at UC Berkeley. 40 or so
                 important system administrators and backers are in town to attend, while
                 disaster erupts at home. Several people who had planned to fly in on
                 Thursday morning are trapped by the crisis. Keith Bostic spends much of
                 the day on the phone at the Computer Systems Research Group offices answering
                 calls from panicked system administrators from around the country.</dd><br>
 
-              <DT>11/3 :1500 (approx.)</dt>
-              <DD>The team at MIT Athena calls Berkeley with an example of how the <I>finger</I>
+              <dt>11/3 :1500 (approx.)</dt>
+              <dd>The team at MIT Athena calls Berkeley with an example of how the <i>finger</i>
                 server bug works.</dd><br>
 
-              <DT>11/3:1626</dt>
-              <DD>Dave Pare arrives at Berkeley CSRG offices;
+              <dt>11/3:1626</dt>
+              <dd>Dave Pare arrives at Berkeley CSRG offices;
                 disassembly and decompiling start shortly afterward using Pare's special
                 tools.</dd><br>
 
-              <DT>11/3:1800 (approx.)</dt>
-              <DD>The Berkeley group sends out for calzones. People arrive and leave;
+              <dt>11/3:1800 (approx.)</dt>
+              <dd>The Berkeley group sends out for calzones. People arrive and leave;
                 the offices are crowded, there's plenty of excitement. Parallel work is in
                 progress at MIT Athena; the two groups swap code.</dd><br>
 
-              <DT>11/3:1918</dt>
-              <DD>Keith Bostic posts a fix for the <I>finger</I> server.</dd><br>
+              <dt>11/3:1918</dt>
+              <dd>Keith Bostic posts a fix for the <i>finger</i> server.</dd><br>
 
-              <DT>11/4: 0600</dt>
-              <DD>Members of the Berkeley team, with the worm almost completely disassembled
+              <dt>11/4: 0600</dt>
+              <dd>Members of the Berkeley team, with the worm almost completely disassembled
                 and largely decompiled, finally take off for a couple hours' sleep before
                 returning to the workshop.</dd><br>
 
-              <DT>11/4: 1236</dt>
-              <DD>Theodore Ts'o of Project Athena at MIT publicly announces that MIT and
+              <dt>11/4: 1236</dt>
+              <dd>Theodore Ts'o of Project Athena at MIT publicly announces that MIT and
                 Berkeley have completely disassembled the worm.</dd><br>
 
-              <DT>11/4:1700 (approx.)</dt>
-              <DD>A short presentation on the worm is made at the end of the Berkeley UNIX
+              <dt>11/4:1700 (approx.)</dt>
+              <dd>A short presentation on the worm is made at the end of the Berkeley UNIX
                 Workshop.</dd><br>
 
-              <DT>11/8:</dt>
-              <DD>National Computer Security Center meeting to discuss the worm. There are
+              <dt>11/8:</dt>
+              <dd>National Computer Security Center meeting to discuss the worm. There are
                 about 50 attendees.</dd><br>
 
-              <DT>11/11: 0038</dt>
-              <DD>Fully decompiled and commented worm source is installed at Berkeley.</dd>
+              <dt>11/11: 0038</dt>
+              <dd>Fully decompiled and commented worm source is installed at Berkeley.</dd>
 
-      </DL>
+      </dl>
 
       <a NAME="p3"></a>
-      <H2>3. Overview</H2>
+      <h2>3. Overview</h2>
 
       <p>What exactly did the worm do that led it to cause an epidemic? The worm
         consists of a 99-line bootstrap program written in the C language, plus a
@@ -301,19 +301,19 @@ import BlogPost from '../../../layouts/BlogPost.astro';
         defense. Attack consists of locating hosts (and accounts) to penetrate, then
         exploiting security holes on remote systems to pass across a copy of the worm
         and run it. The worm obtains host addresses by examining the system tables
-        <I>/etc/hosts.equiv</I> and <I>/.rhosts</I>, user files like <I>.forward</I> and. rhosts, dynamic
+        <i>/etc/hosts.equiv</i> and <i>/.rhosts</i>, user files like <i>.forward</i> and. rhosts, dynamic
         routing information produced by the netstat program, and finally randomly
         generated host addresses on local networks. It ranks these by order of
-        preference, trying a file like <I>/etc/hosts.equiv</I> first because it contains
+        preference, trying a file like <i>/etc/hosts.equiv</i> first because it contains
         names of local machines that are likely to permit unauthenticated connections.
         Penetration of a remote system can be accomplished in any of three ways. The
-        worm can take advantage of a bug in the <I>finger</I> server that allows it to
-        download code in place of a <I>finger</I> request and trick the server into
-        executing it. The worm can use a "trap door" in the <I>sendmail</I> SMTP mail
+        worm can take advantage of a bug in the <i>finger</i> server that allows it to
+        download code in place of a <i>finger</i> request and trick the server into
+        executing it. The worm can use a "trap door" in the <i>sendmail</i> SMTP mail
         service, exercising a bug in the debugging code that allows it to execute a
         command interpreter and download code across a mail connection. If the worm
-        can penetrate a local account by guessing its password, it can use the <I>rexec</I>
-        and <I>rsh</I> remote command interpreter services to attack hosts that share that
+        can penetrate a local account by guessing its password, it can use the <i>rexec</i>
+        and <i>rsh</i> remote command interpreter services to attack hosts that share that
         account. In each case the worm arranges to get a remote command interpreter
         which it can use to copy over, compile and execute the 99-line bootstrap.
         The bootstrap sets up its own network connection with the local worm and
@@ -322,17 +322,17 @@ import BlogPost from '../../../layouts/BlogPost.astro';
         into three categories: preventing the detection of intrusion, inhibiting the
         analysis of the program, and authenticating other worms. The worm's simplest
         means of hiding itself is to change its name. When it starts up, it clears
-        its argument list and sets its zeroth argument to <I>sh</I>, allowing it to
-        masquerade as an innocuous command interpreter. It uses <I>fork()</I> to change its
+        its argument list and sets its zeroth argument to <i>sh</i>, allowing it to
+        masquerade as an innocuous command interpreter. It uses <i>fork()</i> to change its
         process I.D., never staying too long at one I.D. These two tactics are
         intended to disguise the worm's presence on system status listings. The worm
         tries to leave as little trash lying around as it can, so at start-up it
         reads all its support files into memory and deletes the tell-tale filesystem
-        copies. It turns off the generation of <I>core</I> files, so if the worm makes a
-        mistake, it doesn't leave evidence behind in the form of <I>core</I> dumps.
+        copies. It turns off the generation of <i>core</i> files, so if the worm makes a
+        mistake, it doesn't leave evidence behind in the form of <i>core</i> dumps.
         The latter tactic is also designed to block analysis of the program-it prevents
         an administrator from sending a software signal to the worm to force it to
-        dump a <I>core</I> file. There are other ways to get a <I>core</I> file, however, so the
+        dump a <i>core</i> file. There are other ways to get a <i>core</i> file, however, so the
         worm carefully alters character data in memory to prevent it from being
         extracted easily. Copies of disk files are encoded by repeatedly
         exclusive-or'ing a ten-byte code sequence; static strings are encoded
@@ -373,42 +373,42 @@ import BlogPost from '../../../layouts/BlogPost.astro';
         gets them. The worm does not propagate over uucp or X.25 or DECNET or BITNET:
         it specifically requires TCP/IP. The worm does not infect System V systems
         unless they have been modified to use Berkeley network programs like
-        <I>sendmail</I>, <I>fingerd</I> and <I>rexec</I>.</p>
+        <i>sendmail</i>, <i>fingerd</i> and <i>rexec</i>.</p>
 
       <a NAME="p4"></a>
-      <H2>4. Internals</h2>
+      <h2>4. Internals</h2>
 
       <p>Now for some details: we shall follow the main thread of control in the worm,
         then examine some of the worm's data structures before working through each
         phase of activity.</p>
 
       <a NAME="p4.1"></a>
-      <H3>4.1. The thread of control</H3>
+      <h3>4.1. The thread of control</h3>
 
-      <p>When the worm starts executing in <I>main()</I>, it takes care of some
+      <p>When the worm starts executing in <i>main()</i>, it takes care of some
         initializations, some defense and some cleanup. The very first thing it does
-        is to change its name to <I>sh</I>. This shrinks the window during which the worm
+        is to change its name to <i>sh</i>. This shrinks the window during which the worm
         is visible in a system status listing as a process with an odd name like
-        <I>x9834753</I>. It then initializes the random number generator, seeding it
-        with the current time, turns off <I>core</I> dumps, and arranges to die when remote
+        <i>x9834753</i>. It then initializes the random number generator, seeding it
+        with the current time, turns off <i>core</i> dumps, and arranges to die when remote
         connections fail. With this out of the way, the worm processes its argument
-        list. It first looks for an option <B>-p</B> <I>$$</I>, where <I>$$</I> represents the process
+        list. It first looks for an option <b>-p</b> <i>$$</i>, where <i>$$</i> represents the process
         I.D. of its parent process; this option indicates to the worm that it must
         take care to clean up after itself. It proceeds to read in each of the files
         it was given as arguments; if cleaning up, it removes each file after it
-        reads it. If the worm wasn't given the bootstrap source file <I>l1.c</I> as an
+        reads it. If the worm wasn't given the bootstrap source file <i>l1.c</i> as an
         argument, it exits silently; this is perhaps intended to slow down people
         who are experimenting with the worm. If cleaning up, the worm then closes
         its file descriptors, temporarily cutting itself off from its remote parent
-        worm, and removes some files. (One of these files, <I>/tmp/.dumb</I>, is never
+        worm, and removes some files. (One of these files, <i>/tmp/.dumb</i>, is never
         created by the worm and the unlinking seems to be left over from an earlier
         stage of development.) The worm then zeroes out its argument list, again to
-        foil the system status program <I>ps</I>. The next step is to initialize the worm's
+        foil the system status program <i>ps</i>. The next step is to initialize the worm's
         list of network interfaces; these interfaces are used to find local networks
         and to check for alternate addresses of the current host. Finally, if
         cleaning up the worm resets its process group and kills the process that
-        helped to bootstrap it. The worm's last act in <I>main()</I> is to call a function
-        we named <I>doit()</I>, which contains the main loop of the worm.</p>
+        helped to bootstrap it. The worm's last act in <i>main()</i> is to call a function
+        we named <i>doit()</i>, which contains the main loop of the worm.</p>
 
       <pre is:raw><code class="language-c">doit()
 {
@@ -430,14 +430,14 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
   exit(0);
     }
 }</code></pre>
-      <CENTER><br>
-        "C" pseudo-code for the <I>doit()</I> function
-      </CENTER><br>
+      <center><br>
+        "C" pseudo-code for the <i>doit()</i> function
+      </center><br>
 
-      <p><I>doit()</I> runs a short prologue before actually starting the main loop. It (redundantly)
+      <p><i>doit()</i> runs a short prologue before actually starting the main loop. It (redundantly)
         seeds the random number generator with the current time, saving the time so that
         it can tell how long it has been running. The worm then attempts its first
-        infection. It initially attacks gateways that it found with the <I>netstat</I>
+        infection. It initially attacks gateways that it found with the <i>netstat</i>
         network status program; if it can't infect one of these hosts, then it
         checks random host numbers on local networks, then it tries random host
         numbers on networks that are on the far side of gateways, in each case
@@ -445,26 +445,26 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         the sequence the worm uses after it has entered the main loop.)</p>
 
       <p>After this initial attempt at infection, the worm calls the routine
-        <I>checkother()</I> to check for another worm already on the local machine. In
+        <i>checkother()</i> to check for another worm already on the local machine. In
         this check the worm acts as a client to an existing worm which acts as a
         server; they may exchange "population control" messages, after which one
         of the two worms will eventually shut down.</p>
 
       <p>One odd routine is called just before entering the main loop. We named
-        this routine <I>send_message()</I>, but it really doesn't send anything at all.
+        this routine <i>send_message()</i>, but it really doesn't send anything at all.
         It looks like it was intended to cause 1 in 15 copies of the worm to send
-        a 1-byte datagram to a port on the host <I>ernie.berkeley.edu</I>, which is located
+        a 1-byte datagram to a port on the host <i>ernie.berkeley.edu</i>, which is located
         in the Computer Science Department at UC Berkeley. It has been suggested
-        that this was a feint, designed to draw attention to <I>ernie</I> and away from the
+        that this was a feint, designed to draw attention to <i>ernie</i> and away from the
         author's real host. Since the routine has a bug (it sets up a TCP socket but tries
         to send a UDP packet), nothing gets sent at all. It's possible that this
         was a deeper feint, designed to be uncovered only by decompilers; if so,
         this wouldn't be the only deliberate impediment that the author put in our
         way. In any case, administrators at Berkeley never detected any process
-        listening at port 11357 on <I>ernie</I>, and we found no code in the worm that
+        listening at port 11357 on <i>ernie</i>, and we found no code in the worm that
         listens at that port, regardless of the host.</p>
 
-      <p>The main loop begins with a call to a function named <I>cracksome()</I> for some
+      <p>The main loop begins with a call to a function named <i>cracksome()</i> for some
         password cracking. Password cracking is an activity that the worm is
         constantly working at in an incremental fashion. It takes a break for 30
         seconds to look for intruding copies of the worm on the local host, and
@@ -473,7 +473,7 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         this serves to turn over process I.D. numbers and makes it harder to track
         the worm with the system status program ps. At this point the worm goes back
         to its infectious stage, trying (in order of preference) gateways, hosts
-        listed in system tables like <I>/etc/hosts.equiv</I>, random host numbers on the
+        listed in system tables like <i>/etc/hosts.equiv</i>, random host numbers on the
         far side of gateways and random hosts on local networks. As before, if it
         succeeds in infecting a new host, it marks that host in a list and leaves
         the infection phase for the time being. After infection, the worm spends
@@ -487,21 +487,21 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         sufficient amount of work cracking passwords, it exits.</p>
 
       <a NAME="p4.2"></a>
-      <H3>4.2. Data structures</H3>
+      <h3>4.2. Data structures</h3>
 
       <p>The worm maintains at least four interesting data structures, and each is
         associated with a set of support routines.</p>
 
-      <p>The <I>object</I> structure is used to hold copies of files. Files are encrypted
-        using the function <I>xorbuf()</I> while in memory, so that dumps of the worm won't
+      <p>The <i>object</i> structure is used to hold copies of files. Files are encrypted
+        using the function <i>xorbuf()</i> while in memory, so that dumps of the worm won't
         reveal anything interesting. The files are copied to disk on a remote system before
         starting a new worm, and new worms read the files into memory and delete the disk
         copies as part of their start-up duties. Each structure contains a name, a length
-        and a pointer to a buffer. The function <I>getobjectbyname()</I> retrieves a
+        and a pointer to a buffer. The function <i>getobjectbyname()</i> retrieves a
         pointer to a named object structure; for some reason, it is only used to call
         up the bootstrap source file.</p>
 
-      <p>The <I>interface</I> structure contains information about the current host's
+      <p>The <i>interface</i> structure contains information about the current host's
         network interfaces. This is mainly used to check for local attached networks.
         It contains a name, a network address, a subnet mask and some flags. The interface
         table is initialized once at start-up time.</p>
@@ -511,22 +511,22 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         host names and addresses. The list can be searched for a particular address or
         name, with an option to insert a new entry if no matching entry is found. Flag
         bits are used to indicate whether the host is a gateway, whether it was found in
-        a system table like <I>/etc/hosts.equiv</I>, whether the worm has found it
+        a system table like <i>/etc/hosts.equiv</i>, whether the worm has found it
         impossible to attack the host for some reason, and whether the host has already
         been successfully infected. The bits for "can't infect" and "infected" are cleared
         every 12 hours, and low priority hosts are deleted to be accumulated again later.
         The structure contains up to 12 names (aliases) and up to 6 distinct network addresses
         for each host.</p>
 
-      <p>In our sources, what we've called the <I>muck</I> structure is used to keep track of
-        accounts for the purpose of password cracking. (It was awarded the name <I>muck</I>
-        for sentimental reasons, although <I>pw</I> or <I>acct</I> might be more mnemonic.)
+      <p>In our sources, what we've called the <i>muck</i> structure is used to keep track of
+        accounts for the purpose of password cracking. (It was awarded the name <i>muck</i>
+        for sentimental reasons, although <i>pw</i> or <i>acct</i> might be more mnemonic.)
         Each structure contains an account name, an encrypted password a decrypted
         password (if available) plus the home directory and personal information fields
         from the password file.</p>
 
       <a NAME="p4.3"></a>
-      <H3>4.3. Population growth</H3>
+      <h3>4.3. Population growth</h3>
 
       <p>The worm contains a mechanism that seems to be designed to limit the number of
         copies of the worm running on a given system, but beyond that our current
@@ -537,7 +537,7 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         are interested writing such a simulation.</p>
 
       <p>The worm uses a client-and-server technique to control the number of copies
-        executing on the current machine. A routine <I>checkother()</I> is run at
+        executing on the current machine. A routine <i>checkother()</i> is run at
         start-up time. This function tries to connect to a server listening at TCP
         port 23357. The connection attempt returns immediately if no server is present,
         but blocks if one is available and busy; a server worm periodically runs its
@@ -546,32 +546,32 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         a trivial form of authentication, the client and the server roll dice to see who
         gets to survive. If the exclusive-or of the respective low bits of the client's
         and the server's random numbers is 1, the server wins, otherwise the client wins.
-        The loser sets a flag <I>pleasequit</I> that eventually allows it to exit at the
+        The loser sets a flag <i>pleasequit</i> that eventually allows it to exit at the
         bottom of the main loop. If at any time a problem occurs-a read from the server
         fails, or the wrong magic number is returned-the client worm returns from the
         function, becoming a worm that never acts as a server and hence does not engage
         in population control. Perhaps as a precaution against a cataleptic server, a
         test at the top of the function causes 1 in 7 worms to skip population control.
-        Thus the worm finishes the population game in <I>checkother()</I> in one of
-        three states: scheduled to die after some time, with <I>pleasequit</I> set;
+        Thus the worm finishes the population game in <i>checkother()</i> in one of
+        three states: scheduled to die after some time, with <i>pleasequit</i> set;
         running as a server, with the possibility of losing the game later; and immortal,
         safe from the gamble of population control.</p>
 
-      <p>A complementary routine <I>other_sleep()</I> executes the server function. It is
-        passed a time in seconds, and it uses the Berkeley <I>select()</I> system call to
+      <p>A complementary routine <i>other_sleep()</i> executes the server function. It is
+        passed a time in seconds, and it uses the Berkeley <i>select()</i> system call to
         wait for that amount of time accepting connections from clients. On entry to the
         function, it tests to see whether it has a communications port with which to
         accept connections; if not, it simply sleeps for the specified amount of time
-        and returns. Otherwise it loops on <I>select()</I>, decrementing its time
+        and returns. Otherwise it loops on <i>select()</i>, decrementing its time
         remaining after serving a client until no more time is left and the function
         returns. When the server acquires a client, it performs the inverse of the
         client's protocol, eventually deciding whether to proceed or to quit.
-        <I>other_sleep()</I> is called from many different places in the code, so that
+        <i>other_sleep()</i> is called from many different places in the code, so that
         clients are not kept waiting too long.</p>
 
       <p>Given the worm's elaborate scheme for controlling re-infection, what led it to
         reproduce so quickly on an individual machine that it could swamp it? One
-        culprit is the 1 in 7 test in <I>checkother()</I>: worms that skip the client
+        culprit is the 1 in 7 test in <i>checkother()</i>: worms that skip the client
         phase become immortal, and thus don't risk being eliminated by a roll of the
         dice. Another source of system loading is the problem that when a worm decides
         it has lost, it can still do a lot of work before it actually exits. The client
@@ -586,7 +586,7 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         infection, a machine may be entirely devoted to executing worms.</p>
 
       <a NAME="p4.4"></a>
-      <H3>4.4. Locating new hosts to infect</H3>
+      <h3>4.4. Locating new hosts to infect</h3>
 
       <p>One of the characteristics of the worm is that all of its attacks are active,
         never passive. A consequence of this is that the worm can't wait for a user to
@@ -594,11 +594,11 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         on its own.</p>
 
       <p>The worm has a very distinct list of priorities when hunting for hosts. Its
-        favorite hosts are gateways; the <I>hg()</I> routine tries to infect each of the hosts
+        favorite hosts are gateways; the <i>hg()</i> routine tries to infect each of the hosts
         it believes to be gateways. Only when all of the gateways are known to be
-        infected or infection-proof does the worn go on to other hosts. <I>hg()</I>
-        calls the <I>rt_init()</I> function to get a list of gateways; this list is
-        derived by running the <I>netstat</I> network status program and parsing its
+        infected or infection-proof does the worn go on to other hosts. <i>hg()</i>
+        calls the <i>rt_init()</i> function to get a list of gateways; this list is
+        derived by running the <i>netstat</i> network status program and parsing its
         output. The worm is careful to skip the loopback device and any local
         interfaces (in the event that the current host is a gateway); when it finishes,
         it randomizes the order of the list and adds the first 20 gateways to the host
@@ -607,22 +607,22 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
 
       <p>After taking care of gateways, the worm's next priority is hosts whose names
         were found in a scan of system files. At the start of password cracking,
-        the files <I>/etc/hosts.equiv</I> (which contains names of hosts to which the
-        local host grants user permissions without authentication) and <I>/.rhosts</I>
+        the files <i>/etc/hosts.equiv</i> (which contains names of hosts to which the
+        local host grants user permissions without authentication) and <i>/.rhosts</i>
         (which contains names of hosts from which the local host permits remote
-        privileged logins) are examined, as are all users' <I>.forward</I> files
+        privileged logins) are examined, as are all users' <i>.forward</i> files
         (which list hosts to which mail is forwarded from the current host). These hosts
-        are flagged so that they can be scanned earlier than the rest. The <I>hi()</I> function
+        are flagged so that they can be scanned earlier than the rest. The <i>hi()</i> function
         is then responsible for attacking these hosts.</p>
 
       <p>When the most profitable hosts have been used up, the worm starts looking for
-        hosts that aren't recorded in files. The routine <I>hl()</I> checks local
+        hosts that aren't recorded in files. The routine <i>hl()</i> checks local
         networks: it runs through the local host's addresses, masking off the host
-        part and substituting a random value. <I>ha()</I> does the same job for remote hosts,
+        part and substituting a random value. <i>ha()</i> does the same job for remote hosts,
         checking alternate addresses of gateways. Special code handles the ARPAnet
         practice of putting the IMP number in the low host bits and the actual IMP
         port (representing the host) in the high host bits. The function that runs
-        these random probes, which we named <I>hack_netof()</I>, seems to have a bug that
+        these random probes, which we named <i>hack_netof()</i>, seems to have a bug that
         prevents it from attacking hosts on local networks; this may be due to our
         own misunderstanding, of course, but in any case the check of hosts from
         system files should be sufficient to cover all or nearly all of the local
@@ -633,12 +633,12 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         will be discussed below with the other material on passwords.</p>
 
       <a NAME="p4.5"></a>
-      <H3>4.5. Security holes</H3>
+      <h3>4.5. Security holes</h3>
 
-      <BLOCKQUOTE cite="Dennis Ritchie, 'On the Security of Unix'">
+      <blockquote cite="Dennis Ritchie, 'On the Security of Unix'">
         The first fact to face is that Unix was not developed with security, in any
         realistic sense, in mind...
-      </BLOCKQUOTE>
+      </blockquote>
 
       <p>This section discusses the TCP services used by the worm to penetrate systems.
         It's a touch unfair to use the quote above when the implementation of the
@@ -652,51 +652,51 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         not by the author of the worm.</p>
 
       <a NAME="p4.5.1"></a>
-      <H4>4.5.1. <I>Rsh</I> and <I>rexec</I></H4>
+      <h4>4.5.1. <i>Rsh</i> and <i>rexec</i></h4>
 
-      <BLOCKQUOTE cite="Robert T. Morris, 'A Weakness in the 4.2BSD Unix TCP/IP Software'">
+      <blockquote cite="Robert T. Morris, 'A Weakness in the 4.2BSD Unix TCP/IP Software'">
         These notes describe how the design of TCP/IP and the 4.2BSD implementation
         allow users on untrusted and possibly very distant hosts to masquerade as
         users on trusted hosts.
-      </BLOCKQUOTE>
+      </blockquote>
 
-      <p><I>Rsh</I> and <I>rexec</I> are network services which offer remote command
-        interpreters. <I>Rexec</I> uses password authentication; <I>rsh</I> relies on
+      <p><i>Rsh</i> and <i>rexec</i> are network services which offer remote command
+        interpreters. <i>Rexec</i> uses password authentication; <i>rsh</i> relies on
         a "privileged" originating port and permissions files. Two vulnerabilities are
         exploited by the worm-the likelihood that a remote machine that has an account
         for a local user will have the same password as the local account, allowing
-        penetration through <I>rexec</I>, and the likelihood that such a remote account
-        will include the local host in its <I>rsh</I> permissions files. Both of these
+        penetration through <i>rexec</i>, and the likelihood that such a remote account
+        will include the local host in its <i>rsh</i> permissions files. Both of these
         vulnerabilities are really problems with laxness or convenience for users and
         system administrators rather than actual bugs, but they represent avenues for
         infection just like inadvertent security bugs.</p>
 
-      <p>The first use of <I>rsh</I> by the worm is fairly simple: it looks for a remote
+      <p>The first use of <i>rsh</i> by the worm is fairly simple: it looks for a remote
         account with the same name as the one that is (unsuspectingly) running the worm
         on the local machine. This test is part of the standard menu of hacks conducted
-        for each host; if it fails, the worm falls back upon <I>finger</I>, then
-        <I>sendmail</I>. Many sites including Utah already were protected from this
-        trivial attack by not providing remote shells for pseudo-users like <I>daemon</I> or
-        <I>nobody</I>.</p>
+        for each host; if it fails, the worm falls back upon <i>finger</i>, then
+        <i>sendmail</i>. Many sites including Utah already were protected from this
+        trivial attack by not providing remote shells for pseudo-users like <i>daemon</i> or
+        <i>nobody</i>.</p>
 
       <p>A more sophisticated use of these services is found in the password cracking
         routines. After a password is successfully guessed, the worm immediately tries
         to penetrate remote hosts associated with the broken account. It reads the
-        user's <I>.forward</I> file (which contains an address to which mail is
-        forwarded) and <I>.rhosts</I> file (which contains a list of hosts and
+        user's <i>.forward</i> file (which contains an address to which mail is
+        forwarded) and <i>.rhosts</i> file (which contains a list of hosts and
         optionally user names on those hosts which are granted permission to access
-        the local machine with <I>rsh</I> bypassing the usual password authentication),
+        the local machine with <i>rsh</i> bypassing the usual password authentication),
         trying these hostnames until it succeeds. Each target host is attacked in two
-        ways. The worm first contacts the remote host's <I>rexec</I> server and sends
-        it the account name found in the <I>.forward</I> or <I>.rhosts</I> files followed
+        ways. The worm first contacts the remote host's <i>rexec</i> server and sends
+        it the account name found in the <i>.forward</i> or <i>.rhosts</i> files followed
         by the guessed password. If this fails, the worm connects to the local
-        <I>rexec</I> server with the local account name and uses that to contact the
-        target's <I>rsh</I> server. The remote <I>rsh</I> server will permit the
+        <i>rexec</i> server with the local account name and uses that to contact the
+        target's <i>rsh</i> server. The remote <i>rsh</i> server will permit the
         connection provided the name of the local host appears in either the
-        <I>/etc/hosts.equiv</I> file or the user's private <I>.rhosts</I> file.</p>
+        <i>/etc/hosts.equiv</i> file or the user's private <i>.rhosts</i> file.</p>
 
       <p>Strengthening these network services is far more problematic than fixing
-        <I>finger</I> and <I>sendmail</I>, unfortunately. Users don't like the
+        <i>finger</i> and <i>sendmail</i>, unfortunately. Users don't like the
         inconvenience of typing their password when logging in on a trusted local host,
         and they don't want to remember different passwords for each of the many hosts
         they may have to deal with. Some of the solutions may be worse than the
@@ -704,26 +704,26 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         likely to write them down somewhere.</p>
 
       <a NAME="p4.5.2"></a>
-      <H4>4.5.2. <I>Finger</I></H4>
+      <h4>4.5.2. <i>Finger</i></h4>
 
-      <BLOCKQUOTE cite="Bill Cheswick
+      <blockquote cite="Bill Cheswick
                         at AT&amp;T Bell Labs Research, private communication, 11/9/88">
-        <I>gets</I> was removed from our [C library] a couple days ago.
-      </BLOCKQUOTE>
+        <i>gets</i> was removed from our [C library] a couple days ago.
+      </blockquote>
 
-      <p>Probably the neatest hack in the worm is its co-opting of the TCP <I>finger</I>
-        service to gain entry to a system. <I>Finger</I> reports information about a user
+      <p>Probably the neatest hack in the worm is its co-opting of the TCP <i>finger</i>
+        service to gain entry to a system. <i>Finger</i> reports information about a user
         on a host, usually including things like the user's full name, where their
         office is, the number of their phone extension and so on. The Berkeley
-        (<A NAME="rf3" HREF="#f3">3</a>) version of the <I>finger</I> server is a really
+        (<a NAME="rf3" HREF="#f3">3</a>) version of the <i>finger</i> server is a really
         trivial program: it reads a request from the originating host, then runs the
-        local <I>finger</I> program with the request as an argument and ships the output
-        back. Unfortunately the <I>finger</I> server reads the remote request with
-        <I>gets()</I>, a standard C library routine that dates from the dawn of time
+        local <i>finger</i> program with the request as an argument and ships the output
+        back. Unfortunately the <i>finger</i> server reads the remote request with
+        <i>gets()</i>, a standard C library routine that dates from the dawn of time
         and which does not check for overflow of the server's 512 byte request buffer
-        on the stack. The worm supplies the <I>finger</I> server with a request that is
+        on the stack. The worm supplies the <i>finger</i> server with a request that is
         536 bytes long; the bulk of the request is some VAX machine code that asks the
-        system to execute the command interpreter <I>sh</I> and the extra 24 bytes
+        system to execute the command interpreter <i>sh</i> and the extra 24 bytes
         represent just enough data to write over the server's stack frame for the main
         routine. When the main routine of the server exits, the calling function's
         program counter is supposed to be restored from the stack, but the worm wrote
@@ -732,57 +732,57 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         which the worm uses to enter its bootstrap.</p>
 
       <p>Not surprisingly, shortly after the worm was reported to use this feature of
-        <I>gets()</I>, a number of people replaced all instances of <I>gets()</I> in
+        <i>gets()</i>, a number of people replaced all instances of <i>gets()</i> in
         system code with sensible code that checks the length of the buffer. Some even
-        went so far as to remove <I>gets()</I> from the library, although the function
+        went so far as to remove <i>gets()</i> from the library, although the function
         is apparently mandated by the forthcoming ANSI C standard
-        (<A NAME="rf4" HREF="#f4">4</a>). So far no one has claimed to have exercised
-        the <I>finger</I> server bug before the worm incident, but in May 1988, students
-        at UC Santa Cruz apparently penetrated security using a different <I>finger</I>
+        (<a NAME="rf4" HREF="#f4">4</a>). So far no one has claimed to have exercised
+        the <i>finger</i> server bug before the worm incident, but in May 1988, students
+        at UC Santa Cruz apparently penetrated security using a different <i>finger</i>
         server with a similar bug. The system administrator at UCSC noticed that the
-        Berkeley <I>finger</I> server had a similar bug and sent mail to Berkeley, but
+        Berkeley <i>finger</i> server had a similar bug and sent mail to Berkeley, but
         the seriousness of the problem was not appreciated at the time (Jim Haynes,
         private communication).</p>
 
       <p>One final note: the worm is meticulous in some areas but not in others. From
-        what we can tell, there was no Sun-3 version of the <I>finger</I> intrusion
+        what we can tell, there was no Sun-3 version of the <i>finger</i> intrusion
         even though the Sun-3 server was just as vulnerable as the VAX one. Perhaps the
         author had VAX sources available but not Sun sources?</p>
 
       <a NAME="p4.5.3"></a>
-      <H4>4.5.3. <I>Sendmail</I></H4>
+      <h4>4.5.3. <i>Sendmail</i></h4>
 
-      <BLOCKQUOTE cite="Eric Allman, personal communication, 11/22/88">
+      <blockquote cite="Eric Allman, personal communication, 11/22/88">
         [T]he trap door resulted from two distinct 'features' that, although innocent
         by themselves, were deadly when combined (kind of like binary nerve gas).
-      </BLOCKQUOTE>
+      </blockquote>
 
-      <p>The <I>sendmail</I> attack is perhaps the least preferred in the worm's arsenal,
-        but in spite of that one site at Utah was subjected to nearly 150 <I>sendmail</I>
+      <p>The <i>sendmail</i> attack is perhaps the least preferred in the worm's arsenal,
+        but in spite of that one site at Utah was subjected to nearly 150 <i>sendmail</i>
         attacks on Black Thursday. Sendmail is the program that provides the SMTP mail
         service on TCP networks for Berkeley UNIX systems. It uses a simple
         character-oriented protocol to accept mail from remote sites. One feature of
-        <I>sendmail</I> is that it permits mail to be delivered to processes instead of
+        <i>sendmail</i> is that it permits mail to be delivered to processes instead of
         mailbox files; this can be used with (say) the vacation program to notify senders
         that you are out of town and are temporarily unable to respond to their mail.
         Normally this feature is only available to recipients. Unfortunately a little
         loophole was accidentally created when a couple of earlier security bugs were
-        being fixed-if <I>sendmail</I> is compiled with the <I>DEBUG</I> flag, and the
-        sender at runtime asks that <I>sendmail</I> enter <I>debug</I> mode by sending the
-        <I>debug</I> command, it permits senders to pass in a command sequence instead of
-        a user name for a recipient. Alas, most versions of <I>sendmail</I> are compiled
-        with <I>DEBUG</I>, including the one that Sun sends out in its binary
-        distribution. The worm mimics a remote SMTP connection, feeding in <I>/dev/null</I>
+        being fixed-if <i>sendmail</i> is compiled with the <i>DEBUG</i> flag, and the
+        sender at runtime asks that <i>sendmail</i> enter <i>debug</i> mode by sending the
+        <i>debug</i> command, it permits senders to pass in a command sequence instead of
+        a user name for a recipient. Alas, most versions of <i>sendmail</i> are compiled
+        with <i>DEBUG</i>, including the one that Sun sends out in its binary
+        distribution. The worm mimics a remote SMTP connection, feeding in <i>/dev/null</i>
         as the name of the sender and a carefully crafted string as the recipient. The
         string sets up a command that deletes the header of the message and passes the
         body to a command interpreter. The body contains a copy of the worm bootstrap
         source plus commands to compile and run it. After the worm finishes the protocol
-        and closes the connection to <I>sendmail</I>, the bootstrap will be built on the
+        and closes the connection to <i>sendmail</i>, the bootstrap will be built on the
         remote host and the local worm waits for its connection so that it can complete
         the process of building a new worm.</p>
 
       <p>Of course this is not the first time that an inadvertent loophole or "trap door"
-        like this has been found in <I>sendmail</I>, and it may not be the last. In his
+        like this has been found in <i>sendmail</i>, and it may not be the last. In his
         Turing Award lecture, Ken Thompson said: "You can't trust code that you did not
         totally create yourself. (Especially code from companies that employ people
         like me.)" In fact, as Eric Allman says, "[Y]ou can't even trust code that you
@@ -790,60 +790,60 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         not one that is easy to solve.</p>
 
       <a NAME="p4.6"></a>
-      <H3>4.6. Infection</H3>
+      <h3>4.6. Infection</h3>
 
       <p>The worm uses two favorite routines when it decides that it wants to infect a
-        host. One routine that we named <I>infect()</I> is used from host scanning
-        routines like <I>hg()</I>. <I>infect()</I> first checks that it isn't infecting
+        host. One routine that we named <i>infect()</i> is used from host scanning
+        routines like <i>hg()</i>. <i>infect()</i> first checks that it isn't infecting
         the local machine, an already infected machine or a machine previously attacked
         but not successfully infected; the "infected" and
         "immune" states are marked by flags on a host structure when attacks succeed or
         fail, respectively. The worm then makes sure that it can get an address for the
         target host, marking the host immune if it can't. Then comes a series of attacks:
-        first by <I>rsh</I> from the account that the worm is running under, then
-        through <I>finger</I>, then through <I>sendmail</I>. If <I>infect()</I> fails,
+        first by <i>rsh</i> from the account that the worm is running under, then
+        through <i>finger</i>, then through <i>sendmail</i>. If <i>infect()</i> fails,
         it marks the host as immune.</p>
 
-      <p>The other infection routine is named <I>hul()</I> and it is run from the
-        password cracking code after a password has been guessed. <I>hul()</I>, like
-        <I>infect()</I>, makes sure that it's not re-infecting a host, then it checks
+      <p>The other infection routine is named <i>hul()</i> and it is run from the
+        password cracking code after a password has been guessed. <i>hul()</i>, like
+        <i>infect()</i>, makes sure that it's not re-infecting a host, then it checks
         for an address. If a potential remote user name is available from a
-        <I>.forward</I> or <I>.rhosts</I> file, the worm checks it to make sure it is
+        <i>.forward</i> or <i>.rhosts</i> file, the worm checks it to make sure it is
         reasonable - it must contain no punctuation or control characters. If a remote
         user name is unavailable the worm uses the local user name. Once the worm has a
-        user name and a password, it contacts the <I>rexec</I> server on the target host
+        user name and a password, it contacts the <i>rexec</i> server on the target host
         and tries to authenticate itself. If it can, it proceeds to the bootstrap phase;
         otherwise, it tries a slightly different approach-it connects to the local
-        <I>rexec</I> server with the local user name and password, then uses this
+        <i>rexec</i> server with the local user name and password, then uses this
         command interpreter to fire off a command interpreter on the target machine
-        with <I>rsh</I>. This will succeed if the remote host says it trusts the local
-        host in its <I>/etc/hosts.equiv</I> file, or the remote account says it trusts
-        the local account in its <I>.rhosts</I> file. <I>hul()</I> ignores
-        <I>infect()</I>'s "immune" flag and does not set this flag itself, since
-        <I>hul()</I> may find success on a per-account basis that <I>infect()</I>
+        with <i>rsh</i>. This will succeed if the remote host says it trusts the local
+        host in its <i>/etc/hosts.equiv</i> file, or the remote account says it trusts
+        the local account in its <i>.rhosts</i> file. <i>hul()</i> ignores
+        <i>infect()</i>'s "immune" flag and does not set this flag itself, since
+        <i>hul()</i> may find success on a per-account basis that <i>infect()</i>
         can't achieve on a per-host basis.</p>
 
-      <p>Both <I>infect()</I> and <I>hul()</I> use a routine we call <I>sendworm()</I> to
+      <p>Both <i>infect()</i> and <i>hul()</i> use a routine we call <i>sendworm()</i> to
         do their dirty work
-        (<A NAME="rf5" HREF="#f5">5</a>). <I>sendworm()</I> looks for the <I>ll.c</I>
-        bootstrap source file in its objects list, then it uses the <I>makemagic()</I>
+        (<a NAME="rf5" HREF="#f5">5</a>). <i>sendworm()</i> looks for the <i>ll.c</i>
+        bootstrap source file in its objects list, then it uses the <i>makemagic()</i>
         routine to get a communication stream endpoint (a socket), a random network port
         number to rendezvous at, and a magic number for authentication. (There is an
-        interesting side effect to <I>makemagic()</I> - it looks for a usable address
-        for the target host by trying to connect to its TCP <I>telnet</I> port; this
-        produces a characteristic log message from the <I>telnet</I> server.) If
-        <I>makemagic()</I> was successful, the worm begins to send commands to the
+        interesting side effect to <i>makemagic()</i> - it looks for a usable address
+        for the target host by trying to connect to its TCP <i>telnet</i> port; this
+        produces a characteristic log message from the <i>telnet</i> server.) If
+        <i>makemagic()</i> was successful, the worm begins to send commands to the
         remote command interpreter that was started up by the immediately preceding
-        attack. It changes its directory to an unprotected place (<I>/usr/tmp</I>), then
-        it sends across the bootstrap source, using the UNIX stream editor <I>sed</I> to
+        attack. It changes its directory to an unprotected place (<i>/usr/tmp</i>), then
+        it sends across the bootstrap source, using the UNIX stream editor <i>sed</i> to
         parse the input stream. The bootstrap source is compiled and run on the remote
-        system, and the worm runs a routine named <I>waithit()</I> to wait for the remote
+        system, and the worm runs a routine named <i>waithit()</i> to wait for the remote
         bootstrap to call back on the selected port.</p>
 
       <p>The bootstrap is quite simple. It is supplied the address of the originating
         host, a TCP port number and a magic number as arguments. When it starts, it
         unlinks itself so that it can't be detected in the filesystem, then it calls
-        <I>fork()</I> to create a new process with the same image. The old process
+        <i>fork()</i> to create a new process with the same image. The old process
         exits, permitting the originating worm to continue with its business. The
         bootstrap reads its arguments then zeroes them out to hide them from the
         system status program; then it is ready to connect over the network to the
@@ -855,7 +855,7 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         Eventually the transaction completes, and the bootstrap calls up a command
         interpreter to finish the job.</p>
 
-      <p>In the meantime, the parent in <I>waithit()</I> spends up to two minutes waiting
+      <p>In the meantime, the parent in <i>waithit()</i> spends up to two minutes waiting
         for the bootstrap to call back; if the bootstrap fails to call back, or the
         authentication fails, the worm decides to give up and reports a failure. When
         a connection is successful, the worm ships all of its files across followed by
@@ -865,20 +865,20 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         executable object; typically each file contains code for a particular make of
         computer, and the builds will fail until the worm tries the proper computer type.
         If the parent worm finally gets an executable child worm built, it sets it loose
-        with the <B>-p</B> option to kill the command interpreter, then shuts down the
+        with the <b>-p</b> option to kill the command interpreter, then shuts down the
         connection. The target host is marked "infected". If none of the objects produces
-        a usable child worm, the parent removes the detritus and <I>waithit()</I>
+        a usable child worm, the parent removes the detritus and <i>waithit()</i>
         returns an error indication.</p>
 
-      <p>When a system is being swamped by worms, the <I>/usr/tmp</I> directory can fill
-        with leftover files as a consequence of a bug in <I>waithit()</I>. If a worm
+      <p>When a system is being swamped by worms, the <i>/usr/tmp</i> directory can fill
+        with leftover files as a consequence of a bug in <i>waithit()</i>. If a worm
         compile takes more than 30 seconds, resynchronization code will report an error
-        but <I>waithit()</I> will fail to remove the files it has created. On one of
+        but <i>waithit()</i> will fail to remove the files it has created. On one of
         our machines, 13 MB of material representing 86 sets of files accumulated over
         5.5 hours.</p>
 
       <a NAME="p4.7"></a>
-      <H3>4.7. Password cracking</H3>
+      <h3>4.7. Password cracking</h3>
 
       <p>A password cracking algorithm seems like a slow and bulky item to put in a
         worm, but the worm makes this work by being persistent and efficient. The worm
@@ -887,30 +887,30 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         password encryption routine was modified.</p>
 
       <a NAME="p4.7.1"></a>
-      <H4>4.7.1. Guessing passwords</H4>
+      <h4>4.7.1. Guessing passwords</h4>
 
-      <BLOCKQUOTE cite="Grampp and Morris, 'UNIX Operating System Security'">
+      <blockquote cite="Grampp and Morris, 'UNIX Operating System Security'">
         For example, if the login name is "abc", then "abc", "cba", and "abcabc"
         are excellent candidates for passwords.
-      </BLOCKQUOTE>
+      </blockquote>
 
       <p>The worm's password guessing is driven by a little 4-state machine. The first
         state gathers password data, while the remaining states represent increasingly
         less likely sources of potential passwords. The central cracking routine is
-        called <I>cracksome()</I>, and it contains a switch on each of the four states.</p>
+        called <i>cracksome()</i>, and it contains a switch on each of the four states.</p>
 
-      <p>The routine that implements the first state we named <I>crack_0()</I>. This
+      <p>The routine that implements the first state we named <i>crack_0()</i>. This
         routine's job is to collect information about hosts and accounts. It is only
         run once; the information it gathers persists for the lifetime of the worm.
-        Its implementation is straightforward: it reads the files <I>/etc/hosts.equiv</I>
-        and <I>/.rhosts</I> for hosts to attack, then reads the password file looking
+        Its implementation is straightforward: it reads the files <i>/etc/hosts.equiv</i>
+        and <i>/.rhosts</i> for hosts to attack, then reads the password file looking
         for accounts. For each account, the worm saves the name, the encrypted password
         the home directory and the user information fields. As a quick preliminary
-        check, it looks for a <I>.forward</I> file in each user's home directory and
+        check, it looks for a <i>.forward</i> file in each user's home directory and
         saves any host name it finds in that file, marking it like the previous ones.</p>
 
-      <p>We unimaginatively called the function for the next state <I>crack_1()</I>.
-        <I>crack_1()</I> looks for trivially broken passwords. These are passwords which
+      <p>We unimaginatively called the function for the next state <i>crack_1()</i>.
+        <i>crack_1()</i> looks for trivially broken passwords. These are passwords which
         can be guessed merely on the basis of information already contained in the
         password file. Grampp and Morris report a survey of over 100 password files
         where between 8 and 30 percent of all passwords were guessed using just the
@@ -918,55 +918,55 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         than this: it checks the null password, the account name, the account name
         concatenated with itself, the first name (extracted from the user information
         field, with the first letter mapped to lower case), the last name and the account
-        name reversed. It runs through up to 50 accounts per call to <I>cracksome()</I>,
+        name reversed. It runs through up to 50 accounts per call to <i>cracksome()</i>,
         saving its place in the list of accounts and advancing to the next state when it
         runs out of accounts to try.</p>
 
-      <p>The next state is handled by <I>crack_2()</I>. In this state the worm compares a
+      <p>The next state is handled by <i>crack_2()</i>. In this state the worm compares a
         list of favorite passwords, one password per call, with all of the encrypted
         passwords in the password file. The list contains 432 words, most of which are
         real English words or proper names; it seems likely that this list was generated
         by stealing password files and cracking them at leisure on the worm author's
-        home machine. A global variable <I>nextw</I> is used to count the number of
+        home machine. A global variable <i>nextw</i> is used to count the number of
         passwords tried, and it is this count (plus a loss in the population control game)
-        that controls whether the worm exits at the end of the main loop - <I>nextw</I>
+        that controls whether the worm exits at the end of the main loop - <i>nextw</i>
         must be greater than 10 before the worm can exit. Since the worm normally spends
         2.5 minutes checking for clients over the course of the main loop and calls
-        <I>cracksome()</I> twice in that period, it appears that the worm must make a
+        <i>cracksome()</i> twice in that period, it appears that the worm must make a
         minimum of 7 passes through the main loop, taking more than 15 minutes
-        (<A NAME="rf6" HREF="#f6">6</a>). It will take at least 9 hours for the worm to
+        (<a NAME="rf6" HREF="#f6">6</a>). It will take at least 9 hours for the worm to
         scan its built-in password list and proceed to the next state.</p>
 
-      <p>The last state is handled by <I>crack_3()</I>. It opens the UNIX online
-        dictionary <I>/usr/dict/words</I> and goes through it one word at a time. If a
+      <p>The last state is handled by <i>crack_3()</i>. It opens the UNIX online
+        dictionary <i>/usr/dict/words</i> and goes through it one word at a time. If a
         word is capitalized, the worm tries a lower-case version as well. This search
         can essentially go on forever: it would take something like four weeks for the
         worm to finish a typical dictionary like ours.</p>
 
       <p>When the worm selects a potential password, it passes it to a routine we called
-        <I>try_password()</I>. This function calls the worm's special version of the
-        UNIX password encryption function <I>crypt()</I> and compares the result with
+        <i>try_password()</i>. This function calls the worm's special version of the
+        UNIX password encryption function <i>crypt()</i> and compares the result with
         the target account's actual encrypted password. If they are equal, or if the
         password and guess are the null string (no password), the worm saves the
         cleartext password and proceeds to attack hosts that are connected to this
-        account. A routine we called <I>try_forward_and_rhosts()</I> reads the user's
-        <I>.forward</I> and <I>.rhosts</I> files, calling the previously described
-        <I>hul()</I> function for each remote account it finds.</p>
+        account. A routine we called <i>try_forward_and_rhosts()</i> reads the user's
+        <i>.forward</i> and <i>.rhosts</i> files, calling the previously described
+        <i>hul()</i> function for each remote account it finds.</p>
 
       <a NAME="p4.7.2"></a>
-      <H4>4.7.2. Faster password encryption</H4>
+      <h4>4.7.2. Faster password encryption</h4>
 
-      <BLOCKQUOTE cite="Morris and Thompson, 'Password Security: A Case History'">
+      <blockquote cite="Morris and Thompson, 'Password Security: A Case History'">
         The use of encrypted passwords appears reasonably secure in the absence
         of serious attention of experts in the field.
-      </BLOCKQUOTE>
+      </blockquote>
 
       <p>Unfortunately some experts in the field have been giving serious attention to
         fast implementations of the UNIX password encryption algorithm. UNIX password
         authentication works without putting any readable version of the password onto
         the system, and indeed works without protecting the encrypted password against
         reading by users on the system. When a user types a password in the clear, the
-        system encrypts it using the standard <I>crypt()</I> library routine, then
+        system encrypts it using the standard <i>crypt()</i> library routine, then
         compares it against a saved copy of the encrypted password. The encryption
         algorithm is meant to be basically impossible to invert, preventing the retrieval
         of passwords by examining only the encrypted text, and it is meant to be
@@ -983,13 +983,13 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         password scheme was invented. At the same time, ways have been discovered to
         make software DES run faster. UNIX passwords are now far more susceptible to
         persistent guessing, particularly if the encrypted passwords are already known.
-        The worm's version of the UNIX <I>crypt()</I> routine ran more than 9 times
+        The worm's version of the UNIX <i>crypt()</i> routine ran more than 9 times
         faster than the standard version when we tested it on our VAX 8600. While the
-        standard <I>crypt()</I> takes 54 seconds to encrypt 271 passwords on our 8600
+        standard <i>crypt()</i> takes 54 seconds to encrypt 271 passwords on our 8600
         (the number of passwords actually contained in our password file), the worm's
-        <I>crypt()</I> takes less than 6 seconds.</p>
+        <i>crypt()</i> takes less than 6 seconds.</p>
 
-      <p>The worm's <I>crypt()</I> algorithm appears to be a compromise between time and
+      <p>The worm's <i>crypt()</i> algorithm appears to be a compromise between time and
         space: the time needed to encrypt one password guess versus the substantial extra
         table space needed to squeeze performance out of the algorithm. Curiously, one
         performance improvement actually saves a little space. The traditional UNIX
@@ -1002,13 +1002,13 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         algorithm uses. The biggest performance improvement comes as a result of
         combining permutations: the worm uses expanded arrays which are indexed by
         groups of bits rather than the single bits used by the standard algorithm.
-        Matt Bishop's fast version of <I>crypt()</I> does all of these things and also
+        Matt Bishop's fast version of <i>crypt()</i> does all of these things and also
         precomputes even more functions, yielding twice the performance of the worm's
         algorithm but requiring nearly 200 KB of initialized data as opposed to the
-        6 KB used by the worm and the less than 2 KB used by the normal <I>crypt()</I>.</p>
+        6 KB used by the worm and the less than 2 KB used by the normal <i>crypt()</i>.</p>
 
       <p>How can system administrators defend against fast implementations of
-        <I>crypt()</I>? One suggestion that has been introduced for foiling the bad guys
+        <i>crypt()</i>? One suggestion that has been introduced for foiling the bad guys
         is the idea of shadow password files. In this scheme, the encrypted passwords are
         hidden rather than public, forcing a cracker to either break a privileged account
         or use the host's CPU and (slow) encryption algorithm to attack, with the added
@@ -1018,7 +1018,7 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         passwords, all of the passwords must be considered cracked and will need to be
         replaced. Another suggestion has been to replace the UNIX DES implementation with
         the fastest available implementation, but run it 1000 times or more instead of
-        the 25 times used in the UNIX <I>crypt()</I> code. Unless the repeat count is
+        the 25 times used in the UNIX <i>crypt()</i> code. Unless the repeat count is
         somehow pegged to the fastest available CPU speed, this approach merely postpones
         the day of reckoning until the cracker finds a faster machine. It's interesting
         to note that Morris and Thompson measured the time to compute the old M-209
@@ -1030,13 +1030,13 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         (if they aren't already!).</p>
 
       <a NAME="p5"></a>
-      <H2>5. Opinions</H2>
+      <h2>5. Opinions</h2>
 
-      <BLOCKQUOTE cite="Ken Thompson, 1983 Turing Award Lecture">
+      <blockquote cite="Ken Thompson, 1983 Turing Award Lecture">
         The act of breaking into a computer system has to have the same social
         stigma as breaking into a neighbor's house. It should not matter that the
         neighbor's door is unlocked.
-      </BLOCKQUOTE>
+      </blockquote>
 
       <blockquote cite="R H Morris, in 1983 Capitol Hill testimony, cited in the New York Times 11/11/88">
         [Creators of viruses are] stealing a car for the purpose of joyriding.
@@ -1050,7 +1050,7 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         might have been confused by all the information and misinformation, I will try
         to answer a few of the most relevant questions in a narrow but useful way.</p>
 
-      <p><I>Did the worm cause damage?</I> The worm did not destroy files, intercept
+      <p><i>Did the worm cause damage?</i> The worm did not destroy files, intercept
         private mail, reveal passwords, corrupt databases or plant trojan horses. It did
         compete for CPU time with, and eventually overwhelm, ordinary user processes.
         It used up limited system resources such as the open file table and the process
@@ -1080,12 +1080,12 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         in our systems' defenses, but I think we should share our gratefulness with
         someone other than the worm's author.</p>
 
-      <p><I>Was the worm malicious?</I> Some people have suggested that the worm was an
+      <p><i>Was the worm malicious?</i> Some people have suggested that the worm was an
         innocent experiment that got out of hand, and that it was never intended to spread
         so fast or so widely. We can find evidence in the worm to support and to
         contradict this hypothesis. There are a number of bugs in the worm that appear
         to be the result of hasty or careless programming. For example, in the worm's if
-        <I>init()</I> routine, there is a call to the block zero function <I>bzero()</I>
+        <i>init()</i> routine, there is a call to the block zero function <i>bzero()</i>
         that incorrectly uses the block itself rather than the block's address as an
         argument. It's also possible that a bug was responsible for the ineffectiveness
         of the population control measures used by the worm. This could be seen as
@@ -1102,17 +1102,17 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         by dice rolls. There is ample evidence that the worm was designed to hamper
         efforts to stop it even after it was identified and captured. It certainly
         succeeded in this, since it took almost a day before the last mode of infection
-        (the <I>finger</I> server) was identified, analyzed and reported widely; the
+        (the <i>finger</i> server) was identified, analyzed and reported widely; the
         worm was very successful in propagating itself during this time even on systems
-        which had fixed the <I>sendmail</I> <I>debug</I> problem and had turned off
-        <I>rexec</I>. Finally, there is evidence that the worm's author deliberately
+        which had fixed the <i>sendmail</i> <i>debug</i> problem and had turned off
+        <i>rexec</i>. Finally, there is evidence that the worm's author deliberately
         introduced the worm to a foreign site that was left open and welcome to casual
         outside users, rather ungraciously abusing this hospitality. He apparently
         further abused this trust by deleting a log file that might have revealed
         information that could link his home site with the infection. I think the
         innocence lies in the research community rather than with the worm's author.</p>
 
-      <p><I>Will publication of worm details further harm security?</I> In a sense, the worm
+      <p><i>Will publication of worm details further harm security?</i> In a sense, the worm
         itself has solved that problem: it has published itself by sending copies to
         hundreds or thousands of machines around the world. Of course a bad guy who
         wants to use the worm's tricks would have to go through the same effort that we
@@ -1120,7 +1120,7 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         week to completely decompile the program, so while it takes fortitude to hack
         the worm, it clearly is not greatly difficult for a decent programmer. One of
         the worm's most effective tricks was advertised when it entered - the bulk of
-        the <I>sendmail</I> hack is visible in the log file, and a few minutes' work
+        the <i>sendmail</i> hack is visible in the log file, and a few minutes' work
         with the sources will reveal the rest of the trick. The worm's fast password
         algorithm could be useful to the bad guys, but at least two other faster
         implementations have been available for a year or more, so it isn't very secret,
@@ -1134,11 +1134,11 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         fixes immediately, if they haven't done so already.</p>
 
       <a NAME="p6"></a>
-      <H2>6. Conclusion</H2>
+      <h2>6. Conclusion</h2>
 
-      <BLOCKQUOTE cite="R H Morris, quoted in the New York Times 11/5/88">
+      <blockquote cite="R H Morris, quoted in the New York Times 11/5/88">
         It has raised the public awareness to a considerable degree.
-      </BLOCKQUOTE>
+      </blockquote>
 
       <p>This quote is one of the understatements of the year. The worm story was on the
         front page of the New York Times and other newspapers for days. It was the
@@ -1153,7 +1153,7 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         Let's hope we're as lucky next time as we were this time.</p>
 
       <a NAME="ack"></a>
-      <H2>Acknowledgments</H2>
+      <h2>Acknowledgments</h2>
 
       <p>No one is to blame for the inaccuracies herein except me, but there are plenty
         of people to thank for helping to decompile the worm and for helping to document
@@ -1173,41 +1173,41 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         Algorithm", (c)1987 by Matt Bisbop and the Universities Space Research
         Association, was helpful in (slightly) parting the mysteries of DES for me.
         Anyone wishing to understand the worm's DES hacking had better look here first.
-        The paper is available with Bishop's <I>deszip</I> distribution of software for
+        The paper is available with Bishop's <i>deszip</i> distribution of software for
         fast DES encryption. The latter was produced while Bishop was with the Research
         Institute for Advanced Computer Science at NASA Ames Research Center; Bishop
         is now at Dartmouth College (bishop@bear.dartmouth.edu). He sent me a very
-        helpful note on the worm's implementation of <I>crypt()</I> which I leaned on
+        helpful note on the worm's implementation of <i>crypt()</i> which I leaned on
         heavily when discussing the algorithm above.</p>
 
       <p>The following documents were also referenced above for quotes or for other
         material:</p>
 
-      <p><I>Data Encryption Standard</I>, FIPS PUB 46, National Bureau of Standards,
+      <p><i>Data Encryption Standard</i>, FIPS PUB 46, National Bureau of Standards,
         Washington D.C., January 15,1977.</p>
 
       <p>F. T. Grampp and R. H. Morris, "UNIX Operating System Security," in the
-        <I>AT&amp;T Bell Laboratories Technical Journal</I>, October 1984, Vol. 63, No.
+        <i>AT&amp;T Bell Laboratories Technical Journal</i>, October 1984, Vol. 63, No.
         8, Part 2, p. 1649.</p>
 
-      <p>Brian W. Kernighan and Dennis Ritchie, <I>The C Programming Language</I>,
+      <p>Brian W. Kernighan and Dennis Ritchie, <i>The C Programming Language</i>,
         Second Edition, Prentice Hall: Englewood Cliffs, NJ, (C)1988.</p>
 
       <p>John Markoff, "Author of computer 'virus' is son of U.S. Electronic Security
-        Expert," p. 1 of the <I>New York Times</I>, November 5, 1988.</p>
+        Expert," p. 1 of the <i>New York Times</i>, November 5, 1988.</p>
 
       <p>John Markoff, "A family's passion for computers, gone sour," p. 1 of the
-        <I>New York Times</I>, November 11, 1988.</p>
+        <i>New York Times</i>, November 11, 1988.</p>
 
       <p>Robert Morris and Ken Thompson, "Password Security: A Case History," dated
-        April 3, 1978, in the <I>UNIX Programmer's Manual</I>, in the <I>Supplementary
-        Documents</I> or the <I>System Manager's Manual</I>, depending on where and when
+        April 3, 1978, in the <i>UNIX Programmer's Manual</i>, in the <i>Supplementary
+        Documents</i> or the <i>System Manager's Manual</i>, depending on where and when
         you got your manuals.</p>
 
       <p>Robert T. Morris, "A Weakness in the 4.2BSD Unix TCP/IP Software," AT&amp;T Bell
         Laboratories Computing Science Technical Report #117, February 25, 1985. This
         paper actually describes a way of spoofing TCP/IP so that an untrusted host
-        can make use of the <I>rsh</I> server on any 4.2 BSD UNIX system, rather than
+        can make use of the <i>rsh</i> server on any 4.2 BSD UNIX system, rather than
         an attack based on breaking into accounts on trusted hosts, which is what the
         worm uses.</p>
 
@@ -1222,38 +1222,38 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
 
       <br><hr><br><br>
 
-      <B>Footnotes</B>
+      <b>Footnotes</b>
 
       <dl>
-        <DT>(<A NAME="f1" HREF="#rf1">1</a>)</dt>
-        <DD>The Internet is a logical network made up of many physical networks,
+        <dt>(<a NAME="f1" HREF="#rf1">1</a>)</dt>
+        <dd>The Internet is a logical network made up of many physical networks,
           all running the IP class of network protocols.</dd><br>
 
-        <DT>(<A NAME="f2" HREF="#rf2">2</a>)</dt>
-        <DD>VAX and Sun-3 are models of computers built by Digital Equipment Corp.
+        <dt>(<a NAME="f2" HREF="#rf2">2</a>)</dt>
+        <dd>VAX and Sun-3 are models of computers built by Digital Equipment Corp.
           and Sun Microsystems Inc., respectively. UNIX is a Registered Bell of
           AT&amp;T Trademark Laboratories.</dd><br>
 
-        <DT>(<A NAME="f3" HREF="#rf3">3</a>)</dt>
-        <DD>Actually, like much of the code in the Berkeley distribution, the
-          <I>finger</I> server was contributed from elsewhere; in this case, it
+        <dt>(<a NAME="f3" HREF="#rf3">3</a>)</dt>
+        <dd>Actually, like much of the code in the Berkeley distribution, the
+          <i>finger</i> server was contributed from elsewhere; in this case, it
           appears that MIT was the source.</dd><br>
 
-          <DT>(<A NAME="f4" HREF="#rf4">4</a>)</dt>
-          <DD>See for example Appendix B, section 1.4 of the second edition of
+          <dt>(<a NAME="f4" HREF="#rf4">4</a>)</dt>
+          <dd>See for example Appendix B, section 1.4 of the second edition of
             The C Programming Language by Kernighan and Ritchie.</dd><br>
 
-          <DT>(<A NAME="f5" HREF="#rf5">5</a>)</dt>
-          <DD>One minor exception: the <I>sendmail</I> attack doesn't use <I>sendworm()</I>
+          <dt>(<a NAME="f5" HREF="#rf5">5</a>)</dt>
+          <dd>One minor exception: the <i>sendmail</i> attack doesn't use <i>sendworm()</i>
             since it needs to handle the SMTP protocol in addition to the command
             interpreter interface, but the principle is the same.</dd><br>
 
-          <DT>(<A NAME="f6" HREF="#rf6">6</a>)</dt>
-          <DD>For those mindful of details: The first call to <I>cracksome()</I> is
+          <dt>(<a NAME="f6" HREF="#rf6">6</a>)</dt>
+          <dd>For those mindful of details: The first call to <i>cracksome()</i> is
             consumed reading system files. The worm must spend at least one call
             to cracksome0 in the second state attacking trivial passwords. This
             accounts for at least one pass through the main loop. In the third
-            state, <I>cracksome()</I> tests one password from its list of favorites on
+            state, <i>cracksome()</i> tests one password from its list of favorites on
             each call; the worm will exit if it lost a roll of the dice and more
             than ten words have been checked, so this accounts for at least six
             loops, two words on each loop for five loops to reach 10 words, then
