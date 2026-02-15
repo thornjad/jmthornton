@@ -15,8 +15,7 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "astro": "^5.5.0",
-    "@astrojs/cloudflare": "^12.2.0"
+    "astro": "^5.5.0"
   },
   "devDependencies": {
     "purify-css": "^1.2.5"
