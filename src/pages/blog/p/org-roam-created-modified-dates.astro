@@ -45,7 +45,7 @@ and assumes the default Org-roam naming scheme."
             (org-set-property "created" creation-time)))))))</code></pre>
 
       <h3>Extracting Timestamps from Filenames</h3>
-      <pre lang="lisp"><code class="language-lisp">(defun org-roam-extract-timestamp-from-filepath (filepath)
+      <pre is:raw lang="lisp"><code class="language-lisp">(defun org-roam-extract-timestamp-from-filepath (filepath)
   "Extract timestamp from the Org-roam FILEPATH assuming it follows the default naming scheme."
   (let ((filename (file-name-nondirectory filepath)))
     (when (string-match "\\([0-9]\\{8\\}\\)\\([0-9]\\{4\\}\\)" filename)

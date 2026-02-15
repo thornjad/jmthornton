@@ -4,7 +4,7 @@ import BlogPost from '../../../layouts/BlogPost.astro';
 
 <BlogPost
   title="Halfway on Main: Thoughts on Clean Architecture"
-  description="Uncle Bob ignores his own advice when considering the "Main" component, but we can improve on his thoughts and learn from them."
+  description="Uncle Bob ignores his own advice when considering the 'Main' component, but we can improve on his thoughts and learn from them."
   slug="clean-arch-wumpus"
   publishedDate="2021-04-18"
   hasPrism={true}
@@ -46,6 +46,7 @@ import BlogPost from '../../../layouts/BlogPost.astro';
       </p>
 
       <pre
+        is:raw
         class="line-numbers"
         lang="java"
       ><code class="language-java">public class Main implements HtwMessageReceiver {
@@ -192,7 +193,7 @@ import BlogPost from '../../../layouts/BlogPost.astro';
         <code class="language-java">String.equalsIgnoreCase</code> repeatedly.
       </p>
 
-      <pre lang="java"><code class="language-java">while (true) {
+      <pre is:raw lang="java"><code class="language-java">while (true) {
   System.out.println(game.getPlayerCavern());
   System.out.println(&quot;Health: &quot; + hitPoints + &quot; arrows: &quot; + game.getQuiver());
   System.out.println(&quot;&gt;&quot;);
@@ -245,7 +246,7 @@ import BlogPost from '../../../layouts/BlogPost.astro';
         abstraction:
       </p>
 
-      <pre lang="java"><code class="language-java">while (true) {
+      <pre is:raw lang="java"><code class="language-java">while (true) {
   GameUI.displayUserStatus();
   HuntTheWumpus.Command c = GameUI.getUserCommand();
   c.execute();
@@ -268,7 +269,7 @@ import BlogPost from '../../../layouts/BlogPost.astro';
         simply call <code class="language-java">Direction</code>.
       </p>
 
-      <pre lang="java"><code class="language-java">for (String cavern : caverns) {
+      <pre is:raw lang="java"><code class="language-java">for (String cavern : caverns) {
   for (Direction direction : Direction.values()) {
     maybeConnectCavern(cavern, direction);
   }
@@ -289,7 +290,7 @@ import BlogPost from '../../../layouts/BlogPost.astro';
         removed...&quot; section.
       </p>
 
-      <pre lang="java"><code class="language-java">String playerCavern = anyCavern();
+      <pre is:raw lang="java"><code class="language-java">String playerCavern = anyCavern();
 game.setPlayerCavern(playerCavern);
 game.setWumpusCavern(anyOther(playerCavern));
 IntStream.range(0, 3).forEach(() -&gt; game.addBatCavern(anyOtherCavern(playerCavern)));
@@ -341,6 +342,7 @@ IntStream.range(0, 3).forEach(() -&gt; game.addPitCavern(anyOtherCavern(playerCa
       </p>
 
       <pre
+        is:raw
         class="line-numbers"
         lang="java"
       ><code class="language-java">public class Main implements HtwMessageReceiver {

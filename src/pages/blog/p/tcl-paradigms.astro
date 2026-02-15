@@ -54,7 +54,7 @@ import BlogPost from '../../../layouts/BlogPost.astro';
         like <code class="language-tcl">set arr(outer,inner) value</code>.
       </p>
 
-      <pre><code class="language-tcl" set:html={`# Arrays: scope-bound and flat
+      <pre is:raw><code class="language-tcl"># Arrays: scope-bound and flat
 proc make_config {} {
     # Can't return this directly
     set config(host) "localhost"
@@ -64,7 +64,7 @@ proc make_config {} {
 # Dicts: values you can actually use
 proc make_config {} {
     return [dict create host localhost port 8080]
-}`} /></pre>
+}</code></pre>
 
       <p>
         Dicts shine for structured data and functional-style programming.

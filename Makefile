@@ -1,6 +1,6 @@
 .PHONY: all prism style dev build feed
 
-all: style build feed
+all: style feed build
 
 prism:
 	npx purify-css --min --info public/assets/vendor/prism.css public/assets/vendor/prism.js --out public/assets/vendor/prism.min.css
@@ -15,5 +15,4 @@ build:
 	npm run build
 
 feed:
-	pip3 install feedgen bs4
 	python3 bin/feed.py

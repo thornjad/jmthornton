@@ -67,7 +67,7 @@ import BlogPost from '../../../layouts/BlogPost.astro';
         link with a link to the new socket.</p>
 
       <p>We need a name for this symbolic socket, so how about
-        <code class="language-shell" set:html={`/tmp/ssh-agent-$USER-screen`} />. We're putting it in
+        <code class="language-shell">/tmp/ssh-agent-$USER-screen</code>. We're putting it in
         <code>/tmp/</code> since it doesn't matter too much if this is
         overwritten or cleaned up. We're also using the <code class="language-shell">USER</code>
         environment variable to keep sockets separate for different users. At
@@ -89,7 +89,7 @@ import BlogPost from '../../../layouts/BlogPost.astro';
         us. But, if there is no active SSH session, nothing useful will
         happen, so we'll want to get the SSH agent started.</p>
 
-      <pre lang="bash"><code class="language-shell" set:html={`# Source the script first
+      <pre lang="bash"><code class="language-shell"># Source the script first
 . ~/lib/ssh-find-agent/ssh-find-agent.sh
 ssh_find_agent -a
 
@@ -98,18 +98,18 @@ if [ -z "$SSH_AUTH_SOCK" ]
 then
   eval $(ssh-agent) > /dev/null
   ssh-add -l >/dev/null || alias ssh='ssh-add -l >/dev/null || ssh-add && unalias ssh; ssh'
-fi`} /></pre>
+fi</code></pre>
 
       <p>Now that we have the socket, we just need to make (or override)
         that symbolic link so it can be found later.</p>
 
-      <pre lang="bash"><code class="language-shell" set:html={`SOCK="/tmp/ssh-agent-$USER-screen"
+      <pre lang="bash"><code class="language-shell">SOCK="/tmp/ssh-agent-$USER-screen"
 if test $SSH_AUTH_SOCK && [ $SSH_AUTH_SOCK != $SOCK ]
 then
   rm -f /tmp/ssh-agent-$USER-screen
   ln -sf $SSH_AUTH_SOCK $SOCK
   export SSH_AUTH_SOCK=$SOCK
-fi`} /></pre>
+fi</code></pre>
 
       <p>Putting it all together, we'll find the active socket or create it,
         then make a known symblic link. Now we just have to do this everywhere
@@ -122,9 +122,9 @@ fi`} /></pre>
 
       <p>To be clear about where this needs to happen, if your chain looks like this:</p>
 
-      <pre set:html={`host &rarr; tmux &rarr; (remote 1) &rarr; tmux &rarr; (remote 2) &rarr; tmux &rarr; (remote 3)
+      <pre>host &rarr; tmux &rarr; (remote 1) &rarr; tmux &rarr; (remote 2) &rarr; tmux &rarr; (remote 3)
             &DownArrowBar;
-              (remote 4) &rarr; tmux &rarr; (remote 5)`} /></pre>
+              (remote 4) &rarr; tmux &rarr; (remote 5)</pre>
 
       <p>Then you would need to have this set-up on <code>host</code>,
         <code>(remote 1)</code>, <code>(remote 2)</code> and <code>(remote
@@ -135,7 +135,7 @@ fi`} /></pre>
 
       <p>So there we have it, the SSH socket symbolically linked to a known location. After cloning ssh-find-agent, here's the complete script to add to your shell login script as required:</p>
 
-      <pre lang="~/.bashrc"><code class="language-shell" set:html={`# Known SSH Socket for tmux
+      <pre lang="~/.bashrc"><code class="language-shell"># Known SSH Socket for tmux
 # https://jmthornton.net/blog/p/tmux-known-socket
 
 . ~/lib/ssh-find-agent/ssh-find-agent.sh
@@ -153,7 +153,7 @@ then
   rm -f /tmp/ssh-agent-$USER-screen
   ln -sf $SSH_AUTH_SOCK $SOCK
   export SSH_AUTH_SOCK=$SOCK
-fi`} /></pre>
+fi</code></pre>
     </div>
   </div>
 </BlogPost>

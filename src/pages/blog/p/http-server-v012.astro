@@ -83,7 +83,12 @@ import BlogPost from '../../../layouts/BlogPost.astro';
         <code class="language-bash">.httpserverrc</code> file:
       </p>
 
-      <pre><code class="language-json">{"{\n  \"port\": 8080,\n  \"cache\": 3600,\n  \"cors\": true,\n  \"log-ip\": true\n}"}</code></pre>
+      <pre is:raw><code class="language-json">{
+  "port": 8080,
+  "cache": 3600,
+  "cors": true,
+  "log-ip": true
+}</code></pre>
 
       <h2>--find-port</h2>
 

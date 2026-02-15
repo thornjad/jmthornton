@@ -8,6 +8,5 @@ export default defineConfig({
   outDir: 'dist',
   redirects: {
     '/p': '/',
-    '/p/': '/',
   },
 });

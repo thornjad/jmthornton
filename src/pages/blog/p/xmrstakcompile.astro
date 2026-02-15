@@ -57,11 +57,11 @@ CUDA NOT found</pre></p>
 
       <p>Long story short, here&#39;s everything I did to make it finally work:</p>
 
-      <p><pre><code class="language-shell">sudo apt install cuda cuda-9-0 cuda-core-9-0 cuda-cublas-* cuda-cudart-* cuda-cufft-* cuda-documentation-9-0 cuda-runtime-9-0 cuda-nvgraph-* cuda-nvrtc-* cuda-gdb-src-9-0 --reinstall
+      <p><pre is:raw><code class="language-shell">sudo apt install cuda cuda-9-0 cuda-core-9-0 cuda-cublas-* cuda-cudart-* cuda-cufft-* cuda-documentation-9-0 cuda-runtime-9-0 cuda-nvgraph-* cuda-nvrtc-* cuda-gdb-src-9-0 --reinstall
 
 git clone https://github.com/fireice-uk/xmr-stak.git
 
-mkdir xmr-stak/build &amp;&amp; cd xmr-stak/build
+mkdir xmr-stak/build && cd xmr-stak/build
 
 export CC=/usr/bin/gcc
 
@@ -89,34 +89,34 @@ make install -j 4</code></pre></p>
 
       <p><strong>nvidia.txt</strong></p>
 
-      <p><pre><code class="language-json">&quot;gpu_threads_conf&quot; :
+      <p><pre is:raw><code class="language-json">"gpu_threads_conf" :
   [
     // gpu: GeForce GT 755M architecture: 30
     //      memory: 1810/1991 MiB
     //      smx: 2
-    { &quot;index&quot; : 0,
-    &quot;threads&quot; : 124, &quot;blocks&quot; : 6,
-    &quot;bfactor&quot; : 4, &quot;bsleep&quot; :  0,
-    &quot;affine_to_cpu&quot; : false,
+    { "index" : 0,
+    "threads" : 124, "blocks" : 6,
+    "bfactor" : 4, "bsleep" :  0,
+    "affine_to_cpu" : false,
     },
     // gpu: GeForce GT 755M architecture: 30
     //      memory: 1972/1999 MiB
     //      smx: 2
-    { &quot;index&quot; : 1,
-    &quot;threads&quot; : 124, &quot;blocks&quot; : 6,
-    &quot;bfactor&quot; : 4, &quot;bsleep&quot; :  0,
-    &quot;affine_to_cpu&quot; : false,
+    { "index" : 1,
+    "threads" : 124, "blocks" : 6,
+    "bfactor" : 4, "bsleep" :  0,
+    "affine_to_cpu" : false,
     },
   ],</code></pre></p>
 
       <p><strong>cpu.txt</strong></p>
 
-      <p><pre><code class="language-json">&quot;cpu_threads_conf&quot; :
+      <p><pre is:raw><code class="language-json">"cpu_threads_conf" :
   [
-    { &quot;low_power_mode&quot; : false, &quot;no_prefetch&quot; : true, &quot;affine_to_cpu&quot; : 0 },
-    { &quot;low_power_mode&quot; : false, &quot;no_prefetch&quot; : true, &quot;affine_to_cpu&quot; : 1 },
-    { &quot;low_power_mode&quot; : false, &quot;no_prefetch&quot; : true, &quot;affine_to_cpu&quot; : 2 },
-    { &quot;low_power_mode&quot; : false, &quot;no_prefetch&quot; : true, &quot;affine_to_cpu&quot; : 3 },
+    { "low_power_mode" : false, "no_prefetch" : true, "affine_to_cpu" : 0 },
+    { "low_power_mode" : false, "no_prefetch" : true, "affine_to_cpu" : 1 },
+    { "low_power_mode" : false, "no_prefetch" : true, "affine_to_cpu" : 2 },
+    { "low_power_mode" : false, "no_prefetch" : true, "affine_to_cpu" : 3 },
   ],</code></pre></p>
 
       <p>On my system, this gets me around 600 H/s. Not bad, but low enough for me to start considering getting some old GPUs for my weakling Dell Vostro tower.</p>
@@ -129,12 +129,12 @@ make install -j 4</code></pre></p>
 
       <p>Notice the <code class="language-shell">-DCUDA_ENABLE=OFF</code> which makes it CPU-only (on NVidia systems). Then this is my <strong>cpu.txt</strong>, same as for the all-out profile above:</p>
 
-      <p><pre><code class="language-json">&quot;cpu_threads_conf&quot; :
+      <p><pre is:raw><code class="language-json">"cpu_threads_conf" :
   [
-    { &quot;low_power_mode&quot; : false, &quot;no_prefetch&quot; : true, &quot;affine_to_cpu&quot; : 0 },
-    { &quot;low_power_mode&quot; : false, &quot;no_prefetch&quot; : true, &quot;affine_to_cpu&quot; : 1 },
-    { &quot;low_power_mode&quot; : false, &quot;no_prefetch&quot; : true, &quot;affine_to_cpu&quot; : 2 },
-    { &quot;low_power_mode&quot; : false, &quot;no_prefetch&quot; : true, &quot;affine_to_cpu&quot; : 3 },
+    { "low_power_mode" : false, "no_prefetch" : true, "affine_to_cpu" : 0 },
+    { "low_power_mode" : false, "no_prefetch" : true, "affine_to_cpu" : 1 },
+    { "low_power_mode" : false, "no_prefetch" : true, "affine_to_cpu" : 2 },
+    { "low_power_mode" : false, "no_prefetch" : true, "affine_to_cpu" : 3 },
   ],</code></pre></p>
 
       <p>Running this profile gets me around 200 H/s.</p>
@@ -149,10 +149,10 @@ make install -j 4</code></pre></p>
 
       <p>Notice the <code class="language-shell">-DCUDA_ENABLE=OFF</code> which makes it CPU-only (on NVidia systems). Here&#39;s the <strong>cpu.txt</strong> for the lite version:</p>
 
-      <p><pre><code class="language-json">&quot;cpu_threads_conf&quot; :
+      <p><pre is:raw><code class="language-json">"cpu_threads_conf" :
   [
-    { &quot;low_power_mode&quot; : true, &quot;no_prefetch&quot; : false, &quot;affine_to_cpu&quot; : false },
-    { &quot;low_power_mode&quot; : true, &quot;no_prefetch&quot; : false, &quot;affine_to_cpu&quot; : false },
+    { "low_power_mode" : true, "no_prefetch" : false, "affine_to_cpu" : false },
+    { "low_power_mode" : true, "no_prefetch" : false, "affine_to_cpu" : false },
   ],</code></pre></p>
 
       <p>Running this profile keeps me around 60-75 H/s and doesn&#39;t drain enough CPU power for me to notice most of the time. If you&#39;re using a pool that offers a separate port for low-end CPUs, I&#39;d use that for this profile.</p>

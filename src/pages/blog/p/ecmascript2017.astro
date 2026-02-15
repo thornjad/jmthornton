@@ -23,8 +23,20 @@ import BlogPost from '../../../layouts/BlogPost.astro';
 
       <h4>Object.values and Object.entries</h4>
       <p>The first addition to ECMAScript 2017 liberates us from jQuery dependence when it comes to enumerating pairs of entries or values from objects. This adds two new methods to the Object prototype, complementing pre-existing methods like <code class="language-javascript">keys()</code>. <code class="language-javascript">values()</code> returns an array of all values, without the keys, while <code class="language-javascript">entries()</code> returns a two dimensional array of keys and values. Let's see an example use:</p>
-      <pre><code class="language-javascript">{"const jmthornton = {\n  name: 'Jade Michael',\n  writes: 'code'\n};\n\nObject.entries(jmthornton);\n// [['name', 'Jade Michael'], ['writes', 'code']]"}</code></pre>
-      <pre><code class="language-javascript">{"const jmthornton = {\n  name: 'Jade Michael',\n  writes: 'code'\n};\n\nObjects.values(jmthornton);\n// ['Jade Michael', 'code']"}</code></pre>
+      <pre is:raw><code class="language-javascript">const jmthornton = {
+  name: 'Jade Michael',
+  writes: 'code'
+};
+
+Object.entries(jmthornton);
+// [['name', 'Jade Michael'], ['writes', 'code']]</code></pre>
+      <pre is:raw><code class="language-javascript">const jmthornton = {
+  name: 'Jade Michael',
+  writes: 'code'
+};
+
+Objects.values(jmthornton);
+// ['Jade Michael', 'code']</code></pre>
       <p>
         Documentation:
         <ul>
@@ -35,7 +47,11 @@ import BlogPost from '../../../layouts/BlogPost.astro';
 
       <h4>String padding</h4>
       <p>This new feature is relatively small, but comes to the rescue of npm and Node itself. If you don't remember, March 2016 saw <a href="http://www.theregister.co.uk/2016/03/23/npm_left_pad_chaos/">a bit of a crisis</a> where a widely used package (even by Node and Babel) called <code>left-pad</code> was unpublished from npm and crippled developers everywhere. This new ECMAScript feature makes the package unneeded. You can use it to easily format string output so the string reaches the given length:</p>
-      <pre><code class="language-javascript">{"'foobaring foo'.padStart(20);       // \"       foobaring foo\"\n'foobaring foo'.padStart(20, '#');  // \"#######foobaring foo\"\n\n'foobaring foo'.padEnd(20);         // \"foobaring foo       \"\n'foobaring foo'.padEnd(20, '#');    // \"foobaring foo#######\""}</code></pre>
+      <pre><code class="language-javascript">'foobaring foo'.padStart(20);       // &quot;       foobaring foo&quot;
+'foobaring foo'.padStart(20, '#');  // &quot;#######foobaring foo&quot;
+
+'foobaring foo'.padEnd(20);         // &quot;foobaring foo       &quot;
+'foobaring foo'.padEnd(20, '#');    // &quot;foobaring foo#######&quot;</code></pre>
       <p>
         Documentation:
         <ul>
@@ -46,7 +62,24 @@ import BlogPost from '../../../layouts/BlogPost.astro';
 
       <h4>Object.getOwnPropertyDescriptors</h4>
       <p>Copying objects manually is never fun, and comes with a lot of uncertainty, and with the rising awareness and use of functional programming, immutability is very important. The new method on the <code class="language-javascript">Object</code> prototype solves this issue once and for all. <code class="language-javascript">Object.getOwnPropertyDescriptors</code> takes in an <code class="language-javascript">Object</code> and returns the descriptors describing the attributes of a property (like value, if it's writable, etc.) Here's an example of how it's used:</p>
-      <pre><code class="language-javascript">{"const source = {\n  name: 'Jackie Smith',\n  id: 555\n};\n\nconst sourceClone = Object.create(\n  Object.getPrototypeOf(source),\n  Object.getOwnPropertyDescriptors(source)\n);\n\nconst stateClone = Object.create(\n  Object.getPrototypeOf(this.state),\n  Object.getOwnPropertyDescriptors(this.state)\n);\n\n// make changes to stateClone\n\nthis.setState(stateClone);"}</code></pre>
+      <pre is:raw><code class="language-javascript">const source = {
+  name: 'Jackie Smith',
+  id: 555
+};
+
+const sourceClone = Object.create(
+  Object.getPrototypeOf(source),
+  Object.getOwnPropertyDescriptors(source)
+);
+
+const stateClone = Object.create(
+  Object.getPrototypeOf(this.state),
+  Object.getOwnPropertyDescriptors(this.state)
+);
+
+// make changes to stateClone
+
+this.setState(stateClone);</code></pre>
       <p>Documentation:
         <ul>
           <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor">MDN: Object.getOwnPropertyDescriptor()</a></li>
@@ -54,7 +87,13 @@ import BlogPost from '../../../layouts/BlogPost.astro';
 
       <h4 class="hash-line-2"><a class="hash-anchor" id="trailing-commas" href="#trailing-commas">##</a>Trailing commas in function parameter lists and calls</h4>
       <p>This new update is purely aesthetic, allowing trailing commas in function parameter lists and calls. For a long time, we've been able to put trailing commas in objects and arrays, so it's only fitting that parameter lists join the ranks. There's no performance or big underlying changes here, but I think it's a good addition. Example for clarity:</p>
-      <pre><code class="language-javascript">{"function foo(\n    paramA,\n    paramB,\n    paramC,\n  ) {\n  console.log('No more complaints from the compiler!');\n}"}</code></pre>
+      <pre is:raw><code class="language-javascript">function foo(
+    paramA,
+    paramB,
+    paramC,
+  ) {
+  console.log('No more complaints from the compiler!');
+}</code></pre>
       <p>Documentation:
         <ul>
           <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Trailing_commas">MDN: Trailing commas</a></li>
@@ -62,9 +101,25 @@ import BlogPost from '../../../layouts/BlogPost.astro';
 
       <h4>Async functions</h4>
       <p>A solution to chained callbacks, that all-too-common pattern especially prevalent with APIs, async functions are a bit of syntatic sugar, but they let you write promise-based code in a way that looks synchronous. As <a href="https://developers.google.com/web/fundamentals/primers/async-functions">Jake Archibald</a> puts it, it makes "your asynchronous code less 'clever' and more readable". Check out <a href="https://ponyfoo.com/articles/understanding-javascript-async-await">this excellent in-depth walk-through</a> by Nicol&aacute;s Bevacqua. Here's the gist of the syntax:</p>
-      <pre><code class="language-javascript">{"async function doTheThing(data) {\n  try {\n    const valA = await anAsyncFunction(data);\n    const valB = await aDifferentAsyncFunction(valA);\n    console.log(`valB: ${valB}`);\n  } catch (err) {\n    console.error(`Oh noes! ${err}`);\n  }\n}"}</code></pre>
+      <pre is:raw><code class="language-javascript">async function doTheThing(data) {
+  try {
+    const valA = await anAsyncFunction(data);
+    const valB = await aDifferentAsyncFunction(valA);
+    console.log(`valB: ${valB}`);
+  } catch (err) {
+    console.error(`Oh noes! ${err}`);
+  }
+}</code></pre>
       <p>And to use it with an arrow function:</p>
-      <pre><code class="language-javascript">{"const doTheThing = async (data) => {\n  try {\n    const valA = await anAsyncFunction(data);\n    const valB = await aDifferentAsyncFunction(valA);\n    console.log(`valB: ${valB}`);\n  } catch (err) {\n    console.error(`Oh noes! ${err}`);\n  }\n}"}</code></pre>
+      <pre is:raw><code class="language-javascript">const doTheThing = async (data) => {
+  try {
+    const valA = await anAsyncFunction(data);
+    const valB = await aDifferentAsyncFunction(valA);
+    console.log(`valB: ${valB}`);
+  } catch (err) {
+    console.error(`Oh noes! ${err}`);
+  }
+}</code></pre>
       <p>Documentation:
         <ul>
           <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function">MDN: async function</a></li>

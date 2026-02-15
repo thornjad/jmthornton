@@ -30,13 +30,13 @@ import BlogPost from '../../../layouts/BlogPost.astro';
         values. This can lead to unexpected behavior in conditionals:
       </p>
 
-      <pre><code class="language-tcl" set:html={`if {""} {
+      <pre is:raw><code class="language-tcl">if {""} {
     puts "This is true"
 } elseif {!""} {
     puts "This is false"
 } else {
     puts "This is neither true nor false"
-}`} /></pre>
+}</code></pre>
 
       <p>Output:</p>
       <pre><code>This is neither true nor false</code></pre>
@@ -60,8 +60,8 @@ import BlogPost from '../../../layouts/BlogPost.astro';
         dictionary first:
       </p>
 
-      <pre><code class="language-tcl" set:html={`set my_dict [dict create]
-dict set my_dict key value`} /></pre>
+      <pre><code class="language-tcl">set my_dict [dict create]
+dict set my_dict key value</code></pre>
 
       <p>
         This is actually reasonable behavior - TCL doesn't want to assume
@@ -79,7 +79,7 @@ dict set my_dict key value`} /></pre>
         rather than their values:
       </p>
 
-      <pre><code class="language-tcl" set:html={`proc increment {varName} {
+      <pre is:raw><code class="language-tcl">proc increment {varName} {
     upvar $varName var
     incr var
 }
@@ -89,7 +89,7 @@ proc swap {a b} {
     set temp $aVar
     set aVar $bVar
     set bVar $temp
-}`} /></pre>
+}</code></pre>
 
       <p>
         This is actually pretty cool once you get used to it, but it's
@@ -130,13 +130,13 @@ string is fa 0
         syntax of the nested list(s):
       </p>
 
-      <pre><code class="language-tcl" set:html={`set a {aa bb {cc dd}}
+      <pre is:raw><code class="language-tcl">set a {aa bb {cc dd}}
 split $a " "
-# => {aa bb \\{cc dd\\}}`} /></pre>
+# => {aa bb \{cc dd\}}</code></pre>
 
       <p>
         Notice that the braces of the nested list
-        <code class="language-tcl" set:html={`{cc dd}`} /> have been escaped,
+        <code class="language-tcl">&#123;cc dd&#125;</code> have been escaped,
         resulting in a string that looks like a dict, but is not. This is
         because under the hood,
         <code class="language-tcl">split</code> operates on the string
@@ -153,9 +153,9 @@ split $a " "
         unexpected:
       </p>
 
-      <pre><code class="language-tcl" set:html={`set number_string "42A_B8C"
+      <pre><code class="language-tcl">set number_string "42A_B8C"
 string tolower $number_string
-# => 42a_b8c`} /></pre>
+# => 42a_b8c</code></pre>
 
       <p>
         Even though the numbers remain the same, the non-alphabetic
@@ -171,7 +171,7 @@ string tolower $number_string
         variables from previous iterations that have no new value:
       </p>
 
-      <pre><code class="language-tcl" set:html={`set data {
+      <pre is:raw><code class="language-tcl">set data {
     item1 {var1 value1}
     item2 {var2 value2}
 }
@@ -180,11 +180,11 @@ foreach item {item1 item2} {
     dict with data $item {
         puts "Item: $item, var1: $var1, var2: $var2"
     }
-}`} /></pre>
+}</code></pre>
 
       <p>Output:</p>
-      <pre><code set:html={`Item: item1, var1: value1, var2: value2
-Item: item2, var1: value1, var2: value2`} /></pre>
+      <pre><code>Item: item1, var1: value1, var2: value2
+Item: item2, var1: value1, var2: value2</code></pre>
 
       <p>
         Notice that <code class="language-tcl">var1</code> is still set to
@@ -218,12 +218,12 @@ Item: item2, var1: value1, var2: value2`} /></pre>
         in creating macros or DSLs (Domain Specific Languages) in TCL:
       </p>
 
-      <pre><code class="language-tcl" set:html={`proc print_doubled {script} {
-    uplevel "set x [expr {$script * 2}] ; puts \\$x"
+      <pre is:raw><code class="language-tcl">proc print_doubled {script} {
+    uplevel "set x [expr {$script * 2}] ; puts \$x"
 }
 
 print_doubled {2 + 3}
-# => 10`} /></pre>
+# => 10</code></pre>
 
       <p>
         This is actually pretty powerful, but it's also a great way to
@@ -237,12 +237,12 @@ print_doubled {2 + 3}
         have a fixed type. A variable can change its type during runtime:
       </p>
 
-      <pre><code class="language-tcl" set:html={`set my_var 42
+      <pre><code class="language-tcl">set my_var 42
 puts "Variable type: [string is integer $my_var]"
 # => Variable type: 1
 set my_var "hello"
 puts "Variable type: [string is integer $my_var]"
-# => Variable type: 0`} /></pre>
+# => Variable type: 0</code></pre>
 
       <p>
         This can lead to flexibility in development, but may also cause
@@ -263,12 +263,12 @@ puts "Variable type: [string is integer $my_var]"
         runtime:
       </p>
 
-      <pre><code class="language-tcl" set:html={`set x 10
-set y "\\$x + 5"
+      <pre><code class="language-tcl">set x 10
+set y "\$x + 5"
 puts "Before substitution: $y"
 # => Before substitution: $x + 5
 puts "After substitution: [subst $y]"
-# => After substitution: 10 + 5`} /></pre>
+# => After substitution: 10 + 5</code></pre>
 
       <p>
         This may be surprising if you're expecting TCL to
@@ -287,7 +287,7 @@ puts "After substitution: [subst $y]"
         <code class="language-tcl">error</code> commands:
       </p>
 
-      <pre><code class="language-tcl" set:html={`if {[catch {some_command} result]} {
+      <pre is:raw><code class="language-tcl">if {[catch {some_command} result]} {
     puts "Error encountered: $result"
 }
 
@@ -295,7 +295,7 @@ try {
     some_command
 } on error {errorMsg} {
     puts "Error encountered: $errorMsg"
-}`} /></pre>
+}</code></pre>
 
       <p>
         The <code class="language-tcl">catch</code> command can be used to

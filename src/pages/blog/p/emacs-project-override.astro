@@ -34,7 +34,7 @@ import BlogPost from '../../../layouts/BlogPost.astro';
       <hr />
       <h3>Update</h3>
       <p>Since the writing of this post, Emacs 29 has been released and introduces a variable which may solve this same issue in a cleaner way! Unfortunately it doesn't appear to work for me, but some folks on Reddit commented that it seems to function as expected. So, it may be worth a shot for you: set <code>project-vc-extra-root-markers</code> to a list of file names or glob patterns which mark a project's root in addition to the default ".git", ".hg" and other common markers.</p>
-      <p>So, the cleaner equivalent to the rest of the post, if it works, is a simple <pre lang="lisp"><code class="language-lisp">{"(setq project-vc-extra-root-markers '(\".project.el\" \".projectile\" ))"}</code></pre></p>
+      <p>So, the cleaner equivalent to the rest of the post, if it works, is a simple <pre lang="lisp"><code class="language-lisp">(setq project-vc-extra-root-markers '(&quot;.project.el&quot; &quot;.projectile&quot; ))</code></pre></p>
       <p>If, however, you're like me and can't seem to get this to do anything, the original post still works:</p>
       <hr />
       <h3>Original post</h3>
@@ -53,7 +53,26 @@ import BlogPost from '../../../layouts/BlogPost.astro';
         else moving from Projectile like I am, by allowing <code>.projectile</code> to serve as a
         project root marker alongside Michael's <code>.project.el</code>.
       </p>
-      <pre lang="lisp"><code class="language-lisp">{"(defun project-root-override (dir)\n  \"Find DIR's project root by searching for a '.project.el' file.\n\nIf this file exists, it marks the project root. For convenient compatibility\nwith Projectile, '.projectile' is also considered a project root marker.\n\nhttps://jmthornton.net/blog/p/emacs-project-override\"\n  (let ((root (or (locate-dominating-file dir \".project.el\")\n                  (locate-dominating-file dir \".projectile\")))\n        (backend (ignore-errors (vc-responsible-backend dir))))\n    (when root (if (version<= emacs-version \"28\")\n                    (cons 'vc root)\n                  (list 'vc backend root)))))\n\n;; Note that we cannot use :hook here because `project-find-functions' doesn't\n;; end in \"-hook\", and we can't use this in :init because it won't be defined\n;; yet.\n(use-package project\n  :config\n  (add-hook 'project-find-functions #'project-root-override))"}</code></pre>
+      <pre is:raw lang="lisp"><code class="language-lisp">(defun project-root-override (dir)
+  "Find DIR's project root by searching for a '.project.el' file.
+
+If this file exists, it marks the project root. For convenient compatibility
+with Projectile, '.projectile' is also considered a project root marker.
+
+https://jmthornton.net/blog/p/emacs-project-override"
+  (let ((root (or (locate-dominating-file dir ".project.el")
+                  (locate-dominating-file dir ".projectile")))
+        (backend (ignore-errors (vc-responsible-backend dir))))
+    (when root (if (version<= emacs-version "28")
+                    (cons 'vc root)
+                  (list 'vc backend root)))))
+
+;; Note that we cannot use :hook here because `project-find-functions' doesn't
+;; end in "-hook", and we can't use this in :init because it won't be defined
+;; yet.
+(use-package project
+  :config
+  (add-hook 'project-find-functions #'project-root-override))</code></pre>
       <p>
         Now we can use <code>touch .project.el</code> in any directory, and <code>project.el</code> with
         recognize it as the project root!

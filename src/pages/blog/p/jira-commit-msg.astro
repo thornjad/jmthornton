@@ -15,9 +15,9 @@ import BlogPost from '../../../layouts/BlogPost.astro';
   <div class="post-main">
     <div class="blog-body">
       <p>At <a href="https://flightaware.com">FlightAware</a>, we use Jira to track work and git for version control. To reference each other, git branch names start with the relevant issue number, taking the form</p>
-      <pre><code class="language-shell">${project}_${ticketNumber}_${shortDescription}</code></pre>
+      <pre is:raw><code class="language-shell">${project}_${ticketNumber}_${shortDescription}</code></pre>
       <p>Additionally, commit messages end with the same issue number in the form</p>
-      <pre><code class="language-shell">${project}-${ticketNumber}</code></pre>
+      <pre is:raw><code class="language-shell">${project}-${ticketNumber}</code></pre>
       <p>These conventions allow for easy referencing of issues to look for details and business decisions. Specifically, the issue number in the commit message is used by <a href="https://github.com/nugget/zeitgit">Zeitgit</a> to attribute commit statistics to issues. It's also used by <a href="https://www.jenkins.io/">Jenkins</a> to create useful links between tickets and pull requests.</p>
       <p>It is, however, a little annoying to type the issue number in to every commit, especially when I <em>know</em> git already has this information in the branch name—git just doesn't know it. To automate this little task, I use a git hook to prepare the commit message with the issue number before it goes to <code class="language-shell">$EDITOR</code> (e.g. vim) for editing.</p>
 
@@ -29,7 +29,7 @@ import BlogPost from '../../../layouts/BlogPost.astro';
       <p>For the script itself, we need to get the issue number from the branch name, format it according to FlightAware conventions, then prepend it onto the commit message file, preserving git's default message if it exists (the summary of changes in the commit). My script is in Zsh, but could be in any language available on the system; Bash, Python, plain old Bourne shell, etc. would be fine. I use Zsh as my login shell, so that's what I default to.</p>
 
       <h3>Hook script in full</h3>
-      <pre class="line-numbers" lang="zsh"><code class="language-shell">#!/usr/bin/env zsh
+      <pre is:raw class="line-numbers" lang="zsh"><code class="language-shell">#!/usr/bin/env zsh
 COMMIT_MSG_FILE=$1
 COMMIT_SOURCE=$2
 SHA1=$3
@@ -72,7 +72,7 @@ SHA1=$3</code></pre>
       <p>The next <code class="language-shell">if</code> condition performs two actions. First, it only resolves as true if there <em>is</em> an issue number in the branch name—at least of the form we use at FlightAware. Second, the <code class="language-shell">()</code> capture groups take the project code and ticket number and implicitly store them in the <code class="language-shell">$match</code> array. Any description text after the issue number is ignored.</p>
 
       <h2>Formatting the issue number</h2>
-      <pre lang="zsh"><code class="language-shell">    ticket="${match[1]:u}-${match[2]}"</code></pre>
+      <pre is:raw lang="zsh"><code class="language-shell">    ticket="${match[1]:u}-${match[2]}"</code></pre>
       <p><em><code class="language-shell">if</code></em> we find an issue number, we'll need to format it. This is necessary only because of FlightAware conventions; branch names are snake_case, while Jira issue numbers are properly TRAIN-CASE. We simply create a new variable, <code class="language-shell">ticket</code>, built from the capture groups stored in <code class="language-shell">$match</code>. We upcase the project code portion with the <code class="language-shell">:u</code> expansion modifier to complete the transformation. There are other ways to upcase text, but this is the cleanest in my opinion.</p>
 
       <h2>Building the commit message</h2>
