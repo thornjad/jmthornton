@@ -12,6 +12,7 @@ interface Props {
   fontStrategy?: 'preload' | 'prefetch';
   includeOneko?: boolean;
   noindex?: boolean;
+  hideFooter?: boolean;
 }
 
 const {
@@ -23,6 +24,7 @@ const {
   fontStrategy = 'preload',
   includeOneko = false,
   noindex = false,
+  hideFooter = false,
 } = Astro.props;
 
 const robotsContent = noindex ? 'noindex' : (robots ?? 'index, follow');
@@ -49,9 +51,11 @@ const robotsContent = noindex ? 'noindex' : (robots ?? 'index, follow');
     <main>
       <slot />
     </main>
-    <Footer variant={footerVariant}>
-      <slot name="footer-extra" slot="footer-extra" />
-    </Footer>
+    {!hideFooter && (
+      <Footer variant={footerVariant}>
+        <slot name="footer-extra" slot="footer-extra" />
+      </Footer>
+    )}
     <slot name="body-end" />
   </body>
 </html>

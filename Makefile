@@ -15,4 +15,5 @@ build:
 	npm run build
 
 feed:
+	pip3 install -r requirements.txt
 	python3 bin/feed.py

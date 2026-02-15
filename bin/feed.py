@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-from datetime import datetime, timezone, timedelta, time
-from bs4 import BeautifulSoup
+import re
+from datetime import datetime, timezone, timedelta
 from feedgen.feed import FeedGenerator
 from pathlib import Path
 
@@ -29,22 +29,53 @@ def parse_date_to_9am_cst(date_str=None, fallback_timestamp=None):
     return None
 
 
-def parse_astro_file(file_path):
-    import re
+def extract_blog_body(content):
+    """Extract the inner HTML of <div class="blog-body">...</div> using regex.
 
+    Handles nested divs by counting open/close tags.
+    Returns None if no blog-body div is found.
+    """
+    start_match = re.search(r'<div\s+class="blog-body">', content)
+    if not start_match:
+        return None
+
+    # walk forward from after the opening tag, tracking div depth
+    pos = start_match.end()
+    depth = 1
+    div_open = re.compile(r'<div[\s>]')
+    div_close = re.compile(r'</div>')
+
+    while depth > 0 and pos < len(content):
+        next_open = div_open.search(content, pos)
+        next_close = div_close.search(content, pos)
+
+        if next_close is None:
+            break
+
+        if next_open and next_open.start() < next_close.start():
+            depth += 1
+            pos = next_open.end()
+        else:
+            depth -= 1
+            if depth == 0:
+                return content[start_match.end():next_close.start()].strip()
+            pos = next_close.end()
+
+    return None
+
+
+def parse_astro_file(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # Extract BlogPost props using regex
+    # extract BlogPost props
     blogpost_match = re.search(r'<BlogPost\s+(.*?)>', content, re.DOTALL)
     if not blogpost_match:
         return None
 
     props_str = blogpost_match.group(1)
 
-    # Extract individual props
     def extract_prop(name):
-        # Match both title="value" and title={value}
         match = re.search(rf'{name}=(?:"([^"]*)"|{{([^}}]*)\}})', props_str)
         if match:
             return match.group(1) or match.group(2)
@@ -59,7 +90,6 @@ def parse_astro_file(file_path):
     if not title or not slug:
         return None
 
-    # Parse dates
     published_date = parse_date_to_9am_cst(published_date_str) if published_date_str else None
     modified_date = parse_date_to_9am_cst(modified_date_str) if modified_date_str else published_date
 
@@ -68,13 +98,7 @@ def parse_astro_file(file_path):
     if not modified_date:
         modified_date = published_date
 
-    # Extract content after BlogPost tag
-    soup = BeautifulSoup(content, 'html.parser')
-    blog_body = soup.find('div', class_='blog-body')
-    if blog_body:
-        content_html = str(blog_body)
-    else:
-        content_html = description
+    content_html = extract_blog_body(content) or description
 
     url = f'https://jmthornton.net/blog/p/{slug}'
 
