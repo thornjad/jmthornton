@@ -34,9 +34,9 @@ import BlogPost from '../../../layouts/BlogPost.astro';
       </center>
       <em>
         On the evening of November 2, 1988, a self-replicating program was released
-        upon the Internet (<a NAME="rf1" HREF="#f1">1</a>) This program (a worm) invaded VAX and Sun-3 computers
+        upon the Internet (<a name="rf1" href="#f1">1</a>) This program (a worm) invaded VAX and Sun-3 computers
         running versions of Berkeley UNIX, and used their resources to attack still
-        more computers (<a NAME="rf2" HREF="#f2">2</a>). Within the space of hours this program had spread across
+        more computers (<a name="rf2" href="#f2">2</a>). Within the space of hours this program had spread across
         the U.S., infecting hundreds or thousands of computers and making many of
         them unusable due to the burden of its activity. This paper provides a
         chronology for the outbreak and presents a detailed description of the
@@ -73,7 +73,7 @@ import BlogPost from '../../../layouts/BlogPost.astro';
       </dl>
       <br><hr><br>
 
-      <a NAME="p1"></a>
+      <a name="p1"></a>
       <h2>1. Introduction</h2>
 
       <blockquote cite="Grampp and Morris, 'UNIX Operating System Security'">
@@ -117,7 +117,7 @@ import BlogPost from '../../../layouts/BlogPost.astro';
         a troubling thought. Opinions on this and other matters will be offered
         below.</p>
 
-      <a NAME="p2"></a>
+      <a name="p2"></a>
       <h2>2. Chronology</h2>
 
       <blockquote cite="Dennis Miller, on NBC's Saturday Night Live">
@@ -284,7 +284,7 @@ import BlogPost from '../../../layouts/BlogPost.astro';
 
       </dl>
 
-      <a NAME="p3"></a>
+      <a name="p3"></a>
       <h2>3. Overview</h2>
 
       <p>What exactly did the worm do that led it to cause an epidemic? The worm
@@ -375,14 +375,14 @@ import BlogPost from '../../../layouts/BlogPost.astro';
         unless they have been modified to use Berkeley network programs like
         <i>sendmail</i>, <i>fingerd</i> and <i>rexec</i>.</p>
 
-      <a NAME="p4"></a>
+      <a name="p4"></a>
       <h2>4. Internals</h2>
 
       <p>Now for some details: we shall follow the main thread of control in the worm,
         then examine some of the worm's data structures before working through each
         phase of activity.</p>
 
-      <a NAME="p4.1"></a>
+      <a name="p4.1"></a>
       <h3>4.1. The thread of control</h3>
 
       <p>When the worm starts executing in <i>main()</i>, it takes care of some
@@ -486,7 +486,7 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         its population control features, and if it is, and if it has done a
         sufficient amount of work cracking passwords, it exits.</p>
 
-      <a NAME="p4.2"></a>
+      <a name="p4.2"></a>
       <h3>4.2. Data structures</h3>
 
       <p>The worm maintains at least four interesting data structures, and each is
@@ -525,7 +525,7 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         password (if available) plus the home directory and personal information fields
         from the password file.</p>
 
-      <a NAME="p4.3"></a>
+      <a name="p4.3"></a>
       <h3>4.3. Population growth</h3>
 
       <p>The worm contains a mechanism that seems to be designed to limit the number of
@@ -585,7 +585,7 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         factors together and it comes as no surprise that within an hour or two after
         infection, a machine may be entirely devoted to executing worms.</p>
 
-      <a NAME="p4.4"></a>
+      <a name="p4.4"></a>
       <h3>4.4. Locating new hosts to infect</h3>
 
       <p>One of the characteristics of the worm is that all of its attacks are active,
@@ -632,7 +632,7 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         handled separately from the usual host attack scheme presented here, it
         will be discussed below with the other material on passwords.</p>
 
-      <a NAME="p4.5"></a>
+      <a name="p4.5"></a>
       <h3>4.5. Security holes</h3>
 
       <blockquote cite="Dennis Ritchie, 'On the Security of Unix'">
@@ -651,7 +651,7 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         The lesson from that experience seems to have been forgotten by most people, but
         not by the author of the worm.</p>
 
-      <a NAME="p4.5.1"></a>
+      <a name="p4.5.1"></a>
       <h4>4.5.1. <i>Rsh</i> and <i>rexec</i></h4>
 
       <blockquote cite="Robert T. Morris, 'A Weakness in the 4.2BSD Unix TCP/IP Software'">
@@ -703,7 +703,7 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         disease-for example, a user who is forced to deal with many passwords is more
         likely to write them down somewhere.</p>
 
-      <a NAME="p4.5.2"></a>
+      <a name="p4.5.2"></a>
       <h4>4.5.2. <i>Finger</i></h4>
 
       <blockquote cite="Bill Cheswick
@@ -715,7 +715,7 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         service to gain entry to a system. <i>Finger</i> reports information about a user
         on a host, usually including things like the user's full name, where their
         office is, the number of their phone extension and so on. The Berkeley
-        (<a NAME="rf3" HREF="#f3">3</a>) version of the <i>finger</i> server is a really
+        (<a name="rf3" href="#f3">3</a>) version of the <i>finger</i> server is a really
         trivial program: it reads a request from the originating host, then runs the
         local <i>finger</i> program with the request as an argument and ships the output
         back. Unfortunately the <i>finger</i> server reads the remote request with
@@ -736,7 +736,7 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         system code with sensible code that checks the length of the buffer. Some even
         went so far as to remove <i>gets()</i> from the library, although the function
         is apparently mandated by the forthcoming ANSI C standard
-        (<a NAME="rf4" HREF="#f4">4</a>). So far no one has claimed to have exercised
+        (<a name="rf4" href="#f4">4</a>). So far no one has claimed to have exercised
         the <i>finger</i> server bug before the worm incident, but in May 1988, students
         at UC Santa Cruz apparently penetrated security using a different <i>finger</i>
         server with a similar bug. The system administrator at UCSC noticed that the
@@ -749,7 +749,7 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         even though the Sun-3 server was just as vulnerable as the VAX one. Perhaps the
         author had VAX sources available but not Sun sources?</p>
 
-      <a NAME="p4.5.3"></a>
+      <a name="p4.5.3"></a>
       <h4>4.5.3. <i>Sendmail</i></h4>
 
       <blockquote cite="Eric Allman, personal communication, 11/22/88">
@@ -789,7 +789,7 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         did totally create yourself." The basic problem of trusting system programs is
         not one that is easy to solve.</p>
 
-      <a NAME="p4.6"></a>
+      <a name="p4.6"></a>
       <h3>4.6. Infection</h3>
 
       <p>The worm uses two favorite routines when it decides that it wants to infect a
@@ -825,7 +825,7 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
 
       <p>Both <i>infect()</i> and <i>hul()</i> use a routine we call <i>sendworm()</i> to
         do their dirty work
-        (<a NAME="rf5" HREF="#f5">5</a>). <i>sendworm()</i> looks for the <i>ll.c</i>
+        (<a name="rf5" href="#f5">5</a>). <i>sendworm()</i> looks for the <i>ll.c</i>
         bootstrap source file in its objects list, then it uses the <i>makemagic()</i>
         routine to get a communication stream endpoint (a socket), a random network port
         number to rendezvous at, and a magic number for authentication. (There is an
@@ -877,7 +877,7 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         our machines, 13 MB of material representing 86 sets of files accumulated over
         5.5 hours.</p>
 
-      <a NAME="p4.7"></a>
+      <a name="p4.7"></a>
       <h3>4.7. Password cracking</h3>
 
       <p>A password cracking algorithm seems like a slow and bulky item to put in a
@@ -886,7 +886,7 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         discuss how the worm goes about choosing passwords to test and how the UNIX
         password encryption routine was modified.</p>
 
-      <a NAME="p4.7.1"></a>
+      <a name="p4.7.1"></a>
       <h4>4.7.1. Guessing passwords</h4>
 
       <blockquote cite="Grampp and Morris, 'UNIX Operating System Security'">
@@ -934,7 +934,7 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         2.5 minutes checking for clients over the course of the main loop and calls
         <i>cracksome()</i> twice in that period, it appears that the worm must make a
         minimum of 7 passes through the main loop, taking more than 15 minutes
-        (<a NAME="rf6" HREF="#f6">6</a>). It will take at least 9 hours for the worm to
+        (<a name="rf6" href="#f6">6</a>). It will take at least 9 hours for the worm to
         scan its built-in password list and proceed to the next state.</p>
 
       <p>The last state is handled by <i>crack_3()</i>. It opens the UNIX online
@@ -953,7 +953,7 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         <i>.forward</i> and <i>.rhosts</i> files, calling the previously described
         <i>hul()</i> function for each remote account it finds.</p>
 
-      <a NAME="p4.7.2"></a>
+      <a name="p4.7.2"></a>
       <h4>4.7.2. Faster password encryption</h4>
 
       <blockquote cite="Morris and Thompson, 'Password Security: A Case History'">
@@ -1029,7 +1029,7 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         10 times faster than the VAX 8600 at a cheaper price will be available soon
         (if they aren't already!).</p>
 
-      <a NAME="p5"></a>
+      <a name="p5"></a>
       <h2>5. Opinions</h2>
 
       <blockquote cite="Ken Thompson, 1983 Turing Award Lecture">
@@ -1133,7 +1133,7 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         anyone who runs a system with these vulnerabilities needs to look into these
         fixes immediately, if they haven't done so already.</p>
 
-      <a NAME="p6"></a>
+      <a name="p6"></a>
       <h2>6. Conclusion</h2>
 
       <blockquote cite="R H Morris, quoted in the New York Times 11/5/88">
@@ -1152,7 +1152,7 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
         understanding of the crisis just past will help us cope better with the next one.
         Let's hope we're as lucky next time as we were this time.</p>
 
-      <a NAME="ack"></a>
+      <a name="ack"></a>
       <h2>Acknowledgments</h2>
 
       <p>No one is to blame for the inaccuracies herein except me, but there are plenty
@@ -1225,30 +1225,30 @@ if (pleasequit &amp;&amp; nextw &gt; 10)
       <b>Footnotes</b>
 
       <dl>
-        <dt>(<a NAME="f1" HREF="#rf1">1</a>)</dt>
+        <dt>(<a name="f1" href="#rf1">1</a>)</dt>
         <dd>The Internet is a logical network made up of many physical networks,
           all running the IP class of network protocols.</dd><br>
 
-        <dt>(<a NAME="f2" HREF="#rf2">2</a>)</dt>
+        <dt>(<a name="f2" href="#rf2">2</a>)</dt>
         <dd>VAX and Sun-3 are models of computers built by Digital Equipment Corp.
           and Sun Microsystems Inc., respectively. UNIX is a Registered Bell of
           AT&amp;T Trademark Laboratories.</dd><br>
 
-        <dt>(<a NAME="f3" HREF="#rf3">3</a>)</dt>
+        <dt>(<a name="f3" href="#rf3">3</a>)</dt>
         <dd>Actually, like much of the code in the Berkeley distribution, the
           <i>finger</i> server was contributed from elsewhere; in this case, it
           appears that MIT was the source.</dd><br>
 
-          <dt>(<a NAME="f4" HREF="#rf4">4</a>)</dt>
+          <dt>(<a name="f4" href="#rf4">4</a>)</dt>
           <dd>See for example Appendix B, section 1.4 of the second edition of
             The C Programming Language by Kernighan and Ritchie.</dd><br>
 
-          <dt>(<a NAME="f5" HREF="#rf5">5</a>)</dt>
+          <dt>(<a name="f5" href="#rf5">5</a>)</dt>
           <dd>One minor exception: the <i>sendmail</i> attack doesn't use <i>sendworm()</i>
             since it needs to handle the SMTP protocol in addition to the command
             interpreter interface, but the principle is the same.</dd><br>
 
-          <dt>(<a NAME="f6" HREF="#rf6">6</a>)</dt>
+          <dt>(<a name="f6" href="#rf6">6</a>)</dt>
           <dd>For those mindful of details: The first call to <i>cracksome()</i> is
             consumed reading system files. The worm must spend at least one call
             to cracksome0 in the second state attacking trivial passwords. This

@@ -1,0 +1,61 @@
+name: lint
+
+on:
+  push:
+    branches: [main, astro]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: check for uppercase HTML tags in astro files
+        run: |
+          # uppercase tags get misinterpreted as component imports by Astro
+          pattern='<(/?)(I|B|U|S|P|A|CENTER|FONT|STRIKE|BIG|SMALL|SUB|SUP|DL|DT|DD|OL|UL|LI|TR|TD|TH|TABLE|THEAD|TBODY|TFOOT|DIV|SPAN|BLOCKQUOTE|PRE|CODE|EM|STRONG|HR|BR|IMG|H[1-6])(\s|>|/)'
+          violations=""
+          for f in $(find src -name '*.astro'); do
+            template=$(awk '/^---$/{if(++c==2) found=1; next} found{print}' "$f")
+            if echo "$template" | grep -Pn "$pattern" > /dev/null 2>&1; then
+              matches=$(echo "$template" | grep -Pn "$pattern")
+              violations="${violations}\n${f}:\n${matches}\n"
+            fi
+          done
+          if [ -n "$violations" ]; then
+            echo "ERROR: Uppercase HTML tags found (Astro treats these as components):"
+            echo -e "$violations"
+            exit 1
+          fi
+          echo "No uppercase HTML tags found"
+
+      - name: check for uppercase HTML attributes in astro files
+        run: |
+          # uppercase attributes like NAME, HREF are invalid in Astro's strict typing
+          pattern='\s(NAME|HREF|SRC|CLASS|ID|STYLE|TYPE|VALUE|ACTION|METHOD|TARGET|REL|ALT|TITLE|WIDTH|HEIGHT|COLSPAN|ROWSPAN|CELLPADDING|CELLSPACING|BORDER|ALIGN|VALIGN|BGCOLOR|FRAMEBORDER)="'
+          violations=""
+          for f in $(find src -name '*.astro'); do
+            template=$(awk '/^---$/{if(++c==2) found=1; next} found{print}' "$f")
+            if echo "$template" | grep -Pn "$pattern" > /dev/null 2>&1; then
+              matches=$(echo "$template" | grep -Pn "$pattern")
+              violations="${violations}\n${f}:\n${matches}\n"
+            fi
+          done
+          if [ -n "$violations" ]; then
+            echo "ERROR: Uppercase HTML attributes found (use lowercase attributes):"
+            echo -e "$violations"
+            exit 1
+          fi
+          echo "No uppercase HTML attributes found"
+
+      - name: astro check
+        run: npx astro check
