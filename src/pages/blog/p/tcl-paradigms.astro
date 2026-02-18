@@ -1,0 +1,123 @@
+---
+import BlogPost from '../../../layouts/BlogPost.astro';
+---
+
+<BlogPost
+  title="Data Paradigms in TCL: Associative Arrays vs Dictionaries"
+  description="Understanding the fundamental differences between TCL's associative arrays and dictionaries, and when to use each."
+  slug="tcl-paradigms"
+  publishedDate="2020-08-10"
+  hasPrism={true}
+>
+  <h1 class="post-title">
+    Data Paradigms in TCL: Associative Arrays vs Dictionaries
+  </h1>
+  <time datetime="2020-08-10">August 10, 2020</time>
+
+  <div class="post-main">
+    <div class="blog-body">
+      <p>
+        Working with TCL for a while, you have to come to terms with the
+        fact that arrays and dicts aren't just different APIs. They're
+        fundamentally different beasts under the hood.
+      </p>
+
+      <h2>The Implementation Reality</h2>
+
+      <p>
+        Associative arrays are TCL's original key-value store, implemented
+        as hash tables directly in the interpreter. When you write
+        <code class="language-tcl">set arr(key) value</code>, you're
+        actually creating a variable with a compound name. The interpreter
+        maintains a separate hash table for each array variable, and
+        accessing <code class="language-tcl">$arr(key)</code> triggers a
+        hash lookup on that specific table.
+      </p>
+
+      <p>
+        Dictionaries came later (TCL 8.5 in 2007) as first-class values.
+        Unlike arrays, a dict is just a string with a specific internal
+        representation: a list of alternating keys and values that gets
+        cached as a hash table when you perform dict operations on it. The
+        key insight is that dicts are values that can be passed around,
+        while arrays are variables that live in specific scopes.
+      </p>
+
+      <h2>Why This Matters in Practice</h2>
+
+      <p>
+        Arrays tie you to variable scopes. You can't return an array from
+        a procedure without using
+        <code class="language-tcl">upvar</code> or
+        <code class="language-tcl">global</code> to work around the
+        limitation. Arrays also can't be nested without ugly naming tricks
+        like <code class="language-tcl">set arr(outer,inner) value</code>.
+      </p>
+
+      <pre is:raw><code class="language-tcl"># Arrays: scope-bound and flat
+proc make_config {} {
+    # Can't return this directly
+    set config(host) "localhost"
+    set config(port) 8080
+}
+
+# Dicts: values you can actually use
+proc make_config {} {
+    return [dict create host localhost port 8080]
+}</code></pre>
+
+      <p>
+        Dicts shine for structured data and functional-style programming.
+        Need nested data?
+        <code class="language-tcl"
+          >dict set config database host localhost</code
+        >
+        just works. Want to pass complex data between procedures? Dicts
+        are your friend.
+      </p>
+
+      <h2>Performance Quirks</h2>
+
+      <p>
+        Here's the counterintuitive part: arrays can be faster for simple
+        key-value operations because there's no string parsing overhead
+        (everything is a string, except when it's not). But dicts win for
+        complex operations because they can optimize their internal
+        representation and handle nesting efficiently.
+      </p>
+
+      <p>
+        Arrays also support pattern matching with
+        <code class="language-tcl">array names pattern</code>, which dicts
+        can't match without iteration.
+      </p>
+
+      <h2>When to Use What</h2>
+
+      <p>Use arrays for:</p>
+      <ul>
+        <li>Simple key-value stores that stay in one scope</li>
+        <li>When you need pattern matching on keys</li>
+        <li>Legacy code that expects array semantics</li>
+      </ul>
+
+      <p>Use dicts for:</p>
+      <ul>
+        <li>Structured, nested data</li>
+        <li>Passing data between procedures</li>
+        <li>Modern TCL code that values composability</li>
+      </ul>
+
+      <p>
+        The real lesson? TCL's "everything is a string" philosophy is
+        surface-level, and it means these data structures evolved
+        different internal optimizations while maintaining the same
+        string-based interface. At FlightAware, we've learned this the
+        hard way. Legacy code is full of arrays that should have been
+        dicts, and newer code sometimes uses dicts where arrays would be
+        simpler. Understanding the implementation helps you pick the right
+        tool and avoid performance traps.
+      </p>
+    </div>
+  </div>
+</BlogPost>

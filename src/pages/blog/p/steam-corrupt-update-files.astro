@@ -1,0 +1,33 @@
+---
+import BlogPost from '../../../layouts/BlogPost.astro';
+---
+
+<BlogPost
+  title="Fix Steam 'Corrupt Update Files'"
+  description="How to fix the annoying error when downloading or updating some Steam games, which reports the error 'Corrupt Update Files'"
+  slug="steam-corrupt-update-files"
+  publishedDate="2020-10-12"
+>
+  <h1 class="post-title">Fixing corrupt update files in Steam</h1>
+  <time datetime="2020-10-12">October 12, 2020</time>
+
+  <div class="post-main">
+    <div class="blog-body">
+      <p>Occasionally, though I don't know or understand the cause, Steam fails to install and/or update some games and reports the error "Corrupt update files". No matter how many times you try to reinstall, the same error occurs. There are scant resources I've found searching for this problem, but it happens to me just often enough I'd like this post as a reminder for myself.</p>
+      <h3>Steps to fix</h3>
+      <ol>
+        <li><strong>Uninstall the affected game</strong></li>
+        <li><strong>Clear the Download Cache</strong> (In Steam settings > Downloads). Skipping this step may let the game claim to have downloaded successfully, but when the files are verified, it will likely find corrupt files again.</li>
+        <li><strong>Remove lingering game files:</strong> Clear any previous files from the game; look for the game title under steamapps/common (in Linux this can be found in ~/.steam/steam/steamapps/common)</li>
+        <li><strong>Change download region</strong>: Change the download region to something else, probably still something nearby to keep speeds as high as possible. For example, my default is "US - New York", so I usually change it to something like "US - Philadelphia" or anywhere else nearby</li>
+        <li><strong>Restart Steam</strong> when prompted</li>
+        <li><strong>Reinstall the game</strong>
+          <ul>
+            <li>If you do, go back to step 1 and use a different region. If it still doesn't work a second time, these steps may not be valid for your problem, or this guide is now outdated.</li>
+          </ul>
+        </li>
+        <li><strong>Verify game files integrity</strong> (In the game's 'Properties' > 'Local Files')</li>
+      </ol>
+    </div>
+  </div>
+</BlogPost>

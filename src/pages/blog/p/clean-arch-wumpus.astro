@@ -1,0 +1,410 @@
+---
+import BlogPost from '../../../layouts/BlogPost.astro';
+---
+
+<BlogPost
+  title="Halfway on Main: Thoughts on Clean Architecture"
+  description="Uncle Bob ignores his own advice when considering the 'Main' component, but we can improve on his thoughts and learn from them."
+  slug="clean-arch-wumpus"
+  publishedDate="2021-04-18"
+  hasPrism={true}
+>
+  <h1 class="post-title">Halfway on Main: Thoughts on Clean Architecture</h1>
+  <time datetime="2021-04-18">April 18, 2021</time>
+  <p>
+    Uncle Bob ignores his own advice when considering the "Main" component, but we can improve on his
+    thoughts and learn from them.
+  </p>
+
+  <div class="post-main">
+    <div class="blog-body">
+      <p>
+        Chapter 26 is a short section of Uncle Bob Martin&#39;s classic, Clean Architecture. It
+        discusses the necessary evil of creating a <code class="language-java">Main</code> component
+        which handles the dirty work and initializes the rest of the program. This component necessarily
+        breaks rules to get the show running and provide an interface with the non-clean world which is
+        our reality. The <code class="language-java">Main</code> component takes care of setting up
+        globals and may enter the program into an infinite loop to keep it running forever.
+      </p>
+
+      <p>
+        Uncle Bob gives a lengthy yet incomplete example of a
+        <code class="language-java">Main</code> class component for a hypothetical game of &quot;Hunt
+        the Wumpus&quot;. The game is a text-based somewhat-roguelite dungeon-crawler in which you seek
+        out the Wumpus and avoid traps. A simple game concept, well within the wheelhouse of a
+        first-year computer science student, and Uncle Bob&#39;s code looks the part. For an otherwise
+        insightful book about how to separate concerns, Martin seems to give up when it comes to this
+        component, relegating it to be &quot;the dirtiest of all the dirty components&quot; without any
+        effort to find a better way. The example class he presents is needlessly brittle and repetitive.
+      </p>
+
+      <p>
+        Here is that entire <code class="language-java">Main</code> class, as presented in the book.
+        Note that the book contains the comment at the end (<code class="language-java"
+          >much code removed...</code
+        >), it wasn&#39;t added here.
+      </p>
+
+      <pre
+        is:raw
+        class="line-numbers"
+        lang="java"
+      ><code class="language-java">public class Main implements HtwMessageReceiver {
+  private static HuntTheWumpus game;
+  private static int hitPoints = 10;
+  private static final List&lt;String&gt; caverns = new ArrayList&lt;&gt;();
+  private static final String[] environments = new String[]{
+    &quot;bright&quot;,
+    &quot;humid&quot;,
+    &quot;dry&quot;,
+    &quot;creepy&quot;,
+    &quot;ugly&quot;,
+    &quot;foggy&quot;,
+    &quot;hot&quot;,
+    &quot;cold&quot;,
+    &quot;drafty&quot;,
+    &quot;dreadful&quot;
+  };
+
+  private static final String[] shapes = new String[] {
+    &quot;round&quot;,
+    &quot;square&quot;,
+    &quot;oval&quot;,
+    &quot;irregular&quot;,
+    &quot;long&quot;,
+    &quot;craggy&quot;,
+    &quot;rough&quot;,
+    &quot;tall&quot;,
+    &quot;narrow&quot;
+  };
+
+  private static final String[] cavernTypes = new String[] {
+    &quot;cavern&quot;,
+    &quot;room&quot;,
+    &quot;chamber&quot;,
+    &quot;catacomb&quot;,
+    &quot;crevasse&quot;,
+    &quot;cell&quot;,
+    &quot;tunnel&quot;,
+    &quot;passageway&quot;,
+    &quot;hall&quot;,
+    &quot;expanse&quot;
+  };
+
+  private static final String[] adornments = new String[] {
+    &quot;smelling of sulfur&quot;,
+    &quot;with engravings on the walls&quot;,
+    &quot;with a bumpy floor&quot;,
+    &quot;&quot;,
+    &quot;littered with garbage&quot;,
+    &quot;spattered with guano&quot;,
+    &quot;with piles of Wumpus droppings&quot;,
+    &quot;with bones scattered around&quot;,
+    &quot;with a corpse on the floor&quot;,
+    &quot;that seems to vibrate&quot;,
+    &quot;that feels stuffy&quot;,
+    &quot;that fills you with dread&quot;
+  };
+
+  public static void main(String[] args) throws IOException {
+    game = HtwFactory.makeGame(&quot;htw.game.HuntTheWumpusFacade&quot;, new Main());
+    createMap();
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    game.makeRestCommand().execute();
+    while (true) {
+      System.out.println(game.getPlayerCavern());
+      System.out.println(&quot;Health: &quot; + hitPoints + &quot; arrows: &quot; + game.getQuiver());
+      HuntTheWumpus.Command c = game.makeRestCommand();
+      System.out.println(&quot;&gt;&quot;);
+      String command = br.readLine();
+      if (command.equalsIgnoreCase(&quot;e&quot;))
+        c = game.makeMoveCommand(EAST);
+      else if (command.equalsIgnoreCase(&quot;w&quot;))
+        c = game.makeMoveCommand(WEST);
+      else if (command.equalsIgnoreCase(&quot;n&quot;))
+        c = game.makeMoveCommand(NORTH);
+      else if (command.equalsIgnoreCase(&quot;s&quot;))
+        c = game.makeMoveCommand(SOUTH);
+      else if (command.equalsIgnoreCase(&quot;r&quot;))
+        c = game.makeRestCommand();
+      else if (command.equalsIgnoreCase(&quot;sw&quot;))
+        c = game.makeShootCommand(WEST);
+      else if (command.equalsIgnoreCase(&quot;se&quot;))
+        c = game.makeShootCommand(EAST);
+      else if (command.equalsIgnoreCase(&quot;sn&quot;))
+        c = game.makeShootCommand(NORTH);
+      else if (command.equalsIgnoreCase(&quot;ss&quot;))
+        c = game.makeShootCommand(SOUTH);
+      else if (command.equalsIgnoreCase(&quot;q&quot;))
+        return;
+      c.execute();
+    }
+  }
+
+  private static void createMap() {
+    int nCaverns = (int) (Math.random() * 30.0 + 10.0);
+    while (nCaverns-- &gt; 0)
+      caverns.add(makeName());
+
+    for (String cavern : caverns) {
+      maybeConnectCavern(cavern, NORTH);
+      maybeConnectCavern(cavern, SOUTH);
+      maybeConnectCavern(cavern, EAST);
+      maybeConnectCavern(cavern, WEST);
+    }
+
+    String playerCavern = anyCavern();
+    game.setPlayerCavern(playerCavern);
+    game.setWumpusCavern(anyOther(playerCavern));
+    game.addBatCavern(anyOther(playerCavern));
+    game.addBatCavern(anyOther(playerCavern));
+    game.addBatCavern(anyOther(playerCavern));
+    game.addPitCavern(anyOther(playerCavern));
+    game.addPitCavern(anyOther(playerCavern));
+    game.addPitCavern(anyOther(playerCavern));
+    game.setQuiver(5);
+  }
+
+  // much code removed...
+}</code></pre>
+
+      <h2>User command parsing</h2>
+
+      <p>
+        Let&#39;s start with the low-hanging fruit: repetitive statements. The
+        <code class="language-java">main</code> method contains the primary game loop, which runs
+        forever until the user enters <code class="language-java">&quot;q&quot;</code>. Most of this is
+        <em>fine</em>, but the long block of <code class="language-java">else if</code>&#39;s are not
+        only difficult to read, they&#39;re needlessly inefficient. We must test input against every
+        statement in sequence until one turns up true or there are no statements left to test. Further,
+        if the user enters a command which matches none of the conditions (necessitating a complete
+        run-through of them all), the game executes a &quot;rest&quot; command, declared outside the set
+        of conditions, which could easily come back to bite an unsuspecting developer in the future.
+      </p>
+
+      <p>
+        Whenever there is a set of three or more distinct conditions to test, it&#39;s almost always a
+        better bet to use a <code class="language-java">switch</code>,
+        <code class="language-java">case</code> or best of all (if the language supports it), pattern
+        matching. The game loop cleans up a bit if we use this advice. We can also take advantage of the
+        fact that when comparing strings, the <code class="language-java">switch</code> statement acts
+        as if we&#39;re calling the <code class="language-java">String.equals</code> method, so as long
+        as we convert the command to lower case, it&#39;ll act identically to calling
+        <code class="language-java">String.equalsIgnoreCase</code> repeatedly.
+      </p>
+
+      <pre is:raw lang="java"><code class="language-java">while (true) {
+  System.out.println(game.getPlayerCavern());
+  System.out.println(&quot;Health: &quot; + hitPoints + &quot; arrows: &quot; + game.getQuiver());
+  System.out.println(&quot;&gt;&quot;);
+
+  String command = br.readLine();
+  HuntTheWumpus.Command c;
+  switch (command.toLowerCase()) {
+    case &quot;e&quot;: c = game.makeMoveCommand(EAST);
+      break;
+    case &quot;w&quot;: c = game.makeMoveCommand(WEST);
+      break;
+    case &quot;n&quot;: c = game.makeMoveCommand(NORTH);
+      break;
+    case &quot;s&quot;: c = game.makeMoveCommand(SOUTH);
+      break;
+    case &quot;se&quot;: c = game.makeShootCommand(EAST);
+      break;
+    case &quot;sw&quot;: c = game.makeShootCommand(WEST);
+      break;
+    case &quot;sn&quot;: c = game.makeShootCommand(NORTH);
+      break;
+    case &quot;ss&quot;: c = game.makeShootCommand(SOUTH);
+      break;
+    case &quot;q&quot;: return;
+    default: c = game.makeRestCommand();
+  }
+  c.execute();
+}</code></pre>
+
+      <p>
+        These conditions are now, in my opinion, more readable, and operate in O(1) time. Additionally,
+        the command parsing is visually separated from the user output (which is a sort of UI).
+      </p>
+
+      <p>
+        Rather than making the command matches here, the architecture would benefit even more from
+        taking Martin&#39;s advice from his own book, and moving the UI elements to their own component.
+        If we wish to implement a more complex UI in the future, even a GUI, only the dedicated
+        component will need to change considerably. In the shorter-term, perhaps we&#39;ll want to add
+        an explicit <code class="language-java">&quot;i&quot;</code> command which prints this out. It
+        would be nice to separate this concern from the &quot;dirty&quot;
+        <code class="language-java">Main</code> component.
+      </p>
+
+      <p>
+        The main game loop could still live in a clean <code class="language-java">main</code> method,
+        but we should restrict it to only getting the command and executing it. This leaves the looping
+        action at this, the lowest &quot;dirtiest&quot; level, while abstracting away the complications
+        of interpreting user input. Here&#39;s how well we clean it up by separating the concerns via
+        abstraction:
+      </p>
+
+      <pre is:raw lang="java"><code class="language-java">while (true) {
+  GameUI.displayUserStatus();
+  HuntTheWumpus.Command c = GameUI.getUserCommand();
+  c.execute();
+}</code></pre>
+
+      <h2>Map generation</h2>
+
+      <p>
+        The <code class="language-java">createMap</code> method may indeed be at home in the
+        <code class="language-java">Main</code> class, but surely we can clean it up. Uncle Bob leaves
+        needless repetition in the same method where he used a loop to avoid it.
+      </p>
+
+      <p>
+        First, let&#39;s look at the cavern connection block, which uses some not-printed method to
+        dynamically generate connections between caverns. This isn&#39;t so bad, but a nested loop could
+        abstract it a little better, especially if we wanted to change the cavern geometry in the future
+        (I&#39;m thinking hexagons, which are the <a href="https://youtu.be/thOifuHs6eY">bestagons</a>).
+        We&#39;ll make the further improvement of moving our directions into an enum, which we&#39;ll
+        simply call <code class="language-java">Direction</code>.
+      </p>
+
+      <pre is:raw lang="java"><code class="language-java">for (String cavern : caverns) {
+  for (Direction direction : Direction.values()) {
+    maybeConnectCavern(cavern, direction);
+  }
+}</code></pre>
+
+      <p>
+        Next, we have a block which spawns the characters, some bats and some pits into presumably
+        random unique caverns. Placing the player and the Wumpus are single statements and probably
+        always will be, but we don&#39;t need to repeat ourselves thrice for bats and pits each.
+        Let&#39;s also rename the <code class="language-java">anyOther</code> method to
+        <code class="language-java">anyOtherCavern</code> to reduce ambiguity.
+      </p>
+
+      <p>
+        Along with populating caverns, our map generation block gives the player a quiver of arrows?
+        This has nothing to do with creating the map! Let&#39;s move that to a method called
+        <code class="language-java">createPlayer</code>, which we&#39;ll relegate to the &quot;much code
+        removed...&quot; section.
+      </p>
+
+      <pre is:raw lang="java"><code class="language-java">String playerCavern = anyCavern();
+game.setPlayerCavern(playerCavern);
+game.setWumpusCavern(anyOther(playerCavern));
+IntStream.range(0, 3).forEach(() -&gt; game.addBatCavern(anyOtherCavern(playerCavern)));
+IntStream.range(0, 3).forEach(() -&gt; game.addPitCavern(anyOtherCavern(playerCavern)));</code></pre>
+
+      <p>
+        Using <code class="language-java">IntStream.range</code> is about the closest we can get to a
+        proper range loop like Python&#39;s <code class="language-java">for x in range(i, j)</code>, and
+        I much prefer it to <code class="language-java">for</code> loops.
+      </p>
+
+      <p>
+        Why did I leave the bat and pit cavern population loops separated? Because they&#39;re not
+        inherently linked, and we may reasonably wish to change the frequency of one without changing
+        the other.
+      </p>
+
+      <h2>Hard-coded values</h2>
+
+      <p>
+        When an application hard-codes values as severely as this example, it&#39;s hard to avoid
+        cringing at the looming technical debt. The severity we see here would be perfectly acceptable
+        in an early computer science course, but a real-world system would struggle to keep up with
+        changing requirements. A simple typo in a string, an additional witty cavern description or the
+        substitution of localized languages should not require code changes.
+      </p>
+
+      <p>
+        Similarly, values such as the initial player HP, the number of arrows in the player&#39;s
+        quiver, the seed for the randomly generated number of caverns, and the number of bat and pit
+        caverns, all should be configurable with ease. Perhaps we wish to introduce difficulty levels
+        which change the balance of these values. Perhaps we find we&#39;ve given the player too much HP
+        for a fair fight. We&#39;ll undoubtedly need to balance these values, and so we&#39;ll be better
+        off storing them in an configurable but immutable data structure.
+      </p>
+
+      <p>
+        As detailed in previous chapters of Clean Architecture, the data structure to house these values
+        shouldn&#39;t matter to our <code class="language-java">Main</code> component. They could reside
+        in a key-value store, a database of any kind, a CSV or TSV, or even a well formatted plain text
+        file. As far as this component knows, they&#39;re all just an interface. For our purposes
+        we&#39;ll call the interface <code class="language-java">GameConfiguration</code>, which is
+        responsible for loading and providing the configured values.
+      </p>
+
+      <p>
+        Putting all our changes together with the interface-provided configuration, we arrive at a much
+        cleaner architecture than Uncle Bob presents.
+      </p>
+
+      <pre
+        is:raw
+        class="line-numbers"
+        lang="java"
+      ><code class="language-java">public class Main implements HtwMessageReceiver {
+  private static HuntTheWumpus game;
+  private static final List&lt;String&gt; caverns = new ArrayList&lt;&gt;();
+
+  private static int hitPoints;
+  private static int quiver;
+  private static String[] environments, shapes, cavernTypes, adornments;
+
+  public static void main(String[] args) throws IOException {
+    environments = GameConfiguration.get(&quot;environments&quot;);
+    shapes = GameConfiguration.get(&quot;shapes&quot;);
+    cavernTypes = GameConfiguration.get(&quot;cavernTypes&quot;);
+    adornments = GameConfiguration.get(&quot;adornments&quot;);
+    hitPoints = GameConfiguration.get(&quot;hitPoints&quot;);
+    quiver = GameConfiguration.get(&quot;quiver&quot;);
+
+    game = HtwFactory.makeGame(&quot;htw.game.HuntTheWumpusFacade&quot;, new Main());
+    createMap();
+    createPlayer();
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    game.makeRestCommand().execute();
+
+    while (true) {
+      GameUI.displayUserStatus();
+      HuntTheWumpus.Command c = GameUI.getUserCommand();
+      c.execute();
+    }
+  }
+
+  private static void createMap() {
+    int nCaverns = (int) (Math.random()
+                          * GameConfiguration.get(&quot;cavernSeed&quot;)
+                          + GameConfiguration.get(&quot;cavernMinimum&quot;));
+    while (nCaverns-- &gt; 0)
+      caverns.add(makeName());
+
+    for (String cavern : caverns) {
+      for (Direction direction : Direction.values()) {
+        maybeConnectCavern(cavern, direction);
+      }
+    }
+
+    String playerCavern = anyCavern();
+    game.setPlayerCavern(playerCavern);
+    game.setWumpusCavern(anyOther(playerCavern));
+    IntStream.range(0, GameConfiguration.get(&quot;batCaverns&quot;))
+      .forEach(() -&gt; game.addBatCavern(anyOtherCavern(playerCavern)));
+    IntStream.range(0, GameConfiguration.get(&quot;pitCaverns&quot;))
+      .forEach(() -&gt; game.addPitCavern(anyOtherCavern(playerCavern)));
+  }
+
+  // much code removed...
+}</code></pre>
+
+      <p>
+        The resulting code is more terse, hardy and generally cleaner. Is some of this overkill for a
+        small pet or student project? It probably is, but Uncle Bob presents this as a contrived but
+        real-world example in a printed book about code design, and should have taken the time to apply
+        his own principles to his examples.
+      </p>
+    </div>
+  </div>
+</BlogPost>

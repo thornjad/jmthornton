@@ -1,0 +1,26 @@
+---
+import BlogPost from '../../../layouts/BlogPost.astro';
+---
+
+<BlogPost
+  title="Remove (deinit) a Git submodule"
+  description="A quick reminder of how to remove a Git submodule, because I always forget"
+  slug="git-submodule-deinit"
+  publishedDate="2020-11-01"
+  hasPrism={true}
+>
+  <h1 class="post-title">Remove (deinit) a Git submodule</h1>
+  <time datetime="2020-11-01">November 1, 2020</time>
+  <p>A quick reminder of how to remove a Git submodule, because I always forget</p>
+
+  <div class="post-main">
+    <div class="blog-body">
+      <p>Every once in a while, I need to deinit a Git submodule, but I just cannot get my brain to remember how, so here's my reminder:</p>
+      <pre lang="zsh"><code class="language-shell">git submodule deinit -f path/to/submodule
+rm -rf .git/modules/path/to/submodule
+git rm -f path/to/submodule</code></pre>
+      <p>After those three commands, you're free to commit the deinit. Note that this will not actually remove the submodule locally, you'll need to <code>rm -r</code> to take care of that.</p>
+      <p>To make things just a bit easier, we can stick those three lines into a script and call it with a Git alias.</p>
+    </div>
+  </div>
+</BlogPost>

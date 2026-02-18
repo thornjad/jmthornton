@@ -9,8 +9,18 @@
   "author": "Jade Michael Thornton",
   "license": "ISC",
   "homepage": "https://gitlab.com/thornjad/jmthornton",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "astro": "^5.5.0"
+  },
   "devDependencies": {
-    "http-server": "^13.0.1",
-    "purify-css": "^1.2.5"
+    "@astrojs/check": "^0.9.6",
+    "purify-css": "^1.2.5",
+    "typescript": "^5.9.3"
   }
 }

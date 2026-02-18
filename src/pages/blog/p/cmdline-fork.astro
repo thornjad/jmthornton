@@ -1,0 +1,60 @@
+---
+import BlogPost from '../../../layouts/BlogPost.astro';
+---
+
+<BlogPost
+  title="Fixing cmdline for Non-Terminal Usage"
+  description="A fork of the TCL cmdline package that fixes a bug preventing usage in non-terminal contexts by removing the dependency on argv0."
+  slug="cmdline-fork"
+  publishedDate="2019-01-20"
+>
+  <h1 class="post-title">Fixing cmdline for Non-Terminal Usage</h1>
+  <time datetime="2019-01-20">January 20, 2019</time>
+
+  <div class="post-main">
+    <div class="blog-body">
+      <p>
+        Working with TCL at FlightAware, I've run into more than a few
+        frustrating bugs in the standard library packages. One that was
+        particularly annoying was in the <code>cmdline</code> package,
+        which is used for parsing command-line arguments. So I made
+        <a href="https://github.com/thornjad/cmdline">a fork</a>.
+      </p>
+
+      <p>
+        The problem was that the original relies on the global
+        <code>argv0</code> variable to determine the application name for
+        error messages. This works fine when TCL is running as a
+        standalone script from the command line, but fails completely when
+        TCL is embedded in other applications or used in non-terminal
+        contexts where <code>argv0</code> doesn't exist. That's exactly
+        what we do at FlightAware, where TCL runs in a server context.
+      </p>
+
+      <p>
+        Rather than go through the painful process of contributing back to
+        the original project (which uses Fossil for version control, a
+        tool I'd rather avoid), I created a fork that fixes this specific
+        issue. The fix was simple but effective: remove the dependency on
+        <code>argv0</code> entirely and strip out the
+        <code>getArgv0</code> function that was causing the problem.
+      </p>
+
+      <p>
+        The result is a drop-in replacement for the standard
+        <code>cmdline</code> package that works in all contexts, not just
+        terminal applications. You can find it at
+        <a href="https://github.com/thornjad/cmdline"
+          >github.com/thornjad/cmdline</a
+        >.
+      </p>
+
+      <p>
+        This is exactly the kind of bug that makes working with TCL
+        packages frustrating. The ecosystem has been stagnant for years,
+        and we're stuck with these kinds of limitations until the language
+        gets off of Fossil and into the modern world..
+      </p>
+    </div>
+  </div>
+</BlogPost>

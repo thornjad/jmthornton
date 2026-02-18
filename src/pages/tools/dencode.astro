@@ -1,0 +1,49 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base
+  title="URL Encode/Decode | Jade Michael Thornton"
+  description="Easily and quickly encode and decode URL strings online for free"
+  fontStrategy="prefetch"
+>
+  <Fragment slot="head">
+    <style>
+      textarea {
+        width: 100%;
+      }
+    </style>
+  </Fragment>
+
+  <h1>URL Encode/Decode Tool</h1>
+
+  <noscript>Sorry, this tool requires Javascript.</noscript>
+
+  <textarea id="dencoder" rows="18" cols="90" placeholder="Enter text to encode or decode"></textarea>
+  <div class="action-buttons">
+    <button id="encode">Encode</button>
+    <button id="decode">Decode</button>
+  </div>
+
+  <ul>
+    <li>Input a string of text and encode or decode as you like.</li>
+    <li>Handy for turning encoded JavaScript URLs from complete gibberish into readable gibberish.</li>
+    <li>If you'd like to use this tool offline, just 'view source' and save to your computer. You can also copy/fork <a href="https://github.com/thornjad/jmthornton/blob/main/src/pages/tools/dencode.astro">the source code</a>.</li>
+  </ul>
+
+  <script is:inline>
+    const getValue = () => {
+      const dencoder = document.querySelector('#dencoder');
+      const value = dencoder.value;
+      return [dencoder, value];
+    }
+    document.querySelector('#encode').addEventListener('click', () => {
+      const [dencoder, value] = getValue();
+      dencoder.value = encodeURIComponent(value).replace(/'/g, "%27").replace(/"/g, "%22");
+    });
+    document.querySelector('#decode').addEventListener('click', () => {
+      const [dencoder, value] = getValue();
+      dencoder.value = decodeURIComponent(value.replace(/\+/g, " "));
+    });
+  </script>
+</Base>

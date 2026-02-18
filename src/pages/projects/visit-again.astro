@@ -1,0 +1,29 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base
+  title="Places I'd visit again | Jade Michael Thornton"
+  description="A basic map showing places and businesses I'd like to visit again"
+  fontStrategy="prefetch"
+>
+  <Fragment slot="head">
+    <link type="text/plain" rel="author" href="https://jmthornton.net/humans.txt" />
+    <style>
+      body {
+        margin: 0;
+        height: calc(100vh - 5px);
+        padding: 5px 0 0;
+      }
+
+      iframe {
+        display: block;
+        border: none;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+  </Fragment>
+
+  <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1prGGzH623naRM3iGb4eGW-fgrykkK5c&ehbc=2E312F" width="640" height="480" frameborder="0" referrerpolicy="no-referrer"></iframe>
+</Base>

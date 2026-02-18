@@ -1,0 +1,88 @@
+---
+import Base from '../../../layouts/Base.astro';
+---
+
+<Base
+  title="News | Jade Michael Thornton"
+  description="News from the software realm"
+  hideFooter
+>
+  <Fragment slot="head">
+    <style>
+      .top-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 2rem 2rem;
+      }
+
+      .top-row h6::before {
+        content: none;
+      }
+
+      .top-row h6 {
+        margin: 0;
+      }
+
+      .updated-message {
+        font-style: italic;
+      }
+
+      .post p {
+        padding: 0 2rem;
+      }
+
+      .source {
+        font-weight: normal;
+        font-size: 0.7em;
+        letter-spacing: 1px;
+        font-style: italic;
+      }
+
+      .pocket-link,
+      .extra-content-link {
+        font-size: 0.7em;
+        color: grey !important;
+      }
+
+      main a:visited {
+        color: grey;
+      }
+
+      .load-more-container {
+        display: none;
+        justify-content: center;
+        margin-top: 4rem;
+      }
+
+      @media (max-width: 500px) {
+        .top-row {
+          justify-content: end;
+        }
+      }
+    </style>
+  </Fragment>
+
+  <h1>Tech news</h1>
+  <p>
+    Other links: <a href="https://news.ycombinator.com">HackerNews</a>, <a href="https://www.papertalk.xyz/research/home">PaperTalk</a>
+  </p>
+  <div class="top-row">
+    <label class="toggle">
+      <span>Infinite scroll</span>
+      <input class="toggle" type="checkbox" id="infinite-scroll" />
+    </label>
+    <h6 class="updated-message"></h6>
+  </div>
+  <div class="no-md-a" id="posts">
+    <!-- posts are injected here -->
+  </div>
+
+  <Fragment slot="body-end">
+    <div class="spinner spinner-donut large" id="spinner"></div>
+    <div class="load-more-container">
+      <button class="low-key" id="load-more">Load More</button>
+    </div>
+    <script is:inline src="/tools/news/news.js" defer></script>
+  </Fragment>
+</Base>

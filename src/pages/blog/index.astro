@@ -1,0 +1,380 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base
+  title="Blog | Jade Michael Thornton - Jade Thornton"
+  description="Meet Jade Michael Thornton, a full stack software engineer and manager of software engineering with a love for technology"
+>
+  <Fragment slot="head">
+    <link type="text/plain" rel="author" href="https://jmthornton.net/humans.txt" />
+    <meta name="googlebot" content="noindex" />
+    <style>
+      .subscribe-btn {
+        margin-top: 2.1em;
+      }
+
+      @media (min-width: 768px) {
+        .subscribe-btn {
+          text-align: right;
+        }
+      }
+
+      h1 .glitch {
+        padding-left: 2ch;
+      }
+
+      .listing time {
+        font-size: 0.7em;
+      }
+
+      .listing time:first-of-type {
+        padding-left: 1.5em;
+      }
+    </style>
+  </Fragment>
+
+  <div class="no-md-a">
+    <div class="title blog-title">
+      <br />
+      <h1>
+        Blog
+        <small
+          >by <span class="rgb-color">Jade Michael Thornton</span></small
+        >
+      </h1>
+      <p>
+        <small
+          ><em
+            >All opinions are my own and do not reflect the views of my
+            past, present nor future employers. Do not immerse this blog in
+            water. Do not expose to direct sunlight. Safety goggles
+            recommended. Blog titles ice before road. Danger: high voltage.
+            Do not read odd-numbered posts during a snow emergency. Keep out
+            of reach of children. Secure firmly to wall before reading. Not
+            intended for highway use. Remove silica packet before eating. Do
+            not make eye contact with the performers. Watch for fallen
+            rocks. This blog is known to the state of California to cause
+            cancer. Do not use as a projectile in a catapult. Do not feed
+            the wildlife, especially after midnight. Avoid reading during a
+            full moon. In case of emergency, this blog doubles as a
+            floatation device.</em
+          ></small
+        >
+      </p>
+      <p>
+        <a href="/blog/recipes/">Family Recipes</a> |
+        <a href="/blog/feed.xml">Subscribe</a>
+      </p>
+      <br />
+    </div>
+
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/dodd-road">Why is Dodd Road discontiguous?</a>
+        <time datetime="2025-06-04">June 4, 2025</time>&nbsp;
+        <br />
+        A brief history of an early highway in the Twin Cities, MN: Captain
+        Dodd's 1853 Minnesota pioneer wagon trail, its discontiguous modern
+        alignments, and surviving gravel segments.
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/walden-and-bdote"
+          >Walden and Bdote: Land, Protest, and the Forgotten Cost of
+          American Freedom</a
+        >
+        <time datetime="2025-05-11">Posted: May 11, 2025</time>&nbsp;
+        <br />
+        Sharing one of my favorite college papers, in which I contrasted
+        Henry David Thoreau's celebrated individual communion with land
+        against the Dakota's collective kinship with Bdote and desperate
+        resistance to dispossession, using this to point to how American
+        freedom was built on the silencing and exile of indigenous protest.
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/cave-chains">The Chains of Plato's Cave</a>
+        <time datetime="2024-09-13">September 13, 2024</time>&nbsp;
+        <br />
+        The chains of the prisoners of Plato's allegory of the cave aren't
+        really there holding us down. Critical thinking is one tool which
+        can help us realize the shifting nature of our perceptions.
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/org-roam-created-modified-dates"
+          >Org-roam: Automatically Set Node Created and Modified Dates</a
+        >
+        <time datetime="2024-03-18">March 18, 2024</time>&nbsp;
+        <br />
+        Enhancing Org-roam nodes with auto-updating created and modified
+        properties.
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/consult-line-isearch-history"
+          >Connecting consult-line with isearch history</a
+        >
+        <time datetime="2024-01-17">January 17, 2024</time>&nbsp;
+        <br />
+        Adding the latest consult-line search term to isearch history for
+        easy search continuation
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/bug-posts">A list of the best bug write-ups I've read</a>
+        <time datetime="2023-11-11">November 11, 2023</time>&nbsp;
+        <br />
+        A modest list of interesting blog posts I've come across containing
+        tech mystery stories exploring how a bug or mistake or other problem
+        came about, how it was discovered, how it was fixed, and maybe some
+        lessons to learn.
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/snyk-ls-emacs">Snyk Language Server in Emacs</a>
+        <time datetime="2023-06-01">June 01, 2023</time>
+        <br />
+        Setting up the Snyk Language Server for use in Emacs by defining a
+        custom server connection in LSP Mode
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/fav-lesser-known-packages"
+          >Some favorite lesser-known Emacs packages</a
+        >
+        <time datetime="2023-05-07">Posted: May 7, 2023</time>&nbsp;
+        <time datetime="2023-06-25">Updated: June 25, 2023</time>
+        <br />
+        A few of my favorite lesser-known Emacs packages which don't usually
+        make the top lists
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/emacs-project-override"
+          >Overriding project.el project root in Emacs</a
+        >
+        <time datetime="2022-04-21">Posted: April 21, 2022</time>
+        <time datetime="2023-03-07">Updated: March 7, 2023</time>&nbsp;
+        <br />
+        A short function to override what project.el thinks your project
+        root is with a hidden file
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/clean-arch-wumpus"
+          >Halfway on Main: Thoughts on Clean Architecture</a
+        >
+        <time datetime="2021-04-18">April 18, 2021</time>
+        <br />
+        Uncle Bob ignores his own advice when considering the "Main"
+        component, but we can improve on his thoughts and learn from them
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/git-submodule-deinit">Remove (deinit) a Git submodule</a>
+        <time datetime="2020-11-01">November 1, 2020</time>
+        <br />
+        A quick reminder of how to remove a Git submodule, because I always
+        forget
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/steam-corrupt-update-files"
+          >Fix Steam 'Corrupt Update Files'</a
+        >
+        <time datetime="2020-10-12">October 12, 2020</time>
+        <br />
+        How to fix the annoying error when downloading or updating some
+        Steam games, which reports the error 'Corrupt Update Files'
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/jira-commit-msg"
+          >Automatically add Jira issue to commit message from branch
+          name</a
+        >
+        <time datetime="2020-08-15">August 15, 2020</time>
+        <br />
+        When your git branch name contains an issue number (e.g. from Jira),
+        automatically format git commit messages with the issue number at
+        the end
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/tcl-paradigms">Data Paradigms in TCL: Associative Arrays vs Dictionaries</a>
+        <time datetime="2020-08-10">August 10, 2020</time>
+        <br />
+        Understanding the fundamental differences between TCL's associative arrays and dictionaries, and when to use each.
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/tmux-known-socket">A Known SSH Socket for Tmux</a>
+        <time datetime="2020-05-03">May 3, 2020</time>
+        <br />
+        Using a known, shared SSH socket to enable agent forwarding through
+        an existing tmux session
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/tcl-weird">TCL Wat</a>
+        <time datetime="2020-04-10">April 10, 2020</time>
+        <br />
+        A collection of weird TCL edge cases and gotchas I've encountered while working at FlightAware.
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/http-server-v012">What's new in http-server v0.12?</a>
+        <time datetime="2019-11-23">November 23, 2019</time>
+        <br />
+        A preview of upcoming features in http-server v0.12, including Brotli compression, configuration files, and improved error handling.
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/cmdline-fork">Fixing cmdline for Non-Terminal Usage</a>
+        <time datetime="2019-01-20">January 20, 2019</time>
+        <br />
+        A fork of the TCL cmdline package that fixes a bug preventing usage in non-terminal contexts by removing the dependency on argv0.
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/clearnightretro">ClearNight Retro</a>
+        <time datetime="2018-05-08">May 8, 2018</time>
+        <br />
+        Introducing a new dark, relaxed retro theme for the Atom text editor
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/xmrstakcompile"
+          >I successfully compiled the xmr-stak miner with CUDA</a
+        >
+        <time datetime="2018-02-04">February 4, 2018</time>
+        <br />
+        After many errors and failures, I found a method to successfully
+        compile the xmr-stak unified XMR miner with CUDA support
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/array-removeelement"
+          >Remove an element from an Array in Javascript</a
+        >
+        <time datetime="2017-10-13">October 13, 2017</time>
+        <br />
+        A new Javascript function to remove any element from an Array in an
+        intuitive way, with support for negative indexing.
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/ecmascript2017">What's new in ECMAScript 2017</a>
+        <time datetime="2017-09-29">September 29, 2017</time>
+        <br />
+        Two years ago, ES6 gave a massive update to the already powerful
+        ECMAScript standard. This year's release, ECMAScript 2017, provides
+        several new features and changes. Let's take a look.
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/duplicated-ids"
+          >Duplicate IDs in HTML: What would happen?</a
+        >
+        <time datetime="2017-09-27">September 27, 2017</time>
+        <br />
+        Duplicated IDs occur both intentionally and not, so what happens
+        when a browser tries to render them?
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/thunderbird-ddg"
+          >Set DuckDuckGo as default search in Thunderbird</a
+        >
+        <time datetime="2017-02-27">February 27, 2017</time>
+        <br />
+        For several dwindling reasons, DuckDuckGo can still be tricky to add
+        to some services despite being the default search engine for several
+        browsers. A couple years ago, Mozilla broke the old method of adding
+        DuckDuckGo to the settings. They neglected to update their
+        documentation, so here's a little for you.
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/vero-zsh-theme">Vero: A Simple Zsh Theme</a>
+        <time datetime="2017-02-09">February 9, 2017</time>
+        <br />
+        Announcing the release of Vero, a simple and informative theme for Zsh with git status, version managers, and more.
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/websitetimelapse"
+          >Coding a website from scratch &mdash; a timelapse</a
+        >
+        <time datetime="2016-12-14">December 14, 2016</time>
+        <br />
+        Jade creates a simple website from scratch using the Bootstrap
+        framework.
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/combine-excel"
+          >Combine multiple Excel workbooks into sheets in a single
+          workbook</a
+        >
+        <time datetime="2016-11-19">November 19, 2016</time>
+        <br />
+        A quick VBA subroutine for combining multiple Excel workbooks into a
+        single workbook, making ingestion into Tableau easier.
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/protonmail"
+          >Protonmail - Why I switched and you should too</a
+        >
+        <time datetime="2016-10-26">October 26, 2016</time>
+        <br />
+        ProtonMail is the world's largest, most user-friendly open source
+        secure email service, developed by CERN and MIT scientists and
+        protected under Swiss privacy law. It brings email privacy back to
+        the people while still maintaining a fantastic user experience
+        characteristic of the first-class email service it is.
+      </p>
+    </div>
+    <div class="listing sep-top">
+      <p>
+        <a href="/blog/p/switch-caps-esc">Switch Caps Lock and Escape (Linux)</a>
+        <time datetime="2016-03-28">March 28, 2016</time>
+        <br />
+        The standard QWERTY keyboard is great in a lot of ways and for a lot
+        of uses. My current keyboard has been with me for years and I know
+        it well, but if I could change the locations of a couple keys, I
+        would. And naturally, that's what I did.
+      </p>
+    </div>
+  </div>
+</Base>

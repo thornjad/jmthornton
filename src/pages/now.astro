@@ -1,0 +1,184 @@
+---
+import Base from '../layouts/Base.astro';
+import pkg from '../../package.json';
+---
+
+<Base
+  title="Now — Jade Thornton"
+  description="What Jade Michael Thornton is doing right now."
+  canonical="https://jmthornton.net/now"
+>
+  <Fragment slot="head">
+    <style>
+      .js-out-of-date {
+        display: none;
+      }
+      .js-out-of-date.show {
+        display: inline;
+      }
+    </style>
+  </Fragment>
+
+  <h1 style="text-align: center">Now</h1>
+
+  <p>
+    <small
+      ><em>Last updated <time class="js-last-updated"></time>.<span class="js-out-of-date"> It is always now, but sometimes now is out of date.</span></em></small
+    >
+  </p>
+
+  <p>
+    <em
+      >This is a <a href="https://nownownow.com/p/cjhc">now page</a>, learn <a href="https://nownownow.com/about">why</a>. You
+      can see its
+      <a
+        href="https://github.com/thornjad/jmthornton/commits/main/src/pages/now.astro"
+      >update history on GitHub</a
+      >.</em
+    >
+  </p>
+
+  <section>
+    <p class="js-age-container" style="display: none">
+      I'm currently
+      <code><span class="js-age"></span></code>
+      years old. In that time, Earth has traveled
+      <code><span class="js-earth-miles"></span></code>
+      miles relative to the galactic center, we've completed
+      <code><span class="js-galaxy-orbits"></span></code>
+      orbits around the Milky Way, the Moon has orbited Earth
+      <code><span class="js-moon-orbits"></span></code>
+      times, the universe has expanded by
+      <code><span class="js-universe-expansion"></span>%</code> and approximately
+      <code><span class="js-neutrinos"></span></code> neutrinos have passed
+      through me.
+    </p>
+  </section>
+
+  <h2 style="text-align: center">What I'm Doing Now</h2>
+  <section>
+    <p>
+      <strong>Living</strong> in the Twin Cities, Minnesota, and loving
+      year-round access to parks and hiking trails. I'm working on my life
+      goal of visiting and hiking every state park in Minnesota, something
+      my grandparents achieved when I was young. I'm currently at 9 of 64
+      state parks.
+    </p>
+
+    <p><strong>Standing</strong> with my Minnesota community against ICE's unethical, unjust actions in my state. Doing what I can to support neighbors and local efforts. <strong>ICE must leave Minnesota now.</strong></p>
+
+    <p>
+      <strong>Working</strong> as a Manager of Software Engineering at
+      <a href="https://dronedeploy.com">DroneDeploy</a>, leading our Enterprise Growth
+      team and loving it. I'm a new manager and still learning, having
+      transitioned from a Senior Software Engineer in early 2025. I'm
+      learning to use AI tools effectively, seeking to cut out hype as well
+      as find the utility it can provide.
+    </p>
+
+    <p>
+      <strong>Studying</strong> part-time at the
+      <a href="https://www.umn.edu">University of Minnesota</a>, working on
+      my BS in Multidisciplinary Studies with concentrations in computer
+      science and applied business. I'm currently taking classes on AI ethics and human factors in technical writing.
+    </p>
+
+    <p>
+      <strong>Building</strong> my
+      <a href="https://emacs.jmthornton.net">Emacs configuration</a>, with a
+      focus right now on building and improving my personal note-taking and
+      prioritization system built on org-roam (and maybe I'll make a blog
+      post about it at some point).
+    </p>
+
+    <p>
+      <strong>Learning</strong> to play the bagpipes, more or less on a
+      whim, and it's a lot harder than it looks to actually sound good. I
+      haven't played an instrument in at least 7 years before this.
+    </p>
+
+    <p>
+      <strong>Brewing</strong> my next batch of homemade mead, this one will
+      be a nice simple traditional dry mead, using local wildflower honey.
+    </p>
+
+    <p>
+      <strong>Reading</strong> my way through a backlog of weather-related
+      books, currently enjoying
+      <a
+        href="https://www.barnesandnoble.com/w/cloud-warriors-thomas-e-weber/1145317374"
+      >Cloud Warriors by Thomas Weber</a
+      >.
+    </p>
+  </section>
+
+  <script is:inline>
+    // age counter - updates every ~16ms for smooth animation
+    const birthDate = new Date("1996-03-23T03:00:00-06:00");
+
+    // constants for cosmic calculations
+    const EARTH_ORBITAL_MILES_PER_YEAR = 584000000;
+    const SUN_MILES_PER_HOUR = 514495;
+    const SUN_MILES_PER_YEAR = SUN_MILES_PER_HOUR * 24 * 365.25;
+    const EARTH_GALACTIC_MILES_PER_YEAR = Math.sqrt(
+      Math.pow(EARTH_ORBITAL_MILES_PER_YEAR, 2) +
+      Math.pow(SUN_MILES_PER_YEAR, 2),
+    );
+    const GALAXY_ORBIT_YEARS = 230000000;
+    const MOON_ORBITS_PER_YEAR = 13.3687;
+    const HUBBLE_CONSTANT_PER_YEAR = 7.16e-11;
+    const NEUTRINOS_PER_MS = 1800000000000n;
+
+    function updateAge() {
+      const now = new Date();
+      const ageInYears = (now - birthDate) / 1000 / 60 / 60 / 24 / 365.25;
+
+      const earthMiles = ageInYears * EARTH_GALACTIC_MILES_PER_YEAR;
+      const galaxyOrbits = ageInYears / GALAXY_ORBIT_YEARS;
+      const moonOrbits = ageInYears * MOON_ORBITS_PER_YEAR;
+      const universeExpansionPercent =
+        ageInYears * HUBBLE_CONSTANT_PER_YEAR * 100;
+
+      document.querySelector(".js-age").textContent = ageInYears.toFixed(9);
+      document.querySelector(".js-earth-miles").textContent =
+        earthMiles.toLocaleString("en-US", { maximumFractionDigits: 0 });
+      document.querySelector(".js-galaxy-orbits").textContent =
+        galaxyOrbits.toFixed(16);
+      document.querySelector(".js-moon-orbits").textContent =
+        moonOrbits.toFixed(7);
+      document.querySelector(".js-universe-expansion").textContent =
+        universeExpansionPercent.toFixed(15);
+      const neutrinosBig = BigInt(now.getTime() - birthDate.getTime()) * NEUTRINOS_PER_MS;
+      const nStr = neutrinosBig.toString();
+      const precise = nStr.slice(0, -11);
+      let fuzz = '';
+      for (let i = 0; i < 11; i++) fuzz += (Math.random() * 10) | 0;
+      document.querySelector(".js-neutrinos").textContent =
+        (precise + fuzz).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      requestAnimationFrame(updateAge);
+    }
+
+    document.querySelector(".js-age-container").style.display = "block";
+    updateAge();
+    requestAnimationFrame(updateAge);
+
+    // last updated timestamp
+    const lastUpdated = new Date("2026-01-25T00:00:00-06:00");
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    document.querySelector(".js-last-updated").textContent =
+      lastUpdated.toLocaleDateString("en-US", options);
+    document
+      .querySelector(".js-last-updated")
+      .setAttribute("datetime", lastUpdated.toISOString());
+
+    // check if page is out of date (more than 30 days old)
+    const now = new Date();
+    const daysSinceUpdate = Math.floor((now - lastUpdated) / (1000 * 60 * 60 * 24));
+    const outOfDateElement = document.querySelector(".js-out-of-date");
+    if (daysSinceUpdate > 30) {
+      outOfDateElement.classList.add("show");
+    } else {
+      outOfDateElement.classList.remove("show");
+    }
+  </script>
+</Base>

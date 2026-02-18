@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-from datetime import datetime, timezone, timedelta, time
-from bs4 import BeautifulSoup
+import re
+from datetime import datetime, timezone, timedelta
 from feedgen.feed import FeedGenerator
 from pathlib import Path
 
@@ -29,65 +29,78 @@ def parse_date_to_9am_cst(date_str=None, fallback_timestamp=None):
     return None
 
 
-def parse_html_file(file_path):
+def extract_blog_body(content):
+    """Extract the inner HTML of <div class="blog-body">...</div> using regex.
+
+    Handles nested divs by counting open/close tags.
+    Returns None if no blog-body div is found.
+    """
+    start_match = re.search(r'<div\s+class="blog-body">', content)
+    if not start_match:
+        return None
+
+    # walk forward from after the opening tag, tracking div depth
+    pos = start_match.end()
+    depth = 1
+    div_open = re.compile(r'<div[\s>]')
+    div_close = re.compile(r'</div>')
+
+    while depth > 0 and pos < len(content):
+        next_open = div_open.search(content, pos)
+        next_close = div_close.search(content, pos)
+
+        if next_close is None:
+            break
+
+        if next_open and next_open.start() < next_close.start():
+            depth += 1
+            pos = next_open.end()
+        else:
+            depth -= 1
+            if depth == 0:
+                return content[start_match.end():next_close.start()].strip()
+            pos = next_close.end()
+
+    return None
+
+
+def parse_astro_file(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    soup = BeautifulSoup(content, 'html.parser')
+    # extract BlogPost props
+    blogpost_match = re.search(r'<BlogPost\s+(.*?)>', content, re.DOTALL)
+    if not blogpost_match:
+        return None
 
-    # Get title
-    title_tag = soup.find('h1', class_='post-title')
-    if not title_tag:
-        title = file_path.stem
-    else:
-        title = title_tag.text.strip()
+    props_str = blogpost_match.group(1)
 
-    # Get dates - try meta tags first, then time element, then Unix epoch
-    published_date = None
-    modified_date = None
+    def extract_prop(name):
+        match = re.search(rf'{name}=(?:"([^"]*)"|{{([^}}]*)\}})', props_str)
+        if match:
+            return match.group(1) or match.group(2)
+        return None
 
-    # Try article:published_time meta tag
-    published_meta = soup.find('meta', attrs={'property': 'article:published_time'})
-    if published_meta and 'content' in published_meta.attrs:
-        published_date = parse_date_to_9am_cst(published_meta['content'])
+    title = extract_prop('title')
+    description = extract_prop('description') or ''
+    slug = extract_prop('slug')
+    published_date_str = extract_prop('publishedDate')
+    modified_date_str = extract_prop('modifiedDate')
 
-    # Try article:modified_time meta tag
-    modified_meta = soup.find('meta', attrs={'property': 'article:modified_time'})
-    if modified_meta and 'content' in modified_meta.attrs:
-        modified_date = parse_date_to_9am_cst(modified_meta['content'])
+    if not title or not slug:
+        return None
 
-    # If no published time from meta, try modified time
-    if not published_date and modified_date:
-        published_date = modified_date
+    published_date = parse_date_to_9am_cst(published_date_str) if published_date_str else None
+    modified_date = parse_date_to_9am_cst(modified_date_str) if modified_date_str else published_date
 
-    # If still no published time, try time element
     if not published_date:
-        time_tag = soup.find('time')
-        if time_tag and 'datetime' in time_tag.attrs:
-            published_date = parse_date_to_9am_cst(time_tag['datetime'])
-
-    # If still no published date, use file modification time
-    if not published_date:
-        published_date = parse_date_to_9am_cst(fallback_timestamp=0)
-
-    # If no modified date, use published date
+        published_date = parse_date_to_9am_cst(fallback_timestamp=file_path.stat().st_mtime)
     if not modified_date:
         modified_date = published_date
 
-    # Get description from meta tag
-    meta_desc = soup.find('meta', attrs={'name': 'description'})
-    description = meta_desc['content'].strip() if meta_desc else ''
+    content_html = extract_blog_body(content) or description
 
-    # Get main content
-    main_content = soup.find('div', class_='blog-body')
-    if main_content:
-        content_html = str(main_content)
-    else:
-        content_html = description  # Fallback to meta description if no content
-
-    # Get post URL
-    post_id = file_path.stem
-    url = f'https://jmthornton.net/blog/p/{post_id}'
+    url = f'https://jmthornton.net/blog/p/{slug}'
 
     return {
         'title': title,
@@ -110,17 +123,20 @@ def main():
     fg.language('en-US')
     fg.author({'name': 'Jade Michael Thornton'})
 
-    # Get all HTML files in blog/p directory
-    blog_dir = Path('blog/p')
-    html_files = sorted(blog_dir.glob('*.html'), key=lambda x: x.stat().st_mtime, reverse=True)
+    # Get all Astro files from source
+    blog_dir = Path('src/pages/blog/p')
+    astro_files = sorted(blog_dir.glob('*.astro'), key=lambda x: x.stat().st_mtime, reverse=True)
 
     # Track the most recent date across all posts
     most_recent_date = None
 
     # Process each file
-    for file_path in html_files:
+    for file_path in astro_files:
         try:
-            post_data = parse_html_file(file_path)
+            post_data = parse_astro_file(file_path)
+            if not post_data:
+                print(f"Skipping {file_path}: could not parse")
+                continue
 
             # Update most recent date if this post has a more recent date
             post_date = max(post_data['published_date'], post_data['modified_date'])
@@ -149,7 +165,7 @@ def main():
         fg.updated(most_recent_date)
 
     # Write feed to file
-    fg.atom_file('blog/feed.xml', pretty=True)
+    fg.atom_file('public/blog/feed.xml', pretty=True)
 
 
 if __name__ == '__main__':

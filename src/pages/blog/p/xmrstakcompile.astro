@@ -1,0 +1,161 @@
+---
+import BlogPost from '../../../layouts/BlogPost.astro';
+---
+
+<BlogPost
+  title="I successfully compiled the xmr-stak miner with CUDA"
+  description="After many errors and failures, I found a method to successfully compile the xmr-stak unified XMR miner with CUDA support"
+  slug="xmrstakcompile"
+  publishedDate="2018-02-04"
+  hasPrism={true}
+>
+  <h1 class="post-title">I successfully compiled the xmr-stak miner with CUDA</h1>
+  <time datetime="2018-02-04">February 4, 2018</time>
+
+  <div class="post-main">
+    <div class="blog-body">
+      <p>I&#39;ve been mining Monero for a while now, and I use <a
+        href="https://github.com/fireice-uk/xmr-stak">xmr-stak</a> on most of my machines (except the ones using
+      ARM). Of course, my most powerful machine also happens to be my primary personal computer, so I&#39;ve been
+      pretty careful with it. I installed xmr-stak a handful of moons ago, and I remember struggling with it a bit. However, brilliant old me didn&#39;t bother to record how I actually got it to work, so it was a whole new adventure when I decided to update the software. So learning from my mistake, I&#39;m recording what I did here so I can repeat it in the future. If a couple of other people find this and find it useful, all the better.</p>
+
+      <p>To start off, so you know you&#39;re not totally wasting your time, here&#39;s the specs I&#39;m working with:</p>
+
+      <p><pre>
+OS: Linux Mint 18.3 Sylvia
+Kernel: x86_64 4.13.0-26-generic
+CPU: Intel Core i7-4700MQ @ 3.4GHz x 4
+GPU: NVidia GT 755M x 2</pre></p>
+
+      <hr/>
+
+      <p>Now, the problems came down to CUDA. Obviously, with two GPUs, I don&#39;t want to only mine on the CPU (which was working
+      fine). That&#39;s like getting onto a two-engine commercial jet and trying to takeoff with the exhaust from the auxillary
+      power unit. Okay, that&#39;s a bit dramatic, I can still get around 200 H/s from my CPU. Anyway, part of the issue was
+      compatibility between CUDA and my driver. When I started this ordeal, I was using CUDA 9.0 and it was working fine.
+      However, I thought as long as I&#39;m updating xmr-stak, why not update CUDA to 9.1? Well I also happen to be using driver
+      384.111, but 9.1 requires 385 or something. Of course, 9.1 offers to install the driver for you, but you have to be in
+      runlevel 3, and I just didn&#39;t want to get into risky stuff like that on my main computer (not
+      again, anyway). So I tried to go back to CUDA 9.0
+      and xmr-stak just refused to compile again and again. Here&#39;s a sampling of errors I continually ran into:</p>
+
+      <p><pre>
+Could NOT find CUDA (missing:  CUDA_INCLUDE_DIRS) (found suitable version &quot;9.0&quot;, minimum required is &quot;7.5&quot;)</pre></p>
+
+      <p><pre>
+error: cuda_runtime.h: No such file or directory</pre></p>
+
+      <p><pre>
+Error generating
+/xmr-stak/xmr-stak/build/CMakeFiles/xmrstak_cuda_backend.dir/xmrstak/backend/nvidia/nvcc_code/./xmrstak_cuda_backend_generated_cuda_core.cu.o</pre></p>
+
+      <p><pre>
+CMake Error at CMakeLists.txt:209 (message):
+CUDA NOT found</pre></p>
+
+      <h3>How I got it to work</h3>
+
+      <p>Long story short, here&#39;s everything I did to make it finally work:</p>
+
+      <p><pre is:raw><code class="language-shell">sudo apt install cuda cuda-9-0 cuda-core-9-0 cuda-cublas-* cuda-cudart-* cuda-cufft-* cuda-documentation-9-0 cuda-runtime-9-0 cuda-nvgraph-* cuda-nvrtc-* cuda-gdb-src-9-0 --reinstall
+
+git clone https://github.com/fireice-uk/xmr-stak.git
+
+mkdir xmr-stak/build && cd xmr-stak/build
+
+export CC=/usr/bin/gcc
+
+export CXX=/usr/bin/g++
+
+export CUDA_ROOT=/usr/local/cuda
+
+cmake -DCMAKE_LINK_STATIC=ON -DXMR-STAK_COMPILE=generic -DCUDA_ENABLE=ON -DOpenCL_ENABLE=OFF -DMICROHTTPD_ENABLE=ON -DOpenSSL_ENABLE=ON ..
+
+make install -j 4</code></pre></p>
+
+      <p>For me, at least, this finally got it to compile and I can run it now! I often leave it mining while I&#39;m sleeping or at work. The internal fans provide a nice white noise.</p>
+
+      <p>Note, if the GPUs fail to start mining through the software, try reducing the thread count on both before you start looking for other problems. I have mine set to 124 threads with 6 blocks on each GPU, which is lower than the defaults.</p>
+
+      <hr/>
+
+      <h3>Profiles</h3>
+
+      <p>To maximise the amount of mining I can do, I actually have three &quot;profiles&quot; ready to run on my computer. In case you&#39;re interested, here&#39;s some options.</p>
+
+      <h4>All-out (CPU + GPU)</h4>
+
+      <p>This is probably what you&#39;re going for and will get the most bang for your hardware. I compiled using the commands above (all those flags make a difference), and I&#39;m using these two config files:</p>
+
+      <p><strong>nvidia.txt</strong></p>
+
+      <p><pre is:raw><code class="language-json">"gpu_threads_conf" :
+  [
+    // gpu: GeForce GT 755M architecture: 30
+    //      memory: 1810/1991 MiB
+    //      smx: 2
+    { "index" : 0,
+    "threads" : 124, "blocks" : 6,
+    "bfactor" : 4, "bsleep" :  0,
+    "affine_to_cpu" : false,
+    },
+    // gpu: GeForce GT 755M architecture: 30
+    //      memory: 1972/1999 MiB
+    //      smx: 2
+    { "index" : 1,
+    "threads" : 124, "blocks" : 6,
+    "bfactor" : 4, "bsleep" :  0,
+    "affine_to_cpu" : false,
+    },
+  ],</code></pre></p>
+
+      <p><strong>cpu.txt</strong></p>
+
+      <p><pre is:raw><code class="language-json">"cpu_threads_conf" :
+  [
+    { "low_power_mode" : false, "no_prefetch" : true, "affine_to_cpu" : 0 },
+    { "low_power_mode" : false, "no_prefetch" : true, "affine_to_cpu" : 1 },
+    { "low_power_mode" : false, "no_prefetch" : true, "affine_to_cpu" : 2 },
+    { "low_power_mode" : false, "no_prefetch" : true, "affine_to_cpu" : 3 },
+  ],</code></pre></p>
+
+      <p>On my system, this gets me around 600 H/s. Not bad, but low enough for me to start considering getting some old GPUs for my weakling Dell Vostro tower.</p>
+
+      <h4>CPU-full</h4>
+
+      <p>This profile is sans-GPU, if you ever want that. For this, I compiled without CUDA, using the normal install method but with this set of <code>cmake</code> flags:</p>
+
+      <p><pre><code class="language-shell">cmake -DCMAKE_LINK_STATIC=ON -DXMR-STAK_COMPILE=generic -DCUDA_ENABLE=OFF -DOpenCL_ENABLE=OFF -DMICROHTTPD_ENABLE=ON -DOpenSSL_ENABLE=ON ..</code></pre></p>
+
+      <p>Notice the <code class="language-shell">-DCUDA_ENABLE=OFF</code> which makes it CPU-only (on NVidia systems). Then this is my <strong>cpu.txt</strong>, same as for the all-out profile above:</p>
+
+      <p><pre is:raw><code class="language-json">"cpu_threads_conf" :
+  [
+    { "low_power_mode" : false, "no_prefetch" : true, "affine_to_cpu" : 0 },
+    { "low_power_mode" : false, "no_prefetch" : true, "affine_to_cpu" : 1 },
+    { "low_power_mode" : false, "no_prefetch" : true, "affine_to_cpu" : 2 },
+    { "low_power_mode" : false, "no_prefetch" : true, "affine_to_cpu" : 3 },
+  ],</code></pre></p>
+
+      <p>Running this profile gets me around 200 H/s.</p>
+
+      <h4>CPU-lite</h4>
+
+      <p>Here&#39;s the one I really made the profiles for. I run this one in the background while I&#39;m doing light or moderate regular computing. I&#39;ll often run this alongside a handy <code class="language-shell">monerod --max-concurrency 1</code> to keep my local blockchain up to date.</p>
+
+      <p>Compile without CUDA as with CPU-full:</p>
+
+      <pre><code class="language-shell">cmake -DCMAKE_LINK_STATIC=ON -DXMR-STAK_COMPILE=generic -DCUDA_ENABLE=OFF -DOpenCL_ENABLE=OFF -DMICROHTTPD_ENABLE=ON -DOpenSSL_ENABLE=ON ..</code></pre>
+
+      <p>Notice the <code class="language-shell">-DCUDA_ENABLE=OFF</code> which makes it CPU-only (on NVidia systems). Here&#39;s the <strong>cpu.txt</strong> for the lite version:</p>
+
+      <p><pre is:raw><code class="language-json">"cpu_threads_conf" :
+  [
+    { "low_power_mode" : true, "no_prefetch" : false, "affine_to_cpu" : false },
+    { "low_power_mode" : true, "no_prefetch" : false, "affine_to_cpu" : false },
+  ],</code></pre></p>
+
+      <p>Running this profile keeps me around 60-75 H/s and doesn&#39;t drain enough CPU power for me to notice most of the time. If you&#39;re using a pool that offers a separate port for low-end CPUs, I&#39;d use that for this profile.</p>
+    </div>
+  </div>
+</BlogPost>

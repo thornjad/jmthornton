@@ -1,0 +1,162 @@
+---
+import BlogPost from '../../../layouts/BlogPost.astro';
+---
+
+<BlogPost
+  title="What's new in http-server v0.12?"
+  description="A preview of upcoming features in http-server v0.12, including Brotli compression, configuration files, and improved error handling."
+  slug="http-server-v012"
+  publishedDate="2019-11-23"
+  hasPrism={true}
+>
+  <h1 class="post-title">What's new in http-server v0.12?</h1>
+  <time datetime="2019-11-23">November 23, 2019</time>
+
+  <div class="post-main">
+    <div class="blog-body">
+      <p>
+        <a href="https://github.com/indexzero/http-server"
+          ><code class="language-bash">http-server</code></a
+        >
+        has gone a while without a substantial release, despite issues and
+        PR's coming in at full force. Unfortunately, the core team is
+        small, only three devs, and we all have busy lives and full-time
+        careers. But, we've been able to pull together a major release,
+        with some interesting improvements.
+      </p>
+
+      <h2>Ecstatic v4</h2>
+
+      <p>
+        One of the largest set of changes is improvements to the
+        underlying project,
+        <a href="https://github.com/jfhbrook/node-ecstatic"
+          ><code class="language-bash">ecstatic</code></a
+        >, which recently reached version 4.0.0, and has had a few patch
+        releases since. For
+        <code class="language-bash">http-server</code>, the most important
+        improvements include:
+      </p>
+
+      <ul>
+        <li>
+          Ability to override MIME types with a
+          <code class="language-bash">.types</code> file
+        </li>
+        <li>Improved charset detection</li>
+        <li>
+          Improved accuracy when checking if gzip responses are allowed
+        </li>
+        <li>Elimination of a file descriptor leak</li>
+        <li>Elimination of a DOS vulnerability</li>
+      </ul>
+
+      <h2>Brotli encoding</h2>
+
+      <p>
+        In addition to gzip compression,
+        <code class="language-bash">http-server</code> can now serve
+        <a href="https://en.wikipedia.org/wiki/Brotli">Brotli encoded</a>
+        content. This provides better compression ratios than gzip for
+        many types of content, especially text-based assets like HTML,
+        CSS, and JavaScript.
+      </p>
+
+      <h2>.httpserverrc settings file</h2>
+
+      <p>
+        This improvement has been a long time coming, with the original PR
+        opened at the start of 2015! We know passing switches can become
+        cumbersome when automating starting up a server, so now it's a bit
+        easier.
+      </p>
+
+      <p>
+        By using a <code class="language-bash">.httpserverrc</code> file
+        in the directory to be served. The file is simple JSON and uses
+        the same switch arguments as the CLI. This is one of my personal
+        favorite improvements!
+      </p>
+
+      <p>
+        Here's an example
+        <code class="language-bash">.httpserverrc</code> file:
+      </p>
+
+      <pre is:raw><code class="language-json">{
+  "port": 8080,
+  "cache": 3600,
+  "cors": true,
+  "log-ip": true
+}</code></pre>
+
+      <h2>--find-port</h2>
+
+      <p>
+        If the port given with the
+        <code class="language-bash">-p</code> switch is not available,
+        this new switch will allow the server to automatically find a free
+        port to bind to. No more "port already in use" errors when you
+        just want to get a server running quickly!
+      </p>
+
+      <h2>Support for HTTP basic access authentication</h2>
+
+      <p>
+        <code class="language-bash">http-server</code> now supports basic
+        authentication by passing
+        <code class="language-bash">--username</code> and
+        <code class="language-bash">--password</code> switches, which the
+        client must authenticate with. This is useful for protecting
+        development servers or staging environments.
+      </p>
+
+      <h2>Client IP logging</h2>
+
+      <p>
+        By passing the <code class="language-bash">--log-ip</code> option,
+        the client's IP is logged to stdout. This can be helpful for
+        debugging or monitoring which clients are accessing your server.
+      </p>
+
+      <h2>Improved handling of proxy errors</h2>
+
+      <p>
+        Previously, proxy errors had the potential to crash the server
+        with an unhelpful error message. Now, the server logs the error
+        (and status code) and continues without a crash. Much more robust
+        for production use.
+      </p>
+
+      <h2>Other improvements</h2>
+
+      <ul>
+        <li>
+          Aggressive <code class="language-bash">no-cache</code> when the
+          cache option is set to <code class="language-bash">-1</code>
+        </li>
+        <li>
+          A clever hack for a catch-all redirect (useful for single page
+          apps) was added to the Readme page
+        </li>
+        <li>
+          Fixed some issues with the
+          <code class="language-bash">-o [path]</code> switch
+        </li>
+        <li>Better test messaging on some types of errors</li>
+        <li>Cleaner handling of setting options behind the scenes</li>
+      </ul>
+
+      <p>
+        We're excited to get this release out to the community. The
+        combination of these improvements should make
+        <code class="language-bash">http-server</code> more robust,
+        feature-rich, and easier to use. Keep an eye on the
+        <a href="https://github.com/indexzero/http-server"
+          >GitHub repository</a
+        >
+        for the official release announcement!
+      </p>
+    </div>
+  </div>
+</BlogPost>
