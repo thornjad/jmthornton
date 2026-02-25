@@ -11,16 +11,39 @@ import Base from '../../layouts/Base.astro';
     <style>
       textarea {
         width: 100%;
-        height: 10ch;
+        height: 4ch;
+        resize: vertical;
+      }
+
+      .privacy-note {
+        color: var(--fg-muted, #888);
+        font-size: 0.85em;
+        margin-top: 0;
       }
 
       #output-wrapper {
         display: none;
-        margin-top: 2em;
+        margin-top: 1em;
       }
 
-      pre {
+      .output-columns {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1em;
+      }
+
+      @media (min-width: 768px) {
+        .output-columns {
+          grid-template-columns: 1fr 2fr;
+        }
+      }
+
+      .output-columns pre {
         margin: 0;
+      }
+
+      .output-columns label {
+        font-weight: bold;
       }
 
       #error {
@@ -31,19 +54,23 @@ import Base from '../../layouts/Base.astro';
   </Fragment>
 
   <h1>JWT Decode Tool</h1>
-  <h3>All decoding is performed in the browser, your token will not be saved nor shared in any way.</h3>
+  <p class="privacy-note">All decoding is performed in the browser. Your token is never saved or shared.</p>
 
   <noscript>Sorry, this tool requires Javascript.</noscript>
 
-  <textarea id="input" rows="1" cols="90" placeholder="Enter JWT"></textarea>
-  <button id="decode">Decode</button>
+  <textarea id="input" rows="1" cols="90" placeholder="Paste a JWT"></textarea>
   <pre id="error"></pre>
   <div id="output-wrapper">
-    Header:
-    <pre id="header"></pre>
-    <br />
-    Payload:
-    <pre id="payload"></pre>
+    <div class="output-columns">
+      <div>
+        <label>Header</label>
+        <pre id="header"></pre>
+      </div>
+      <div>
+        <label>Payload</label>
+        <pre id="payload"></pre>
+      </div>
+    </div>
   </div>
 
   <script is:inline>
@@ -62,17 +89,23 @@ import Base from '../../layouts/Base.astro';
       return JSON.stringify(json, undefined, 2);
     }
 
-    document.querySelector('#decode').addEventListener('click', () => {
-      const token = document.querySelector('#input').value;
+    function tryDecode() {
+      const token = document.querySelector('#input').value.trim();
+      if (!token) {
+        document.querySelector('#output-wrapper').style.display = 'none';
+        document.querySelector('#error').style.display = 'none';
+        return;
+      }
+
       const headerOutput = document.querySelector('#header');
       const payloadOutput = document.querySelector('#payload');
 
       try {
-        error.style.display = 'none';
+        document.querySelector('#error').style.display = 'none';
         const [header, payload] = token.split('.');
         const [prettyHeader, prettyPayload] = [header, payload].map(decode);
-        headerOutput.innerText = `${prettyHeader}`;
-        payloadOutput.innerText = `${prettyPayload}`;
+        headerOutput.innerText = prettyHeader;
+        payloadOutput.innerText = prettyPayload;
         document.querySelector('#output-wrapper').style.display = 'block';
       } catch (e) {
         document.querySelector('#output-wrapper').style.display = 'none';
@@ -80,6 +113,8 @@ import Base from '../../layouts/Base.astro';
         error.innerText = `Error: Could not parse JWT:\n${e}`;
         error.style.display = 'block';
       }
-    });
+    }
+
+    document.querySelector('#input').addEventListener('input', tryDecode);
   </script>
 </Base>
