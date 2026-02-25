@@ -8,7 +8,7 @@ prism:
 
 style: prism
 
-dev:
+dev: prism
 	npm run dev
 
 build:
