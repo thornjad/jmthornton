@@ -19,7 +19,9 @@ import BlogPost from '../../../layouts/BlogPost.astro';
         <code>Co-Authored-By</code> on git commits by default. They sign
         commits as though they were a contributing developer. I think this
         gets something fundamentally wrong about what commit authorship
-        means.
+        means. As someone who has started leaning on AI tools heavily in
+        my own work, I find it matters to me that the line of
+        accountability stays clear.
       </p>
 
       <p>
@@ -47,7 +49,7 @@ import BlogPost from '../../../layouts/BlogPost.astro';
         AI was a tool in that process, the same way a compiler or a linter
         or Stack Overflow is a tool. We don't add
         <code>Co-Authored-By: GCC</code> to commits that required tricky
-        compiler flags, and we don't credit the IDE's autocomplete. The
+        compiler flags (and we don't credit the IDE's autocomplete either). The
         relevant question is not "who typed these characters" but "who is
         responsible for them."
       </p>
@@ -66,8 +68,8 @@ import BlogPost from '../../../layouts/BlogPost.astro';
         produced. But <code>Co-Authored-By</code> is the wrong mechanism
         for it. If your team wants to track AI usage, build that into your
         process explicitly. A commit message note, a PR label, whatever
-        fits (we use PR labels at DroneDeploy). Don't repurpose an
-        authorship field that carries professional meaning. The more
+        fits (we use PR labels at DroneDeploy). An authorship field with
+        professional meaning isn't the right place for it. The more
         interesting question for code review is not "did AI help write
         this" but "did a human verify this is correct." The answer to that
         should always be yes, regardless of how the code was literally
