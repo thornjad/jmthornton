@@ -179,6 +179,7 @@ header {
 footer {
   position: relative;
   margin-top: 5rem;
+  text-align: center;
 
   &::before {
     content: "- - - - - - -";
