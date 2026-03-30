@@ -1,0 +1,53 @@
+---
+import BlogPost from '../../../layouts/BlogPost.astro';
+---
+
+<BlogPost
+  title="Weather Station Forwarder on Cloudflare Workers"
+  description="How I ported a Google Apps Script weather station forwarder to Cloudflare Workers to push my Tempest readings to CWOP, Weather Underground, PWSWeather and Windy."
+  slug="cloudflare-tempest-forwarder"
+  publishedDate="2026-03-29"
+>
+  <h1 class="post-title">Weather Station Forwarder on Cloudflare Workers</h1>
+  <time datetime="2026-03-29">March 29, 2026</time>
+
+  <div class="post-main">
+    <div class="blog-body">
+      <p>
+        I have a <a href="https://tempest.earth">Tempest</a> weather station and I quite love it. The app is excellent and I love checking the readings more often than a sane person might. Tempest already shares the weather data to some sources when the public share data setting is active, which also allows it to appear publicly on the Tempest weather site. But I really believe in contributing weather data to the public meteorological record, so I want to send to more weather aggregation sites. Philosophically, I hold the belief that surface weather is theoretically deterministic given sufficient observational density, and probabilistic forecasting is better today only because we lack enough weather data. Weather models are getting remarkably good, but fundamentally we're working around a data problem. My one station is a tiny push in a better direction, and I want those readings going to as many networks as I can, starting with NOAA's <a href="https://www.weather.gov/cle/CWOP">Citizen Weather Observer Program</a> (CWOP).
+      </p>
+
+      <p>
+        One starting point is <a href="https://weewx.com">WeeWX</a>, which I planned to run on a Raspberry Pi Zero (because I happened to have one lying around). WeeWX is mature, well-documented, and well-loved by weather hobbyists. I got about halfway through the setup documentation and even got a simulated weather station running before remembering that I genuinely do not enjoy DevOps or running servers. Nothing against WeeWX, I just don't want to run it, even though its pretty hands-off. The Pi Zero went back into its drawer.
+      </p>
+
+      <p>
+        Then I found <a href="https://github.com/leoherzog/WundergroundStationForwarder">WundergroundStationForwarder</a> by Leo Herzog, a Google Apps Script project that pulls from the Tempest API and forwards the readings to reporting services on a timer. It's simple, serverless, no hardware needed. I would have run it immediately, except that I remembered that I spent a significant chunk of my time when I worked at the University of Minnesota writing Google Apps Script, and I did not enjoy it much better than configuring servers. The development environment is cramped and under-featured, and debugging is painful, and quota limits have a way of surprising you at unexpected times.
+      </p>
+
+      <p>
+        Luckily, I deal with <a href="https://workers.cloudflare.com">Cloudflare Workers</a> in my work at DroneDeploy. The runtime is quite sane, wrangler is a real CLI, and cron triggers are a first class feature. Plus the free tier could probably handle ten thousand times the load of this functionality without blinking. So porting Leo's project to Workers was the obvious path for me.
+      </p>
+
+      <p>
+        I also decided to treat this as an experiment in end-to-end agent-driven development. I use Claude Code regularly for small, well-scoped work, but as a manager, I don't often have the opportunity to define and implement complex projects anymore. So I read through the GAS source, mapped out the destination integrations, defined the overall architecture, and wrote up a plan that included comprehensive testing. After less than an hour of refinement, I handed it off to a Claude Code agent team and let it run. After about 10 minutes (on coffee shop WiFi, so a lot of waiting for tokens to stream), I had a full feature, with only one bug to fix.
+      </p>
+
+      <p>
+        The result is <a href="https://github.com/thornjad/CloudflareTempestStationForwarder">CloudflareTempestStationForwarder</a> (creative name, I know, thanks), and it came out better than the source in a few ways, if I may be so bold. The Workers module system allowed pushing the code toward cleaner separation than the GAS original. For example, unit conversion math is in its own module and each destination has its own module. The GAS original had no test suite (GAS testing is no joy), but the port runs real tests in the workers runtime via vitest.
+      </p>
+
+      <p>
+        Having planned for WeeWX, I had applied for my CWOP station ID a week prior, since CWOP approval is manual and takes a while (much love to the unsung heroes of NOAA and NWS who run this program as well as others like <a href="https://www.weather.gov/skywarn/">Skywarn</a>). So by the end of just one afternoon, my station was reporting to <a href="https://www.weather.gov/cle/CWOP">CWOP</a>, <a href="https://www.wunderground.com">Weather Underground</a>, <a href="https://www.pwsweather.com">PWSWeather</a> and <a href="https://www.windy.com">Windy</a> on a five-minute interval (with more destinations to be built later).
+      </p>
+
+      <p>
+        Between this project and my professional work, what I keep learning time and time again is nothing new. Garbage in, garbage out, and its corollary: quality in and quality out. Spending my brain power on a well-specified architecture document rather than the actual code produced a coherent result that I can review with confidence and rely on tests that I trust. Without AI, I'm confident I could have produced a fairly literal GAS to JavaScript transliteration filled with hacky code and misleading comments. And given how much I have always despised the process of writing tests, I'm sure that my result would have zero tests.
+      </p>
+
+      <p>
+        The project is available <a href="https://github.com/thornjad/CloudflareTempestStationForwarder">on GitHub</a> under Creative Commons BY-SA 4.0, the same as <a href="https://github.com/leoherzog/WundergroundStationForwarder">Leo's original project</a> from which the vast majority of my code derives directly. If you have a Tempest station and want your readings in public networks without maintaining a Raspberry Pi on a shelf or a GAS project in your account, it should be straightforward to get running. But please open an issue if it's not.
+      </p>
+    </div>
+  </div>
+</BlogPost>
