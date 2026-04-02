@@ -236,20 +236,15 @@ import pkg from '../../package.json';
     <!--/sse-->
   </section>
 
-  <script is:inline>
-    (function() {
-      var el = document.getElementById('weather-snippet');
-      if (!el) return;
-      fetch('/api/weather')
-        .then(function(r) { return r.ok ? r.json() : null; })
-        .then(function(d) {
-          if (d && d.temp_f != null && d.conditions) {
-            var emoji = d.emoji ? d.emoji + ' ' : '';
-            el.textContent = ', where it\u2019s currently '
-              + d.temp_f + '\u00b0F and ' + emoji + d.conditions;
-          }
-        })
-        .catch(function() {});
-    })();
+  <script is:inline type="module">
+    const el = document.getElementById('weather-snippet');
+    if (el) {
+      const res = await fetch('/api/weather').catch(() => null);
+      const d = res?.ok ? await res.json() : null;
+      if (d?.temp_f != null && d.conditions) {
+        const emoji = d.emoji ? `${d.emoji} ` : '';
+        el.textContent = `, where it\u2019s currently ${d.temp_f}\u00b0F and ${emoji}${d.conditions}`;
+      }
+    }
   </script>
 </Base>
