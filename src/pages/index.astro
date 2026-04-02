@@ -37,7 +37,7 @@ import pkg from '../../package.json';
       <div class="left">
         <p>
           I'm Jade Michael Thornton, an engineering manager, software engineer and weather enthusiast (and trained <a href="https://www.weather.gov/skywarn/">Skywarn</a> spotter) in the
-          Twin Cities, Minnesota. You can call me Jade or Michael. I know some things about some
+          Twin Cities, Minnesota<span id="weather-snippet"></span>. You can call me Jade or Michael. I know some things about some
           software, and a lot about taking care of house rabbits. My favorite language is Clojure,
           but I never get to work in it. I work as a manager of software engineering at
           <a href="https://dronedeploy.com">DroneDeploy</a>, leading our Enterprise Growth engineering
@@ -76,9 +76,9 @@ import pkg from '../../package.json';
         <noscript
           ><p>
             Javascript disabled? Dope, I like you. The only JS on this page
-            animates a little cat sprite that follows your cursor, and a
-            little snippet that looks up the current site version number from a <code>package.json</code>. So
-            you're not missing much. Blog posts also use JS for code block
+            animates a little cat sprite that follows your cursor, fetches
+            current weather conditions, and looks up the current site version
+            number from a <code>package.json</code>. So you're not missing much. Blog posts also use JS for code block
             syntax highlighting. Some tools pages need JS to work, but those
             should be pretty obvious.
           </p></noscript
@@ -235,4 +235,21 @@ import pkg from '../../package.json';
     </div>
     <!--/sse-->
   </section>
+
+  <script is:inline>
+    (function() {
+      var el = document.getElementById('weather-snippet');
+      if (!el) return;
+      fetch('/api/weather')
+        .then(function(r) { return r.ok ? r.json() : null; })
+        .then(function(d) {
+          if (d && d.temp_f != null && d.conditions) {
+            var emoji = d.emoji ? d.emoji + ' ' : '';
+            el.textContent = ', where it\u2019s currently '
+              + d.temp_f + '\u00b0F and ' + emoji + d.conditions;
+          }
+        })
+        .catch(function() {});
+    })();
+  </script>
 </Base>
