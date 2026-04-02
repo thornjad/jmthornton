@@ -1,0 +1,9 @@
+name = "jmthornton"
+compatibility_date = "2025-04-01"
+
+# KV namespace for weather caching. In production, bind via Cloudflare
+# dashboard. For local dev, wrangler pages dev --kv WEATHER_KV creates
+# a local KV store automatically.
+#
+# Secrets (TEMPEST_STATION_ID, TEMPEST_API_TOKEN) go in .dev.vars for
+# local dev, or in the Cloudflare dashboard for production.
