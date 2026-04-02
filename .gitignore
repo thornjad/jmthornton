@@ -35,7 +35,6 @@ CNAME
 
 # Development files #
 #####################
-.dev.vars
 *.old
 public/assets/style/out.css.map
 public/assets/style/main.css.map
