@@ -1,0 +1,151 @@
+---
+import BlogPost from '../../../layouts/BlogPost.astro';
+---
+
+<BlogPost
+  title="StormScope: Giving Real-Time Weather Data to Your AI"
+  description="An open-source MCP server that gives AI assistants access to real-time US weather data from seven sources, enabling grounded meteorological reasoning."
+  slug="stormscope"
+  publishedDate="2026-04-07"
+  hasPrism={true}
+>
+  <h1 class="post-title">StormScope: Giving Real-Time Weather Data to Your AI</h1>
+  <time datetime="2026-04-07">April 7, 2026</time>
+
+  <div class="post-main">
+    <div class="blog-body">
+      <p>
+        I built an MCP server that gives AI assistants access to real-time US weather data. It pulls from seven different sources, aggregates them into structured JSON, and exposes nine tools that any MCP-pluggable client can call. The project is called <a href="https://github.com/thornjad/stormscope">StormScope</a>, and it's open source under an ISC license.
+      </p>
+
+      <p>
+        What I actually wanted was for the AI I already use every day to understand weather the way I want to. I've been a weather enthusiast for practically all my life, the kind of person who reads <a href="https://www.spc.noaa.gov/products/outlook/">SPC outlooks</a> more often than a sane person might, especially once the upper Midwest starts thawing out and things get interesting. I wanted to be able to ask my AI about severe weather risk, or current conditions, or what the 500mb pattern looks like, and get answers grounded in real observations rather than over-eager hallucinations. LLMs know a surprising amount about meteorology in the abstract, but they have no idea what the weather is doing right now. StormScope fills that niche gap.
+      </p>
+
+      <h2>The data problem</h2>
+
+      <p>
+        Weather data in the US is remarkably good and remarkably free. The <a href="https://www.weather.gov/documentation/services-web-api">National Weather Service API</a> returns current observations, forecasts, gridpoint data, and active alerts. NOAA's <a href="https://www.spc.noaa.gov/">Storm Prediction Center</a> publishes severe weather outlooks as GeoJSON. The <a href="https://mesonet.agron.iastate.edu/">Iowa Environmental Mesonet</a> (our neighbors at Iowa State) archives NEXRAD radar imagery and WPC surface bulletins. <a href="https://open-meteo.com/">Open-Meteo</a> provides global model data including pressure-level fields. All of these are public, well maintained, and free to use (much love to the unsung heroes at NOAA and NWS, and everywhere else, who keep these systems running).
+      </p>
+
+      <p>
+        One problem is that no single source gives you the full picture. NWS gives you surface observations and forecasts but nothing about upper-air patterns. SPC gives you severe weather risk but only as polygons on a map. Radar data exists as imagery, which an AI cannot interpret without help. And if you want to know whether you're in the warm sector ahead of a cold front, you need surface analysis data that lives in a completely different format, an encoded bulletin called CODSUS that uses decades-old 7-digit coordinate notation. All of it is freely available and machine-readable, so StormScope aggregates all of it rather than leaving it scattered across half a dozen APIs when an AI could be using it at once.
+      </p>
+
+      <h2>How it works</h2>
+
+      <p>
+        The server is built with <a href="https://gofastmcp.com">FastMCP</a>, a Python framework for building MCP servers. Each tool is an async function that accepts optional latitude and longitude (falling back to a configured primary location) and returns structured JSON. The AI calls whichever tool matches the user's question. Conditions, forecasts, alerts, briefings, the straightforward stuff works the way you'd expect.
+      </p>
+
+      <p>
+        The interesting problems start when a question requires data that doesn't come back as a simple JSON response. "Am I at risk for severe weather this afternoon?" sounds like one question, but answering it well means pulling the SPC's categorical and probabilistic outlooks (<code>get_spc_outlook</code>), checking surface analysis for whether you're in the warm sector ahead of a cold front (<code>get_surface_analysis</code>), and looking at the 500mb pattern for shortwave energy that might trigger development (<code>get_upper_air</code>). Each of those is a separate tool call against a different data source, and some of those sources require some computation before the data is useful to an AI.
+      </p>
+
+      <p>
+        The SPC publishes outlooks as GeoJSON polygons, which is great for mapping but useless for a text-based AI conversation. So <code>get_national_outlook</code> converts those polygons into human-readable region descriptions, "central Oklahoma" or "northern Texas" instead of a coordinate array. The surface analysis lives in a CODSUS bulletin (more on that later), and <code>get_surface_analysis</code> parses it into front positions and pressure centers with distances and bearings from your location. Radar is imagery, which an AI can't look at, so <code>get_radar</code> provides NEXRAD station metadata alongside a textual precipitation summary.
+      </p>
+
+      <p>
+        The vorticity computation was a fun side problem. Vorticity is essentially how much the atmosphere is spinning at a given point, and meteorologists use it to identify where storm development is favored. To compute it you need wind observations from five grid points arranged in a cross pattern around your location, one center point and four cardinal neighbors. Weather reports give you wind as a speed and a direction ("southwest at 30 knots"), but the math needs those broken into east-west and north-south components (the u and v you might see in meteorological data). The center point gives you the observation at your location, but the actual computation uses the four cardinal points to measure how the wind field changes across the grid. That rate of change is the relative vorticity. Add Earth's own rotational contribution (the Coriolis parameter) and you get absolute vorticity, which is what forecasters actually look at on a 500mb chart.
+      </p>
+
+      <p>
+        I was pleasantly surprised by how little code the core computation needs.
+      </p>
+
+      <pre lang="python"><code class="language-python">dx, dy = grid_spacing(lat)
+
+u_n, v_n = wind_components(*north_wind)
+u_s, v_s = wind_components(*south_wind)
+u_e, v_e = wind_components(*east_wind)
+u_w, v_w = wind_components(*west_wind)
+
+# centered finite differences: dv/dx - du/dy
+dvdx = (v_e - v_w) / (2.0 * dx)
+dudy = (u_n - u_s) / (2.0 * dy)
+
+relative = dvdx - dudy
+absolute = relative + coriolis_parameter(lat)</code></pre>
+
+      <p>
+        The <code>wind_components()</code> helper decomposes speed and direction into u/v, and <code>grid_spacing()</code> adjusts for latitude (a degree of longitude is shorter near the poles). The whole module is under 75 lines with no external dependencies, but getting it to produce meteorologically sensible values took some fun comparison against professional analyses, and one frustrated rewrite. It's still not perfect, always trust your friendly neighborhood meteorologist more, but it hasn't been flat wrong in a while.
+      </p>
+
+      <h2>Personal weather station integration</h2>
+
+      <p>
+        NWS observations come from airports and official stations, which can be miles from where you actually are. This part is optional, but it's the feature I use most. If you have a <a href="https://tempest.earth">WeatherFlow Tempest</a> weather station (because of course you happened to have one on your roof), you can configure StormScope to enrich NWS data with hyper-local sensor readings. Solar radiation, UV index, lightning strike counts, air density, wet bulb temperature, data and more data galore. The Tempest station becomes the primary source for temperature, wind, and pressure, with the NWS values retained as sidecars for comparison. There's a 5-mile distance gate on the station for precision, though, so if you ask about weather in a city 200 miles away, StormScope uses NWS data alone.
+      </p>
+
+      <p>
+        When the Tempest and NWS temperatures diverge by more than 5 degrees Fahrenheit, it flags the discrepancy so the AI knows something might be off with the sensor or the NWS observation station is farther away than you'd like.
+      </p>
+
+      <h2>What this enables</h2>
+
+      <p>
+        Here's what using it actually feels like. I asked "what's the weather?" a few minutes ago and got back a summary that pulled from my Tempest station (40&deg;F with gusts to 30, not too bad for April up here), blended in the NWS forecast (mostly cloudy tonight, chance of rain tomorrow), noted no active alerts, and mentioned that the SPC had a general thunderstorm risk over eastern Colorado. The whole thing took a couple of seconds and the answer was grounded in data from four different sources, none of which the AI made up. That's a simple case, and it's what I use most often. I run StormScope as an MCP server connected to Claude Code, so asking about the weather is as natural as asking about code.
+      </p>
+
+      <p>
+        Ask about severe weather risk and the AI will pull the probabilistic tornado, wind, and hail outlooks, cross-reference with the surface analysis to see if you're in the warm sector, check the 500mb pattern for shortwave energy, and synthesize all of that into a plain-English assessment of what the afternoon looks like. Four tool calls and a synthesis step, done in a few seconds, tech is magic.
+      </p>
+
+      <p>
+        Ask for a weather briefing before a road trip and the AI can check conditions and forecasts for both endpoints, look at alerts along the route, and flag anything worth knowing about the sky. Ask whether it's warm enough to finally open the windows and it can check temperature, humidity, and wind, then give you a straight answer instead of a disclaimer about not having real-time data.
+      </p>
+
+      <p>
+        One design decision that hasn't worked as well as I hoped was suggesting behavioral patterns to the AI. MCP servers can ship with an instruction block that the AI reads at connection time, and mine asks it to check for alerts at the start of a conversation and proactively fetch probabilistic outlooks when the SPC risk level is elevated. In practice the AI never follows through unprompted (MCP instructions are suggestions, not commands), but when it does check, it has some basis for prioritization, which is better than nothing.
+      </p>
+
+      <p>
+        The underlying bet with this project is that LLMs are already good at meteorological reasoning, they just lack current observations to reason over. StormScope is the plumbing that makes that possible.
+      </p>
+
+      <h2>Things that bit me</h2>
+
+      <p>
+        The NWS API has a two-step coordinate lookup that tripped me up early on. You can't just ask for the forecast at a lat/lon pair. First you call <code>{`/points/{lat},{lon}`}</code> to get the grid office, grid coordinates, and a URL for the nearest observation stations. Then you use those to fetch the actual forecast and observations. Not hard once you know, but I was surprised that I couldn't just pass coordinates and get an answer. Luckily the point metadata is stable enough to cache for 24 hours, so the extra round trip only hurts on the first request for a given location, which includes the server making multiple calls and the AI making subsequent tool calls, even if you only ask one weather question.
+      </p>
+
+      <p>
+        Before you can even call the NWS API, you need to know where the user is. The simplest approach is to require the AI to pass coordinates, but AI assistants don't usually know where you are unless you tell them. So StormScope has a fallback chain. First it checks for a configured primary location (environment variables). Then it can optionally pull coordinates from a connected Tempest station. After that, IP geolocation, which sounds reasonable until you try it. My IP address resolves to a location roughly 25 miles from where I actually am, and for mesoscale weather that's a huge difference. My solution here, though it only works on macOS, was to compile a tiny Swift app that calls CoreLocation directly. The server builds it automatically on first run, stashes it in <code>~/Library/Application Support/</code>, and calls it as a subprocess. It requires location authorization (a macOS popup, but only the first time) and returns coordinates accurate to about a hundred meters. Because it needs compilation and touches system permissions, it's opt-in via an environment variable. But when it works, it's the most satisfying kind of hack, solving a problem by compiling a tool on the fly that has no business being inside a weather server.
+      </p>
+
+      <p>
+        I already mentioned vorticity, and I spent a while looking for a public API that returns it directly, but came up empty. Open-Meteo gives you 500mb wind speed and direction at individual grid points, which is the raw material you need, but the vorticity itself requires computing finite differences across a grid. I'd never written that kind of computation before, so I pulled out some faithful old meteorology tomes (jk, I used Wikipedia and a NOAA training module) and worked through it. But that's the kind of thing that makes a side project really fun.
+      </p>
+
+      <p>
+        The CODSUS surface bulletin parser was a different kind of fun. The bulletin is plaintext with encoded 7-digit coordinates, front type keywords, and pressure values, all strung together with minimal delimiters. The coordinate encoding is, well... different:
+      </p>
+
+      <pre lang="python"><code class="language-python">def _decode_coord(token: str) -> tuple[float, float]:
+    lat = int(token[:3]) / 10.0
+    lon = -(int(token[3:]) / 10.0)
+    return lat, lon</code></pre>
+
+      <p>
+        First three digits are latitude times ten, last four are longitude times ten, always negated because the bulletin only covers North America. The Iowa Environmental Mesonet archives these bulletins, but their product ID metadata is unreliable. ASUS01 and ASUS02 labels get swapped frequently, so StormScope checks the actual WMO header text instead of trusting the label. Long front segments and pressure center lists wrap across continuation lines that need to be rejoined before parsing. The first version worked on most bulletins but produced phantom front segments between disconnected line segments in certain edge cases. Getting the parser robust enough to handle the full range of real-world bulletins took a few iterations, and I'm not convinced all the bugs are gone.
+      </p>
+
+      <h2>What it can't do</h2>
+
+      <p>
+        StormScope is focused on general-purpose weather for the contiguous US, and, frankly, focused on the upper Midwest, since that's where I call home. It doesn't cover marine forecasts, fire weather, aviation TAFs and METARs (beyond the raw METAR that shows up in full-detail conditions), or tropical cyclone advisories. It doesn't do historical data or climate norms. The SPC outlooks cover days 1 through 3 but nothing beyond that.
+      </p>
+
+      <p>
+        I'd like to add some historical data access, since the Tempest API provides it (and I log my data to a local DB too), plus maybe tropical cyclone support eventually, and aviation METARs/TAFs wouldn't be a huge lift. If any of those gaps bother you enough to contribute, the client architecture is modular and welcoming PRs is part of what I love about open source software.
+      </p>
+
+      <h2>Feed your AI fresh weather data</h2>
+
+      <p>
+        If you want to give your AI a dose of the sky, the <a href="https://github.com/thornjad/stormscope">GitHub repo</a> has everything you need to get started, and leave a star while you're there. StormScope is open source under an ISC license. Fair warning, most of the tools are US-only because they depend on the NWS API (though the Tempest integration <em>should</em> work anywhere). Thanks for letting me take up a little of your brain power today!
+      </p>
+    </div>
+  </div>
+</BlogPost>
