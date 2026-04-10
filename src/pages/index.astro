@@ -44,7 +44,8 @@ import pkg from '../../package.json';
           team. Learn more about <a href="/now">what I'm doing now</a>.
         </p>
         <p>
-          I've previously worked at
+          I have about <span id="exp-years">10+</span> years of experience
+          in software and I've previously worked at
           <a href="https://flightaware.com">FlightAware</a> (acquired by
           <a href="https://www.collinsaerospace.com">Collins Aerospace</a>),
           <a href="https://www.thomsonreuters.com">Thomson Reuters</a>,
@@ -246,5 +247,10 @@ import pkg from '../../package.json';
         el.textContent = `, where it\u2019s currently ${d.temp_f}\u00b0F and ${emoji}${d.conditions}`;
       }
     }
+
+    const expStart = new Date("2015-09-01T00:00:00-05:00");
+    const expYears = (new Date() - expStart) / 1000 / 60 / 60 / 24 / 365.25;
+    const expEl = document.getElementById('exp-years');
+    if (expEl) expEl.textContent = expYears.toFixed(1);
   </script>
 </Base>
