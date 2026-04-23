@@ -7,11 +7,11 @@ import BlogPost from '../../../layouts/BlogPost.astro';
   description="A continually updating list of my favorite lesser-known Emacs packages"
   slug="fav-lesser-known-packages"
   publishedDate="2023-05-07"
-  modifiedDate="2023-06-25"
+  modifiedDate="2026-04-22"
 >
   <h1 class="post-title">A few of the best lesser-known Emacs packages</h1>
   <time datetime="2023-05-07">First posted: May 7, 2023</time>&nbsp;
-  <time datetime="2023-06-25">Last updated: June 25, 2023</time>
+  <time datetime="2026-04-22">Last updated: April 22, 2026</time>
 
   <div class="post-main">
     <div class="blog-body">
@@ -36,6 +36,14 @@ import BlogPost from '../../../layouts/BlogPost.astro';
       <h3><a href="https://github.com/arthurcgusmao/unmodified-buffer">Unmodified Buffer</a></h3>
       <p>
         This one is a small yet compelling package. It resets the "modified" flag on a buffer automatically if the new buffer content matches the content of the file on disk. This means that you won't accidentally overwrite a previously saved copy of a file with identical buffer content, saving you time and headaches in the long run. Honestly this should be the default behavior in core Emacs.
+      </p>
+      <h3><a href="https://github.com/yad-tahir/org-roam-latte">Org-roam Latte</a></h3>
+      <p>
+        If you use org-roam, this one fills a gap you probably didn't know you wanted filled. It scans visible buffer content for text that matches existing node titles and aliases, then highlights those occurrences as potential links you haven't made explicit. Click one to jump to the node, or convert it into a real org-roam link in a single step. Obsidian users always cite unlinked mentions as one of that app's best features, and this brings the same idea into Emacs without the usual performance headaches.
+      </p>
+      <h3><a href="https://github.com/rolandwalker/flyspell-lazy">Flyspell Lazy</a></h3>
+      <p>
+        Flyspell is great in theory but can make editing sluggish, especially in large files. This package defers spell checks until Emacs has been idle for a moment instead of firing on every keystroke. That single behavioral change makes flyspell feel invisible. macOS users used to have it particularly rough with the default behavior, and this makes the whole thing bearable without giving up spell-checking entirely.
       </p>
       <h3><a href="">ToDo Light</a></h3>
       <p>
