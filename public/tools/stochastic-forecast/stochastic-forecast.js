@@ -101,6 +101,12 @@ function fmtPrecipAmt(mm, isUS) {
   return mm.toFixed(1) + ' mm';
 }
 
+function dewToRH(temp_c, dew_c) {
+  if (temp_c === null || dew_c === null) return null;
+  const b = 17.625, c = 243.04;
+  return Math.round(100 * Math.exp(b * dew_c / (c + dew_c)) / Math.exp(b * temp_c / (c + temp_c)));
+}
+
 function cloudToText(fraction) {
   if (fraction === null || fraction === undefined) return '—';
   if (fraction <= 0.05) return 'Clear';
@@ -111,6 +117,26 @@ function cloudToText(fraction) {
 }
 
 function fmtPrecip(p) { return Math.round(p * 100) + '%'; }
+
+function easterEggHtml(formattedStr) {
+  const m = formattedStr.match(/^-?(\d+(?:\.\d+)?)/);
+  if (!m) return '';
+  const numStr = m[1];
+  const n = parseFloat(numStr);
+  if (Math.round(n) === 69) return ' <span class="easter-egg">nice</span>';
+  if (numStr === '420' || numStr === '4.20' || numStr === '42.0') return ' <span class="easter-egg">blaze it</span>';
+  return '';
+}
+
+function fmtTempHtml(c, isUS) {
+  const s = fmtTemp(c, isUS);
+  return escapeHtml(s) + easterEggHtml(s);
+}
+
+function fmtPrecipHtml(p) {
+  const s = fmtPrecip(p);
+  return escapeHtml(s) + easterEggHtml(s);
+}
 
 function fmtLeadTime(lead_h, startDate) {
   const target = new Date(startDate.getTime() + lead_h * 3600000);
@@ -1178,8 +1204,9 @@ function showCurrentConditions(current, locationLabel, isUS) {
   const sky = cloudToText(current.cloud_cover);
   const emoji = skyEmoji(current.cloud_cover, current.has_lightning, current.precip_last_hour_mm);
   const tempVal = current.temp_c !== null ? fmtTemp(current.temp_c, isUS) : '—';
+  const rh = dewToRH(current.temp_c, current.dewpoint_c);
   const details = [
-    current.dewpoint_c !== null ? 'Dew ' + fmtTemp(current.dewpoint_c, isUS) : null,
+    rh !== null ? rh + '% RH' : null,
     current.pressure_hpa !== null ? Math.round(current.pressure_hpa) + ' hPa' : null,
     current.wind_kph !== null ? fmtWind(current.wind_kph, isUS) : null,
     fmtPrecipAmt(current.precip_last_hour_mm, isUS) !== 'None'
@@ -1199,6 +1226,172 @@ function showCurrentConditions(current, locationLabel, isUS) {
     '</div>';
 }
 
+function computeNarrative(memberResult, isUS, fd) {
+  const fc = memberResult.forecasts;
+  const dailyFc = fc.filter(f => !NOWCAST_LEADS.includes(f.lead_h));
+  const days = groupIntoDays(dailyFc, fd.date);
+  const tmr = days.find(d => d.day === 'Tomorrow') || days[0];
+  const f168 = fc.find(f => f.lead_h === 168);
+
+  const tHi = tmr && tmr.hi_c !== null ? fmtTemp(tmr.hi_c, isUS) : null;
+  const tLo = tmr && tmr.lo_c !== null ? fmtTemp(tmr.lo_c, isUS) : null;
+  const tPrecip = tmr && tmr.precip_prob !== null ? Math.round(tmr.precip_prob * 100) + '%' : null;
+  const curTmp = fd.current.temp_c !== null ? fmtTemp(fd.current.temp_c, isUS) : null;
+  const hiLo = tHi && tLo ? tHi + '/' + tLo : (tHi || null);
+
+  switch (memberResult.member_id) {
+    case 1: {
+      if (!tHi) return 'Started from current conditions and wandered off from there.';
+      const far = f168 && f168.temp_c !== null ? fmtTemp(f168.temp_c, isUS) : null;
+      return far
+        ? 'Started at ' + (curTmp || 'current') + ', drifted to ' + hiLo + ' tomorrow and ' + far + ' by day 7 - compound errors compounding.'
+        : 'Started at ' + (curTmp || 'current') + ' and walked to ' + hiLo + ' tomorrow with no plan.';
+    }
+    case 2: {
+      if (!tHi) return 'Each lead drawn fresh from climo noise - no memory, no continuity, no problem.';
+      return hiLo + ' tomorrow - each step re-anchored independently to climatology with no memory of the last.';
+    }
+    case 3: {
+      if (!tHi) return 'Three times normal step size, zero times the restraint.';
+      const far = f168 && f168.temp_c !== null ? fmtTemp(f168.temp_c, isUS) : null;
+      return far
+        ? hiLo + ' tomorrow, swinging out to ' + far + ' by day 7 - consequences of a 15-degree step size.'
+        : hiLo + ' tomorrow - three times normal step size, full send.';
+    }
+    case 4: {
+      if (!tHi) return 'I picked these numbers from the floor. They feel right.';
+      return hiLo + ' tomorrow - drawn at random from seasonal extremes, no further justification provided.';
+    }
+    case 5: {
+      const anomSign = (fd.current.temp_c ?? fd.climo.temp_c) > fd.climo.temp_c ? 'warm' : 'cold';
+      if (!tHi) return 'Running ' + anomSign + ' right now, so the correction is obviously coming.';
+      return 'Running ' + anomSign + ' now, so ' + hiLo + ' tomorrow as the correction that is clearly overdue.';
+    }
+    case 6: {
+      const trendVal = (fd.current.temp_c ?? fd.climo.temp_c) - (fd.obs_6h_ago.temp_c ?? fd.current.temp_c ?? fd.climo.temp_c);
+      const dir = trendVal > 0.5 ? 'warming' : trendVal < -0.5 ? 'cooling' : 'flat';
+      if (!tHi) return 'The ' + dir + ' trend has never failed and I see no reason it would start now.';
+      return dir.charAt(0).toUpperCase() + dir.slice(1) + ' trend extrapolated to ' + (tHi || 'unknown') + ' tomorrow - trend has never failed before.';
+    }
+    case 7: {
+      if (fd.is_retrograde) {
+        if (!tHi) return 'Mercury retrograde amplified everything - treat all values as entertainment.';
+        return 'Retrograde walk at 10x normal yields ' + hiLo + ' tomorrow - I cannot be held responsible for this.';
+      }
+      if (!tHi) return 'Outside retrograde window, forecast is subdued - for now.';
+      return 'Outside retrograde, subdued walk - calling ' + hiLo + ' tomorrow, pending any planetary disruption.';
+    }
+    case 8: {
+      return 'Tomorrow near ' + (tHi || fmtTemp(fd.climo.temp_c + HALF_RANGE_C, isUS)) + ' with a ' + (tPrecip || '30%') + ' chance of precipitation - conditions typical for this time of year.';
+    }
+    case 9: {
+      const dayName = DAY_NAMES[fd.obs_random_past.weekday];
+      const monthName = MONTH_NAMES[fd.obs_random_past.month];
+      if (!tHi) return 'A ' + dayName + ' in ' + monthName + ' looked like this - the wisdom of the crowd has spoken.';
+      return 'A ' + dayName + ' in ' + monthName + ' had ' + hiLo + ' and that is the forecast, end of discussion.';
+    }
+    case 10: {
+      const yt = fd.obs_24h_ago.temp_c !== null ? fmtTemp(fd.obs_24h_ago.temp_c, isUS) : 'yesterday\'s reading';
+      return 'Yesterday was ' + yt + ' and tomorrow will also be ' + yt + ' - this model sees no distinction between the two.';
+    }
+    case 11: {
+      if (fd.current.has_lightning) return 'CG on scope - 100% precip locked in for the full period, storm of the century confirmed.';
+      if (!tHi) return 'No CG detected, positioned for intercept, holding at climo.';
+      return 'No CG on scope - climo holds at ' + hiLo + ' tomorrow, intercept readiness maintained.';
+    }
+    case 12: {
+      if (!tHi) return 'Running a consistent 3C above climatology - the trend is clear and it only gets clearer.';
+      return 'A persistent 3C above climatology yields ' + hiLo + ' tomorrow - the trend is self-evident.';
+    }
+    case 13: {
+      const obs6t = fd.obs_6h_ago.temp_c !== null ? fmtTemp(fd.obs_6h_ago.temp_c, isUS) : 'the earlier reading';
+      return 'Arrived when it was ' + obs6t + ' and locked in that value for every lead - updates are not planned.';
+    }
+    case 14: {
+      const dow = fd.day_of_week;
+      if (!tHi) return 'Day-of-week bias applied - still mostly mad about Mondays.';
+      if (dow === 1) return 'It\'s Monday so bias applied: ' + hiLo + ' tomorrow, heavier clouds, higher precip, obviously.';
+      if (dow === 5) return 'Friday energy channeled: ' + hiLo + ' tomorrow, boosted by the collective relief of the approaching weekend.';
+      return DAY_NAMES[dow] + ' bias applied: ' + hiLo + ' tomorrow - still mostly mad about Mondays though.';
+    }
+    case 15: {
+      const nullCount = fc.reduce((n, f) => n + [f.temp_c, f.dewpoint_c, f.pressure_hpa, f.precip_prob, f.cloud_cover].filter(v => v === null).length, 0);
+      if (nullCount > 20) return 'Significant data withheld pending peer review and continued funding - results inconclusive.';
+      if (!tHi) return 'Preliminary results pending review - ' + nullCount + ' variables abstained from comment.';
+      return 'Preliminary results suggest ' + hiLo + ' tomorrow - ' + nullCount + ' variables require further study before commitment.';
+    }
+    case 16: {
+      const dev = (fd.current.temp_c ?? fd.climo.temp_c) - fd.climo.temp_c;
+      const devF = isUS ? Math.round(Math.abs(dev) * 9 / 5) : Math.round(Math.abs(dev));
+      const dir = dev > 0 ? 'above' : 'below';
+      if (!tHi) return 'Anomaly amplified for maximum engagement - results may vary.';
+      return 'Currently ' + devF + (isUS ? 'F' : 'C') + ' ' + dir + ' climo, amplified to ' + (tHi || 'peak engagement') + ' tomorrow.';
+    }
+    case 17: {
+      if (!tHi) return 'Mean of 26 prior members with noise - a consensus of nonsense is still a consensus.';
+      return hiLo + ' tomorrow - arithmetic mean of 26 nonsense forecasts plus noise, which is still a consensus.';
+    }
+    case 18: {
+      if (!tHi) return 'Dew point set to temperature at all leads - humidity is just air that cares.';
+      return hiLo + ' tomorrow at 100% relative humidity - dew point equals temperature, which this model considers normal.';
+    }
+    case 19: {
+      const isWarm = (fd.current.temp_c ?? fd.climo.temp_c) > fd.climo.temp_c;
+      if (!tHi) return 'DEVELOPING: unprecedented conditions inbound - stay with us for updates.';
+      return 'DEVELOPING: ' + (isWarm ? 'historic heat' : 'record cold') + ' targets the region - ' + hiLo + ' tomorrow, representing the seasonal extreme.';
+    }
+    case 20: {
+      if (!tHi) return '52% chance of engagement - like and subscribe to unlock the forecast.';
+      return hiLo + ' tomorrow with 52% precip - like and subscribe to find out if it actually rains.';
+    }
+    case 21: {
+      const exHi = fmtTemp(fd.extremes.temp.max, isUS);
+      const exLo = fmtTemp(fd.extremes.temp.min, isUS);
+      return 'Alternating between ' + exHi + ' and ' + exLo + ' - both outcomes are valid and deserve equal coverage.';
+    }
+    case 22: {
+      const vpn = memberResult.tagline.includes('Brought to you by ')
+        ? memberResult.tagline.split('Brought to you by ')[1].replace('.', '')
+        : 'our sponsor';
+      return '72F and sunny for all forecast leads - ideal conditions, brought to you by ' + vpn + '.';
+    }
+    case 23: {
+      const tl = memberResult.tagline;
+      if (tl.includes('Full moon')) return (tHi ? tHi + ' tomorrow with clear skies - ' : '') + 'full moon energy detected, maximum content opportunity.';
+      if (tl.includes('catastrophe') || tl.includes('Staying safe')) return (hiLo ? hiLo + ' tomorrow with ' + (tPrecip || '85%') + ' precip - ' : '') + 'storm mode engaged, documenting everything.';
+      return (tHi ? tHi + ' tomorrow, zero clouds, zero precip - ' : '') + 'golden hour forecast locked in, content secured.';
+    }
+    case 24: {
+      const tl = memberResult.tagline;
+      if (tl.includes('FALLING')) return 'Pressure dropping - bracing for ' + (hiLo || 'severe conditions') + ' tomorrow, 100% precip, emergency protocol initiated.';
+      if (tl.includes('RISING')) return 'Pressure rising - ' + (hiLo || 'warming') + ' tomorrow, unknown if good or bad, panicking regardless.';
+      if (tl.includes('ALL IS DARK')) return 'New moon detected - no light, no readings, no confidence - holding at ' + (tHi || fmtTemp(fd.climo.temp_c, isUS)) + ' until the darkness lifts.';
+      return 'No significant pressure trend - suspicious - calling ' + (hiLo || 'climo') + ' tomorrow, monitoring for evidence.';
+    }
+    case 25: {
+      const obs = fd.obs_nostalgia;
+      const wday = DAY_NAMES[obs.weekday];
+      const mon = MONTH_NAMES[obs.month];
+      if (!tHi) return 'Consulting a ' + wday + ' in ' + mon + ' ' + obs.year + ' - the past is always relevant.';
+      return 'A ' + wday + ' in ' + mon + ' ' + obs.year + ' had ' + hiLo + ' - not much has changed since then, apparently.';
+    }
+    case 26: {
+      const refDate = new Date('2024-01-01');
+      const months = (fd.date.getFullYear() - refDate.getFullYear()) * 12 + (fd.date.getMonth() - refDate.getMonth());
+      const drift = (months * 0.1).toFixed(1);
+      if (!tHi) return 'Climatology plus ' + drift + ' degrees of gradual drift - nothing to see here.';
+      return 'Climatology plus ' + drift + ' of imperceptible drift yields ' + hiLo + ' tomorrow - indistinguishable from normal, which is the point.';
+    }
+    case 27: {
+      const isWarm = (fd.current.temp_c ?? fd.climo.temp_c) > fd.climo.temp_c;
+      if (!tHi) return 'Current trajectory points directly at the world record - direction TBD.';
+      return 'On current trajectory, ' + (tHi || 'tomorrow') + ' is the leading edge of a move toward the world-record ' + (isWarm ? 'high' : 'low') + '.';
+    }
+    default:
+      return '';
+  }
+}
+
 function createMemberCards(weights) {
   const grid = el('members-grid');
   grid.innerHTML = '';
@@ -1209,41 +1402,77 @@ function createMemberCards(weights) {
     card.id = 'card-' + m.id;
     card.innerHTML =
       '<div class="member-header">' +
-        '<span class="member-name">' + m.icon + ' ' + escapeHtml(m.name) + '</span>' +
-        '<span class="member-weight" id="wt-' + m.id + '">weight: ' + w + '</span>' +
+        '<span class="member-name-group">' +
+          '<span class="member-name">' + escapeHtml(m.name) + '</span>' +
+          '<span class="member-tagline-inline" id="tl-' + m.id + '"></span>' +
+        '</span>' +
+        '<span class="member-weight" id="wt-' + m.id + '">' + w + '</span>' +
       '</div>' +
       '<div class="member-loading-state" id="ml-' + m.id + '">' +
         '<span class="spinner spinner-sm"></span>' +
         '<span>running...</span>' +
       '</div>' +
       '<div id="mr-' + m.id + '" style="display:none">' +
-        '<p class="member-tagline" id="mt-' + m.id + '"></p>' +
-        '<p class="member-summary" id="ms-' + m.id + '"></p>' +
-        '<button class="member-details-btn" onclick="window._stoch.toggleDetails(' + m.id + ')">forecast ▸</button>' +
+        '<p class="member-narrative" id="mn-' + m.id + '"></p>' +
+        '<div class="member-fc-row" id="mfc-' + m.id + '"></div>' +
+        '<button class="member-details-btn" onclick="window._stoch.toggleDetails(' + m.id + ')">' +
+          'forecast ▸' +
+        '</button>' +
         '<div class="member-details" id="md-' + m.id + '" style="display:none"></div>' +
       '</div>';
     grid.appendChild(card);
   }
 }
 
-function resolveMemberCard(memberId, forecast, isUS, startDate) {
+function resolveMemberCard(memberId, forecast, isUS, startDate, fd) {
   const loadingEl = el('ml-' + memberId);
   const resultsEl = el('mr-' + memberId);
   if (loadingEl) loadingEl.style.display = 'none';
   if (resultsEl) resultsEl.style.display = 'block';
 
-  const taglineEl = el('mt-' + memberId);
-  if (taglineEl) taglineEl.textContent = forecast.tagline;
+  const taglineEl = el('tl-' + memberId);
+  if (taglineEl) taglineEl.textContent = ' — ' + forecast.tagline;
 
-  const f24 = forecast.forecasts.find(f => f.lead_h === 24);
-  const summaryEl = el('ms-' + memberId);
-  if (summaryEl) {
-    if (f24 && f24.temp_c !== null) {
-      summaryEl.textContent = fmtLeadTime(24, startDate) + ': ' + fmtTemp(f24.temp_c, isUS) +
-        '  ·  precip ' + fmtPrecip(f24.precip_prob ?? 0);
-    } else {
-      summaryEl.textContent = 'Data withheld pending further study.';
+  const narrativeEl = el('mn-' + memberId);
+  if (narrativeEl && fd) narrativeEl.textContent = computeNarrative(forecast, isUS, fd);
+
+  const fcRowEl = el('mfc-' + memberId);
+  if (fcRowEl) {
+    const ncForecasts = forecast.forecasts.filter(f => NOWCAST_LEADS.includes(f.lead_h));
+    const dailyFc = forecast.forecasts.filter(f => !NOWCAST_LEADS.includes(f.lead_h));
+    const days = groupIntoDays(dailyFc, startDate);
+    const tmr = days.find(d => d.day === 'Tomorrow') || days[0];
+
+    let html = '';
+    for (const f of ncForecasts) {
+      const timeStr = fmtLeadTime(f.lead_h, startDate);
+      const emoji = skyEmoji(f.cloud_cover, false, null);
+      const temp = f.temp_c !== null ? fmtTempHtml(f.temp_c, isUS) : '—';
+      const precip = f.precip_prob !== null ? fmtPrecipHtml(f.precip_prob) : '—';
+      html +=
+        '<div class="member-fc-line">' +
+          '<span class="mfc-time">' + escapeHtml(timeStr) + '</span>' +
+          '<span class="mfc-emoji">' + emoji + '</span>' +
+          '<span class="mfc-temp">' + temp + '</span>' +
+          '<span class="mfc-detail">' + precip + ' precip</span>' +
+        '</div>';
     }
+
+    if (tmr) {
+      const emoji = skyEmoji(tmr.cloud_cover, false, tmr.precip_prob > 0.5 ? 1 : 0);
+      const hiStr = tmr.hi_c !== null ? fmtTempHtml(tmr.hi_c, isUS) : '—';
+      const loStr = tmr.lo_c !== null ? fmtTempHtml(tmr.lo_c, isUS) : '—';
+      const precipStr = tmr.precip_prob !== null ? fmtPrecipHtml(tmr.precip_prob) : '—';
+      html +=
+        '<div class="member-fc-line member-fc-tomorrow">' +
+          '<span class="mfc-time">Tomorrow</span>' +
+          '<span class="mfc-emoji">' + emoji + '</span>' +
+          '<span class="mfc-temp">' + hiStr + '</span>' +
+          '<span class="mfc-detail">' + loStr + ' lo  ·  ' + precipStr + '</span>' +
+        '</div>';
+    }
+
+    fcRowEl.innerHTML = html;
   }
 
   const detailsEl = el('md-' + memberId);
@@ -1364,8 +1593,8 @@ function showEnsembleResults(ensemble, isUS, startDate) {
       card.innerHTML =
         '<p class="nc-time">' + escapeHtml(fmtLeadTime(f.lead_h, startDate)) + '</p>' +
         '<p class="nc-emoji">' + emoji + '</p>' +
-        '<p class="nc-temp">' + (f.temp_c !== null ? fmtTemp(f.temp_c, isUS) : '—') + '</p>' +
-        '<p class="nc-precip">' + (f.precip_prob !== null ? fmtPrecip(f.precip_prob) : '—') + ' precip</p>';
+        '<p class="nc-temp">' + (f.temp_c !== null ? fmtTempHtml(f.temp_c, isUS) : '—') + '</p>' +
+        '<p class="nc-precip">' + (f.precip_prob !== null ? fmtPrecipHtml(f.precip_prob) : '—') + ' precip</p>';
       cardsRow.appendChild(card);
     }
     ncSection.appendChild(cardsRow);
@@ -1392,11 +1621,11 @@ function showEnsembleResults(ensemble, isUS, startDate) {
         '<span class="dr-day">' + escapeHtml(d.day) + '</span>' +
         '<span class="dr-emoji">' + emoji + '</span>' +
         '<span class="dr-range">' +
-          (d.lo_c !== null ? fmtTemp(d.lo_c, isUS) : '—') +
+          (d.lo_c !== null ? fmtTempHtml(d.lo_c, isUS) : '—') +
           ' / ' +
-          (d.hi_c !== null ? fmtTemp(d.hi_c, isUS) : '—') +
+          (d.hi_c !== null ? fmtTempHtml(d.hi_c, isUS) : '—') +
         '</span>' +
-        '<span class="dr-precip">' + (d.precip_prob !== null ? fmtPrecip(d.precip_prob) : '—') + '</span>';
+        '<span class="dr-precip">' + (d.precip_prob !== null ? fmtPrecipHtml(d.precip_prob) : '—') + '</span>';
       dailyEl.appendChild(row);
     }
     daySection.appendChild(dailyEl);
@@ -1534,7 +1763,7 @@ async function runForecast(lat, lon, geocodedName) {
   // schedule card reveals
   const revealPromises = MEMBER_DEFS.map(m => new Promise(resolve => {
     setTimeout(() => {
-      resolveMemberCard(m.id, all[m.id], fd.isUS, fd.date);
+      resolveMemberCard(m.id, all[m.id], fd.isUS, fd.date, fd);
       resolve();
     }, delays[m.id]);
   }));
@@ -1633,6 +1862,14 @@ function init() {
     el('error-section').style.display = 'none';
     el('location-section').style.display = 'block';
   });
+
+  const logDisc = el('log-disclosure');
+  if (logDisc) {
+    logDisc.querySelector('summary').addEventListener('click', () => {
+      const y = window.scrollY;
+      requestAnimationFrame(() => window.scrollTo({ top: y, behavior: 'instant' }));
+    });
+  }
 }
 
 document.addEventListener('DOMContentLoaded', init);

@@ -17,6 +17,14 @@ import Base from '../../layouts/Base.astro';
         font-style: italic;
       }
 
+      #location-section {
+        margin-top: 1.5em;
+      }
+
+      #results-section {
+        margin-top: 1.5em;
+      }
+
       .location-row {
         display: flex;
         gap: 0.5em;
@@ -76,13 +84,14 @@ import Base from '../../layouts/Base.astro';
         padding: 0.4em 0.9em;
         border-radius: var(--border-radius);
         font-size: 0.9em;
-        margin-bottom: 1.5em;
+        margin-bottom: 0.75em;
         display: inline-block;
         font-weight: bold;
       }
 
       #current-section {
         margin-bottom: 2.5em;
+        margin-top: 0;
       }
 
       #current-section h2 {
@@ -135,16 +144,19 @@ import Base from '../../layouts/Base.astro';
       .log-disclosure {
         margin-top: 2em;
         font-size: 0.8em;
-        opacity: 0.5;
       }
 
       .log-disclosure summary {
         cursor: pointer;
         font-family: var(--font-mono);
+        opacity: 0.45;
+        list-style: none;
       }
 
+      .log-disclosure summary::-webkit-details-marker { display: none; }
+
       .log-disclosure summary:hover {
-        opacity: 0.8;
+        opacity: 0.65;
       }
 
       .log-disclosure .status-log {
@@ -316,10 +328,9 @@ import Base from '../../layouts/Base.astro';
       }
 
       .daily-row {
-        display: grid;
-        grid-template-columns: 5.5em 1.75em 1fr auto;
+        display: flex;
         align-items: center;
-        gap: 0 0.5em;
+        gap: 0.6em;
         padding: 0.5em 0;
         border-bottom: 1px solid var(--pre-border);
         font-size: 0.9em;
@@ -330,9 +341,11 @@ import Base from '../../layouts/Base.astro';
       .dr-day {
         font-family: var(--font-mono);
         font-size: 0.88em;
+        min-width: 4.5em;
+        flex-shrink: 0;
       }
 
-      .dr-emoji { font-size: 1.15em; }
+      .dr-emoji { font-size: 1.15em; flex-shrink: 0; }
 
       .dr-range {
         font-family: var(--font-mono);
@@ -344,7 +357,6 @@ import Base from '../../layouts/Base.astro';
         font-family: var(--font-mono);
         font-size: 0.82em;
         opacity: 0.55;
-        text-align: right;
       }
 
       .member-card {
@@ -394,20 +406,56 @@ import Base from '../../layouts/Base.astro';
         display: inline-block;
       }
 
-      .member-tagline {
-        font-size: 0.8em;
-        margin: 0 0 0.5em;
-        line-height: 1.4;
-        opacity: 0.5;
-        font-style: italic;
+      .member-name-group {
+        display: flex;
+        align-items: baseline;
+        gap: 0.3em;
+        flex-wrap: wrap;
+        min-width: 0;
       }
 
-      .member-summary {
-        font-size: 0.95em;
-        margin: 0 0 0.5em;
-        font-family: var(--font-mono);
-        color: var(--mint);
+      .member-tagline-inline {
+        font-size: 0.78em;
+        opacity: 0.45;
+        font-style: italic;
+        font-weight: normal;
       }
+
+      .member-narrative {
+        font-size: 0.85em;
+        margin: 0.25em 0 0.6em;
+        line-height: 1.45;
+        opacity: 0.7;
+      }
+
+      .member-fc-row {
+        margin: 0 0 0.5em;
+      }
+
+      .member-fc-line {
+        display: grid;
+        grid-template-columns: 7em 1.4em 3.8em auto;
+        gap: 0 0.4em;
+        font-family: var(--font-mono);
+        font-size: 0.8em;
+        line-height: 1.7;
+        align-items: center;
+      }
+
+      .member-fc-tomorrow {
+        border-top: 1px solid var(--pre-border);
+        margin-top: 0.15em;
+        padding-top: 0.15em;
+      }
+
+      .mfc-time { opacity: 0.6; }
+
+      .mfc-temp {
+        color: var(--mint);
+        font-weight: bold;
+      }
+
+      .mfc-detail { opacity: 0.55; }
 
       .member-details-btn {
         background: none;
@@ -458,6 +506,13 @@ import Base from '../../layouts/Base.astro';
       .null-cell {
         opacity: 0.25;
         font-style: italic;
+      }
+
+      .easter-egg {
+        font-size: 0.62em;
+        opacity: 0.55;
+        font-style: italic;
+        letter-spacing: 0.02em;
       }
 
       @media (max-width: 600px) {
