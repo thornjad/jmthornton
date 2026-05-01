@@ -26,18 +26,18 @@ const FAKE_VPNS = [
 ];
 
 const LOADING_MESSAGES = [
-  'Initializing 27-member ensemble...',
+  'Initializing 25-member ensemble...',
   'Consulting the historical record...',
   "Checking Mercury's position...",
   'Running uncertainty quantification...',
   'Peer review in progress...',
   'Optimizing for engagement...',
-  "Calibrating the drunkard's random walk...",
   'Sourcing sponsored content...',
   'Applying day-of-week bias...',
-  'Randomizing delay times...',
   'Generating ensemble weights...',
+  'Calibrating the vibes score...',
   'Verifying uncertainty quantification of uncertainty...',
+  'Results pending further funding...',
 ];
 
 const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -47,33 +47,31 @@ const MONTH_NAMES = [
 ];
 
 const MEMBER_DEFS = [
-  { id: 1,  name: 'drunkard',          icon: '🍺' },
-  { id: 2,  name: 'blind-drunkard',    icon: '🙈' },
-  { id: 3,  name: 'chaos',             icon: '🌪️' },
-  { id: 4,  name: 'vibes',             icon: '✨' },
-  { id: 5,  name: 'contrarian',        icon: '🙃' },
-  { id: 6,  name: 'hype-train',        icon: '🚂' },
-  { id: 7,  name: 'mercury-retrograde',icon: '☿' },
-  { id: 8,  name: 'weatherperson',     icon: '📺' },
-  { id: 9,  name: 'crowd-sourced',     icon: '👥' },
-  { id: 10, name: 'groundhog-day',     icon: '🦫' },
-  { id: 11, name: 'CG',               icon: '⚡' },
-  { id: 12, name: 'climate-anxiety',   icon: '🌡️' },
-  { id: 13, name: 'too-early',         icon: '⏰' },
-  { id: 14, name: 'monday',            icon: '😩' },
-  { id: 15, name: 'grant-funded',      icon: '🔬' },
-  { id: 16, name: 'the-algorithm',     icon: '🤖' },
-  { id: 17, name: 'peer-review',       icon: '📋' },
-  { id: 18, name: 'dew-denier',        icon: '💧' },
-  { id: 19, name: 'breaking-news',     icon: '📰' },
-  { id: 20, name: 'engagement-bait',   icon: '👆' },
-  { id: 21, name: 'both-sides',        icon: '⚖️' },
-  { id: 22, name: 'sponsored-content', icon: '💰' },
-  { id: 23, name: 'influencer',        icon: '📸' },
-  { id: 24, name: 'panic',             icon: '😱' },
-  { id: 25, name: 'nostalgia',         icon: '📅' },
-  { id: 26, name: 'astroturfed',       icon: '🌱' },
-  { id: 27, name: 'record-breaker',    icon: '🏆' },
+  { id: 2,  name: 'legally blind drunkard', icon: '🙈' },
+  { id: 3,  name: 'chaos',                  icon: '🌪️' },
+  { id: 4,  name: 'vibes',                  icon: '✨' },
+  { id: 5,  name: 'contrarian',             icon: '🙃' },
+  { id: 6,  name: 'hype-train',             icon: '🚂' },
+  { id: 7,  name: 'mercury-retrograde',     icon: '☿' },
+  { id: 8,  name: 'weatherperson',          icon: '📺' },
+  { id: 9,  name: 'crowd-sourced',          icon: '👥' },
+  { id: 10, name: 'groundhog-day',          icon: '🦫' },
+  { id: 11, name: 'CG',                     icon: '⚡' },
+  { id: 12, name: 'cold-like-minnesota',    icon: '🥶' },
+  { id: 13, name: 'too-early',              icon: '⏰' },
+  { id: 14, name: 'monday',                 icon: '😩' },
+  { id: 17, name: 'peer-review',            icon: '📋' },
+  { id: 18, name: 'dew-denier',             icon: '💧' },
+  { id: 19, name: 'breaking-news',          icon: '📰' },
+  { id: 20, name: 'engagement-bait',        icon: '👆' },
+  { id: 21, name: 'both-sides',             icon: '⚖️' },
+  { id: 22, name: 'sponsored-content',      icon: '💰' },
+  { id: 23, name: 'influencer',             icon: '📸' },
+  { id: 24, name: 'panic',                  icon: '😱' },
+  { id: 25, name: 'nostalgia',              icon: '📅' },
+  { id: 26, name: 'definitely-not-sponsored', icon: '🛢️' },
+  { id: 27, name: 'record-breaker',         icon: '🏆' },
+  { id: 28, name: 'but-its-a-dry-heat',     icon: '🏜️' },
 ];
 
 // ============================================================
@@ -151,6 +149,12 @@ function fmtLeadTime(lead_h, startDate) {
   return dayShort[target.getDay()] + ' ' + timeStr;
 }
 
+function fmtLeadTimeShort(lead_h, startDate) {
+  const target = new Date(startDate.getTime() + lead_h * 3600000);
+  const h = target.getHours();
+  return (h % 12 || 12) + ' ' + (h < 12 ? 'AM' : 'PM');
+}
+
 function fmtDay(lead_h, startDate) {
   const target = new Date(startDate.getTime() + lead_h * 3600000);
   const startDay = new Date(startDate); startDay.setHours(0, 0, 0, 0);
@@ -174,6 +178,7 @@ function groupIntoDays(forecasts, startDate) {
   const result = [];
   for (const [day, pts] of dayMap) {
     const temps = pts.map(p => p.temp_c).filter(v => v !== null && !isNaN(v));
+    const dews = pts.map(p => p.dewpoint_c).filter(v => v !== null && !isNaN(v));
     const precips = pts.map(p => p.precip_prob).filter(v => v !== null && !isNaN(v));
     const clouds = pts.map(p => p.cloud_cover).filter(v => v !== null && !isNaN(v));
     const vibesArr = pts.map(p => p.vibes).filter(v => v !== null && !isNaN(v));
@@ -181,14 +186,18 @@ function groupIntoDays(forecasts, startDate) {
     if (temps.length >= 2) {
       hi_c = Math.max.apply(null, temps);
       lo_c = Math.min.apply(null, temps);
+      if (hi_c === lo_c) { hi_c += HALF_RANGE_C; lo_c -= HALF_RANGE_C; }
     } else if (temps.length === 1) {
       hi_c = temps[0] + HALF_RANGE_C;
       lo_c = temps[0] - HALF_RANGE_C;
     }
+    const avgTemp = temps.length ? temps.reduce((s, v) => s + v, 0) / temps.length : null;
+    const avgDew = dews.length ? dews.reduce((s, v) => s + v, 0) / dews.length : null;
+    const repLeadH = pts[Math.floor(pts.length / 2)].lead_h;
     const maxPrecip = precips.length ? Math.max.apply(null, precips) : null;
     const avgCloud = clouds.length ? clouds.reduce((s, v) => s + v, 0) / clouds.length : null;
     const avgVibes = vibesArr.length ? Math.round(vibesArr.reduce((s, v) => s + v, 0) / vibesArr.length * 10) / 10 : null;
-    result.push({ day, hi_c, lo_c, precip_prob: maxPrecip, cloud_cover: avgCloud, vibes: avgVibes });
+    result.push({ day, hi_c, lo_c, avg_temp_c: avgTemp, avg_dewpoint_c: avgDew, rep_lead_h: repLeadH, precip_prob: maxPrecip, cloud_cover: avgCloud, vibes: avgVibes });
   }
   return result;
 }
@@ -196,7 +205,7 @@ function groupIntoDays(forecasts, startDate) {
 function skyEmoji(cloudFraction, hasLightning, precipMm) {
   if (hasLightning) return '⛈️';
   if (precipMm && precipMm > 0) return '🌧️';
-  if (cloudFraction === null || cloudFraction === undefined) return '🌡️';
+  if (cloudFraction === null || cloudFraction === undefined) return '⛅';
   if (cloudFraction <= 0.05) return '☀️';
   if (cloudFraction <= 0.25) return '🌤️';
   if (cloudFraction <= 0.5) return '⛅';
@@ -209,6 +218,36 @@ function randomBetween(a, b) { return a + Math.random() * (b - a); }
 function randomElement(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
 function randomStep(maxStep) { return (Math.random() * 2 - 1) * maxStep; }
+
+let _chaosPrecipTypes = null;
+function getChaosPrecipTypes() {
+  if (!_chaosPrecipTypes) _chaosPrecipTypes = LEADS.map(() => Math.random() < 0.5 ? 'rain' : 'snow');
+  return _chaosPrecipTypes;
+}
+
+let _vibesPrecipType = null;
+function getVibesPrecipType() {
+  if (_vibesPrecipType === null) _vibesPrecipType = Math.random() < 0.5 ? 'rain' : 'snow';
+  return _vibesPrecipType;
+}
+
+function precipTypeForMember(memberId, temp_c, lead_h) {
+  if (memberId === 11) return 'hail';
+  if (memberId === 8) return 'rain';
+  if (memberId === 12) return 'snow';
+  const leadIdx = LEADS.indexOf(lead_h);
+  if (memberId === 3) return getChaosPrecipTypes()[Math.max(leadIdx, 0)];
+  if (memberId === 4) return getVibesPrecipType();
+  if (memberId === 21) return 'mix';
+  return temp_c === null ? 'rain' : temp_c > 2 ? 'rain' : temp_c < -2 ? 'snow' : 'mix';
+}
+
+function precipLabel(type) {
+  if (type === 'hail') return 'chance of hail';
+  if (type === 'snow') return 'chance of snow';
+  if (type === 'mix') return 'chance of rain and snow';
+  return 'chance of rain';
+}
 
 function randomGaussian(mean, sd) {
   const u = 1 - Math.random();
@@ -244,6 +283,18 @@ function sanitize(f) {
   if (f.cloud_cover !== null) f.cloud_cover = clamp(f.cloud_cover, 0, 1);
   return f;
 }
+
+// Snap precip to weather-forecast-style round values with a bias toward 0.
+// Values below 0.18 are treated as no precipitation.
+const PRECIP_SNAPS = [0, 0.10, 0.20, 0.25, 0.30, 0.40, 0.50, 0.60, 0.70, 0.75, 0.80, 0.90, 1.0];
+function roundPrecip(p) {
+  if (p === null) return null;
+  if (p < 0.18) return 0;
+  return PRECIP_SNAPS.reduce((a, b) => Math.abs(b - p) < Math.abs(a - p) ? b : a);
+}
+
+// Members with fixed/intentional precip values that should not be quantized.
+const PRECIP_QUANTIZE_EXEMPT = new Set([20, 23]);
 
 function computeVibes(temp_c, dew_c, pressure_hpa, precip_prob, cloud_cover) {
   const tempScore = 1 - Math.min(Math.abs(temp_c - 21) / 20, 1);
@@ -495,10 +546,16 @@ async function buildForecastData(lat, lon, geocodedName) {
   }
 
   const { climo, extremes } = climoResult.value;
-  logStatus('climo', '✓ climatological data loaded', 'done');
+  const climoTempStr = isUS ? Math.round(toF(climo.temp_c)) + '°F' : Math.round(climo.temp_c) + '°C';
+  const climoPressStr = Math.round(climo.pressure_hpa) + ' hPa';
+  logStatus('climo', '✓ climo mean: ' + climoTempStr + ', ' + climoPressStr, 'done');
+  const extLoStr = isUS ? Math.round(toF(extremes.temp.min)) + '°F' : Math.round(extremes.temp.min) + '°C';
+  const extHiStr = isUS ? Math.round(toF(extremes.temp.max)) + '°F' : Math.round(extremes.temp.max) + '°C';
+  logStatus('extremes', '> checking seasonal extremes...', 'pending');
+  logStatus('extremes', '✓ seasonal range: ' + extLoStr + '–' + extHiStr, 'done');
 
   // nostalgia: random year 1940 to (current_year - 5)
-  logStatus('nostalgia', '> loading historical observation...', 'pending');
+  logStatus('nostalgia', '> consulting nostalgia archive...', 'pending');
   const nostalgiaYear = Math.floor(randomBetween(1940, now.getFullYear() - 4));
   let nostalgiaDay = now.getDate();
   // handle Feb 29 on non-leap year
@@ -517,7 +574,7 @@ async function buildForecastData(lat, lon, geocodedName) {
 
   const nostalgiaWeekday = DAY_NAMES[nostalgiaDate.getUTCDay()];
   const nostalgiaMonth = MONTH_NAMES[now.getMonth()];
-  logStatus('nostalgia', '✓ fetched conditions from ' + nostalgiaWeekday + ', ' + nostalgiaMonth + ' ' + nostalgiaYear, 'done');
+  logStatus('nostalgia', '✓ fetched conditions from a ' + nostalgiaWeekday + ' in ' + nostalgiaMonth + ' ' + nostalgiaYear, 'done');
 
   // crowd-sourced: random date in past year
   const crowdDaysAgo = Math.floor(randomBetween(30, 365));
@@ -555,28 +612,10 @@ async function buildForecastData(lat, lon, geocodedName) {
 // MEMBER COMPUTE FUNCTIONS
 // ============================================================
 
-function member1Drunkard(d) {
-  let t = d.current.temp_c ?? d.climo.temp_c;
-  let dew = d.current.dewpoint_c ?? d.climo.dewpoint_c;
-  let p = d.current.pressure_hpa ?? d.climo.pressure_hpa;
-  let precip = d.climo.precip_prob;
-  let cloud = d.current.cloud_cover ?? d.climo.cloud_cover;
-  return {
-    member_id: 1, name: 'drunkard',
-    tagline: 'Started somewhere reasonable and kept walking',
-    forecasts: LEADS.map(lead => {
-      t += randomStep(5); dew += randomStep(3); p += randomStep(3);
-      precip = clamp(precip + randomStep(0.2), 0, 1);
-      cloud = clamp(cloud + randomStep(0.2), 0, 1);
-      return makeForecast(lead, t, dew, p, precip, cloud);
-    }),
-  };
-}
-
 function member2BlindDrunkard(d) {
   return {
-    member_id: 2, name: 'blind-drunkard',
-    tagline: "No idea where it was, no idea where it's going",
+    member_id: 2, name: 'legally blind drunkard',
+    tagline: 'Legally blind. Legally drunk.',
     forecasts: LEADS.map(lead => makeForecast(
       lead,
       d.climo.temp_c + randomStep(5),
@@ -606,19 +645,46 @@ function member3Chaos(d) {
   };
 }
 
-function member4Vibes(d) {
-  const { extremes } = d;
+function member4Vibes(d, otherForecasts) {
+  const IDEAL = { temp: 22.2, dew: 12, pressure: 1015, precip: 0, cloud: 0.15 };
+  const ANTI_IDEAL = { temp: 35, dew: 28, pressure: 990, precip: 0.8, cloud: 0.9 };
+  function lerp(a, b, t) { return a + (b - a) * t; }
+
+  // compute mean vibes score per lead from other members
+  const meanVibesPerLead = LEADS.map((_, li) => {
+    const scores = otherForecasts
+      .map(mf => mf.forecasts[li] && mf.forecasts[li].vibes)
+      .filter(v => v !== null && v !== undefined && !isNaN(v));
+    return scores.length ? scores.reduce((s, v) => s + v, 0) / scores.length : 5;
+  });
+
+  const overallMean = meanVibesPerLead.reduce((s, v) => s + v, 0) / meanVibesPerLead.length;
+
   return {
     member_id: 4, name: 'vibes',
-    tagline: 'Consulted no data. Extremely confident.',
-    forecasts: LEADS.map(lead => makeForecast(
-      lead,
-      randomBetween(extremes.temp.min, extremes.temp.max),
-      randomBetween(extremes.dewpoint.min, extremes.dewpoint.max),
-      randomBetween(extremes.pressure.min, extremes.pressure.max),
-      Math.random(),
-      Math.random()
-    )),
+    tagline: 'The vibe is what it is.',
+    _meanVibes: overallMean,
+    forecasts: LEADS.map((lead, li) => {
+      const mv = meanVibesPerLead[li];
+      const alpha = (mv - 5) / 5; // -1 to +1
+      const target = alpha > 0 ? IDEAL : ANTI_IDEAL;
+      const t = alpha > 0
+        ? lerp(d.climo.temp_c, target.temp, alpha)
+        : lerp(d.climo.temp_c, target.temp, -alpha);
+      const dew = alpha > 0
+        ? lerp(d.climo.dewpoint_c, target.dew, alpha)
+        : lerp(d.climo.dewpoint_c, target.dew, -alpha);
+      const p = alpha > 0
+        ? lerp(d.climo.pressure_hpa, target.pressure, alpha)
+        : lerp(d.climo.pressure_hpa, target.pressure, -alpha);
+      const precip = alpha > 0
+        ? lerp(d.climo.precip_prob, target.precip, alpha)
+        : lerp(d.climo.precip_prob, target.precip, -alpha);
+      const cloud = alpha > 0
+        ? lerp(d.climo.cloud_cover, target.cloud, alpha)
+        : lerp(d.climo.cloud_cover, target.cloud, -alpha);
+      return makeForecast(lead, t, dew, p, clamp(precip, 0, 1), clamp(cloud, 0, 1));
+    }),
   };
 }
 
@@ -635,7 +701,7 @@ function member5Contrarian(d) {
       d.climo.dewpoint_c - (cdew - d.climo.dewpoint_c),
       d.climo.pressure_hpa - (cp - d.climo.pressure_hpa),
       clamp(d.climo.precip_prob + (d.climo.temp_c - ct) * 0.02, 0, 1),
-      clamp(d.climo.cloud_cover + (d.climo.temp_c - ct) * 0.02, 0, 1)
+      clamp(d.climo.cloud_cover + (d.climo.temp_c - ct) * 0.02 + randomStep(0.3), 0, 1)
     )),
   };
 }
@@ -688,7 +754,7 @@ function member8Weatherperson(d) {
     tagline: isAprilFools ? '100% chance of rain. April Fools. Or is it?' : "There's a 30% chance it's raining right now.",
     forecasts: LEADS.map(lead => makeForecast(
       lead, d.climo.temp_c, d.climo.dewpoint_c, d.climo.pressure_hpa,
-      isAprilFools ? 1.0 : 0.30, 0.45
+      isAprilFools ? 1.0 : 0.30, clamp(0.45 + randomStep(0.3), 0, 1)
     )),
   };
 }
@@ -738,28 +804,33 @@ function member11CG(d) {
     forecasts: LEADS.map(lead => makeForecast(
       lead, d.climo.temp_c, d.climo.dewpoint_c, d.climo.pressure_hpa,
       lightning ? 1.0 : d.climo.precip_prob,
-      d.climo.cloud_cover
+      lightning ? clamp(0.9 + randomStep(0.1), 0, 1) : clamp(d.climo.cloud_cover + randomStep(0.3), 0, 1)
     )),
   };
 }
 
-function member12ClimateAnxiety(d) {
+function member12ColdLikMN(d) {
+  let t = d.climo.temp_c;
   return {
-    member_id: 12, name: 'climate-anxiety',
-    tagline: 'The trend is clear. Has always been clear. Will only get clearer.',
-    forecasts: LEADS.map(lead => makeForecast(
-      lead,
-      d.climo.temp_c + 3,
-      d.climo.dewpoint_c + 3,
-      d.climo.pressure_hpa,
-      clamp(d.climo.precip_prob * 1.1, 0, 1),
-      d.climo.cloud_cover
-    )),
+    member_id: 12, name: 'cold-like-minnesota',
+    tagline: "Oh ya, bit nippy out. Nothin' we can't handle, don'tcha know.",
+    forecasts: LEADS.map(lead => {
+      t += randomStep(2);
+      return makeForecast(
+        lead,
+        -Math.abs(t),
+        Math.min(-Math.abs(t), d.climo.dewpoint_c),
+        d.climo.pressure_hpa,
+        d.climo.precip_prob,
+        d.climo.cloud_cover
+      );
+    }),
   };
 }
 
 function member13TooEarly(d) {
   const obs = d.obs_6h_ago;
+  const baseCloud = obs.cloud_cover ?? d.climo.cloud_cover;
   return {
     member_id: 13, name: 'too-early',
     tagline: 'Showed up six hours early and refuses to update',
@@ -769,7 +840,7 @@ function member13TooEarly(d) {
       obs.dewpoint_c ?? d.climo.dewpoint_c,
       obs.pressure_hpa ?? d.climo.pressure_hpa,
       d.climo.precip_prob,
-      obs.cloud_cover ?? d.climo.cloud_cover
+      clamp(baseCloud + randomStep(0.2), 0, 1)
     )),
   };
 }
@@ -786,65 +857,7 @@ function member14Monday(d) {
       d.climo.dewpoint_c,
       d.climo.pressure_hpa,
       clamp(d.climo.precip_prob + pb, 0, 1),
-      d.climo.cloud_cover
-    )),
-  };
-}
-
-function member15GrantFunded(d) {
-  const isTaxDay = d.date.getMonth() === 3 && d.date.getDate() === 15;
-  if (isTaxDay) {
-    return {
-      member_id: 15, name: 'grant-funded',
-      tagline: 'All funding redirected to the Treasury. No forecast available at this time.',
-      forecasts: LEADS.map(lead => ({
-        lead_h: lead, temp_c: null, dewpoint_c: null, pressure_hpa: null,
-        precip_prob: null, cloud_cover: null, vibes: null,
-      })),
-    };
-  }
-
-  let t = d.climo.temp_c;
-  let dew = d.climo.dewpoint_c;
-  let p = d.climo.pressure_hpa;
-  let precip = d.climo.precip_prob;
-  let cloud = d.climo.cloud_cover;
-
-  const forecasts = LEADS.map(lead => {
-    t += randomStep(2.5); dew += randomStep(1.5); p += randomStep(1.5);
-    precip = clamp(precip + randomStep(0.1), 0, 1);
-    cloud = clamp(cloud + randomStep(0.1), 0, 1);
-    const f = {
-      lead_h: lead,
-      temp_c: Math.random() < 0.2 ? null : t,
-      dewpoint_c: Math.random() < 0.2 ? null : dew,
-      pressure_hpa: Math.random() < 0.2 ? null : p,
-      precip_prob: Math.random() < 0.2 ? null : precip,
-      cloud_cover: Math.random() < 0.2 ? null : cloud,
-      vibes: null,
-    };
-    if (f.temp_c !== null && f.dewpoint_c !== null) f.dewpoint_c = Math.min(f.dewpoint_c, f.temp_c);
-    if (f.temp_c !== null && f.dewpoint_c !== null && f.pressure_hpa !== null && f.precip_prob !== null && f.cloud_cover !== null) {
-      f.vibes = computeVibes(f.temp_c, f.dewpoint_c, f.pressure_hpa, f.precip_prob, f.cloud_cover);
-    }
-    return f;
-  });
-
-  return { member_id: 15, name: 'grant-funded', tagline: 'Results pending peer review and continued funding', forecasts };
-}
-
-function member16TheAlgorithm(d) {
-  const dev = (d.current.temp_c ?? d.climo.temp_c) - d.climo.temp_c;
-  return {
-    member_id: 16, name: 'the-algorithm',
-    tagline: 'Engagement-optimized for maximum interaction',
-    forecasts: LEADS.map(lead => makeForecast(
-      lead,
-      d.climo.temp_c + dev * 2,
-      d.climo.dewpoint_c + dev * 1.5,
-      d.climo.pressure_hpa - dev * 3,
-      clamp(d.climo.precip_prob + (dev < 0 ? 0.3 : -0.3), 0, 1),
-      d.climo.cloud_cover
+      clamp(d.climo.cloud_cover + randomStep(0.3), 0, 1)
     )),
   };
 }
@@ -878,7 +891,7 @@ function member19BreakingNews(d) {
       isWarm ? ex.dewpoint.max : ex.dewpoint.min,
       isWarm ? ex.pressure.max : ex.pressure.min,
       isWarm ? 0 : 1,
-      isWarm ? 0 : 1
+      clamp((isWarm ? 0 : 1) + randomStep(0.15), 0, 1)
     )),
   };
 }
@@ -914,7 +927,7 @@ function member21BothSides(d) {
         useMax ? ex.dewpoint.max : ex.dewpoint.min,
         useMax ? ex.pressure.max : ex.pressure.min,
         useMax ? 0 : 1,
-        useMax ? 0 : 1
+        clamp((useMax ? 0.1 : 0.9) + randomStep(0.15), 0, 1)
       );
     }),
   };
@@ -942,7 +955,7 @@ function member23Influencer(d) {
       f.vibes = 10;
       return f;
     });
-    return { member_id: 23, name: 'influencer', tagline: 'Full moon. Maximum content opportunity.', forecasts };
+    return { member_id: 23, name: 'influencer', tagline: 'Full moon. Maximum reach.', forecasts };
   }
 
   const isGolden = Math.random() < 0.5;
@@ -955,7 +968,7 @@ function member23Influencer(d) {
   });
   return {
     member_id: 23, name: 'influencer',
-    tagline: isGolden ? 'Chasing the perfect forecast. Content incoming.' : 'Staying safe by documenting the catastrophe.',
+    tagline: isGolden ? 'Golden hour is eternal. The forecast is a filter.' : 'Rain. Drama. Content.',
     forecasts,
   };
 }
@@ -988,9 +1001,10 @@ function member24Panic(d) {
     tagline = 'No pressure trend detected. Suspicious.';
   }
 
+  const baseCloud = trend < -0.5 ? 0.9 : trend > 0.5 ? 0.1 : d.climo.cloud_cover;
   return {
     member_id: 24, name: 'panic', tagline,
-    forecasts: LEADS.map(lead => makeForecast(lead, t, dew, p, precip, d.climo.cloud_cover)),
+    forecasts: LEADS.map(lead => makeForecast(lead, t, dew, p, precip, clamp(baseCloud + randomStep(0.2), 0, 1))),
   };
 }
 
@@ -1013,48 +1027,69 @@ function member25Nostalgia(d) {
   };
 }
 
-function member26Astroturfed(d) {
+function member26DefinitelyNotSponsored(d) {
   const ref = new Date('2024-01-01');
   const months = (d.date.getFullYear() - ref.getFullYear()) * 12 + (d.date.getMonth() - ref.getMonth());
   const drift = months * 0.1;
 
   const isWinterSolstice = d.date.getMonth() === 11 && d.date.getDate() === 21;
   const isSummerSolstice = d.date.getMonth() === 5 && d.date.getDate() === 21;
-  let tagline = 'Very similar to climatology, for reasons we cannot disclose';
+  let tagline = 'Definitely not influenced by fossil fuel interests. Definitely.';
   if (isWinterSolstice) tagline = 'The drift has peaked. Allegedly.';
   if (isSummerSolstice) tagline = 'The drift continues its natural seasonal cycle. Trust the process.';
 
   return {
-    member_id: 26, name: 'astroturfed', tagline,
+    member_id: 26, name: 'definitely-not-sponsored', tagline,
     forecasts: LEADS.map(lead => makeForecast(
       lead,
       d.climo.temp_c + drift,
       d.climo.dewpoint_c + drift,
       d.climo.pressure_hpa,
       d.climo.precip_prob,
-      d.climo.cloud_cover
+      clamp(d.climo.cloud_cover + randomStep(0.3), 0, 1)
     )),
   };
 }
 
 function member27RecordBreaker(d) {
-  const RECORDS = { temp: { min: -89.2, max: 56.7 }, dewpoint: { min: -60, max: 35.5 }, pressure: { min: 870.0, max: 1083.8 } };
+  // slightly beyond actual world records to read as "headed past the record"
+  const RECORDS = { temp: { min: -95, max: 62 }, dewpoint: { min: -65, max: 38 }, pressure: { min: 860, max: 1090 } };
   const isWarm = (d.current.temp_c ?? d.climo.temp_c) > d.climo.temp_c;
   return {
     member_id: 27, name: 'record-breaker',
-    tagline: 'Current trajectory points directly at the world record',
+    tagline: 'Current trajectory points directly past the world record',
     forecasts: LEADS.map(lead => makeForecast(
       lead,
       isWarm ? RECORDS.temp.max : RECORDS.temp.min,
       isWarm ? RECORDS.dewpoint.max : RECORDS.dewpoint.min,
       isWarm ? RECORDS.pressure.max : RECORDS.pressure.min,
       isWarm ? 0 : 1,
-      isWarm ? 0 : 1
+      clamp((isWarm ? 0 : 1) + randomStep(0.1), 0, 1)
     )),
   };
 }
 
+function member28ButItsADryHeat(d) {
+  // Always predicts scorching heat: clamp to [85°F, 125°F] = [29.4°C, 51.7°C]
+  // RH never above 10%, achieved by pinning dewpoint to temp - large offset
+  const toF = c => c * 9 / 5 + 32;
+  const toC = f => (f - 32) * 5 / 9;
+  let tF = Math.max(85, Math.min(125, toF(d.climo.temp_c) + 60 + Math.random() * 20));
+  return {
+    member_id: 28, name: 'but-its-a-dry-heat',
+    tagline: "Sure it's hot. But it's a dry heat.",
+    forecasts: LEADS.map(lead => {
+      tF = clamp(tF + randomStep(3), 85, 125);
+      const t = toC(tF);
+      // Dewpoint low enough to keep RH under 10%: dew = t - 30 gives ~7% RH at these temps
+      const dew = t - 30;
+      return makeForecast(lead, t, dew, d.climo.pressure_hpa + 5, 0, 0);
+    }),
+  };
+}
+
 function member17PeerReview(memberForecasts) {
+  const isTaxDay = new Date().getMonth() === 3 && new Date().getDate() === 15;
   const forecasts = LEADS.map((lead, li) => {
     const vals = { temp_c: [], dewpoint_c: [], pressure_hpa: [], precip_prob: [], cloud_cover: [] };
     for (const mf of memberForecasts) {
@@ -1073,13 +1108,15 @@ function member17PeerReview(memberForecasts) {
     const precip = mean(vals.precip_prob);
     const cloud = mean(vals.cloud_cover);
 
+    // drop ~50% of (lead, variable) combinations — grant-funded behavior absorbed
+    const dropRate = isTaxDay ? 1.0 : 0.5;
     const f = {
       lead_h: lead,
-      temp_c: t !== null ? t + randomGaussian(0, 0.5) : null,
-      dewpoint_c: dew !== null ? dew + randomGaussian(0, 0.5) : null,
-      pressure_hpa: p !== null ? p + randomGaussian(0, 0.5) : null,
-      precip_prob: precip !== null ? clamp(precip + randomGaussian(0, 0.03), 0, 1) : null,
-      cloud_cover: cloud !== null ? clamp(cloud + randomGaussian(0, 0.02), 0, 1) : null,
+      temp_c: (t !== null && Math.random() > dropRate) ? t + randomGaussian(0, 0.5) : null,
+      dewpoint_c: (dew !== null && Math.random() > dropRate) ? dew + randomGaussian(0, 0.5) : null,
+      pressure_hpa: (p !== null && Math.random() > dropRate) ? p + randomGaussian(0, 0.5) : null,
+      precip_prob: (precip !== null && Math.random() > dropRate) ? clamp(precip + randomGaussian(0, 0.03), 0, 1) : null,
+      cloud_cover: (cloud !== null && Math.random() > dropRate) ? clamp(cloud + randomGaussian(0, 0.02), 0, 1) : null,
       vibes: null,
     };
     if (f.temp_c !== null && f.dewpoint_c !== null) f.dewpoint_c = Math.min(f.dewpoint_c, f.temp_c);
@@ -1088,7 +1125,10 @@ function member17PeerReview(memberForecasts) {
     }
     return f;
   });
-  return { member_id: 17, name: 'peer-review', tagline: 'A consensus of nonsense is still a consensus.', forecasts };
+  const tagline = isTaxDay
+    ? 'All funding redirected to the Treasury. No forecast available at this time.'
+    : 'Consensus of nonsense. Results pending peer review and continued funding.';
+  return { member_id: 17, name: 'peer-review', tagline, forecasts };
 }
 
 // ============================================================
@@ -1128,12 +1168,13 @@ function computeEnsemble(allForecasts, weights) {
     const precip = wmean(vars.precip_prob);
     const cloud = wmean(vars.cloud_cover);
 
+    const precipFinal = precip !== null ? (clamp(precip, 0, 1) < 0.25 ? 0 : clamp(precip, 0, 1)) : null;
     const ef = {
       lead_h: lead,
       temp_c: t,
       dewpoint_c: (dew !== null && t !== null) ? Math.min(dew, t) : dew,
       pressure_hpa: p,
-      precip_prob: precip !== null ? clamp(precip, 0, 1) : null,
+      precip_prob: precipFinal,
       cloud_cover: cloud !== null ? clamp(cloud, 0, 1) : null,
       temp_spread: wstd(vars.temp_c),
       vibes: null,
@@ -1195,7 +1236,7 @@ function showPageError(msg) {
   el('error-section').style.display = 'block';
 }
 
-function showCurrentConditions(current, locationLabel, isUS) {
+function showCurrentConditions(current, locationLabel, isUS, fd) {
   const locEl = el('current-location');
   if (locEl) locEl.textContent = locationLabel;
   el('ensemble-location').textContent = locationLabel;
@@ -1205,13 +1246,25 @@ function showCurrentConditions(current, locationLabel, isUS) {
   const emoji = skyEmoji(current.cloud_cover, current.has_lightning, current.precip_last_hour_mm);
   const tempVal = current.temp_c !== null ? fmtTemp(current.temp_c, isUS) : '—';
   const rh = dewToRH(current.temp_c, current.dewpoint_c);
+
+  let pressureTrendStr = null;
+  if (fd && current.pressure_hpa !== null && fd.obs_6h_ago && fd.obs_6h_ago.pressure_hpa !== null) {
+    const delta = current.pressure_hpa - fd.obs_6h_ago.pressure_hpa;
+    if (delta > 0.5) pressureTrendStr = '↑ +' + delta.toFixed(1) + ' hPa';
+    else if (delta < -0.5) pressureTrendStr = '↓ ' + delta.toFixed(1) + ' hPa';
+  }
+
+  const pressureStr = current.pressure_hpa !== null
+    ? Math.round(current.pressure_hpa) + ' hPa' + (pressureTrendStr ? ' ' + pressureTrendStr : '')
+    : null;
+
   const details = [
-    rh !== null ? rh + '% RH' : null,
-    current.pressure_hpa !== null ? Math.round(current.pressure_hpa) + ' hPa' : null,
+    rh !== null ? rh + '% humidity' : null,
+    pressureStr,
     current.wind_kph !== null ? fmtWind(current.wind_kph, isUS) : null,
     fmtPrecipAmt(current.precip_last_hour_mm, isUS) !== 'None'
       ? fmtPrecipAmt(current.precip_last_hour_mm, isUS) + ' precip'
-      : 'No precip',
+      : 'No precipitation',
     current.has_lightning ? '⚡ Lightning active' : null,
   ].filter(Boolean);
 
@@ -1236,31 +1289,24 @@ function computeNarrative(memberResult, isUS, fd) {
   const tHi = tmr && tmr.hi_c !== null ? fmtTemp(tmr.hi_c, isUS) : null;
   const tLo = tmr && tmr.lo_c !== null ? fmtTemp(tmr.lo_c, isUS) : null;
   const tPrecip = tmr && tmr.precip_prob !== null ? Math.round(tmr.precip_prob * 100) + '%' : null;
-  const curTmp = fd.current.temp_c !== null ? fmtTemp(fd.current.temp_c, isUS) : null;
   const hiLo = tHi && tLo ? tHi + '/' + tLo : (tHi || null);
 
   switch (memberResult.member_id) {
-    case 1: {
-      if (!tHi) return 'Started from current conditions and wandered off from there.';
-      const far = f168 && f168.temp_c !== null ? fmtTemp(f168.temp_c, isUS) : null;
-      return far
-        ? 'Started at ' + (curTmp || 'current') + ', drifted to ' + hiLo + ' tomorrow and ' + far + ' by day 7 - compound errors compounding.'
-        : 'Started at ' + (curTmp || 'current') + ' and walked to ' + hiLo + ' tomorrow with no plan.';
-    }
     case 2: {
-      if (!tHi) return 'Each lead drawn fresh from climo noise - no memory, no continuity, no problem.';
-      return hiLo + ' tomorrow - each step re-anchored independently to climatology with no memory of the last.';
+      if (!tHi) return 'Started in the dark and it only got darker from there.';
+      return hiLo + ' tomorrow. Each step re-anchored to climo with no memory of the last. No idea where it was.';
     }
     case 3: {
-      if (!tHi) return 'Three times normal step size, zero times the restraint.';
+      if (!tHi) return 'Confidence: maximum. Basis: optional.';
       const far = f168 && f168.temp_c !== null ? fmtTemp(f168.temp_c, isUS) : null;
       return far
-        ? hiLo + ' tomorrow, swinging out to ' + far + ' by day 7 - consequences of a 15-degree step size.'
-        : hiLo + ' tomorrow - three times normal step size, full send.';
+        ? hiLo + ' tomorrow, out to ' + far + ' by day 7. Consequences of a 15-degree step size.'
+        : hiLo + ' tomorrow. Three times normal step size. Full send.';
     }
     case 4: {
-      if (!tHi) return 'I picked these numbers from the floor. They feel right.';
-      return hiLo + ' tomorrow - drawn at random from seasonal extremes, no further justification provided.';
+      const mv = memberResult._meanVibes;
+      if (mv === undefined || mv === null) return 'The vibe is what it is.';
+      return 'Aggregate vibes score: ' + mv.toFixed(1) + '/10. ' + (mv >= 5 ? 'The vibes were immaculate.' : 'The vibes were off.');
     }
     case 5: {
       const anomSign = (fd.current.temp_c ?? fd.climo.temp_c) > fd.climo.temp_c ? 'warm' : 'cold';
@@ -1275,128 +1321,126 @@ function computeNarrative(memberResult, isUS, fd) {
     }
     case 7: {
       if (fd.is_retrograde) {
-        if (!tHi) return 'Mercury retrograde amplified everything - treat all values as entertainment.';
+        if (!tHi) return 'Mercury retrograde amplifying everything - treat all values as entertainment.';
         return 'Retrograde walk at 10x normal yields ' + hiLo + ' tomorrow - I cannot be held responsible for this.';
       }
       if (!tHi) return 'Outside retrograde window, forecast is subdued - for now.';
       return 'Outside retrograde, subdued walk - calling ' + hiLo + ' tomorrow, pending any planetary disruption.';
     }
     case 8: {
-      return 'Tomorrow near ' + (tHi || fmtTemp(fd.climo.temp_c + HALF_RANGE_C, isUS)) + ' with a ' + (tPrecip || '30%') + ' chance of precipitation - conditions typical for this time of year.';
+      return "There is a 30% chance it is raining right now. " + (tHi ? 'Tomorrow near ' + tHi + ' with a ' + (tPrecip || '30%') + ' chance of precipitation.' : '');
     }
     case 9: {
       const dayName = DAY_NAMES[fd.obs_random_past.weekday];
       const monthName = MONTH_NAMES[fd.obs_random_past.month];
-      if (!tHi) return 'A ' + dayName + ' in ' + monthName + ' looked like this - the wisdom of the crowd has spoken.';
-      return 'A ' + dayName + ' in ' + monthName + ' had ' + hiLo + ' and that is the forecast, end of discussion.';
+      return 'Sourced from a ' + dayName + ' in ' + monthName + '. That ' + dayName + ' was probably fine.';
     }
     case 10: {
-      const yt = fd.obs_24h_ago.temp_c !== null ? fmtTemp(fd.obs_24h_ago.temp_c, isUS) : 'yesterday\'s reading';
-      return 'Yesterday was ' + yt + ' and tomorrow will also be ' + yt + ' - this model sees no distinction between the two.';
+      return 'Nothing has changed. Nothing will change.';
     }
     case 11: {
-      if (fd.current.has_lightning) return 'CG on scope - 100% precip locked in for the full period, storm of the century confirmed.';
-      if (!tHi) return 'No CG detected, positioned for intercept, holding at climo.';
-      return 'No CG on scope - climo holds at ' + hiLo + ' tomorrow, intercept readiness maintained.';
+      if (fd.current.has_lightning) return 'CG!! CG!! CG!! Storm of the century confirmed. 100% precip locked in for the full period.';
+      return 'No lightning detected. Staying vigilant. Positioned for intercept.';
     }
     case 12: {
-      if (!tHi) return 'Running a consistent 3C above climatology - the trend is clear and it only gets clearer.';
-      return 'A persistent 3C above climatology yields ' + hiLo + ' tomorrow - the trend is self-evident.';
+      const tomorrowTmpC = tmr && tmr.avg_temp_c !== null ? tmr.avg_temp_c : null;
+      const shotsWeather = tomorrowTmpC !== null && tomorrowTmpC > -5 && tomorrowTmpC < 0;
+      const windNote = "It's the wind that'll get ya.";
+      if (!tHi) return 'Uff da. Real cold. ' + windNote;
+      if (shotsWeather) return hiLo + ' tomorrow. Shorts weather. ' + windNote;
+      const mnNarratives = [
+        'Oh ya, ' + hiLo + ' tomorrow. Bundle up, for Pete\'s sake. ' + windNote,
+        hiLo + ' tomorrow, you betcha. Good hotdish weather. ' + windNote,
+        'Yah sure, ' + hiLo + ' tomorrow. We\'ve seen worse, oh for sure. ' + windNote,
+        'Oh, ' + hiLo + ' tomorrow. Don\'t worry, it warms up in July. ' + windNote,
+      ];
+      return mnNarratives[Math.floor(fd.date.getDate() % mnNarratives.length)];
     }
     case 13: {
-      const obs6t = fd.obs_6h_ago.temp_c !== null ? fmtTemp(fd.obs_6h_ago.temp_c, isUS) : 'the earlier reading';
-      return 'Arrived when it was ' + obs6t + ' and locked in that value for every lead - updates are not planned.';
+      return 'Arrived six hours early. Updates are for quitters.';
     }
     case 14: {
       const dow = fd.day_of_week;
-      if (!tHi) return 'Day-of-week bias applied - still mostly mad about Mondays.';
-      if (dow === 1) return 'It\'s Monday so bias applied: ' + hiLo + ' tomorrow, heavier clouds, higher precip, obviously.';
-      if (dow === 5) return 'Friday energy channeled: ' + hiLo + ' tomorrow, boosted by the collective relief of the approaching weekend.';
-      return DAY_NAMES[dow] + ' bias applied: ' + hiLo + ' tomorrow - still mostly mad about Mondays though.';
-    }
-    case 15: {
-      const nullCount = fc.reduce((n, f) => n + [f.temp_c, f.dewpoint_c, f.pressure_hpa, f.precip_prob, f.cloud_cover].filter(v => v === null).length, 0);
-      if (nullCount > 20) return 'Significant data withheld pending peer review and continued funding - results inconclusive.';
-      if (!tHi) return 'Preliminary results pending review - ' + nullCount + ' variables abstained from comment.';
-      return 'Preliminary results suggest ' + hiLo + ' tomorrow - ' + nullCount + ' variables require further study before commitment.';
-    }
-    case 16: {
-      const dev = (fd.current.temp_c ?? fd.climo.temp_c) - fd.climo.temp_c;
-      const devF = isUS ? Math.round(Math.abs(dev) * 9 / 5) : Math.round(Math.abs(dev));
-      const dir = dev > 0 ? 'above' : 'below';
-      if (!tHi) return 'Anomaly amplified for maximum engagement - results may vary.';
-      return 'Currently ' + devF + (isUS ? 'F' : 'C') + ' ' + dir + ' climo, amplified to ' + (tHi || 'peak engagement') + ' tomorrow.';
+      if (dow === 5) return 'TGIF.';
+      if (dow === 1) return "Mondays, am I right?";
+      return "Day-of-week bias applied. Mondays still hurt the most.";
     }
     case 17: {
-      if (!tHi) return 'Mean of 26 prior members with noise - a consensus of nonsense is still a consensus.';
-      return hiLo + ' tomorrow - arithmetic mean of 26 nonsense forecasts plus noise, which is still a consensus.';
+      return 'Arithmetic mean of 25 nonsense forecasts. Half the results are pending further funding.';
     }
     case 18: {
-      if (!tHi) return 'Dew point set to temperature at all leads - humidity is just air that cares.';
-      return hiLo + ' tomorrow at 100% relative humidity - dew point equals temperature, which this model considers normal.';
+      return "Dew point equals temperature. That's just how air works.";
     }
     case 19: {
       const isWarm = (fd.current.temp_c ?? fd.climo.temp_c) > fd.climo.temp_c;
-      if (!tHi) return 'DEVELOPING: unprecedented conditions inbound - stay with us for updates.';
-      return 'DEVELOPING: ' + (isWarm ? 'historic heat' : 'record cold') + ' targets the region - ' + hiLo + ' tomorrow, representing the seasonal extreme.';
+      return isWarm
+        ? 'DEVELOPING: Unprecedented warmth forecast. Stay tuned.'
+        : 'DEVELOPING: Historic cold threatens region. Details at 11.';
     }
     case 20: {
-      if (!tHi) return '52% chance of engagement - like and subscribe to unlock the forecast.';
-      return hiLo + ' tomorrow with 52% precip - like and subscribe to find out if it actually rains.';
+      const pct = tPrecip || '52%';
+      return pct + ' engagement probability. Share to confirm.';
     }
     case 21: {
-      const exHi = fmtTemp(fd.extremes.temp.max, isUS);
-      const exLo = fmtTemp(fd.extremes.temp.min, isUS);
-      return 'Alternating between ' + exHi + ' and ' + exLo + ' - both outcomes are valid and deserve equal coverage.';
+      return 'Some models warm. Some models cool. Both are correct.';
     }
     case 22: {
       const vpn = memberResult.tagline.includes('Brought to you by ')
         ? memberResult.tagline.split('Brought to you by ')[1].replace('.', '')
         : 'our sponsor';
-      return '72F and sunny for all forecast leads - ideal conditions, brought to you by ' + vpn + '.';
+      return 'Perfect conditions for outdoor advertising. Brought to you by ' + vpn + '.';
     }
     case 23: {
       const tl = memberResult.tagline;
-      if (tl.includes('Full moon')) return (tHi ? tHi + ' tomorrow with clear skies - ' : '') + 'full moon energy detected, maximum content opportunity.';
-      if (tl.includes('catastrophe') || tl.includes('Staying safe')) return (hiLo ? hiLo + ' tomorrow with ' + (tPrecip || '85%') + ' precip - ' : '') + 'storm mode engaged, documenting everything.';
-      return (tHi ? tHi + ' tomorrow, zero clouds, zero precip - ' : '') + 'golden hour forecast locked in, content secured.';
+      if (tl.includes('Full moon')) return 'Full moon energy detected. Maximum reach.';
+      if (tl.includes('Rain')) return 'This is content.';
+      return 'Lighting looks incredible right now.';
     }
     case 24: {
       const tl = memberResult.tagline;
-      if (tl.includes('FALLING')) return 'Pressure dropping - bracing for ' + (hiLo || 'severe conditions') + ' tomorrow, 100% precip, emergency protocol initiated.';
-      if (tl.includes('RISING')) return 'Pressure rising - ' + (hiLo || 'warming') + ' tomorrow, unknown if good or bad, panicking regardless.';
-      if (tl.includes('ALL IS DARK')) return 'New moon detected - no light, no readings, no confidence - holding at ' + (tHi || fmtTemp(fd.climo.temp_c, isUS)) + ' until the darkness lifts.';
-      return 'No significant pressure trend - suspicious - calling ' + (hiLo || 'climo') + ' tomorrow, monitoring for evidence.';
+      if (tl.includes('FALLING')) return 'IT IS FALLING. EVERYTHING IS FALLING.';
+      if (tl.includes('RISING')) return 'PRESSURE RISING. UNKNOWN IF GOOD.';
+      if (tl.includes('ALL IS DARK')) return 'ALL IS DARK. NO READINGS. NO HOPE.';
+      return 'Suspicious stillness.';
     }
     case 25: {
       const obs = fd.obs_nostalgia;
       const wday = DAY_NAMES[obs.weekday];
       const mon = MONTH_NAMES[obs.month];
-      if (!tHi) return 'Consulting a ' + wday + ' in ' + mon + ' ' + obs.year + ' - the past is always relevant.';
-      return 'A ' + wday + ' in ' + mon + ' ' + obs.year + ' had ' + hiLo + ' - not much has changed since then, apparently.';
+      return 'Consulting a ' + wday + ' in ' + mon + ' ' + obs.year + '. History is a guide.';
     }
     case 26: {
-      const refDate = new Date('2024-01-01');
-      const months = (fd.date.getFullYear() - refDate.getFullYear()) * 12 + (fd.date.getMonth() - refDate.getMonth());
-      const drift = (months * 0.1).toFixed(1);
-      if (!tHi) return 'Climatology plus ' + drift + ' degrees of gradual drift - nothing to see here.';
-      return 'Climatology plus ' + drift + ' of imperceptible drift yields ' + hiLo + ' tomorrow - indistinguishable from normal, which is the point.';
+      return 'Our projections align closely with climatology. No further comment.';
     }
     case 27: {
-      const isWarm = (fd.current.temp_c ?? fd.climo.temp_c) > fd.climo.temp_c;
-      if (!tHi) return 'Current trajectory points directly at the world record - direction TBD.';
-      return 'On current trajectory, ' + (tHi || 'tomorrow') + ' is the leading edge of a move toward the world-record ' + (isWarm ? 'high' : 'low') + '.';
+      return 'The current trajectory points directly past the world record.';
+    }
+    case 28: {
+      const climoTF = toF(fd.climo.temp_c);
+      const fcTF = tmr && tmr.hi_c !== null ? toF(tmr.hi_c) : null;
+      const dryCoolFront = fcTF !== null && fcTF > climoTF + 20;
+      return 'It is hot. But it is a dry heat. You are fine. ' +
+        (dryCoolFront ? 'Practically a cool front by local standards.' : 'Air conditioning is a crutch.');
     }
     default:
       return '';
   }
 }
 
+function weightStyle(w) {
+  if (w >= 1.8) return 'opacity:0.8;color:var(--mint);';
+  if (w >= 1.3) return 'opacity:0.65;';
+  if (w <= 0.7) return 'opacity:0.25;';
+  return 'opacity:0.45;';
+}
+
 function createMemberCards(weights) {
   const grid = el('members-grid');
   grid.innerHTML = '';
   for (const m of MEMBER_DEFS) {
-    const w = weights[m.id] ? weights[m.id].toFixed(2) + '×' : '—';
+    const wVal = weights[m.id];
+    const wStr = wVal ? wVal.toFixed(2) + '×' : '—';
+    const wStyle = wVal ? weightStyle(wVal) : 'opacity:0.45;';
     const card = document.createElement('div');
     card.className = 'member-card';
     card.id = 'card-' + m.id;
@@ -1406,7 +1450,7 @@ function createMemberCards(weights) {
           '<span class="member-name">' + escapeHtml(m.name) + '</span>' +
           '<span class="member-tagline-inline" id="tl-' + m.id + '"></span>' +
         '</span>' +
-        '<span class="member-weight" id="wt-' + m.id + '">' + w + '</span>' +
+        '<span class="member-weight" id="wt-' + m.id + '" style="' + wStyle + '">' + wStr + '</span>' +
       '</div>' +
       '<div class="member-loading-state" id="ml-' + m.id + '">' +
         '<span class="spinner spinner-sm"></span>' +
@@ -1445,16 +1489,20 @@ function resolveMemberCard(memberId, forecast, isUS, startDate, fd) {
 
     let html = '';
     for (const f of ncForecasts) {
-      const timeStr = fmtLeadTime(f.lead_h, startDate);
+      const timeStr = fmtLeadTimeShort(f.lead_h, startDate);
       const emoji = skyEmoji(f.cloud_cover, false, null);
       const temp = f.temp_c !== null ? fmtTempHtml(f.temp_c, isUS) : '—';
-      const precip = f.precip_prob !== null ? fmtPrecipHtml(f.precip_prob) : '—';
+      const rh = f.temp_c !== null && f.dewpoint_c !== null ? dewToRH(f.temp_c, f.dewpoint_c) : null;
+      const pType = precipTypeForMember(memberId, f.temp_c, f.lead_h);
+      const parts = [];
+      if (rh !== null) parts.push(rh + '% humidity');
+      if (f.precip_prob !== null) parts.push(fmtPrecipHtml(f.precip_prob) + ' ' + escapeHtml(precipLabel(pType)));
       html +=
         '<div class="member-fc-line">' +
           '<span class="mfc-time">' + escapeHtml(timeStr) + '</span>' +
           '<span class="mfc-emoji">' + emoji + '</span>' +
           '<span class="mfc-temp">' + temp + '</span>' +
-          '<span class="mfc-detail">' + precip + ' precip</span>' +
+          '<span class="mfc-detail">' + (parts.join('  ·  ') || '—') + '</span>' +
         '</div>';
     }
 
@@ -1462,13 +1510,17 @@ function resolveMemberCard(memberId, forecast, isUS, startDate, fd) {
       const emoji = skyEmoji(tmr.cloud_cover, false, tmr.precip_prob > 0.5 ? 1 : 0);
       const hiStr = tmr.hi_c !== null ? fmtTempHtml(tmr.hi_c, isUS) : '—';
       const loStr = tmr.lo_c !== null ? fmtTempHtml(tmr.lo_c, isUS) : '—';
-      const precipStr = tmr.precip_prob !== null ? fmtPrecipHtml(tmr.precip_prob) : '—';
+      const tmrRh = tmr.avg_temp_c !== null && tmr.avg_dewpoint_c !== null ? dewToRH(tmr.avg_temp_c, tmr.avg_dewpoint_c) : null;
+      const tmrPType = precipTypeForMember(memberId, tmr.avg_temp_c, tmr.rep_lead_h);
+      const tmrParts = [loStr + ' lo'];
+      if (tmrRh !== null) tmrParts.push(tmrRh + '% humidity');
+      if (tmr.precip_prob !== null) tmrParts.push(fmtPrecipHtml(tmr.precip_prob) + ' ' + escapeHtml(precipLabel(tmrPType)));
       html +=
         '<div class="member-fc-line member-fc-tomorrow">' +
           '<span class="mfc-time">Tomorrow</span>' +
           '<span class="mfc-emoji">' + emoji + '</span>' +
           '<span class="mfc-temp">' + hiStr + '</span>' +
-          '<span class="mfc-detail">' + loStr + ' lo  ·  ' + precipStr + '</span>' +
+          '<span class="mfc-detail">' + tmrParts.join('  ·  ') + '</span>' +
         '</div>';
     }
 
@@ -1476,7 +1528,7 @@ function resolveMemberCard(memberId, forecast, isUS, startDate, fd) {
   }
 
   const detailsEl = el('md-' + memberId);
-  if (detailsEl) detailsEl.appendChild(buildForecastTable(forecast.forecasts, isUS, startDate));
+  if (detailsEl) detailsEl.appendChild(buildForecastTable(forecast.forecasts, isUS, startDate, memberId));
 
   membersDone++;
   const countEl = el('members-done-count');
@@ -1487,7 +1539,7 @@ function nullCell(v, fmt) {
   return v !== null && v !== undefined && !isNaN(v) ? escapeHtml(fmt(v)) : '<span class="null-cell">—</span>';
 }
 
-function buildForecastTable(forecasts, isUS, startDate) {
+function buildForecastTable(forecasts, isUS, startDate, memberId) {
   const wrap = document.createElement('div');
 
   const nowcasts = startDate ? forecasts.filter(f => NOWCAST_LEADS.includes(f.lead_h)) : [];
@@ -1501,14 +1553,17 @@ function buildForecastTable(forecasts, isUS, startDate) {
 
     const tbl = document.createElement('table');
     tbl.className = 'forecast-table';
-    tbl.innerHTML = '<tr><th>Time</th><th></th><th>Temp</th><th>Precip</th><th>Vibes</th></tr>';
+    tbl.innerHTML = '<tr><th>Time</th><th></th><th>Temp</th><th>Humidity</th><th>Precip</th><th>Vibes</th></tr>';
     for (const f of nowcasts) {
+      const rh = f.temp_c !== null && f.dewpoint_c !== null ? dewToRH(f.temp_c, f.dewpoint_c) : null;
+      const pType = precipTypeForMember(memberId, f.temp_c, f.lead_h);
       const tr = document.createElement('tr');
       tr.innerHTML =
         '<td>' + escapeHtml(fmtLeadTime(f.lead_h, startDate)) + '</td>' +
         '<td>' + skyEmoji(f.cloud_cover, false, null) + '</td>' +
         '<td>' + nullCell(f.temp_c, v => fmtTemp(v, isUS)) + '</td>' +
-        '<td>' + nullCell(f.precip_prob, fmtPrecip) + '</td>' +
+        '<td>' + (rh !== null ? rh + '%' : '<span class="null-cell">—</span>') + '</td>' +
+        '<td>' + (f.precip_prob !== null ? nullCell(f.precip_prob, fmtPrecip) + ' ' + escapeHtml(precipLabel(pType)) : '<span class="null-cell">—</span>') + '</td>' +
         '<td>' + nullCell(f.vibes, v => v.toFixed(1)) + '</td>';
       tbl.appendChild(tr);
     }
@@ -1542,7 +1597,7 @@ function buildForecastTable(forecasts, isUS, startDate) {
         '<td>' + emoji + '</td>' +
         '<td>' + nullCell(d.lo_c, v => fmtTemp(v, isUS)) + '</td>' +
         '<td>' + nullCell(d.hi_c, v => fmtTemp(v, isUS)) + '</td>' +
-        '<td>' + nullCell(d.precip_prob, fmtPrecip) + '</td>' +
+        '<td>' + (d.precip_prob !== null ? nullCell(d.precip_prob, fmtPrecip) + ' ' + escapeHtml(precipLabel(precipTypeForMember(memberId, d.avg_temp_c, d.rep_lead_h))) : '<span class="null-cell">—</span>') + '</td>' +
         '<td>' + nullCell(d.vibes, v => v.toFixed(1)) + '</td>';
       tbl.appendChild(tr);
     }
@@ -1553,27 +1608,8 @@ function buildForecastTable(forecasts, isUS, startDate) {
 }
 
 function showEnsembleResults(ensemble, isUS, startDate) {
-  const f24 = ensemble.find(f => f.lead_h === 24);
-  if (!f24 || f24.temp_c === null) return;
-
-  const spreadVal = f24.temp_spread ? (isUS ? Math.round(f24.temp_spread * 9 / 5) : Math.round(f24.temp_spread)) : null;
-  const spreadStr = spreadVal !== null ? ' ± ' + spreadVal + '°' + (isUS ? 'F' : 'C') : '';
-  const tomorrowHi_c = f24.temp_c + HALF_RANGE_C;
-  const tomorrowLo_c = f24.temp_c - HALF_RANGE_C;
-  const tomorrowLabel = startDate ? fmtDay(24, startDate) : 'Tomorrow';
-
   const bodyEl = el('ensemble-body');
-  bodyEl.innerHTML =
-    '<p class="ensemble-time-label">27-member weighted ensemble mean</p>' +
-    '<div class="ensemble-headline-row">' +
-      '<span class="ensemble-headline">' + fmtTemp(tomorrowHi_c, isUS) + '</span>' +
-      '<span class="ensemble-hi-lo-label">' + escapeHtml(tomorrowLabel) + ' high</span>' +
-    '</div>' +
-    '<div class="ensemble-subline">' +
-      'Low ' + fmtTemp(tomorrowLo_c, isUS) +
-      (spreadStr ? '  ·  model spread ' + spreadStr : '') +
-    '</div>' +
-    '<p class="ensemble-disclaimer">*models do not actually agree on anything</p>';
+  bodyEl.innerHTML = '';
 
   // nowcast cards (leads 6, 12)
   const nowcasts = ensemble.filter(f => NOWCAST_LEADS.includes(f.lead_h));
@@ -1590,11 +1626,13 @@ function showEnsembleResults(ensemble, isUS, startDate) {
       const card = document.createElement('div');
       card.className = 'nowcast-card';
       const emoji = skyEmoji(f.cloud_cover, false, null);
+      const ncRh = f.temp_c !== null && f.dewpoint_c !== null ? dewToRH(f.temp_c, f.dewpoint_c) : null;
+      const ncPType = precipTypeForMember(null, f.temp_c, f.lead_h);
       card.innerHTML =
-        '<p class="nc-time">' + escapeHtml(fmtLeadTime(f.lead_h, startDate)) + '</p>' +
+        '<p class="nc-time">' + escapeHtml(fmtLeadTimeShort(f.lead_h, startDate)) + '</p>' +
         '<p class="nc-emoji">' + emoji + '</p>' +
         '<p class="nc-temp">' + (f.temp_c !== null ? fmtTempHtml(f.temp_c, isUS) : '—') + '</p>' +
-        '<p class="nc-precip">' + (f.precip_prob !== null ? fmtPrecipHtml(f.precip_prob) : '—') + ' precip</p>';
+        '<p class="nc-precip">' + (ncRh !== null ? ncRh + '% humidity' : '') + (ncRh !== null && f.precip_prob !== null ? '  ·  ' : '') + (f.precip_prob !== null ? fmtPrecipHtml(f.precip_prob) + ' ' + escapeHtml(precipLabel(ncPType)) : '') + '</p>';
       cardsRow.appendChild(card);
     }
     ncSection.appendChild(cardsRow);
@@ -1611,10 +1649,15 @@ function showEnsembleResults(ensemble, isUS, startDate) {
     dayLabel.className = 'forecast-section-label';
     dayLabel.textContent = '7-Day Forecast';
     daySection.appendChild(dayLabel);
+    const disclaimer = document.createElement('p');
+    disclaimer.className = 'ensemble-disclaimer';
+    disclaimer.textContent = '*models do not actually agree on anything';
+    daySection.appendChild(disclaimer);
     const dailyEl = document.createElement('div');
     dailyEl.className = 'daily-forecast';
     for (const d of days) {
       const emoji = skyEmoji(d.cloud_cover, false, d.precip_prob > 0.5 ? 1 : 0);
+      const rh = d.avg_temp_c !== null && d.avg_dewpoint_c !== null ? dewToRH(d.avg_temp_c, d.avg_dewpoint_c) : null;
       const row = document.createElement('div');
       row.className = 'daily-row';
       row.innerHTML =
@@ -1625,7 +1668,8 @@ function showEnsembleResults(ensemble, isUS, startDate) {
           ' / ' +
           (d.hi_c !== null ? fmtTempHtml(d.hi_c, isUS) : '—') +
         '</span>' +
-        '<span class="dr-precip">' + (d.precip_prob !== null ? fmtPrecipHtml(d.precip_prob) : '—') + '</span>';
+        (rh !== null ? '<span class="dr-humidity">' + rh + '% humidity</span>' : '') +
+        '<span class="dr-precip">' + (d.precip_prob !== null ? fmtPrecipHtml(d.precip_prob) + ' ' + escapeHtml(precipLabel(precipTypeForMember(null, d.avg_temp_c, d.rep_lead_h))) : '—') + '</span>';
       dailyEl.appendChild(row);
     }
     daySection.appendChild(dailyEl);
@@ -1671,12 +1715,10 @@ async function runForecast(lat, lon, geocodedName) {
 
   logStatus('weights', '> generating ensemble weights...', 'pending');
 
-  // compute all members except peer-review
+  // compute all members except vibes (4) and peer-review (17)
   const computeFns = {
-    1: () => member1Drunkard(fd),
     2: () => member2BlindDrunkard(fd),
     3: () => member3Chaos(fd),
-    4: () => member4Vibes(fd),
     5: () => member5Contrarian(fd),
     6: () => member6HypeTrain(fd),
     7: () => member7MercuryRetrograde(fd),
@@ -1684,11 +1726,9 @@ async function runForecast(lat, lon, geocodedName) {
     9: () => member9CrowdSourced(fd),
     10: () => member10GroundhogDay(fd),
     11: () => member11CG(fd),
-    12: () => member12ClimateAnxiety(fd),
+    12: () => member12ColdLikMN(fd),
     13: () => member13TooEarly(fd),
     14: () => member14Monday(fd),
-    15: () => member15GrantFunded(fd),
-    16: () => member16TheAlgorithm(fd),
     18: () => member18DewDenier(fd),
     19: () => member19BreakingNews(fd),
     20: () => member20EngagementBait(fd),
@@ -1697,12 +1737,31 @@ async function runForecast(lat, lon, geocodedName) {
     23: () => member23Influencer(fd),
     24: () => member24Panic(fd),
     25: () => member25Nostalgia(fd),
-    26: () => member26Astroturfed(fd),
+    26: () => member26DefinitelyNotSponsored(fd),
     27: () => member27RecordBreaker(fd),
+    28: () => member28ButItsADryHeat(fd),
   };
 
-  const nonPR = {};
-  for (const [id, fn] of Object.entries(computeFns)) nonPR[parseInt(id)] = fn();
+  const baseMembers = {};
+  for (const [id, fn] of Object.entries(computeFns)) {
+    const mid = parseInt(id);
+    const result = fn();
+    if (!PRECIP_QUANTIZE_EXEMPT.has(mid)) {
+      for (const f of result.forecasts) {
+        if (f.precip_prob !== null) f.precip_prob = roundPrecip(f.precip_prob);
+      }
+    }
+    baseMembers[mid] = result;
+  }
+
+  // vibes computed after others (uses their vibes scores)
+  const vibes = member4Vibes(fd, Object.values(baseMembers));
+  if (!PRECIP_QUANTIZE_EXEMPT.has(4)) {
+    for (const f of vibes.forecasts) {
+      if (f.precip_prob !== null) f.precip_prob = roundPrecip(f.precip_prob);
+    }
+  }
+  const nonPR = Object.assign({}, baseMembers, { 4: vibes });
 
   const pr = member17PeerReview(Object.values(nonPR));
   const all = Object.assign({}, nonPR, { 17: pr });
@@ -1714,7 +1773,7 @@ async function runForecast(lat, lon, geocodedName) {
 
   logStatus('weights', '✓ weights assigned (sponsored-content: ' + weights[22].toFixed(2) + '×, peer-review: ' + weights[17].toFixed(2) + '×)', 'done');
 
-  // async-flavored status logs for self-aware lines
+  // self-aware log entries
   setTimeout(() => {
     logStatus('retrograde', '> consulting Mercury\'s orbital position...', 'pending');
     setTimeout(() => {
@@ -1733,50 +1792,43 @@ async function runForecast(lat, lon, geocodedName) {
     }, 700);
   }
 
-  // show results container
-  el('results-section').style.display = 'block';
-  showCurrentConditions(fd.current, fd.locationLabel, fd.isUS);
-
-  if (fd.is_retrograde) el('retrograde-badge').style.display = 'inline-block';
-
-  // build member cards
-  createMemberCards(weights);
-
-  // assign staggered fake delays
-  const delays = {};
-  let maxDelay = 0;
-  for (const m of MEMBER_DEFS) {
-    if (m.id === 17) continue;
-    const d = Math.round(randomBetween(300, 3800));
-    delays[m.id] = d;
-    if (d > maxDelay) maxDelay = d;
-  }
-  delays[17] = maxDelay + 500;
+  const afterVpn = vpnLine ? 1100 : 650;
 
   setTimeout(() => {
-    logStatus('delays', '> randomizing delay times...', 'pending');
+    logStatus('members', '> running 25-member ensemble...', 'pending');
     setTimeout(() => {
-      logStatus('delays', '✓ delays randomized (peer-review assigned last slot)', 'done');
-    }, 250);
-  }, 500);
+      logStatus('members', '✓ all 25 members computed (vibes and peer-review assigned last)', 'done');
+    }, 320);
+  }, afterVpn);
 
-  // schedule card reveals
-  const revealPromises = MEMBER_DEFS.map(m => new Promise(resolve => {
+  setTimeout(() => {
+    logStatus('ensemble', '> computing ensemble mean and spread...', 'pending');
     setTimeout(() => {
-      resolveMemberCard(m.id, all[m.id], fd.isUS, fd.date, fd);
-      resolve();
-    }, delays[m.id]);
-  }));
+      logStatus('ensemble', '✓ ensemble ready — uncertainty quantified', 'done');
+    }, 280);
+  }, afterVpn + 450);
 
-  Promise.all(revealPromises).then(() => {
-    const ensemble = computeEnsemble(Object.values(all), weights);
-    showEnsembleResults(ensemble, fd.isUS, fd.date);
-    stopLoadingAnimation();
-    el('loading-section').style.display = 'none';
+  // reveal everything after all log entries finish
+  setTimeout(() => {
     const logArchive = el('log-archive');
     const logSrc = el('status-log');
     if (logArchive && logSrc) logArchive.innerHTML = logSrc.innerHTML;
-  });
+
+    el('results-section').style.display = 'block';
+    showCurrentConditions(fd.current, fd.locationLabel, fd.isUS, fd);
+    if (fd.is_retrograde) el('retrograde-badge').style.display = 'inline-block';
+
+    createMemberCards(weights);
+    for (const m of MEMBER_DEFS) {
+      resolveMemberCard(m.id, all[m.id], fd.isUS, fd.date, fd);
+    }
+
+    const ensemble = computeEnsemble(Object.values(all), weights);
+    showEnsembleResults(ensemble, fd.isUS, fd.date);
+
+    stopLoadingAnimation();
+    el('loading-section').style.display = 'none';
+  }, afterVpn + 900);
 }
 
 // ============================================================
