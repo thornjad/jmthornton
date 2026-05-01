@@ -4,7 +4,7 @@ import Base from '../../layouts/Base.astro';
 
 <Base
   title="Stochastic Forecast | Jade Michael Thornton"
-  description="27-member ensemble forecast with state-of-the-art uncertainty quantification"
+  description="25-member ensemble forecast with state-of-the-art uncertainty quantification"
   fontStrategy="prefetch"
 >
   <Fragment slot="head">
@@ -15,6 +15,13 @@ import Base from '../../layouts/Base.astro';
         margin-top: -0.5em;
         opacity: 0.7;
         font-style: italic;
+      }
+
+      .forecast-disclaimer {
+        margin-top: 0.2em;
+        opacity: 0.55;
+        font-style: italic;
+        font-size: 0.85em;
       }
 
       #location-section {
@@ -78,15 +85,28 @@ import Base from '../../layouts/Base.astro';
         display: block;
       }
 
+      .ensemble-heading-row {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.6em;
+        margin-bottom: 0.5em;
+      }
+
+      .ensemble-heading-row h2 {
+        margin: 0;
+      }
+
       .retrograde-badge {
         background: var(--gold);
         color: #1a1a1a;
-        padding: 0.4em 0.9em;
+        padding: 0.2em 0.7em;
         border-radius: var(--border-radius);
-        font-size: 0.9em;
-        margin-bottom: 0.75em;
-        display: inline-block;
+        font-size: 0.78em;
         font-weight: bold;
+        white-space: nowrap;
+        align-self: center;
       }
 
       #current-section {
@@ -143,7 +163,7 @@ import Base from '../../layouts/Base.astro';
 
       .log-disclosure {
         margin-top: 2em;
-        font-size: 0.8em;
+        font-size: 0.85em;
       }
 
       .log-disclosure summary {
@@ -159,8 +179,26 @@ import Base from '../../layouts/Base.astro';
         opacity: 0.65;
       }
 
+      #status-log,
+      .log-disclosure .status-log {
+        background: var(--bg-alt);
+        color: var(--fg);
+        opacity: 1;
+        font-size: 0.85em;
+      }
+
       .log-disclosure .status-log {
         margin-top: 0.5em;
+      }
+
+      #status-log .log-done,
+      .log-disclosure .log-done {
+        color: var(--fg);
+      }
+
+      #status-log .log-pending,
+      .log-disclosure .log-pending {
+        opacity: 0.65;
       }
 
       #error-section {
@@ -228,32 +266,50 @@ import Base from '../../layouts/Base.astro';
       }
 
       .ensemble-time-label {
-        font-size: 0.72em;
-        opacity: 0.5;
-        margin: 0 0 0.4em;
-        font-family: var(--font-mono);
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
+        font-size: 1.1em;
+        opacity: 0.75;
+        margin: 0 0 0.3em;
+        font-weight: bold;
       }
 
       .ensemble-headline-row {
         display: flex;
         align-items: baseline;
-        gap: 0.4em;
+        gap: 0.25em;
         flex-wrap: wrap;
-        margin-bottom: 0.1em;
+        margin-bottom: 0.25em;
       }
 
       .ensemble-headline {
-        font-size: 3.5em;
+        font-size: 2.4em;
         color: var(--mint);
         font-weight: bold;
         line-height: 1;
       }
 
-      .ensemble-hi-lo-label {
+      .ensemble-lo {
+        opacity: 0.75;
+      }
+
+      .ensemble-hl-tag {
+        font-size: 0.85em;
+        opacity: 0.6;
+      }
+
+      .ensemble-hl-sep {
+        font-size: 1.6em;
+        opacity: 0.25;
+        margin: 0 0.15em;
+        line-height: 1;
+      }
+
+      .ensemble-spread {
         font-size: 1em;
         opacity: 0.6;
+        font-family: var(--font-mono);
+        align-self: flex-end;
+        margin-bottom: 0.15em;
+        margin-left: 0.5em;
       }
 
       .ensemble-subline {
@@ -354,6 +410,12 @@ import Base from '../../layouts/Base.astro';
       }
 
       .dr-precip {
+        font-family: var(--font-mono);
+        font-size: 0.82em;
+        opacity: 0.55;
+      }
+
+      .dr-humidity {
         font-family: var(--font-mono);
         font-size: 0.82em;
         opacity: 0.55;
@@ -517,13 +579,14 @@ import Base from '../../layouts/Base.astro';
 
       @media (max-width: 600px) {
         .cond-temp { font-size: 2.75em; }
-        .ensemble-headline { font-size: 2.75em; }
+        .ensemble-headline { font-size: 2em; }
       }
     </style>
   </Fragment>
 
   <h1>The Stochastic Forecast</h1>
-  <p class="page-tagline">27-member ensemble with state-of-the-art uncertainty quantification</p>
+  <p class="page-tagline">25-member ensemble with state-of-the-art uncertainty quantification</p>
+  <p class="forecast-disclaimer">All member forecasts are satirical. The ensemble is a work of comedy, not meteorology.</p>
 
   <noscript>Sorry, this tool requires Javascript.</noscript>
 
@@ -535,15 +598,15 @@ import Base from '../../layouts/Base.astro';
         placeholder="City, state or zip code"
         autocomplete="off"
       />
-      <button id="locate-btn" type="button">Locate me</button>
       <button id="forecast-btn" type="button">Get forecast</button>
+      <button id="locate-btn" type="button">Locate me</button>
     </div>
-    <p class="location-note">Your location is used only to fetch weather data and is not stored.</p>
+    <p class="location-note">Works best for US locations. Your location is used only to fetch weather data and is not stored.</p>
   </section>
 
   <div id="loading-section" style="display: none">
     <div class="spinner" style="margin: 0 auto; display: block; width: 2rem; height: 2rem; border-width: 0.3rem;"></div>
-    <p id="loading-headline" class="loading-headline">Initializing 27-member ensemble...</p>
+    <p id="loading-headline" class="loading-headline">Initializing 25-member ensemble...</p>
     <div id="status-log" class="status-log"></div>
   </div>
 
@@ -553,9 +616,10 @@ import Base from '../../layouts/Base.astro';
   </div>
 
   <div id="results-section" style="display: none">
-    <div id="retrograde-badge" class="retrograde-badge" style="display: none">
-      &#9888; Mercury is in retrograde. Model skill is not guaranteed.
-    </div>
+    <details id="log-disclosure" class="log-disclosure" open>
+      <summary>forecast build log</summary>
+      <div id="log-archive" class="status-log"></div>
+    </details>
 
     <section id="current-section">
       <h2>Current Conditions</h2>
@@ -564,24 +628,24 @@ import Base from '../../layouts/Base.astro';
     </section>
 
     <section id="ensemble-section">
-      <h2>Ensemble Forecast <small id="ensemble-location" style="opacity: 0.6; font-weight: normal;"></small></h2>
+      <div class="ensemble-heading-row">
+        <h2>Ensemble Forecast <small id="ensemble-location" style="opacity: 0.6; font-weight: normal;"></small></h2>
+        <div id="retrograde-badge" class="retrograde-badge" style="display: none">
+          &#9888; Mercury in retrograde. Model skill not guaranteed.
+        </div>
+      </div>
       <div id="ensemble-body">
         <p class="ensemble-computing">
-          Computing ensemble mean&hellip; <span id="members-done-count">0</span> / 27 members complete
+          Computing ensemble mean&hellip; <span id="members-done-count">0</span> / 25 members complete
         </p>
       </div>
     </section>
 
     <section id="members-section">
       <h2>Model Members</h2>
-      <p class="members-note">Each model runs independently. Weights are randomized each load.</p>
+      <p class="members-note">Each of the 25 models runs independently with a randomized weight.</p>
       <div id="members-grid" class="members-grid"></div>
     </section>
-
-    <details id="log-disclosure" class="log-disclosure">
-      <summary>forecast build log</summary>
-      <div id="log-archive" class="status-log"></div>
-    </details>
   </div>
 
   <Fragment slot="body-end">
