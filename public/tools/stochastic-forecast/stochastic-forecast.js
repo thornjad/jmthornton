@@ -45,33 +45,33 @@ const MONTH_NAMES = [
 ];
 
 const MEMBER_DEFS = [
-  { id: 1, name: 'drunkard' },
-  { id: 2, name: 'blind-drunkard' },
-  { id: 3, name: 'chaos' },
-  { id: 4, name: 'vibes' },
-  { id: 5, name: 'contrarian' },
-  { id: 6, name: 'hype-train' },
-  { id: 7, name: 'mercury-retrograde' },
-  { id: 8, name: 'weatherperson' },
-  { id: 9, name: 'crowd-sourced' },
-  { id: 10, name: 'groundhog-day' },
-  { id: 11, name: 'CG' },
-  { id: 12, name: 'climate-anxiety' },
-  { id: 13, name: 'too-early' },
-  { id: 14, name: 'monday' },
-  { id: 15, name: 'grant-funded' },
-  { id: 16, name: 'the-algorithm' },
-  { id: 17, name: 'peer-review' },
-  { id: 18, name: 'dew-denier' },
-  { id: 19, name: 'breaking-news' },
-  { id: 20, name: 'engagement-bait' },
-  { id: 21, name: 'both-sides' },
-  { id: 22, name: 'sponsored-content' },
-  { id: 23, name: 'influencer' },
-  { id: 24, name: 'panic' },
-  { id: 25, name: 'nostalgia' },
-  { id: 26, name: 'astroturfed' },
-  { id: 27, name: 'record-breaker' },
+  { id: 1,  name: 'drunkard',          icon: '🍺' },
+  { id: 2,  name: 'blind-drunkard',    icon: '🙈' },
+  { id: 3,  name: 'chaos',             icon: '🌪️' },
+  { id: 4,  name: 'vibes',             icon: '✨' },
+  { id: 5,  name: 'contrarian',        icon: '🙃' },
+  { id: 6,  name: 'hype-train',        icon: '🚂' },
+  { id: 7,  name: 'mercury-retrograde',icon: '☿' },
+  { id: 8,  name: 'weatherperson',     icon: '📺' },
+  { id: 9,  name: 'crowd-sourced',     icon: '👥' },
+  { id: 10, name: 'groundhog-day',     icon: '🦫' },
+  { id: 11, name: 'CG',               icon: '⚡' },
+  { id: 12, name: 'climate-anxiety',   icon: '🌡️' },
+  { id: 13, name: 'too-early',         icon: '⏰' },
+  { id: 14, name: 'monday',            icon: '😩' },
+  { id: 15, name: 'grant-funded',      icon: '🔬' },
+  { id: 16, name: 'the-algorithm',     icon: '🤖' },
+  { id: 17, name: 'peer-review',       icon: '📋' },
+  { id: 18, name: 'dew-denier',        icon: '💧' },
+  { id: 19, name: 'breaking-news',     icon: '📰' },
+  { id: 20, name: 'engagement-bait',   icon: '👆' },
+  { id: 21, name: 'both-sides',        icon: '⚖️' },
+  { id: 22, name: 'sponsored-content', icon: '💰' },
+  { id: 23, name: 'influencer',        icon: '📸' },
+  { id: 24, name: 'panic',             icon: '😱' },
+  { id: 25, name: 'nostalgia',         icon: '📅' },
+  { id: 26, name: 'astroturfed',       icon: '🌱' },
+  { id: 27, name: 'record-breaker',    icon: '🏆' },
 ];
 
 // ============================================================
@@ -109,6 +109,30 @@ function cloudToText(fraction) {
 }
 
 function fmtPrecip(p) { return Math.round(p * 100) + '%'; }
+
+function fmtLeadTime(lead_h, startDate) {
+  const target = new Date(startDate.getTime() + lead_h * 3600000);
+  const startDay = new Date(startDate); startDay.setHours(0, 0, 0, 0);
+  const targetDay = new Date(target); targetDay.setHours(0, 0, 0, 0);
+  const diffDays = Math.round((targetDay - startDay) / 86400000);
+  const h = target.getHours();
+  const timeStr = (h % 12 || 12) + ' ' + (h < 12 ? 'AM' : 'PM');
+  if (diffDays === 0) return 'Today ' + timeStr;
+  if (diffDays === 1) return 'Tomorrow ' + timeStr;
+  const dayShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  return dayShort[target.getDay()] + ' ' + timeStr;
+}
+
+function skyEmoji(cloudFraction, hasLightning, precipMm) {
+  if (hasLightning) return '⛈️';
+  if (precipMm && precipMm > 0) return '🌧️';
+  if (cloudFraction === null || cloudFraction === undefined) return '🌡️';
+  if (cloudFraction <= 0.05) return '☀️';
+  if (cloudFraction <= 0.25) return '🌤️';
+  if (cloudFraction <= 0.5) return '⛅';
+  if (cloudFraction <= 0.875) return '🌥️';
+  return '☁️';
+}
 
 function randomBetween(a, b) { return a + Math.random() * (b - a); }
 
@@ -214,7 +238,9 @@ function extractObsFields(obs) {
   return {
     temp_c: obs.temperature?.value ?? null,
     dewpoint_c: obs.dewpoint?.value ?? null,
-    pressure_hpa: obs.barometricPressure?.value ? obs.barometricPressure.value / 100 : null,
+    pressure_hpa: (obs.seaLevelPressure?.value ?? obs.barometricPressure?.value)
+      ? (obs.seaLevelPressure?.value ?? obs.barometricPressure?.value) / 100
+      : null,
     wind_kph: obs.windSpeed?.value ? obs.windSpeed.value * 3.6 : null,
     cloud_cover: cloudLayersToFraction(obs.cloudLayers),
     has_lightning: (obs.presentWeather || []).some(w =>
@@ -269,7 +295,7 @@ async function fetchOpenMeteoCurrent(lat, lon) {
   const params = new URLSearchParams({
     latitude: lat.toFixed(4),
     longitude: lon.toFixed(4),
-    current: 'temperature_2m,dewpoint_2m,surface_pressure,precipitation,cloudcover,windspeed_10m',
+    current: 'temperature_2m,dewpoint_2m,pressure_msl,precipitation,cloudcover,windspeed_10m',
     timezone: 'UTC',
   });
   const res = await fetch('https://api.open-meteo.com/v1/forecast?' + params);
@@ -278,7 +304,7 @@ async function fetchOpenMeteoCurrent(lat, lon) {
   return {
     temp_c: c.temperature_2m,
     dewpoint_c: c.dewpoint_2m,
-    pressure_hpa: c.surface_pressure,
+    pressure_hpa: c.pressure_msl,
     wind_kph: c.windspeed_10m,
     cloud_cover: (c.cloudcover ?? 0) / 100,
     has_lightning: false,
@@ -292,7 +318,7 @@ async function fetchClimoAndExtremes(lat, lon, month) {
     longitude: lon.toFixed(4),
     start_date: '2022-' + mm + '-01',
     end_date: '2024-' + mm + '-28',
-    hourly: 'temperature_2m,dewpoint_2m,surface_pressure,precipitation,cloudcover,windspeed_10m',
+    hourly: 'temperature_2m,dewpoint_2m,pressure_msl,precipitation,cloudcover,windspeed_10m',
     timezone: 'UTC',
   });
   const res = await fetch('https://archive-api.open-meteo.com/v1/archive?' + params);
@@ -300,7 +326,7 @@ async function fetchClimoAndExtremes(lat, lon, month) {
 
   const temps = data.hourly.temperature_2m.filter(v => v !== null);
   const dews = data.hourly.dewpoint_2m.filter(v => v !== null);
-  const pressures = data.hourly.surface_pressure.filter(v => v !== null);
+  const pressures = data.hourly.pressure_msl.filter(v => v !== null);
   const precips = data.hourly.precipitation.filter(v => v !== null);
   const clouds = data.hourly.cloudcover.filter(v => v !== null);
 
@@ -335,7 +361,7 @@ async function fetchHistoricalDay(lat, lon, date) {
     longitude: lon.toFixed(4),
     start_date: d,
     end_date: d,
-    hourly: 'temperature_2m,dewpoint_2m,surface_pressure,precipitation,cloudcover,windspeed_10m',
+    hourly: 'temperature_2m,dewpoint_2m,pressure_msl,precipitation,cloudcover,windspeed_10m',
     timezone: 'UTC',
   });
   const res = await fetch('https://archive-api.open-meteo.com/v1/archive?' + params);
@@ -353,7 +379,7 @@ async function fetchHistoricalDay(lat, lon, date) {
   return {
     temp_c: data.hourly.temperature_2m[bestIdx],
     dewpoint_c: data.hourly.dewpoint_2m[bestIdx],
-    pressure_hpa: data.hourly.surface_pressure[bestIdx],
+    pressure_hpa: data.hourly.pressure_msl[bestIdx],
     cloud_cover: (data.hourly.cloudcover[bestIdx] ?? 0) / 100,
   };
 }
@@ -1106,6 +1132,7 @@ function showCurrentConditions(current, locationLabel, isUS) {
 
   const heroEl = el('conditions-hero');
   const sky = cloudToText(current.cloud_cover);
+  const emoji = skyEmoji(current.cloud_cover, current.has_lightning, current.precip_last_hour_mm);
   const tempVal = current.temp_c !== null ? fmtTemp(current.temp_c, isUS) : '—';
   const details = [
     current.dewpoint_c !== null ? 'Dew ' + fmtTemp(current.dewpoint_c, isUS) : null,
@@ -1119,6 +1146,7 @@ function showCurrentConditions(current, locationLabel, isUS) {
 
   heroEl.innerHTML =
     '<div class="cond-main">' +
+      '<span class="cond-emoji">' + emoji + '</span>' +
       '<span class="cond-temp">' + escapeHtml(tempVal) + '</span>' +
       '<span class="cond-sky">' + escapeHtml(sky) + '</span>' +
     '</div>' +
@@ -1137,7 +1165,7 @@ function createMemberCards(weights) {
     card.id = 'card-' + m.id;
     card.innerHTML =
       '<div class="member-header">' +
-        '<span class="member-name">' + escapeHtml(m.name) + '</span>' +
+        '<span class="member-name">' + m.icon + ' ' + escapeHtml(m.name) + '</span>' +
         '<span class="member-weight" id="wt-' + m.id + '">weight: ' + w + '</span>' +
       '</div>' +
       '<div class="member-loading-state" id="ml-' + m.id + '">' +
@@ -1154,7 +1182,7 @@ function createMemberCards(weights) {
   }
 }
 
-function resolveMemberCard(memberId, forecast, isUS) {
+function resolveMemberCard(memberId, forecast, isUS, startDate) {
   const loadingEl = el('ml-' + memberId);
   const resultsEl = el('mr-' + memberId);
   if (loadingEl) loadingEl.style.display = 'none';
@@ -1167,32 +1195,33 @@ function resolveMemberCard(memberId, forecast, isUS) {
   const summaryEl = el('ms-' + memberId);
   if (summaryEl) {
     if (f24 && f24.temp_c !== null) {
-      summaryEl.textContent = '+24h: ' + fmtTemp(f24.temp_c, isUS) +
-        ', precip ' + fmtPrecip(f24.precip_prob ?? 0);
+      summaryEl.textContent = fmtLeadTime(24, startDate) + ': ' + fmtTemp(f24.temp_c, isUS) +
+        '  ·  precip ' + fmtPrecip(f24.precip_prob ?? 0);
     } else {
       summaryEl.textContent = 'Data withheld pending further study.';
     }
   }
 
   const detailsEl = el('md-' + memberId);
-  if (detailsEl) detailsEl.appendChild(buildForecastTable(forecast.forecasts, isUS));
+  if (detailsEl) detailsEl.appendChild(buildForecastTable(forecast.forecasts, isUS, startDate));
 
   membersDone++;
   const countEl = el('members-done-count');
   if (countEl) countEl.textContent = String(membersDone);
 }
 
-function buildForecastTable(forecasts, isUS) {
+function buildForecastTable(forecasts, isUS, startDate) {
   const table = document.createElement('table');
   table.className = 'forecast-table';
-  table.innerHTML = '<tr><th>Lead</th><th>Temp</th><th>Dew</th><th>Pres</th><th>Precip</th><th>Vibes</th></tr>';
+  table.innerHTML = '<tr><th>Time</th><th>Temp</th><th>Dew</th><th>Pres</th><th>Precip</th><th>Vibes</th></tr>';
   for (const f of forecasts) {
     function cell(v, fmt) {
       return v !== null && v !== undefined ? escapeHtml(fmt(v)) : '<span class="null-cell">—</span>';
     }
+    const timeLabel = startDate ? fmtLeadTime(f.lead_h, startDate) : '+' + f.lead_h + 'h';
     const tr = document.createElement('tr');
     tr.innerHTML =
-      '<td>+' + f.lead_h + 'h</td>' +
+      '<td>' + escapeHtml(timeLabel) + '</td>' +
       '<td>' + cell(f.temp_c, v => fmtTemp(v, isUS)) + '</td>' +
       '<td>' + cell(f.dewpoint_c, v => fmtTemp(v, isUS)) + '</td>' +
       '<td>' + cell(f.pressure_hpa, v => Math.round(v) + ' hPa') + '</td>' +
@@ -1203,23 +1232,25 @@ function buildForecastTable(forecasts, isUS) {
   return table;
 }
 
-function showEnsembleResults(ensemble, isUS) {
+function showEnsembleResults(ensemble, isUS, startDate) {
   const f24 = ensemble.find(f => f.lead_h === 24);
   if (!f24 || f24.temp_c === null) return;
 
   const spreadVal = f24.temp_spread ? (isUS ? Math.round(f24.temp_spread * 9 / 5) : Math.round(f24.temp_spread)) : null;
   const spreadStr = spreadVal !== null ? ' ± ' + spreadVal + '°' + (isUS ? 'F' : 'C') : '';
+  const timeLabel = startDate ? fmtLeadTime(24, startDate) : '24-hour forecast';
 
   const bodyEl = el('ensemble-body');
   bodyEl.innerHTML =
+    '<p class="ensemble-time-label">' + escapeHtml(timeLabel) + ' — 27-member weighted mean</p>' +
     '<div class="ensemble-headline">' + fmtTemp(f24.temp_c, isUS) + spreadStr + '</div>' +
-    '<div class="ensemble-subline">+24h ensemble mean (27 members, randomized weights)</div>' +
+    '<div class="ensemble-subline">spread shows how much the models disagree</div>' +
     '<p class="ensemble-disclaimer">*models do not actually agree on anything</p>';
 
   const tableWrapper = document.createElement('div');
   tableWrapper.style.overflowX = 'auto';
   tableWrapper.style.marginTop = '0.75em';
-  tableWrapper.appendChild(buildForecastTable(ensemble, isUS));
+  tableWrapper.appendChild(buildForecastTable(ensemble, isUS, startDate));
   bodyEl.appendChild(tableWrapper);
 }
 
@@ -1353,14 +1384,14 @@ async function runForecast(lat, lon, geocodedName) {
   // schedule card reveals
   const revealPromises = MEMBER_DEFS.map(m => new Promise(resolve => {
     setTimeout(() => {
-      resolveMemberCard(m.id, all[m.id], fd.isUS);
+      resolveMemberCard(m.id, all[m.id], fd.isUS, fd.date);
       resolve();
     }, delays[m.id]);
   }));
 
   Promise.all(revealPromises).then(() => {
     const ensemble = computeEnsemble(Object.values(all), weights);
-    showEnsembleResults(ensemble, fd.isUS);
+    showEnsembleResults(ensemble, fd.isUS, fd.date);
     stopLoadingAnimation();
     el('loading-section').style.display = 'none';
     const logArchive = el('log-archive');
