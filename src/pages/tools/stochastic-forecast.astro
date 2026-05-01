@@ -216,12 +216,20 @@ import Base from '../../layouts/Base.astro';
       }
 
       .ensemble-time-label {
-        font-size: 0.8em;
-        opacity: 0.6;
-        margin: 0 0 0.1em;
+        font-size: 0.72em;
+        opacity: 0.5;
+        margin: 0 0 0.4em;
         font-family: var(--font-mono);
         text-transform: uppercase;
-        letter-spacing: 0.05em;
+        letter-spacing: 0.08em;
+      }
+
+      .ensemble-headline-row {
+        display: flex;
+        align-items: baseline;
+        gap: 0.4em;
+        flex-wrap: wrap;
+        margin-bottom: 0.1em;
       }
 
       .ensemble-headline {
@@ -229,20 +237,114 @@ import Base from '../../layouts/Base.astro';
         color: var(--mint);
         font-weight: bold;
         line-height: 1;
-        margin: 0 0 0.1em;
+      }
+
+      .ensemble-hi-lo-label {
+        font-size: 1em;
+        opacity: 0.6;
       }
 
       .ensemble-subline {
         font-size: 0.85em;
         opacity: 0.65;
         margin: 0 0 0.25em;
+        font-family: var(--font-mono);
       }
 
       .ensemble-disclaimer {
         font-size: 0.75em;
         opacity: 0.45;
         font-style: italic;
-        margin: 0.1em 0 0.75em;
+        margin: 0.1em 0 0;
+      }
+
+      .forecast-section-label {
+        font-size: 0.72em;
+        opacity: 0.5;
+        margin: 0 0 0.5em;
+        font-family: var(--font-mono);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .nowcast-cards {
+        display: flex;
+        gap: 0.75em;
+        flex-wrap: wrap;
+      }
+
+      .nowcast-card {
+        background: var(--bg);
+        border: 1px solid var(--pre-border);
+        border-radius: var(--border-radius);
+        padding: 0.75em 1em;
+        min-width: 90px;
+        text-align: center;
+      }
+
+      .nc-time {
+        font-size: 0.72em;
+        opacity: 0.6;
+        font-family: var(--font-mono);
+        margin: 0 0 0.2em;
+      }
+
+      .nc-emoji {
+        font-size: 1.75em;
+        margin: 0.15em 0;
+        line-height: 1;
+      }
+
+      .nc-temp {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: var(--mint);
+        margin: 0.1em 0;
+        font-family: var(--font-mono);
+      }
+
+      .nc-precip {
+        font-size: 0.72em;
+        opacity: 0.6;
+        margin: 0;
+        font-family: var(--font-mono);
+      }
+
+      .daily-forecast {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .daily-row {
+        display: grid;
+        grid-template-columns: 5.5em 1.75em 1fr auto;
+        align-items: center;
+        gap: 0 0.5em;
+        padding: 0.5em 0;
+        border-bottom: 1px solid var(--pre-border);
+        font-size: 0.9em;
+      }
+
+      .daily-row:last-child { border-bottom: none; }
+
+      .dr-day {
+        font-family: var(--font-mono);
+        font-size: 0.88em;
+      }
+
+      .dr-emoji { font-size: 1.15em; }
+
+      .dr-range {
+        font-family: var(--font-mono);
+        color: var(--mint);
+        font-size: 0.88em;
+      }
+
+      .dr-precip {
+        font-family: var(--font-mono);
+        font-size: 0.82em;
+        opacity: 0.55;
+        text-align: right;
       }
 
       .member-card {

@@ -7,6 +7,8 @@
 // ============================================================
 
 const LEADS = [6, 12, 18, 24, 48, 72, 96, 120, 144, 168];
+const NOWCAST_LEADS = [6, 12];
+const HALF_RANGE_C = 6; // approx half of typical daily temp swing
 
 const NWS_HEADERS = { 'User-Agent': 'stochastic-forecast/jmthornton.net' };
 
@@ -121,6 +123,48 @@ function fmtLeadTime(lead_h, startDate) {
   if (diffDays === 1) return 'Tomorrow ' + timeStr;
   const dayShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   return dayShort[target.getDay()] + ' ' + timeStr;
+}
+
+function fmtDay(lead_h, startDate) {
+  const target = new Date(startDate.getTime() + lead_h * 3600000);
+  const startDay = new Date(startDate); startDay.setHours(0, 0, 0, 0);
+  const targetDay = new Date(target); targetDay.setHours(0, 0, 0, 0);
+  const diffDays = Math.round((targetDay - startDay) / 86400000);
+  if (diffDays === 0) return 'Today';
+  if (diffDays === 1) return 'Tomorrow';
+  const dayShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  return dayShort[target.getDay()];
+}
+
+// Groups per-lead forecasts into daily buckets, deriving hi/lo for each day.
+// Expects forecasts with lead_h >= 18 (daily leads, not nowcast).
+function groupIntoDays(forecasts, startDate) {
+  const dayMap = new Map();
+  for (const f of forecasts) {
+    const day = startDate ? fmtDay(f.lead_h, startDate) : '+' + f.lead_h + 'h';
+    if (!dayMap.has(day)) dayMap.set(day, []);
+    dayMap.get(day).push(f);
+  }
+  const result = [];
+  for (const [day, pts] of dayMap) {
+    const temps = pts.map(p => p.temp_c).filter(v => v !== null && !isNaN(v));
+    const precips = pts.map(p => p.precip_prob).filter(v => v !== null && !isNaN(v));
+    const clouds = pts.map(p => p.cloud_cover).filter(v => v !== null && !isNaN(v));
+    const vibesArr = pts.map(p => p.vibes).filter(v => v !== null && !isNaN(v));
+    let hi_c = null, lo_c = null;
+    if (temps.length >= 2) {
+      hi_c = Math.max.apply(null, temps);
+      lo_c = Math.min.apply(null, temps);
+    } else if (temps.length === 1) {
+      hi_c = temps[0] + HALF_RANGE_C;
+      lo_c = temps[0] - HALF_RANGE_C;
+    }
+    const maxPrecip = precips.length ? Math.max.apply(null, precips) : null;
+    const avgCloud = clouds.length ? clouds.reduce((s, v) => s + v, 0) / clouds.length : null;
+    const avgVibes = vibesArr.length ? Math.round(vibesArr.reduce((s, v) => s + v, 0) / vibesArr.length * 10) / 10 : null;
+    result.push({ day, hi_c, lo_c, precip_prob: maxPrecip, cloud_cover: avgCloud, vibes: avgVibes });
+  }
+  return result;
 }
 
 function skyEmoji(cloudFraction, hasLightning, precipMm) {
@@ -1210,26 +1254,73 @@ function resolveMemberCard(memberId, forecast, isUS, startDate) {
   if (countEl) countEl.textContent = String(membersDone);
 }
 
+function nullCell(v, fmt) {
+  return v !== null && v !== undefined && !isNaN(v) ? escapeHtml(fmt(v)) : '<span class="null-cell">—</span>';
+}
+
 function buildForecastTable(forecasts, isUS, startDate) {
-  const table = document.createElement('table');
-  table.className = 'forecast-table';
-  table.innerHTML = '<tr><th>Time</th><th>Temp</th><th>Dew</th><th>Pres</th><th>Precip</th><th>Vibes</th></tr>';
-  for (const f of forecasts) {
-    function cell(v, fmt) {
-      return v !== null && v !== undefined ? escapeHtml(fmt(v)) : '<span class="null-cell">—</span>';
+  const wrap = document.createElement('div');
+
+  const nowcasts = startDate ? forecasts.filter(f => NOWCAST_LEADS.includes(f.lead_h)) : [];
+  const dailyLeads = startDate ? forecasts.filter(f => !NOWCAST_LEADS.includes(f.lead_h)) : forecasts;
+
+  if (nowcasts.length) {
+    const lbl = document.createElement('p');
+    lbl.className = 'forecast-section-label';
+    lbl.textContent = 'Next 12 hours';
+    wrap.appendChild(lbl);
+
+    const tbl = document.createElement('table');
+    tbl.className = 'forecast-table';
+    tbl.innerHTML = '<tr><th>Time</th><th></th><th>Temp</th><th>Precip</th><th>Vibes</th></tr>';
+    for (const f of nowcasts) {
+      const tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td>' + escapeHtml(fmtLeadTime(f.lead_h, startDate)) + '</td>' +
+        '<td>' + skyEmoji(f.cloud_cover, false, null) + '</td>' +
+        '<td>' + nullCell(f.temp_c, v => fmtTemp(v, isUS)) + '</td>' +
+        '<td>' + nullCell(f.precip_prob, fmtPrecip) + '</td>' +
+        '<td>' + nullCell(f.vibes, v => v.toFixed(1)) + '</td>';
+      tbl.appendChild(tr);
     }
-    const timeLabel = startDate ? fmtLeadTime(f.lead_h, startDate) : '+' + f.lead_h + 'h';
-    const tr = document.createElement('tr');
-    tr.innerHTML =
-      '<td>' + escapeHtml(timeLabel) + '</td>' +
-      '<td>' + cell(f.temp_c, v => fmtTemp(v, isUS)) + '</td>' +
-      '<td>' + cell(f.dewpoint_c, v => fmtTemp(v, isUS)) + '</td>' +
-      '<td>' + cell(f.pressure_hpa, v => Math.round(v) + ' hPa') + '</td>' +
-      '<td>' + cell(f.precip_prob, fmtPrecip) + '</td>' +
-      '<td>' + cell(f.vibes, v => v.toFixed(1)) + '</td>';
-    table.appendChild(tr);
+    wrap.appendChild(tbl);
   }
-  return table;
+
+  if (dailyLeads.length) {
+    const days = startDate ? groupIntoDays(dailyLeads, startDate) : dailyLeads.map(f => ({
+      day: '+' + f.lead_h + 'h',
+      hi_c: f.temp_c !== null ? f.temp_c + HALF_RANGE_C : null,
+      lo_c: f.temp_c !== null ? f.temp_c - HALF_RANGE_C : null,
+      precip_prob: f.precip_prob,
+      cloud_cover: f.cloud_cover,
+      vibes: f.vibes,
+    }));
+
+    const lbl = document.createElement('p');
+    lbl.className = 'forecast-section-label';
+    lbl.style.marginTop = nowcasts.length ? '0.75em' : '0';
+    lbl.textContent = '7-day';
+    wrap.appendChild(lbl);
+
+    const tbl = document.createElement('table');
+    tbl.className = 'forecast-table';
+    tbl.innerHTML = '<tr><th>Day</th><th></th><th>Lo</th><th>Hi</th><th>Precip</th><th>Vibes</th></tr>';
+    for (const d of days) {
+      const emoji = skyEmoji(d.cloud_cover, false, d.precip_prob > 0.5 ? 1 : 0);
+      const tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td>' + escapeHtml(d.day) + '</td>' +
+        '<td>' + emoji + '</td>' +
+        '<td>' + nullCell(d.lo_c, v => fmtTemp(v, isUS)) + '</td>' +
+        '<td>' + nullCell(d.hi_c, v => fmtTemp(v, isUS)) + '</td>' +
+        '<td>' + nullCell(d.precip_prob, fmtPrecip) + '</td>' +
+        '<td>' + nullCell(d.vibes, v => v.toFixed(1)) + '</td>';
+      tbl.appendChild(tr);
+    }
+    wrap.appendChild(tbl);
+  }
+
+  return wrap;
 }
 
 function showEnsembleResults(ensemble, isUS, startDate) {
@@ -1238,20 +1329,79 @@ function showEnsembleResults(ensemble, isUS, startDate) {
 
   const spreadVal = f24.temp_spread ? (isUS ? Math.round(f24.temp_spread * 9 / 5) : Math.round(f24.temp_spread)) : null;
   const spreadStr = spreadVal !== null ? ' ± ' + spreadVal + '°' + (isUS ? 'F' : 'C') : '';
-  const timeLabel = startDate ? fmtLeadTime(24, startDate) : '24-hour forecast';
+  const tomorrowHi_c = f24.temp_c + HALF_RANGE_C;
+  const tomorrowLo_c = f24.temp_c - HALF_RANGE_C;
+  const tomorrowLabel = startDate ? fmtDay(24, startDate) : 'Tomorrow';
 
   const bodyEl = el('ensemble-body');
   bodyEl.innerHTML =
-    '<p class="ensemble-time-label">' + escapeHtml(timeLabel) + ' — 27-member weighted mean</p>' +
-    '<div class="ensemble-headline">' + fmtTemp(f24.temp_c, isUS) + spreadStr + '</div>' +
-    '<div class="ensemble-subline">spread shows how much the models disagree</div>' +
+    '<p class="ensemble-time-label">27-member weighted ensemble mean</p>' +
+    '<div class="ensemble-headline-row">' +
+      '<span class="ensemble-headline">' + fmtTemp(tomorrowHi_c, isUS) + '</span>' +
+      '<span class="ensemble-hi-lo-label">' + escapeHtml(tomorrowLabel) + ' high</span>' +
+    '</div>' +
+    '<div class="ensemble-subline">' +
+      'Low ' + fmtTemp(tomorrowLo_c, isUS) +
+      (spreadStr ? '  ·  model spread ' + spreadStr : '') +
+    '</div>' +
     '<p class="ensemble-disclaimer">*models do not actually agree on anything</p>';
 
-  const tableWrapper = document.createElement('div');
-  tableWrapper.style.overflowX = 'auto';
-  tableWrapper.style.marginTop = '0.75em';
-  tableWrapper.appendChild(buildForecastTable(ensemble, isUS, startDate));
-  bodyEl.appendChild(tableWrapper);
+  // nowcast cards (leads 6, 12)
+  const nowcasts = ensemble.filter(f => NOWCAST_LEADS.includes(f.lead_h));
+  if (nowcasts.length && startDate) {
+    const ncSection = document.createElement('div');
+    ncSection.style.marginTop = '1.25em';
+    const ncLabel = document.createElement('p');
+    ncLabel.className = 'forecast-section-label';
+    ncLabel.textContent = 'Next 12 hours';
+    ncSection.appendChild(ncLabel);
+    const cardsRow = document.createElement('div');
+    cardsRow.className = 'nowcast-cards';
+    for (const f of nowcasts) {
+      const card = document.createElement('div');
+      card.className = 'nowcast-card';
+      const emoji = skyEmoji(f.cloud_cover, false, null);
+      card.innerHTML =
+        '<p class="nc-time">' + escapeHtml(fmtLeadTime(f.lead_h, startDate)) + '</p>' +
+        '<p class="nc-emoji">' + emoji + '</p>' +
+        '<p class="nc-temp">' + (f.temp_c !== null ? fmtTemp(f.temp_c, isUS) : '—') + '</p>' +
+        '<p class="nc-precip">' + (f.precip_prob !== null ? fmtPrecip(f.precip_prob) : '—') + ' precip</p>';
+      cardsRow.appendChild(card);
+    }
+    ncSection.appendChild(cardsRow);
+    bodyEl.appendChild(ncSection);
+  }
+
+  // 7-day daily rows
+  const dailyForecasts = ensemble.filter(f => !NOWCAST_LEADS.includes(f.lead_h));
+  if (dailyForecasts.length) {
+    const days = groupIntoDays(dailyForecasts, startDate);
+    const daySection = document.createElement('div');
+    daySection.style.marginTop = '1.25em';
+    const dayLabel = document.createElement('p');
+    dayLabel.className = 'forecast-section-label';
+    dayLabel.textContent = '7-Day Forecast';
+    daySection.appendChild(dayLabel);
+    const dailyEl = document.createElement('div');
+    dailyEl.className = 'daily-forecast';
+    for (const d of days) {
+      const emoji = skyEmoji(d.cloud_cover, false, d.precip_prob > 0.5 ? 1 : 0);
+      const row = document.createElement('div');
+      row.className = 'daily-row';
+      row.innerHTML =
+        '<span class="dr-day">' + escapeHtml(d.day) + '</span>' +
+        '<span class="dr-emoji">' + emoji + '</span>' +
+        '<span class="dr-range">' +
+          (d.lo_c !== null ? fmtTemp(d.lo_c, isUS) : '—') +
+          ' / ' +
+          (d.hi_c !== null ? fmtTemp(d.hi_c, isUS) : '—') +
+        '</span>' +
+        '<span class="dr-precip">' + (d.precip_prob !== null ? fmtPrecip(d.precip_prob) : '—') + '</span>';
+      dailyEl.appendChild(row);
+    }
+    daySection.appendChild(dailyEl);
+    bodyEl.appendChild(daySection);
+  }
 }
 
 // ============================================================
