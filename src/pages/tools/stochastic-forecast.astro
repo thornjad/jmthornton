@@ -9,13 +9,14 @@ import Base from '../../layouts/Base.astro';
 >
   <Fragment slot="head">
     <style>
+      /* ── static template elements (Astro-scoped) ── */
+
       .page-tagline {
         margin-top: -0.5em;
         opacity: 0.7;
         font-style: italic;
       }
 
-      /* location section */
       .location-row {
         display: flex;
         gap: 0.5em;
@@ -35,42 +36,32 @@ import Base from '../../layouts/Base.astro';
         margin-top: 0;
       }
 
-      /* loading section */
       #loading-section {
-        padding: 1.5em 0;
+        padding: 2em 0 1em;
+        text-align: center;
       }
 
       .loading-headline {
         font-style: italic;
         text-align: center;
-        margin: 0.75em 0 0.5em;
+        margin: 0.75em 0 1em;
+        font-size: 1.05em;
+        opacity: 0.8;
       }
 
       .status-log {
-        background: #111;
-        color: #8ec07c;
+        background: var(--bg-alt-darker);
+        color: var(--green);
         font-family: var(--font-mono);
         font-size: 0.8em;
         text-align: left;
         padding: 0.75em 1em;
         border-radius: var(--border-radius);
-        max-height: 13em;
+        max-height: 11em;
         overflow-y: auto;
-        border: 1px solid #333;
         margin-top: 0.75em;
       }
 
-      .log-line {
-        margin: 0;
-        line-height: 1.6;
-        white-space: pre;
-      }
-
-      .log-pending { color: #aaa; }
-      .log-done { color: #8ec07c; }
-      .log-error { color: var(--red); }
-
-      /* loading spinner override: center without huge margin */
       #loading-section .spinner {
         margin: 0 auto;
         width: 2rem;
@@ -79,47 +70,48 @@ import Base from '../../layouts/Base.astro';
         display: block;
       }
 
-      /* retrograde badge */
       .retrograde-badge {
         background: var(--gold);
         color: #1a1a1a;
-        padding: 0.35em 0.75em;
+        padding: 0.4em 0.9em;
         border-radius: var(--border-radius);
         font-size: 0.9em;
-        margin-bottom: 1em;
-        display: inline-block;
-      }
-
-      /* current conditions */
-      .conditions-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-        gap: 0.75em;
-        margin: 0.75em 0 1.5em;
-      }
-
-      .condition-item {
-        text-align: center;
-        padding: 0.5em;
-        border: 1px solid var(--pre-border);
-        border-radius: var(--border-radius);
-      }
-
-      .condition-value {
-        font-size: 1.2em;
-        font-weight: bold;
-        color: var(--mint);
-      }
-
-      .condition-label {
-        font-size: 0.75em;
-        opacity: 0.65;
-        margin-top: 0.15em;
-      }
-
-      /* ensemble section */
-      #ensemble-section {
         margin-bottom: 1.5em;
+        display: inline-block;
+        font-weight: bold;
+      }
+
+      #current-section {
+        margin-bottom: 2.5em;
+      }
+
+      #current-section h2 {
+        margin-bottom: 0.1em;
+      }
+
+      .cond-location {
+        color: var(--mint);
+        font-size: 1em;
+        margin: 0 0 1em;
+        font-style: italic;
+      }
+
+      .conditions-hero {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6em;
+      }
+
+      #ensemble-section {
+        margin-bottom: 2.5em;
+        padding: 1.25em 1.5em;
+        background: var(--bg-alt);
+        border-radius: var(--border-radius);
+        border-left: 4px solid var(--mint);
+      }
+
+      #ensemble-section h2 {
+        margin-top: 0;
       }
 
       .ensemble-computing {
@@ -127,27 +119,6 @@ import Base from '../../layouts/Base.astro';
         font-style: italic;
       }
 
-      .ensemble-headline {
-        font-size: 2em;
-        color: var(--mint);
-        font-weight: bold;
-        margin: 0.15em 0 0;
-      }
-
-      .ensemble-subline {
-        font-size: 0.85em;
-        opacity: 0.65;
-        margin-top: 0.2em;
-      }
-
-      .ensemble-disclaimer {
-        font-size: 0.75em;
-        opacity: 0.5;
-        font-style: italic;
-        margin-top: 0.15em;
-      }
-
-      /* members */
       .members-note {
         font-size: 0.85em;
         opacity: 0.65;
@@ -155,119 +126,36 @@ import Base from '../../layouts/Base.astro';
       }
 
       .members-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-        gap: 1em;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75em;
         margin-top: 1em;
       }
 
-      .member-card {
-        border: 1px solid var(--pre-border);
-        border-left: 3px solid var(--mint);
-        border-radius: var(--border-radius);
-        padding: 0.75em 1em;
-      }
-
-      .member-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        margin-bottom: 0.4em;
-      }
-
-      .member-name {
-        font-weight: bold;
-        font-family: var(--font-mono);
-        color: var(--mint);
-      }
-
-      .member-weight {
-        font-size: 0.75em;
-        opacity: 0.55;
-        font-family: var(--font-mono);
-      }
-
-      .member-loading-state {
-        display: flex;
-        align-items: center;
-        gap: 0.6em;
-        color: var(--fg);
-        opacity: 0.55;
-        font-size: 0.85em;
-        padding: 0.25em 0;
-      }
-
-      /* small inline spinner for member cards */
-      .spinner-sm {
-        width: 0.9rem;
-        height: 0.9rem;
-        border-width: 0.15rem;
-        margin: 0;
-        flex-shrink: 0;
-        display: inline-block;
-      }
-
-      .member-tagline {
-        font-style: italic;
-        font-size: 0.875em;
-        margin: 0.2em 0;
-        opacity: 0.85;
-      }
-
-      .member-summary {
-        font-size: 0.85em;
-        margin: 0.2em 0 0.4em;
-      }
-
-      .member-details-btn {
+      .log-disclosure {
+        margin-top: 2em;
         font-size: 0.8em;
-        padding: 0.15em 0.5em;
+        opacity: 0.5;
       }
 
-      .member-details {
+      .log-disclosure summary {
+        cursor: pointer;
+        font-family: var(--font-mono);
+      }
+
+      .log-disclosure summary:hover {
+        opacity: 0.8;
+      }
+
+      .log-disclosure .status-log {
         margin-top: 0.5em;
-        overflow-x: auto;
       }
 
-      /* forecast table */
-      .forecast-table {
-        border-collapse: collapse;
-        width: 100%;
-        font-family: var(--font-mono);
-        font-size: 0.8em;
-        margin-top: 0.25em;
-      }
-
-      .forecast-table th {
-        text-align: left;
-        border-bottom: 1px solid var(--pre-border);
-        padding: 0.2em 0.4em;
-        opacity: 0.65;
-        white-space: nowrap;
-      }
-
-      .forecast-table td {
-        padding: 0.2em 0.4em;
-        border-bottom: 1px solid var(--pre-border);
-        white-space: nowrap;
-      }
-
-      .null-cell {
-        opacity: 0.3;
-        font-style: italic;
-      }
-
-      /* error section */
       #error-section {
         margin-top: 1em;
       }
 
-      /* responsive */
       @media (max-width: 600px) {
-        .members-grid {
-          grid-template-columns: 1fr;
-        }
-
         .location-row {
           flex-direction: column;
         }
@@ -279,6 +167,184 @@ import Base from '../../layouts/Base.astro';
         .location-row button {
           width: 100%;
         }
+      }
+    </style>
+
+    <style is:global>
+      /* ── JS-injected elements — not Astro-scoped ── */
+
+      .log-line {
+        margin: 0;
+        line-height: 1.6;
+        white-space: pre;
+      }
+
+      .log-pending { opacity: 0.5; }
+      .log-done { color: var(--green); }
+      .log-error { color: var(--red); }
+
+      .cond-main {
+        display: flex;
+        align-items: baseline;
+        gap: 0.75em;
+        flex-wrap: wrap;
+      }
+
+      .cond-temp {
+        font-size: 3.5em;
+        font-weight: bold;
+        color: var(--mint);
+        line-height: 1;
+      }
+
+      .cond-sky {
+        font-size: 1.2em;
+        opacity: 0.8;
+      }
+
+      .cond-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25em 1.25em;
+        font-size: 0.9em;
+        opacity: 0.75;
+      }
+
+      .ensemble-headline {
+        font-size: 3.5em;
+        color: var(--mint);
+        font-weight: bold;
+        line-height: 1;
+        margin: 0.1em 0 0.15em;
+      }
+
+      .ensemble-subline {
+        font-size: 0.85em;
+        opacity: 0.65;
+        margin: 0 0 0.25em;
+      }
+
+      .ensemble-disclaimer {
+        font-size: 0.75em;
+        opacity: 0.45;
+        font-style: italic;
+        margin: 0.1em 0 0.75em;
+      }
+
+      .member-card {
+        border: 1px solid var(--pre-border);
+        border-left: 5px solid var(--mint);
+        border-radius: var(--border-radius);
+        padding: 1em 1.25em;
+      }
+
+      .member-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 0.5em;
+      }
+
+      .member-name {
+        font-weight: bold;
+        font-family: var(--font-mono);
+        font-size: 1.05em;
+        color: var(--mint);
+        letter-spacing: 0.02em;
+      }
+
+      .member-weight {
+        font-size: 0.75em;
+        opacity: 0.45;
+        font-family: var(--font-mono);
+      }
+
+      .member-loading-state {
+        display: flex;
+        align-items: center;
+        gap: 0.6em;
+        color: var(--fg);
+        opacity: 0.45;
+        font-size: 0.85em;
+        padding: 0.4em 0;
+      }
+
+      .spinner-sm {
+        width: 0.85rem;
+        height: 0.85rem;
+        border-width: 0.14rem;
+        margin: 0;
+        flex-shrink: 0;
+        display: inline-block;
+      }
+
+      .member-tagline {
+        font-size: 1em;
+        margin: 0 0 0.35em;
+        line-height: 1.4;
+      }
+
+      .member-summary {
+        font-size: 0.85em;
+        margin: 0 0 0.6em;
+        opacity: 0.6;
+        font-family: var(--font-mono);
+      }
+
+      .member-details-btn {
+        background: none;
+        border: none;
+        border-color: transparent;
+        color: var(--mint);
+        cursor: pointer;
+        font-size: 0.82em;
+        padding: 0;
+        min-width: 0;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        opacity: 0.7;
+      }
+
+      .member-details-btn:hover {
+        opacity: 1;
+        background: none;
+        color: var(--mint);
+      }
+
+      .member-details {
+        margin-top: 0.75em;
+        overflow-x: auto;
+      }
+
+      .forecast-table {
+        border-collapse: collapse;
+        width: 100%;
+        font-family: var(--font-mono);
+        font-size: 0.8em;
+      }
+
+      .forecast-table th {
+        text-align: left;
+        border-bottom: 1px solid var(--pre-border);
+        padding: 0.25em 0.6em;
+        opacity: 0.55;
+        white-space: nowrap;
+      }
+
+      .forecast-table td {
+        padding: 0.25em 0.6em;
+        border-bottom: 1px solid var(--pre-border);
+        white-space: nowrap;
+      }
+
+      .null-cell {
+        opacity: 0.25;
+        font-style: italic;
+      }
+
+      @media (max-width: 600px) {
+        .cond-temp { font-size: 2.75em; }
+        .ensemble-headline { font-size: 2.75em; }
       }
     </style>
   </Fragment>
@@ -303,7 +369,7 @@ import Base from '../../layouts/Base.astro';
   </section>
 
   <div id="loading-section" style="display: none">
-    <div class="spinner spinner-sm" style="margin: 0 auto; display: block; width: 2rem; height: 2rem; border-width: 0.3rem;"></div>
+    <div class="spinner" style="margin: 0 auto; display: block; width: 2rem; height: 2rem; border-width: 0.3rem;"></div>
     <p id="loading-headline" class="loading-headline">Initializing 27-member ensemble...</p>
     <div id="status-log" class="status-log"></div>
   </div>
@@ -319,12 +385,13 @@ import Base from '../../layouts/Base.astro';
     </div>
 
     <section id="current-section">
-      <h2>Current Conditions <small id="current-location" style="color: var(--mint); font-weight: normal;"></small></h2>
-      <div class="conditions-grid" id="conditions-grid"></div>
+      <h2>Current Conditions</h2>
+      <p class="cond-location" id="current-location"></p>
+      <div class="conditions-hero" id="conditions-hero"></div>
     </section>
 
     <section id="ensemble-section">
-      <h2>Ensemble Forecast <small id="ensemble-location"></small></h2>
+      <h2>Ensemble Forecast <small id="ensemble-location" style="opacity: 0.6; font-weight: normal;"></small></h2>
       <div id="ensemble-body">
         <p class="ensemble-computing">
           Computing ensemble mean&hellip; <span id="members-done-count">0</span> / 27 members complete
@@ -337,6 +404,11 @@ import Base from '../../layouts/Base.astro';
       <p class="members-note">Each model runs independently. Weights are randomized each load.</p>
       <div id="members-grid" class="members-grid"></div>
     </section>
+
+    <details id="log-disclosure" class="log-disclosure">
+      <summary>forecast build log</summary>
+      <div id="log-archive" class="status-log"></div>
+    </details>
   </div>
 
   <Fragment slot="body-end">

@@ -1102,24 +1102,29 @@ function showPageError(msg) {
 function showCurrentConditions(current, locationLabel, isUS) {
   const locEl = el('current-location');
   if (locEl) locEl.textContent = locationLabel;
-  el('ensemble-location').textContent = '— ' + locationLabel;
+  el('ensemble-location').textContent = locationLabel;
 
-  const grid = el('conditions-grid');
-  const items = [
-    { label: 'Temperature', value: current.temp_c !== null ? fmtTemp(current.temp_c, isUS) : '—' },
-    { label: 'Dewpoint', value: current.dewpoint_c !== null ? fmtTemp(current.dewpoint_c, isUS) : '—' },
-    { label: 'Sky', value: cloudToText(current.cloud_cover) },
-    { label: 'Pressure', value: current.pressure_hpa !== null ? Math.round(current.pressure_hpa) + ' hPa' : '—' },
-    { label: 'Wind', value: fmtWind(current.wind_kph, isUS) },
-    { label: 'Precip (1h)', value: fmtPrecipAmt(current.precip_last_hour_mm, isUS) },
-    { label: 'Lightning', value: current.has_lightning ? '⚡ Active' : 'None detected' },
-  ];
-  grid.innerHTML = items.map(item =>
-    '<div class="condition-item">' +
-    '<div class="condition-value">' + escapeHtml(item.value) + '</div>' +
-    '<div class="condition-label">' + item.label + '</div>' +
-    '</div>'
-  ).join('');
+  const heroEl = el('conditions-hero');
+  const sky = cloudToText(current.cloud_cover);
+  const tempVal = current.temp_c !== null ? fmtTemp(current.temp_c, isUS) : '—';
+  const details = [
+    current.dewpoint_c !== null ? 'Dew ' + fmtTemp(current.dewpoint_c, isUS) : null,
+    current.pressure_hpa !== null ? Math.round(current.pressure_hpa) + ' hPa' : null,
+    current.wind_kph !== null ? fmtWind(current.wind_kph, isUS) : null,
+    fmtPrecipAmt(current.precip_last_hour_mm, isUS) !== 'None'
+      ? fmtPrecipAmt(current.precip_last_hour_mm, isUS) + ' precip'
+      : 'No precip',
+    current.has_lightning ? '⚡ Lightning active' : null,
+  ].filter(Boolean);
+
+  heroEl.innerHTML =
+    '<div class="cond-main">' +
+      '<span class="cond-temp">' + escapeHtml(tempVal) + '</span>' +
+      '<span class="cond-sky">' + escapeHtml(sky) + '</span>' +
+    '</div>' +
+    '<div class="cond-row">' +
+      details.map(d => '<span>' + escapeHtml(d) + '</span>').join('') +
+    '</div>';
 }
 
 function createMemberCards(weights) {
@@ -1142,7 +1147,7 @@ function createMemberCards(weights) {
       '<div id="mr-' + m.id + '" style="display:none">' +
         '<p class="member-tagline" id="mt-' + m.id + '"></p>' +
         '<p class="member-summary" id="ms-' + m.id + '"></p>' +
-        '<button class="member-details-btn low-key" onclick="window._stoch.toggleDetails(' + m.id + ')">Details ▸</button>' +
+        '<button class="member-details-btn" onclick="window._stoch.toggleDetails(' + m.id + ')">forecast ▸</button>' +
         '<div class="member-details" id="md-' + m.id + '" style="display:none"></div>' +
       '</div>';
     grid.appendChild(card);
@@ -1358,6 +1363,9 @@ async function runForecast(lat, lon, geocodedName) {
     showEnsembleResults(ensemble, fd.isUS);
     stopLoadingAnimation();
     el('loading-section').style.display = 'none';
+    const logArchive = el('log-archive');
+    const logSrc = el('status-log');
+    if (logArchive && logSrc) logArchive.innerHTML = logSrc.innerHTML;
   });
 }
 
@@ -1371,10 +1379,10 @@ window._stoch = {
     const btn = details.previousElementSibling;
     if (details.style.display === 'none') {
       details.style.display = 'block';
-      btn.textContent = 'Details ▾';
+      btn.textContent = 'forecast ▾';
     } else {
       details.style.display = 'none';
-      btn.textContent = 'Details ▸';
+      btn.textContent = 'forecast ▸';
     }
   },
 };
