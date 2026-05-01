@@ -1,0 +1,345 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base
+  title="Stochastic Forecast | Jade Michael Thornton"
+  description="27-member ensemble forecast with state-of-the-art uncertainty quantification"
+  fontStrategy="prefetch"
+>
+  <Fragment slot="head">
+    <style>
+      .page-tagline {
+        margin-top: -0.5em;
+        opacity: 0.7;
+        font-style: italic;
+      }
+
+      /* location section */
+      .location-row {
+        display: flex;
+        gap: 0.5em;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 0.5em;
+      }
+
+      #location-input {
+        flex: 1;
+        min-width: 200px;
+      }
+
+      .location-note {
+        font-size: 0.85em;
+        opacity: 0.6;
+        margin-top: 0;
+      }
+
+      /* loading section */
+      #loading-section {
+        padding: 1.5em 0;
+      }
+
+      .loading-headline {
+        font-style: italic;
+        text-align: center;
+        margin: 0.75em 0 0.5em;
+      }
+
+      .status-log {
+        background: #111;
+        color: #8ec07c;
+        font-family: var(--font-mono);
+        font-size: 0.8em;
+        text-align: left;
+        padding: 0.75em 1em;
+        border-radius: var(--border-radius);
+        max-height: 13em;
+        overflow-y: auto;
+        border: 1px solid #333;
+        margin-top: 0.75em;
+      }
+
+      .log-line {
+        margin: 0;
+        line-height: 1.6;
+        white-space: pre;
+      }
+
+      .log-pending { color: #aaa; }
+      .log-done { color: #8ec07c; }
+      .log-error { color: var(--red); }
+
+      /* loading spinner override: center without huge margin */
+      #loading-section .spinner {
+        margin: 0 auto;
+        width: 2rem;
+        height: 2rem;
+        border-width: 0.3rem;
+        display: block;
+      }
+
+      /* retrograde badge */
+      .retrograde-badge {
+        background: var(--gold);
+        color: #1a1a1a;
+        padding: 0.35em 0.75em;
+        border-radius: var(--border-radius);
+        font-size: 0.9em;
+        margin-bottom: 1em;
+        display: inline-block;
+      }
+
+      /* current conditions */
+      .conditions-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+        gap: 0.75em;
+        margin: 0.75em 0 1.5em;
+      }
+
+      .condition-item {
+        text-align: center;
+        padding: 0.5em;
+        border: 1px solid var(--pre-border);
+        border-radius: var(--border-radius);
+      }
+
+      .condition-value {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: var(--mint);
+      }
+
+      .condition-label {
+        font-size: 0.75em;
+        opacity: 0.65;
+        margin-top: 0.15em;
+      }
+
+      /* ensemble section */
+      #ensemble-section {
+        margin-bottom: 1.5em;
+      }
+
+      .ensemble-computing {
+        opacity: 0.65;
+        font-style: italic;
+      }
+
+      .ensemble-headline {
+        font-size: 2em;
+        color: var(--mint);
+        font-weight: bold;
+        margin: 0.15em 0 0;
+      }
+
+      .ensemble-subline {
+        font-size: 0.85em;
+        opacity: 0.65;
+        margin-top: 0.2em;
+      }
+
+      .ensemble-disclaimer {
+        font-size: 0.75em;
+        opacity: 0.5;
+        font-style: italic;
+        margin-top: 0.15em;
+      }
+
+      /* members */
+      .members-note {
+        font-size: 0.85em;
+        opacity: 0.65;
+        margin-top: -0.5em;
+      }
+
+      .members-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 1em;
+        margin-top: 1em;
+      }
+
+      .member-card {
+        border: 1px solid var(--pre-border);
+        border-left: 3px solid var(--mint);
+        border-radius: var(--border-radius);
+        padding: 0.75em 1em;
+      }
+
+      .member-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 0.4em;
+      }
+
+      .member-name {
+        font-weight: bold;
+        font-family: var(--font-mono);
+        color: var(--mint);
+      }
+
+      .member-weight {
+        font-size: 0.75em;
+        opacity: 0.55;
+        font-family: var(--font-mono);
+      }
+
+      .member-loading-state {
+        display: flex;
+        align-items: center;
+        gap: 0.6em;
+        color: var(--fg);
+        opacity: 0.55;
+        font-size: 0.85em;
+        padding: 0.25em 0;
+      }
+
+      /* small inline spinner for member cards */
+      .spinner-sm {
+        width: 0.9rem;
+        height: 0.9rem;
+        border-width: 0.15rem;
+        margin: 0;
+        flex-shrink: 0;
+        display: inline-block;
+      }
+
+      .member-tagline {
+        font-style: italic;
+        font-size: 0.875em;
+        margin: 0.2em 0;
+        opacity: 0.85;
+      }
+
+      .member-summary {
+        font-size: 0.85em;
+        margin: 0.2em 0 0.4em;
+      }
+
+      .member-details-btn {
+        font-size: 0.8em;
+        padding: 0.15em 0.5em;
+      }
+
+      .member-details {
+        margin-top: 0.5em;
+        overflow-x: auto;
+      }
+
+      /* forecast table */
+      .forecast-table {
+        border-collapse: collapse;
+        width: 100%;
+        font-family: var(--font-mono);
+        font-size: 0.8em;
+        margin-top: 0.25em;
+      }
+
+      .forecast-table th {
+        text-align: left;
+        border-bottom: 1px solid var(--pre-border);
+        padding: 0.2em 0.4em;
+        opacity: 0.65;
+        white-space: nowrap;
+      }
+
+      .forecast-table td {
+        padding: 0.2em 0.4em;
+        border-bottom: 1px solid var(--pre-border);
+        white-space: nowrap;
+      }
+
+      .null-cell {
+        opacity: 0.3;
+        font-style: italic;
+      }
+
+      /* error section */
+      #error-section {
+        margin-top: 1em;
+      }
+
+      /* responsive */
+      @media (max-width: 600px) {
+        .members-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .location-row {
+          flex-direction: column;
+        }
+
+        #location-input {
+          width: 100%;
+        }
+
+        .location-row button {
+          width: 100%;
+        }
+      }
+    </style>
+  </Fragment>
+
+  <h1>The Stochastic Forecast</h1>
+  <p class="page-tagline">27-member ensemble with state-of-the-art uncertainty quantification</p>
+
+  <noscript>Sorry, this tool requires Javascript.</noscript>
+
+  <section id="location-section">
+    <div class="location-row">
+      <input
+        type="text"
+        id="location-input"
+        placeholder="City, state or zip code"
+        autocomplete="off"
+      />
+      <button id="locate-btn" type="button">Locate me</button>
+      <button id="forecast-btn" type="button">Get forecast</button>
+    </div>
+    <p class="location-note">Your location is used only to fetch weather data and is not stored.</p>
+  </section>
+
+  <div id="loading-section" style="display: none">
+    <div class="spinner spinner-sm" style="margin: 0 auto; display: block; width: 2rem; height: 2rem; border-width: 0.3rem;"></div>
+    <p id="loading-headline" class="loading-headline">Initializing 27-member ensemble...</p>
+    <div id="status-log" class="status-log"></div>
+  </div>
+
+  <div id="error-section" style="display: none">
+    <p id="error-message" style="color: var(--red)"></p>
+    <button id="retry-btn" type="button" class="low-key">Try again</button>
+  </div>
+
+  <div id="results-section" style="display: none">
+    <div id="retrograde-badge" class="retrograde-badge" style="display: none">
+      &#9888; Mercury is in retrograde. Model skill is not guaranteed.
+    </div>
+
+    <section id="current-section">
+      <h2>Current Conditions <small id="current-location" style="color: var(--mint); font-weight: normal;"></small></h2>
+      <div class="conditions-grid" id="conditions-grid"></div>
+    </section>
+
+    <section id="ensemble-section">
+      <h2>Ensemble Forecast <small id="ensemble-location"></small></h2>
+      <div id="ensemble-body">
+        <p class="ensemble-computing">
+          Computing ensemble mean&hellip; <span id="members-done-count">0</span> / 27 members complete
+        </p>
+      </div>
+    </section>
+
+    <section id="members-section">
+      <h2>Model Members</h2>
+      <p class="members-note">Each model runs independently. Weights are randomized each load.</p>
+      <div id="members-grid" class="members-grid"></div>
+    </section>
+  </div>
+
+  <Fragment slot="body-end">
+    <script is:inline src="/tools/stochastic-forecast/stochastic-forecast.js" defer></script>
+  </Fragment>
+</Base>
