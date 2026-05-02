@@ -548,7 +548,7 @@ async function buildForecastData(lat, lon, geocodedName) {
   const { climo, extremes } = climoResult.value;
   const climoTempStr = isUS ? Math.round(toF(climo.temp_c)) + '°F' : Math.round(climo.temp_c) + '°C';
   const climoPressStr = Math.round(climo.pressure_hpa) + ' hPa';
-  logStatus('climo', '✓ climo mean: ' + climoTempStr + ', ' + climoPressStr, 'done');
+  logStatus('climo', '✓ historical average: ' + climoTempStr + ', ' + climoPressStr, 'done');
   const extLoStr = isUS ? Math.round(toF(extremes.temp.min)) + '°F' : Math.round(extremes.temp.min) + '°C';
   const extHiStr = isUS ? Math.round(toF(extremes.temp.max)) + '°F' : Math.round(extremes.temp.max) + '°C';
   logStatus('extremes', '> checking seasonal extremes...', 'pending');
@@ -1294,7 +1294,7 @@ function computeNarrative(memberResult, isUS, fd) {
   switch (memberResult.member_id) {
     case 2: {
       if (!tHi) return 'Started in the dark and it only got darker from there.';
-      return hiLo + ' tomorrow. Each step re-anchored to climo with no memory of the last. No idea where it was.';
+      return hiLo + ' tomorrow. Each step re-anchored to average with no memory of the last. No idea where it was.';
     }
     case 3: {
       if (!tHi) return 'Confidence: maximum. Basis: optional.';
