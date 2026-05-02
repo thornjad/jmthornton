@@ -1170,7 +1170,7 @@ function computeEnsemble(allForecasts, weights) {
     const precip = wmean(vars.precip_prob);
     const cloud = wmean(vars.cloud_cover);
 
-    const precipFinal = precip !== null ? (clamp(precip, 0, 1) < 0.25 ? 0 : clamp(precip, 0, 1)) : null;
+    const precipFinal = precip !== null ? (clamp(precip, 0, 1) < 0.20 ? 0 : clamp(precip, 0, 1)) : null;
     const ef = {
       lead_h: lead,
       temp_c: t,
