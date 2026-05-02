@@ -13,6 +13,7 @@ interface Props {
   includeOneko?: boolean;
   noindex?: boolean;
   hideFooter?: boolean;
+  coffeeText?: string;
 }
 
 const {
@@ -25,6 +26,7 @@ const {
   includeOneko = false,
   noindex = false,
   hideFooter = false,
+  coffeeText,
 } = Astro.props;
 
 const robotsContent = noindex ? 'noindex' : (robots ?? 'index, follow');
@@ -62,7 +64,7 @@ const robotsContent = noindex ? 'noindex' : (robots ?? 'index, follow');
       <slot />
     </main>
     {!hideFooter && (
-      <Footer variant={footerVariant}>
+      <Footer variant={footerVariant} coffeeText={coffeeText}>
         <slot name="footer-extra" slot="footer-extra" />
       </Footer>
     )}

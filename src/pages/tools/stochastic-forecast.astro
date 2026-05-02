@@ -1,0 +1,672 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base
+  title="Stochastic Forecast | Jade Michael Thornton"
+  description="24-member ensemble forecast with state-of-the-art uncertainty quantification"
+  fontStrategy="prefetch"
+  coffeeText="if you found this fun"
+>
+  <Fragment slot="head">
+    <style>
+      /* ── static template elements (Astro-scoped) ── */
+
+      .page-tagline {
+        margin-top: -0.5em;
+        opacity: 0.7;
+        font-style: italic;
+      }
+
+      .forecast-disclaimer {
+        margin-top: 0.2em;
+        opacity: 0.55;
+        font-style: italic;
+        font-size: 0.85em;
+      }
+
+      #location-section {
+        margin-top: 1.5em;
+      }
+
+      #results-section {
+        margin-top: 1.5em;
+      }
+
+      .location-row {
+        display: flex;
+        gap: 0.5em;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 0.5em;
+      }
+
+      #location-input {
+        flex: 1;
+        min-width: 200px;
+        background: var(--bg-alt);
+        color: var(--fg);
+        border: 1px solid var(--bg-alt-darker);
+        border-radius: var(--border-radius);
+        padding: 10px 12px;
+      }
+
+      .location-note {
+        font-size: 0.85em;
+        opacity: 0.6;
+        margin-top: 0;
+      }
+
+      #loading-section {
+        padding: 2em 0 1em;
+        text-align: center;
+      }
+
+      .loading-headline {
+        font-style: italic;
+        text-align: center;
+        margin: 0.75em 0 1em;
+        font-size: 1.05em;
+        opacity: 0.8;
+      }
+
+      .status-log {
+        background: var(--bg-alt-darker);
+        color: var(--green);
+        font-family: var(--font-mono);
+        font-size: 0.8em;
+        text-align: left;
+        padding: 0.75em 1em;
+        border-radius: var(--border-radius);
+        max-height: 11em;
+        overflow-y: auto;
+        margin-top: 0.75em;
+      }
+
+      #loading-section .spinner {
+        margin: 0 auto;
+        width: 2rem;
+        height: 2rem;
+        border-width: 0.3rem;
+        display: block;
+      }
+
+      .ensemble-heading-row {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.6em;
+        margin-bottom: 0.5em;
+      }
+
+      .ensemble-heading-row h2 {
+        margin: 0;
+      }
+
+      .retrograde-badge {
+        background: var(--gold);
+        color: #1a1a1a;
+        padding: 0.2em 0.7em;
+        border-radius: var(--border-radius);
+        font-size: 0.78em;
+        font-weight: bold;
+        white-space: nowrap;
+        align-self: center;
+      }
+
+      #current-section {
+        margin-bottom: 2.5em;
+        margin-top: 0;
+      }
+
+      #current-section h2 {
+        margin-bottom: 0.1em;
+      }
+
+      .cond-location {
+        color: var(--mint);
+        font-size: 1em;
+        margin: 0 0 1em;
+        font-style: italic;
+      }
+
+      .conditions-hero {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6em;
+      }
+
+      #ensemble-section {
+        margin-bottom: 2.5em;
+        padding: 1.25em 1.5em;
+        background: var(--bg-alt-darker);
+        border-radius: var(--border-radius);
+        border-left: 4px solid var(--mint);
+      }
+
+      #ensemble-section h2 {
+        margin-top: 0;
+      }
+
+      .ensemble-computing {
+        opacity: 0.65;
+        font-style: italic;
+      }
+
+      .members-note {
+        font-size: 0.85em;
+        opacity: 0.65;
+        margin-top: -0.5em;
+      }
+
+      .members-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75em;
+        margin-top: 1em;
+      }
+
+      .log-disclosure {
+        margin-top: 2em;
+        font-size: 0.85em;
+      }
+
+      .log-disclosure summary {
+        cursor: pointer;
+        font-family: var(--font-mono);
+        opacity: 0.45;
+        list-style: none;
+      }
+
+      .log-disclosure summary::-webkit-details-marker { display: none; }
+
+      .log-disclosure summary:hover {
+        opacity: 0.65;
+      }
+
+      #status-log,
+      .log-disclosure .status-log {
+        background: var(--bg-alt-darker);
+        color: var(--fg);
+        opacity: 1;
+        font-size: 0.85em;
+      }
+
+      .log-disclosure .status-log {
+        margin-top: 0.5em;
+      }
+
+      #status-log .log-done,
+      .log-disclosure .log-done {
+        color: var(--fg);
+      }
+
+      #status-log .log-pending,
+      .log-disclosure .log-pending {
+        opacity: 0.65;
+      }
+
+      #error-section {
+        margin-top: 1em;
+      }
+
+      @media (max-width: 600px) {
+        .location-row {
+          flex-direction: column;
+        }
+
+        #location-input {
+          width: 100%;
+        }
+
+        .location-row button {
+          width: 100%;
+        }
+      }
+    </style>
+
+    <style is:global>
+      /* ── JS-injected elements — not Astro-scoped ── */
+
+      .log-line {
+        margin: 0;
+        line-height: 1.6;
+        white-space: pre;
+      }
+
+      .log-pending { opacity: 0.5; }
+      .log-done { color: var(--green); }
+      .log-error { color: var(--red); }
+
+      .cond-main {
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+        flex-wrap: wrap;
+      }
+
+      .cond-emoji {
+        font-size: 3em;
+        line-height: 1;
+      }
+
+      .cond-temp {
+        font-size: 3.5em;
+        font-weight: bold;
+        color: var(--mint);
+        line-height: 1;
+      }
+
+      .cond-sky {
+        font-size: 1.2em;
+        opacity: 0.8;
+      }
+
+      .cond-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25em 1.25em;
+        font-size: 0.9em;
+        opacity: 0.75;
+      }
+
+      .ensemble-time-label {
+        font-size: 1.1em;
+        opacity: 0.75;
+        margin: 0 0 0.3em;
+        font-weight: bold;
+      }
+
+      .ensemble-headline-row {
+        display: flex;
+        align-items: baseline;
+        gap: 0.25em;
+        flex-wrap: wrap;
+        margin-bottom: 0.25em;
+      }
+
+      .ensemble-headline {
+        font-size: 2.4em;
+        color: var(--mint);
+        font-weight: bold;
+        line-height: 1;
+      }
+
+      .ensemble-lo {
+        opacity: 0.75;
+      }
+
+      .ensemble-hl-tag {
+        font-size: 0.85em;
+        opacity: 0.6;
+      }
+
+      .ensemble-hl-sep {
+        font-size: 1.6em;
+        opacity: 0.25;
+        margin: 0 0.15em;
+        line-height: 1;
+      }
+
+      .ensemble-spread {
+        font-size: 1em;
+        opacity: 0.6;
+        font-family: var(--font-mono);
+        align-self: flex-end;
+        margin-bottom: 0.15em;
+        margin-left: 0.5em;
+      }
+
+      .ensemble-subline {
+        font-size: 0.85em;
+        opacity: 0.65;
+        margin: 0 0 0.25em;
+        font-family: var(--font-mono);
+      }
+
+      .ensemble-disclaimer {
+        font-size: 0.75em;
+        opacity: 0.45;
+        font-style: italic;
+        margin: 0.1em 0 0;
+      }
+
+      .forecast-section-label {
+        font-size: 0.72em;
+        opacity: 0.5;
+        margin: 0 0 0.5em;
+        font-family: var(--font-mono);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .nowcast-cards {
+        display: flex;
+        gap: 0.75em;
+        flex-wrap: wrap;
+      }
+
+      .nowcast-card {
+        background: var(--bg);
+        border: 1px solid var(--pre-border);
+        border-radius: var(--border-radius);
+        padding: 0.75em 1em;
+        min-width: 90px;
+        text-align: center;
+      }
+
+      .nc-time {
+        font-size: 0.72em;
+        opacity: 0.6;
+        font-family: var(--font-mono);
+        margin: 0 0 0.2em;
+      }
+
+      .nc-emoji {
+        font-size: 1.75em;
+        margin: 0.15em 0;
+        line-height: 1;
+      }
+
+      .nc-temp {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: var(--mint);
+        margin: 0.1em 0;
+        font-family: var(--font-mono);
+      }
+
+      .nc-precip {
+        font-size: 0.72em;
+        opacity: 0.6;
+        margin: 0;
+        font-family: var(--font-mono);
+      }
+
+      .daily-forecast {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .daily-row {
+        display: flex;
+        align-items: center;
+        gap: 0.6em;
+        padding: 0.5em 0;
+        border-bottom: 1px solid var(--pre-border);
+        font-size: 0.9em;
+      }
+
+      .daily-row:last-child { border-bottom: none; }
+
+      .dr-day {
+        font-family: var(--font-mono);
+        font-size: 0.88em;
+        min-width: 4.5em;
+        flex-shrink: 0;
+      }
+
+      .dr-emoji { font-size: 1.15em; flex-shrink: 0; }
+
+      .dr-range {
+        font-family: var(--font-mono);
+        color: var(--mint);
+        font-size: 0.88em;
+      }
+
+      .dr-spread {
+        font-family: var(--font-mono);
+        font-size: 0.78em;
+        opacity: 0.5;
+      }
+
+      .dr-sep {
+        opacity: 0.3;
+        margin: 0 0.3em;
+      }
+
+      .dr-precip {
+        font-family: var(--font-mono);
+        font-size: 0.82em;
+        opacity: 0.55;
+      }
+
+      .dr-humidity {
+        font-family: var(--font-mono);
+        font-size: 0.82em;
+        opacity: 0.55;
+      }
+
+      .member-card {
+        border: 1px solid var(--pre-border);
+        border-left: 5px solid var(--mint);
+        border-radius: var(--border-radius);
+        padding: 1em 1.25em;
+      }
+
+      .member-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 0.5em;
+      }
+
+      .member-name {
+        font-weight: bold;
+        font-family: var(--font-mono);
+        font-size: 1.05em;
+        color: var(--mint);
+        letter-spacing: 0.02em;
+      }
+
+      .member-weight {
+        font-size: 0.75em;
+        opacity: 0.45;
+        font-family: var(--font-mono);
+      }
+
+      .member-loading-state {
+        display: flex;
+        align-items: center;
+        gap: 0.6em;
+        color: var(--fg);
+        opacity: 0.45;
+        font-size: 0.85em;
+        padding: 0.4em 0;
+      }
+
+      .spinner-sm {
+        width: 0.85rem;
+        height: 0.85rem;
+        border-width: 0.14rem;
+        margin: 0;
+        flex-shrink: 0;
+        display: inline-block;
+      }
+
+      .member-name-group {
+        display: flex;
+        align-items: baseline;
+        gap: 0.3em;
+        flex-wrap: wrap;
+        min-width: 0;
+      }
+
+      .member-tagline-inline {
+        font-size: 0.78em;
+        opacity: 0.45;
+        font-style: italic;
+        font-weight: normal;
+      }
+
+      .member-narrative {
+        font-size: 0.85em;
+        margin: 0.25em 0 0.6em;
+        line-height: 1.45;
+        opacity: 0.7;
+      }
+
+      .member-fc-row {
+        margin: 0 0 0.5em;
+      }
+
+      .member-fc-line {
+        display: grid;
+        grid-template-columns: 7em 1.4em 3.8em auto;
+        gap: 0 0.4em;
+        font-family: var(--font-mono);
+        font-size: 0.8em;
+        line-height: 1.7;
+        align-items: center;
+      }
+
+      .member-fc-tomorrow {
+        border-top: 1px solid var(--pre-border);
+        margin-top: 0.15em;
+        padding-top: 0.15em;
+      }
+
+      .mfc-time { opacity: 0.6; }
+
+      .mfc-temp {
+        color: var(--mint);
+        font-weight: bold;
+      }
+
+      .mfc-detail { opacity: 0.55; }
+
+      .member-details-btn {
+        background: none;
+        border: none;
+        border-color: transparent;
+        color: var(--mint);
+        cursor: pointer;
+        font-size: 0.82em;
+        padding: 0;
+        min-width: 0;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        opacity: 0.7;
+      }
+
+      .member-details-btn:hover {
+        opacity: 1;
+        background: none;
+        color: var(--mint);
+      }
+
+      .member-details {
+        margin-top: 0.75em;
+        overflow-x: auto;
+      }
+
+      .forecast-table {
+        border-collapse: collapse;
+        width: 100%;
+        font-family: var(--font-mono);
+        font-size: 0.8em;
+      }
+
+      .forecast-table th {
+        text-align: left;
+        border-bottom: 1px solid var(--pre-border);
+        padding: 0.25em 0.6em;
+        opacity: 0.55;
+        white-space: nowrap;
+      }
+
+      .forecast-table td {
+        padding: 0.25em 0.6em;
+        border-bottom: 1px solid var(--pre-border);
+        white-space: nowrap;
+      }
+
+      .null-cell {
+        opacity: 0.25;
+        font-style: italic;
+      }
+
+      .easter-egg {
+        font-size: 0.62em;
+        opacity: 0.55;
+        font-style: italic;
+        letter-spacing: 0.02em;
+      }
+
+      @media (max-width: 600px) {
+        .cond-temp { font-size: 2.75em; }
+        .ensemble-headline { font-size: 2em; }
+      }
+
+    </style>
+  </Fragment>
+
+  <h1>Stochastic Forecast</h1>
+  <p class="page-tagline">24-member ensemble with state-of-the-art uncertainty quantification</p>
+  <p class="forecast-disclaimer">The ensemble is a work of comedy, not meteorology.</p>
+
+  <noscript>Sorry, this tool requires Javascript.</noscript>
+
+  <section id="location-section">
+    <div class="location-row">
+      <input
+        type="text"
+        id="location-input"
+        placeholder="City, state or zip code"
+        autocomplete="off"
+      />
+      <button id="forecast-btn" type="button">Get forecast</button>
+      <button id="locate-btn" type="button">Locate me</button>
+    </div>
+    <p class="location-note">Works best for US locations. Your location is used only to fetch weather data and is not stored.</p>
+  </section>
+
+  <div id="loading-section" style="display: none">
+    <div class="spinner" style="margin: 0 auto; display: block; width: 2rem; height: 2rem; border-width: 0.3rem;"></div>
+    <p id="loading-headline" class="loading-headline">Initializing 24-member ensemble...</p>
+    <div id="status-log" class="status-log"></div>
+  </div>
+
+  <div id="error-section" style="display: none">
+    <p id="error-message" style="color: var(--red)"></p>
+    <button id="retry-btn" type="button" class="low-key">Try again</button>
+  </div>
+
+  <div id="results-section" style="display: none">
+    <details id="log-disclosure" class="log-disclosure" open>
+      <summary>forecast build log</summary>
+      <div id="log-archive" class="status-log"></div>
+    </details>
+
+    <section id="current-section">
+      <h2>Current Conditions</h2>
+      <p class="cond-location" id="current-location"></p>
+      <div class="conditions-hero" id="conditions-hero"></div>
+    </section>
+
+    <section id="ensemble-section">
+      <div class="ensemble-heading-row">
+        <h2>Ensemble Forecast <small id="ensemble-location" style="opacity: 0.6; font-weight: normal;"></small></h2>
+        <div id="retrograde-badge" class="retrograde-badge" style="display: none">
+          &#9888; Mercury in retrograde. Model skill not guaranteed.
+        </div>
+      </div>
+      <div id="ensemble-body">
+        <p class="ensemble-computing">
+          Computing ensemble mean&hellip; <span id="members-done-count">0</span> / 24 members complete
+        </p>
+      </div>
+    </section>
+
+    <section id="members-section">
+      <h2>Model Members</h2>
+      <p class="members-note">Each of the 24 models runs independently. Weights are what they are.</p>
+      <div id="members-grid" class="members-grid"></div>
+    </section>
+  </div>
+
+  <Fragment slot="body-end">
+    <script is:inline src="/tools/stochastic-forecast/stochastic-forecast.js" defer></script>
+  </Fragment>
+</Base>
