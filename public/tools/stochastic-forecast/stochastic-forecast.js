@@ -1669,7 +1669,7 @@ function computeNarrative(memberResult, isUS, fd) {
     case 28: {
       const climoTF = toF(fd.climo.temp_c);
       const fcTF = tmr && tmr.hi_c !== null ? toF(tmr.hi_c) : null;
-      const dryCoolFront = fcTF !== null && fcTF > climoTF + 20;
+      const dryCoolFront = climoTF > 85 && fcTF !== null && fcTF > climoTF + 10;
       if (!tHi) return randomElement([
         "It's going to be extremely hot. But it's a dry heat. You're fine. Drink some water.",
         "Hot tomorrow. Very hot. But dry. Completely manageable.",
