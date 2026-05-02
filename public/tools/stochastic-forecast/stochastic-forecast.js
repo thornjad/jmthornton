@@ -69,7 +69,7 @@ const MEMBER_DEFS = [
   { id: 23, name: 'influencer',             icon: '📸' },
   { id: 24, name: 'panic',                  icon: '😱' },
   { id: 25, name: 'nostalgia',              icon: '📅' },
-  { id: 26, name: 'astroturfed',              icon: '🌱' },
+  { id: 26, name: 'astroturfed',              icon: ''   },
   { id: 28, name: 'but-its-a-dry-heat',     icon: '🏜️' },
 ];
 
