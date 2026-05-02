@@ -1105,8 +1105,8 @@ function member26DefinitelyNotSponsored(d) {
 }
 
 function member27RecordBreaker(d) {
-  // slightly beyond actual world records to read as "headed past the record"
-  const RECORDS = { temp: { min: -95, max: 62 }, dewpoint: { min: -65, max: 38 }, pressure: { min: 860, max: 1090 } };
+  // slightly beyond actual world records: cold -89.2°C, hot 56.7°C
+  const RECORDS = { temp: { min: -90.5, max: 57.5 }, dewpoint: { min: -65, max: 38 }, pressure: { min: 860, max: 1090 } };
   const isWarm = (d.current.temp_c ?? d.climo.temp_c) > d.climo.temp_c;
   return {
     member_id: 27, name: 'record-breaker',
@@ -1704,7 +1704,8 @@ function computeNarrative(memberResult, isUS, fd) {
       ]);
     }
     case 27: {
-      const recTemp = fmtTemp(56.7, isUS);
+      const isWarmRun = memberResult.forecasts[0] && memberResult.forecasts[0].temp_c > 0;
+      const recTemp = fmtTemp(isWarmRun ? 56.7 : -89.2, isUS);
       if (!tHi) return randomElement([
         "Current trajectory points directly past the world record. Direction TBD. I recommend appropriate gear.",
         "The record is in range. I expect it to fall tomorrow. Standby for confirmation.",
