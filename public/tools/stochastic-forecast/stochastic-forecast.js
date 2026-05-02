@@ -1295,134 +1295,166 @@ function computeNarrative(memberResult, isUS, fd) {
 
   switch (memberResult.member_id) {
     case 2: {
-      if (!tHi) return 'Started in the dark and it only got darker from there.';
-      return hiLo + ' tomorrow. Each step re-anchored to average with no memory of the last. No idea where it was.';
+      if (!tHi) return "I checked the thermometer. I think. It was hard to tell. Could be cold out there. Could be warm. Hard to say.";
+      return "I'm calling " + hiLo + " tomorrow. I walked outside to verify but I walked into the door frame. I'm pretty confident in those numbers though.";
     }
     case 3: {
-      if (!tHi) return 'Confidence: maximum. Basis: optional.';
+      if (!tHi) return "Somewhere between absolute zero and the surface of the sun. Could go either way. I have no regrets.";
       const far = f168 && f168.temp_c !== null ? fmtTemp(f168.temp_c, isUS) : null;
       return far
-        ? hiLo + ' tomorrow, out to ' + far + ' by day 7. Consequences of a 15-degree step size.'
-        : hiLo + ' tomorrow. Three times normal step size. Full send.';
+        ? hiLo + " tomorrow, then " + far + " by day 7. I stand behind every single one of these numbers."
+        : hiLo + " tomorrow. I am confident. I am very confident.";
     }
     case 4: {
       const mv = memberResult._meanVibes;
       if (mv === undefined || mv === null) return 'The vibe is what it is.';
-      return 'Aggregate vibes score: ' + mv.toFixed(1) + '/10. ' + (mv >= 5 ? 'The vibes were immaculate.' : 'The vibes were off.');
+      const vibeVerdict = mv >= 7 ? 'The vibes were immaculate. Ideal conditions incoming.'
+        : mv <= 3 ? 'The vibes were deeply off. Uncomfortable weather ahead.'
+        : mv >= 5 ? 'Vibes were decent. Conditions near average.'
+        : 'Vibes were rough. Below average weather expected.';
+      return 'Aggregate vibes score: ' + mv.toFixed(1) + '/10. ' + vibeVerdict;
     }
     case 5: {
       const anomSign = (fd.current.temp_c ?? fd.climo.temp_c) > fd.climo.temp_c ? 'warm' : 'cold';
-      if (!tHi) return 'Running ' + anomSign + ' right now, so the correction is obviously coming.';
-      return 'Running ' + anomSign + ' now, so ' + hiLo + ' tomorrow as the correction that is clearly overdue.';
+      if (!tHi) return "It's running " + anomSign + " right now. A correction is obviously coming. That's just how temperature works.";
+      return "It's been too " + anomSign + ", so I put " + hiLo + " tomorrow. The overcorrection is not only inevitable, it is correct.";
     }
     case 6: {
       const trendVal = (fd.current.temp_c ?? fd.climo.temp_c) - (fd.obs_6h_ago.temp_c ?? fd.current.temp_c ?? fd.climo.temp_c);
-      const dir = trendVal > 0.5 ? 'warming' : trendVal < -0.5 ? 'cooling' : 'flat';
-      if (!tHi) return 'The ' + dir + ' trend has never failed and I see no reason it would start now.';
-      return dir.charAt(0).toUpperCase() + dir.slice(1) + ' trend extrapolated to ' + (tHi || 'unknown') + ' tomorrow - trend has never failed before.';
+      const dir = trendVal > 0.5 ? 'warming' : trendVal < -0.5 ? 'cooling' : 'holding steady';
+      if (!tHi) return "We're " + dir + ". I have extrapolated this to its logical conclusion. The trend has never failed.";
+      return "We're " + dir + ", so I'm calling " + tHi + " tomorrow. I have ridden this trend to its end. It has never let me down.";
     }
     case 7: {
       if (fd.is_retrograde) {
-        if (!tHi) return 'Mercury retrograde amplifying everything - treat all values as entertainment.';
-        return 'Retrograde walk at 10x normal yields ' + hiLo + ' tomorrow - I cannot be held responsible for this.';
+        if (!tHi) return "Mercury is literally going backwards right now. I cannot be held responsible for any of these numbers.";
+        return "Mercury is in retrograde. I got " + hiLo + " for tomorrow. That is Mercury's fault, not mine.";
       }
-      if (!tHi) return 'Outside retrograde window, forecast is subdued - for now.';
-      return 'Outside retrograde, subdued walk - calling ' + hiLo + ' tomorrow, pending any planetary disruption.';
+      if (!tHi) return "No retrograde today. I'm calling normal temperatures. Cautiously optimistic.";
+      return hiLo + " tomorrow. Mercury is cooperating. For now. I wouldn't get too comfortable.";
     }
     case 8: {
-      return "There is a 30% chance it is raining right now. " + (tHi ? 'Tomorrow near ' + tHi + ' with a ' + (tPrecip || '30%') + ' chance of precipitation.' : '');
+      if (!tHi) return "Tonight: cloudy with a 30% chance of precipitation. Tomorrow: similar. Back to you in the studio.";
+      return "Tomorrow's high near " + tHi + ", low near " + (tLo || 'seasonal') + ". " + (tPrecip || '30%') + " chance of precipitation. Have a great night, everyone.";
     }
     case 9: {
       const dayName = DAY_NAMES[fd.obs_random_past.weekday];
       const monthName = MONTH_NAMES[fd.obs_random_past.month];
-      return 'Sourced from a ' + dayName + ' in ' + monthName + '. That ' + dayName + ' was probably fine.';
+      if (!tHi) return "I asked a " + dayName + " in " + monthName + " what the weather would be. It answered. I'm going with that.";
+      return "I asked a " + dayName + " in " + monthName + " and it said " + tHi + ". That " + dayName + " had no reason to lie.";
     }
     case 10: {
-      return 'Nothing has changed. Nothing will change.';
+      if (!tHi) return "Same as today. Same as tomorrow. Same as it has always been. I have made my peace with this.";
+      return hiLo + " tomorrow. Same as today. Same as yesterday. Same as next week. I find it comforting.";
     }
     case 11: {
-      if (fd.current.has_lightning) return 'CG!! CG!! CG!! Storm of the century confirmed. 100% precip locked in for the full period.';
-      return 'No lightning detected. Staying vigilant. Positioned for intercept.';
+      if (fd.current.has_lightning) return "CG!! CG!! CG!! I'm calling 100% precip all leads! Get in the car! We are going! Right now!";
+      if (!tHi) return "Nothing to chase right now. I've put in my forecast. I'll be parked near the car just in case.";
+      return hiLo + " tomorrow, " + (tPrecip || '0%') + " precip. No lightning yet. I'm staying close to the car. You never know.";
     }
     case 12: {
       const tomorrowTmpC = tmr && tmr.avg_temp_c !== null ? tmr.avg_temp_c : null;
       const shotsWeather = tomorrowTmpC !== null && tomorrowTmpC > -5 && tomorrowTmpC < 0;
       const windNote = "It's the wind that'll get ya.";
-      if (!tHi) return 'Uff da. Real cold. ' + windNote;
-      if (shotsWeather) return hiLo + ' tomorrow. Shorts weather. ' + windNote;
+      if (!tHi) return 'Uff da. Real cold out there. ' + windNote;
+      if (shotsWeather) return hiLo + ' tomorrow. Shorts weather, honestly. ' + windNote;
       const mnNarratives = [
         'Oh ya, ' + hiLo + ' tomorrow. Bundle up, for Pete\'s sake. ' + windNote,
         hiLo + ' tomorrow, you betcha. Good hotdish weather. ' + windNote,
-        'Yah sure, ' + hiLo + ' tomorrow. We\'ve seen worse, oh for sure. ' + windNote,
+        'Yah sure, ' + hiLo + ' tomorrow. We\'ve seen worse in February, oh for sure. ' + windNote,
         'Oh, ' + hiLo + ' tomorrow. Don\'t worry, it warms up in July. ' + windNote,
       ];
       return mnNarratives[Math.floor(fd.date.getDate() % mnNarratives.length)];
     }
     case 13: {
-      return 'Arrived six hours early. Updates are for quitters.';
+      if (!tHi) return "I got here six hours early and locked in my forecast. It is locked. I am not revisiting it.";
+      return hiLo + " tomorrow. I called that six hours ago and I stand by it completely. Updates are for people with no conviction.";
     }
     case 14: {
       const dow = fd.day_of_week;
-      if (dow === 5) return 'TGIF.';
-      if (dow === 1) return "Mondays, am I right?";
-      return "Day-of-week bias applied. Mondays still hurt the most.";
+      if (dow === 5) return "TGIF. " + (tHi ? tHi + " tomorrow. The weekend earned this." : "The forecast is good. It has to be.");
+      if (dow === 1) return (tHi ? hiLo + " tomorrow." : "Already looking rough.") + " It's Monday. Of course it is.";
+      return (tHi ? hiLo + " tomorrow. " : "") + "Still better than a Monday, technically.";
     }
     case 17: {
-      return 'Arithmetic mean of 25 nonsense forecasts. Half the results are pending further funding.';
+      const nullCount = memberResult.forecasts.reduce((n, f) =>
+        n + [f.temp_c, f.dewpoint_c, f.pressure_hpa, f.precip_prob, f.cloud_cover].filter(v => v === null).length, 0);
+      if (!tHi) return "The committee has reviewed the submissions. Several variables require additional funding before we can comment.";
+      return "The committee arrived at " + hiLo + " for tomorrow. " +
+        (nullCount > 5 ? nullCount + " variables are still pending peer review and continued funding." : "Methodology available upon request.");
     }
     case 18: {
-      return "Dew point equals temperature. That's just how air works.";
+      if (!tHi) return "It will be whatever temperature it is tomorrow, at 100% relative humidity. The air will be completely saturated. This is normal.";
+      return hiLo + " tomorrow at 100% relative humidity. The dew point equals the temperature. You will feel every degree of that " + tHi + ".";
     }
     case 19: {
       const isWarm = (fd.current.temp_c ?? fd.climo.temp_c) > fd.climo.temp_c;
-      return isWarm
-        ? 'DEVELOPING: Unprecedented warmth forecast. Stay tuned.'
-        : 'DEVELOPING: Historic cold threatens region. Details at 11.';
+      if (!tHi) return "DEVELOPING: Unprecedented conditions inbound for your area. Stay with us for continuous coverage.";
+      return "DEVELOPING: " + (isWarm ? "Unprecedented warmth threatens region. " : "Historic cold event unfolding. ") +
+        "I'm forecasting " + tHi + " tomorrow. We will continue to update this story as it develops.";
     }
     case 20: {
       const pct = tPrecip || '52%';
-      return pct + ' engagement probability. Share to confirm.';
+      if (!tHi) return "You won't BELIEVE what's coming. LIKE AND SUBSCRIBE to unlock the full forecast.";
+      return hiLo + " and " + pct + " precip tomorrow. SHARE THIS FORECAST to find out if it actually rains. Your engagement determines the weather.";
     }
     case 21: {
-      return 'Some models warm. Some models cool. Both are correct.';
+      const exHi = fmtTemp(fd.extremes.temp.max, isUS);
+      const exLo = fmtTemp(fd.extremes.temp.min, isUS);
+      return "Some data says " + exHi + ". Other data says " + exLo + ". " + (tHi ? "I gave both equal weight. Hence " + hiLo + "." : "Both deserve equal coverage.");
     }
     case 22: {
       const vpn = memberResult.tagline.includes('Brought to you by ')
         ? memberResult.tagline.split('Brought to you by ')[1].replace('.', '')
         : 'our sponsor';
-      return 'Perfect conditions for outdoor advertising. Brought to you by ' + vpn + '.';
+      if (!tHi) return "Beautiful day ahead. Zero clouds, zero precip. Brought to you by " + vpn + ".";
+      return tHi + " and sunny tomorrow. Zero clouds, zero precipitation. Brought to you by " + vpn + ". Perfect conditions to browse securely.";
     }
     case 23: {
       const tl = memberResult.tagline;
-      if (tl.includes('Full moon')) return 'Full moon energy detected. Maximum reach.';
-      if (tl.includes('Rain')) return 'This is content.';
-      return 'Lighting looks incredible right now.';
+      if (tl.includes('Full moon')) {
+        return (tHi ? tHi + " tonight and " : "") + "the full moon is out. The lighting is already ethereal. Zero clouds. Zero precip. Maximum reach.";
+      }
+      if (tl.includes('Rain')) {
+        return (hiLo ? hiLo + " and " + (tPrecip || 'heavy') + " precip tomorrow. " : "") + "The storm aesthetic is unreal right now. This is incredible content.";
+      }
+      return (tHi ? tHi + " tomorrow. " : "") + "Golden hour is going to be absolutely insane. Zero clouds. You need to be outside for this.";
     }
     case 24: {
       const tl = memberResult.tagline;
-      if (tl.includes('FALLING')) return 'IT IS FALLING. EVERYTHING IS FALLING.';
-      if (tl.includes('RISING')) return 'PRESSURE RISING. UNKNOWN IF GOOD.';
-      if (tl.includes('ALL IS DARK')) return 'ALL IS DARK. NO READINGS. NO HOPE.';
-      return 'Suspicious stillness.';
+      if (tl.includes('FALLING')) {
+        return "PRESSURE IS FALLING. I am calling " + (tLo || 'dangerously cold lows') + " and " + (tPrecip || '100%') + " precip. THIS IS NOT A DRILL. EVERYONE SHOULD BE CONCERNED.";
+      }
+      if (tl.includes('RISING')) {
+        return "PRESSURE IS RISING. I got " + (tHi || 'warming') + " and clearing. I DON'T KNOW IF THIS IS GOOD OR BAD. PANICKING REGARDLESS.";
+      }
+      if (tl.includes('ALL IS DARK')) {
+        return "New moon. No light. I'm holding at " + (tHi || fmtTemp(fd.climo.temp_c, isUS)) + " until the sky clears. Something feels wrong.";
+      }
+      return (hiLo ? hiLo + " tomorrow. " : "") + "No pressure trend. Nothing is changing. I don't trust it.";
     }
     case 25: {
       const obs = fd.obs_nostalgia;
       const wday = DAY_NAMES[obs.weekday];
       const mon = MONTH_NAMES[obs.month];
-      return 'Consulting a ' + wday + ' in ' + mon + ' ' + obs.year + '. History is a guide.';
+      if (!tHi) return "I found a " + wday + " in " + mon + " " + obs.year + " that looked just like today. I'm going with what it did.";
+      return "I found a " + wday + " in " + mon + " " + obs.year + " just like this one. It came in at " + tHi + ". That " + wday + " had no reason to lie.";
     }
     case 26: {
-      return 'Our projections align closely with climatology. No further comment.';
+      if (!tHi) return "Our projections are consistent with natural baseline variability. Any warming trend you observe is completely normal. No further comment.";
+      return hiLo + " tomorrow, consistent with our gradual baseline projections. This is entirely natural. There is nothing unusual happening here. No further comment.";
     }
     case 27: {
-      return 'The current trajectory points directly past the world record.';
+      if (!tHi) return "Current trajectory points directly past the world record. Direction TBD. I recommend appropriate gear.";
+      return "I'm calling " + tHi + " for tomorrow. The all-time record is " + fmtTemp(isUS ? 56.7 : 56.7, isUS) + ". We are on track to exceed it.";
     }
     case 28: {
       const climoTF = toF(fd.climo.temp_c);
       const fcTF = tmr && tmr.hi_c !== null ? toF(tmr.hi_c) : null;
       const dryCoolFront = fcTF !== null && fcTF > climoTF + 20;
-      return 'It is hot. But it is a dry heat. You are fine. ' +
-        (dryCoolFront ? 'Practically a cool front by local standards.' : 'Air conditioning is a crutch.');
+      if (!tHi) return "It's going to be extremely hot. But it's a dry heat. You're fine. Drink some water.";
+      return tHi + " tomorrow. Yes, that number looks high. But it's a dry heat. " +
+        (dryCoolFront ? "Practically a cool front by local standards." : "Air conditioning is a crutch.");
     }
     default:
       return '';
