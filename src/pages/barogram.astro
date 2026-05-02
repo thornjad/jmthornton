@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import css from '../data/barogram-style.css?raw';
+import bodyHtml from '../data/barogram-body.html?raw';
+import scripts from '../data/barogram-scripts.html?raw';
+---
+<Base
+  title="Barogram — jmthornton.net"
+  description="Personal weather forecast ensemble tracking local temperature, dew point, pressure, and precipitation probability."
+  footerVariant="standard"
+>
+  <Fragment slot="head" set:html={`<style>${css}</style>`} />
+  <Fragment set:html={bodyHtml} />
+  <Fragment slot="body-end" set:html={scripts} />
+</Base>
