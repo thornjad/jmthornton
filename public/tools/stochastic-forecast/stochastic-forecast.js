@@ -543,6 +543,24 @@ async function buildForecastData(lat, lon, geocodedName) {
     logStatus('nws', '✓ current conditions loaded via Open-Meteo', 'done');
   }
 
+  const currentTempStr = current.temp_c !== null
+    ? (isUS ? Math.round(toF(current.temp_c)) + '°F' : Math.round(current.temp_c) + '°C')
+    : 'unknown';
+  const skyDesc = current.cloud_cover !== null
+    ? (current.cloud_cover < 0.2 ? 'clear' : current.cloud_cover < 0.5 ? 'partly cloudy' : current.cloud_cover < 0.8 ? 'mostly cloudy' : 'overcast')
+    : 'unknown sky';
+  const lightningNote = current.has_lightning ? ', lightning active' : '';
+  logStatus('current-obs', '✓ currently ' + currentTempStr + ', ' + skyDesc + lightningNote, 'done');
+
+  const pressDelta = (current.pressure_hpa !== null && obs6h.pressure_hpa !== null)
+    ? current.pressure_hpa - obs6h.pressure_hpa : null;
+  const pressDir = pressDelta === null ? 'steady'
+    : pressDelta > 0.5 ? 'rising' : pressDelta < -0.5 ? 'falling' : 'steady';
+  const pressDeltaStr = pressDelta !== null && Math.abs(pressDelta) >= 0.5
+    ? ' (' + (pressDelta > 0 ? '+' : '') + pressDelta.toFixed(1) + ' hPa / 6h)' : '';
+  logStatus('pressure-trend', '> checking pressure trend...', 'pending');
+  logStatus('pressure-trend', '✓ pressure ' + pressDir + pressDeltaStr, 'done');
+
   if (climoResult.status === 'rejected') {
     throw new Error('Failed to load historical archive: ' + climoResult.reason);
   }
@@ -581,6 +599,9 @@ async function buildForecastData(lat, lon, geocodedName) {
   // crowd-sourced: random date in past year
   const crowdDaysAgo = Math.floor(randomBetween(30, 365));
   const crowdDate = new Date(Date.now() - crowdDaysAgo * 86400000);
+  const crowdWeekday = DAY_NAMES[crowdDate.getDay()];
+  const crowdMonth = MONTH_NAMES[crowdDate.getMonth()];
+  logStatus('crowd', '> sourcing crowd-sourced analog...', 'pending');
   let obsRandomPast;
   try {
     obsRandomPast = await fetchHistoricalDay(lat, lon, crowdDate);
@@ -589,6 +610,17 @@ async function buildForecastData(lat, lon, geocodedName) {
   }
   obsRandomPast.weekday = crowdDate.getDay();
   obsRandomPast.month = crowdDate.getMonth();
+  logStatus('crowd', '✓ analog sourced from a ' + crowdWeekday + ' in ' + crowdMonth, 'done');
+
+  const moonPh = moonPhase(now);
+  const moonDesc = moonPh < 0.05 || moonPh > 0.95 ? 'new moon'
+    : moonPh > 0.45 && moonPh < 0.55 ? 'full moon'
+    : moonPh < 0.25 ? 'waxing crescent'
+    : moonPh < 0.45 ? 'waxing gibbous'
+    : moonPh < 0.75 ? 'waning gibbous'
+    : 'waning crescent';
+  logStatus('moon', '> checking lunar phase...', 'pending');
+  logStatus('moon', '✓ ' + moonDesc + ' (' + Math.round(moonPh * 100) + '% illumination)', 'done');
 
   return {
     lat, lon,
@@ -604,7 +636,7 @@ async function buildForecastData(lat, lon, geocodedName) {
     hour: now.getHours(),
     day_of_week: now.getDay(),
     is_retrograde: isRetrograde(now),
-    moon_phase: moonPhase(now),
+    moon_phase: moonPh,
     climo,
     extremes,
   };
@@ -2060,12 +2092,32 @@ async function runForecast(lat, lon, geocodedName) {
     }, 320);
   }, afterVpn);
 
+  const meanVibes = vibes._meanVibes;
+  setTimeout(() => {
+    logStatus('vibes', '> calibrating vibes score...', 'pending');
+    setTimeout(() => {
+      const vibesVerdict = meanVibes === null ? 'indeterminate'
+        : meanVibes >= 7 ? 'immaculate' : meanVibes >= 5 ? 'acceptable' : meanVibes >= 3 ? 'rough' : 'deeply off';
+      logStatus('vibes', '✓ aggregate vibes: ' + (meanVibes !== null ? meanVibes.toFixed(1) + '/10' : 'N/A') + ' — ' + vibesVerdict, 'done');
+    }, 260);
+  }, afterVpn + 400);
+
+  const prNullCount = pr.forecasts.reduce((n, f) =>
+    n + [f.temp_c, f.dewpoint_c, f.pressure_hpa, f.precip_prob, f.cloud_cover].filter(v => v === null).length, 0);
+
   setTimeout(() => {
     logStatus('ensemble', '> computing ensemble mean and spread...', 'pending');
     setTimeout(() => {
       logStatus('ensemble', '✓ ensemble ready — uncertainty quantified', 'done');
     }, 280);
-  }, afterVpn + 450);
+  }, afterVpn + 550);
+
+  setTimeout(() => {
+    logStatus('peer-review', '> awaiting peer review...', 'pending');
+    setTimeout(() => {
+      logStatus('peer-review', '✓ ' + prNullCount + ' result' + (prNullCount !== 1 ? 's' : '') + ' pending further funding', 'done');
+    }, 310);
+  }, afterVpn + 900);
 
   // reveal everything after all log entries finish
   setTimeout(() => {
