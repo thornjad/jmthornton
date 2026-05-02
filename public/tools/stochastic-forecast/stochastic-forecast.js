@@ -1357,7 +1357,7 @@ function computeNarrative(memberResult, isUS, fd) {
       ]);
       return randomElement([
         "It's been too " + anomSign + ", so I put " + hiLo + " tomorrow. The overcorrection is not only inevitable, it is correct.",
-        "Running " + anomSign + " right now. Nature corrects. I am nature's instrument. " + hiLo + " tomorrow.",
+        "Too " + anomSign + " right now. Obviously it's going to flip. That's what temperature does. " + hiLo + " tomorrow.",
         "Too " + anomSign + " today means " + opp + "er tomorrow. That's just thermodynamics. Calling " + hiLo + ".",
         "What goes " + anomSign + " must come back. " + hiLo + " is where it lands. I don't make the rules.",
       ]);
@@ -1373,7 +1373,7 @@ function computeNarrative(memberResult, isUS, fd) {
         "We're " + dir + ", so I'm calling " + tHi + " tomorrow. I have ridden this trend to its end. It has never let me down.",
         "We're " + dir + ". I locked in " + tHi + " and didn't look away. This is the result.",
         dir.charAt(0).toUpperCase() + dir.slice(1) + " hard. " + tHi + " tomorrow. The trend is the signal. Everything else is noise.",
-        "Trajectory: " + dir + ". Extrapolated to tomorrow: " + tHi + ". I don't know how to stop and I won't.",
+        "Trajectory: " + dir + ". Extrapolated to tomorrow: " + tHi + ". The trend continues. It always continues.",
       ]);
     }
     case 7: {
@@ -1433,7 +1433,7 @@ function computeNarrative(memberResult, isUS, fd) {
         hiLo + " tomorrow. Same as today. Same as yesterday. Same as next week. I find it comforting.",
         "Today: " + hiLo + ". Tomorrow: " + hiLo + ". The day after: " + hiLo + ". I see no reason to update.",
         hiLo + " tomorrow, as expected. Nothing changes. I have made my peace with this and you should too.",
-        "The forecast is " + hiLo + ". The forecast will remain " + hiLo + ". This is not a bug.",
+        "The forecast is " + hiLo + ". The forecast will remain " + hiLo + ". I will not be filing an update.",
       ]);
     }
     case 11: {
@@ -1472,7 +1472,7 @@ function computeNarrative(memberResult, isUS, fd) {
     case 13: {
       if (!tHi) return randomElement([
         "I got here six hours early and locked in my forecast. It is locked. I am not revisiting it.",
-        "Already filed. Already locked. No further comment until verification.",
+        "Already filed. Already locked. I'll check verification tomorrow to see how right I was.",
       ]);
       return randomElement([
         hiLo + " tomorrow. I called that six hours ago and I stand by it completely. Updates are for people with no conviction.",
@@ -1591,7 +1591,7 @@ function computeNarrative(memberResult, isUS, fd) {
       if (tl.includes('Full moon')) return randomElement([
         (tHi ? tHi + " and " : "") + "the full moon is out. The lighting is already ethereal. Zero clouds. Zero precip. Maximum reach.",
         "Full moon tonight. " + (tHi || "Perfect temps") + " and zero clouds. This is the content.",
-        (tHi ? tHi + " tomorrow. " : "") + "Full moon. Zero clouds. I'm not even forecasting, I'm just describing the vibe.",
+        (tHi ? tHi + " tomorrow. " : "") + "Full moon. Zero clouds. The content writes itself.",
       ]);
       if (tl.includes('Rain')) return randomElement([
         (hiLo ? hiLo + " and " + (tPrecip || 'heavy') + " precip tomorrow. " : "") + "The storm aesthetic is unreal right now. This is incredible content.",
