@@ -1669,20 +1669,16 @@ function computeNarrative(memberResult, isUS, fd) {
     case 28: {
       const climoTF = toF(fd.climo.temp_c);
       const fcTF = tmr && tmr.hi_c !== null ? toF(tmr.hi_c) : null;
-      const dryCoolFront = climoTF > 85 && fcTF !== null && fcTF > climoTF + 10;
       if (!tHi) return randomElement([
         "It's going to be extremely hot. But it's a dry heat. You're fine. Drink some water.",
         "Hot tomorrow. Very hot. But dry. Completely manageable.",
-      ]);
-      if (dryCoolFront) return randomElement([
-        tHi + " tomorrow. Yes, that number looks high. But it's a dry heat. Practically a cool front by local standards.",
-        "I'm calling " + tHi + " and that is a mild day around here. Dry heat. You'll be fine.",
       ]);
       return randomElement([
         tHi + " tomorrow. Yes, that number looks high. But it's a dry heat. Air conditioning is a crutch.",
         tHi + " tomorrow. Dry heat. Stay hydrated. Stop complaining.",
         "I'm putting " + tHi + " out there. It's not 'hot,' it's warm with low humidity. The distinction matters.",
         tHi + " tomorrow. Drink some water. It's a dry heat. You'll be fine.",
+        "I'm calling " + tHi + " and that is a perfectly reasonable temperature. Dry heat. You'll be fine.",
       ]);
     }
     default:
