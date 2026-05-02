@@ -134,7 +134,7 @@ import Base from '../../layouts/Base.astro';
       #ensemble-section {
         margin-bottom: 2.5em;
         padding: 1.25em 1.5em;
-        background: var(--bg-alt);
+        background: var(--bg-alt-darker);
         border-radius: var(--border-radius);
         border-left: 4px solid var(--mint);
       }
@@ -181,7 +181,7 @@ import Base from '../../layouts/Base.astro';
 
       #status-log,
       .log-disclosure .status-log {
-        background: var(--bg-alt);
+        background: var(--bg-alt-darker);
         color: var(--fg);
         opacity: 1;
         font-size: 0.85em;
@@ -582,13 +582,6 @@ import Base from '../../layouts/Base.astro';
         .ensemble-headline { font-size: 2em; }
       }
 
-      @media (prefers-color-scheme: dark) {
-        #ensemble-section,
-        #status-log,
-        .log-disclosure .status-log {
-          background: var(--bg-alt-darker);
-        }
-      }
     </style>
   </Fragment>
 
