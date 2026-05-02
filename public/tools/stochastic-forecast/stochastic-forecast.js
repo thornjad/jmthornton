@@ -561,6 +561,25 @@ async function buildForecastData(lat, lon, geocodedName) {
   logStatus('pressure-trend', '> checking pressure trend...', 'pending');
   logStatus('pressure-trend', '✓ pressure ' + pressDir + pressDeltaStr, 'done');
 
+  const windKph = current.wind_kph;
+  if (windKph !== null) {
+    const windVal = isUS ? Math.round(windKph * 0.621) + ' mph' : Math.round(windKph) + ' km/h';
+    logStatus('wind', '✓ wind: ' + (windKph < 3 ? 'calm' : windVal), 'done');
+  } else {
+    logStatus('wind', '✓ wind: calm', 'done');
+  }
+
+  const tempChange24h = (current.temp_c !== null && obs24h.temp_c !== null) ? current.temp_c - obs24h.temp_c : null;
+  if (tempChange24h !== null && Math.abs(tempChange24h) >= 1) {
+    const changeVal = isUS ? Math.round(tempChange24h * 9 / 5) : Math.round(tempChange24h);
+    const unit = isUS ? '°F' : '°C';
+    logStatus('trend-24h', '> checking 24h temperature trend...', 'pending');
+    logStatus('trend-24h', '✓ ' + (tempChange24h > 0 ? '+' : '') + changeVal + unit + ' vs. 24 hours ago', 'done');
+  }
+
+  logStatus('lightning', '> scanning for lightning activity...', 'pending');
+  logStatus('lightning', current.has_lightning ? '⚡ lightning detected — CG member on high alert' : '✓ no lightning detected', 'done');
+
   if (climoResult.status === 'rejected') {
     throw new Error('Failed to load historical archive: ' + climoResult.reason);
   }
@@ -2064,7 +2083,31 @@ async function runForecast(lat, lon, geocodedName) {
 
   logStatus('weights', '✓ weights assigned (sponsored-content: ' + weights[22].toFixed(2) + '×, peer-review: ' + weights[17].toFixed(2) + '×)', 'done');
 
+  const topEntry = Object.entries(weights).reduce((a, b) => weights[a[0]] > b[1] ? a : b);
+  const topMember = MEMBER_DEFS.find(m => m.id === parseInt(topEntry[0]));
+
+  const dowName = DAY_NAMES[fd.day_of_week];
+  const dowNote = fd.day_of_week === 1
+    ? '⚠ it\'s Monday — monday-bias member is activated'
+    : fd.day_of_week === 5
+    ? '✓ it\'s Friday — weekend adjustment applied'
+    : '✓ ' + dowName + ' — no special bias';
+
   // self-aware log entries
+  setTimeout(() => {
+    logStatus('dominant', '> identifying dominant member...', 'pending');
+    setTimeout(() => {
+      logStatus('dominant', '✓ highest weighted: ' + (topMember ? topMember.name : 'unknown') + ' (' + topEntry[1].toFixed(2) + '×)', 'done');
+    }, 280);
+  }, 80);
+
+  setTimeout(() => {
+    logStatus('dow', '> checking day of week...', 'pending');
+    setTimeout(() => {
+      logStatus('dow', dowNote, 'done');
+    }, 240);
+  }, 450);
+
   setTimeout(() => {
     logStatus('retrograde', '> consulting Mercury\'s orbital position...', 'pending');
     setTimeout(() => {
@@ -2105,6 +2148,13 @@ async function runForecast(lat, lon, geocodedName) {
   const prNullCount = pr.forecasts.reduce((n, f) =>
     n + [f.temp_c, f.dewpoint_c, f.pressure_hpa, f.precip_prob, f.cloud_cover].filter(v => v === null).length, 0);
 
+  const memberTemps = Object.values(all).flatMap(m =>
+    m.forecasts.filter(f => f.lead_h === 24).map(f => f.temp_c).filter(v => v !== null)
+  );
+  const spreadHi = memberTemps.length ? (isUS ? Math.round(toF(Math.max(...memberTemps))) : Math.round(Math.max(...memberTemps))) : null;
+  const spreadLo = memberTemps.length ? (isUS ? Math.round(toF(Math.min(...memberTemps))) : Math.round(Math.min(...memberTemps))) : null;
+  const spreadUnit = isUS ? '°F' : '°C';
+
   setTimeout(() => {
     logStatus('ensemble', '> computing ensemble mean and spread...', 'pending');
     setTimeout(() => {
@@ -2113,11 +2163,20 @@ async function runForecast(lat, lon, geocodedName) {
   }, afterVpn + 550);
 
   setTimeout(() => {
+    logStatus('spread', '> measuring member disagreement...', 'pending');
+    setTimeout(() => {
+      logStatus('spread', spreadHi !== null
+        ? '✓ 24h member range: ' + spreadLo + '–' + spreadHi + spreadUnit + ' (' + (spreadHi - spreadLo) + spreadUnit + ' spread)'
+        : '✓ spread computed', 'done');
+    }, 260);
+  }, afterVpn + 750);
+
+  setTimeout(() => {
     logStatus('peer-review', '> awaiting peer review...', 'pending');
     setTimeout(() => {
       logStatus('peer-review', '✓ ' + prNullCount + ' result' + (prNullCount !== 1 ? 's' : '') + ' pending further funding', 'done');
     }, 310);
-  }, afterVpn + 900);
+  }, afterVpn + 1050);
 
   // reveal everything after all log entries finish
   setTimeout(() => {
@@ -2139,7 +2198,7 @@ async function runForecast(lat, lon, geocodedName) {
 
     stopLoadingAnimation();
     el('loading-section').style.display = 'none';
-  }, afterVpn + 900);
+  }, afterVpn + 1450);
 }
 
 // ============================================================
