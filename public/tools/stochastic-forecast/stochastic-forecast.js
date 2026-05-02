@@ -26,7 +26,7 @@ const FAKE_VPNS = [
 ];
 
 const LOADING_MESSAGES = [
-  'Initializing 25-member ensemble...',
+  'Initializing 24-member ensemble...',
   'Consulting the historical record...',
   "Checking Mercury's position...",
   'Running uncertainty quantification...',
@@ -70,7 +70,6 @@ const MEMBER_DEFS = [
   { id: 24, name: 'panic',                  icon: '😱' },
   { id: 25, name: 'nostalgia',              icon: '📅' },
   { id: 26, name: 'definitely-not-sponsored', icon: '🛢️' },
-  { id: 27, name: 'record-breaker',         icon: '🏆' },
   { id: 28, name: 'but-its-a-dry-heat',     icon: '🏜️' },
 ];
 
@@ -1104,23 +1103,6 @@ function member26DefinitelyNotSponsored(d) {
   };
 }
 
-function member27RecordBreaker(d) {
-  // slightly beyond actual world records: cold -89.2°C, hot 56.7°C
-  const RECORDS = { temp: { min: -90.5, max: 57.5 }, dewpoint: { min: -65, max: 38 }, pressure: { min: 860, max: 1090 } };
-  const isWarm = (d.current.temp_c ?? d.climo.temp_c) > d.climo.temp_c;
-  return {
-    member_id: 27, name: 'record-breaker',
-    tagline: 'Current trajectory points directly past the world record',
-    forecasts: LEADS.map(lead => makeForecast(
-      lead,
-      isWarm ? RECORDS.temp.max : RECORDS.temp.min,
-      isWarm ? RECORDS.dewpoint.max : RECORDS.dewpoint.min,
-      isWarm ? RECORDS.pressure.max : RECORDS.pressure.min,
-      isWarm ? 0 : 1,
-      clamp((isWarm ? 0 : 1) + randomStep(0.1), 0, 1)
-    )),
-  };
-}
 
 function member28ButItsADryHeat(d) {
   // Always predicts scorching heat: clamp to [85°F, 125°F] = [29.4°C, 51.7°C]
@@ -1703,19 +1685,6 @@ function computeNarrative(memberResult, isUS, fd) {
         "Baseline forecast: " + hiLo + ". Any apparent trend is well within historical norms. We stand by our data. No further comment.",
       ]);
     }
-    case 27: {
-      const isWarmRun = memberResult.forecasts[0] && memberResult.forecasts[0].temp_c > 0;
-      const recTemp = fmtTemp(isWarmRun ? 56.7 : -89.2, isUS);
-      if (!tHi) return randomElement([
-        "Current trajectory points directly past the world record. Direction TBD. I recommend appropriate gear.",
-        "The record is in range. I expect it to fall tomorrow. Standby for confirmation.",
-      ]);
-      return randomElement([
-        "I'm calling " + tHi + " for tomorrow. The all-time record is " + recTemp + ". We are on track to exceed it.",
-        tHi + " tomorrow. The world record stands at " + recTemp + ". Current trajectory has us clearing it.",
-        "Forecasting " + tHi + " tomorrow. That is past the world record of " + recTemp + ". I recommend appropriate gear.",
-      ]);
-    }
     case 28: {
       if (!tHi) return randomElement([
         "It's going to be extremely hot. But it's a dry heat. You're fine. Drink some water.",
@@ -2049,7 +2018,7 @@ async function runForecast(lat, lon, geocodedName) {
     24: () => member24Panic(fd),
     25: () => member25Nostalgia(fd),
     26: () => member26DefinitelyNotSponsored(fd),
-    27: () => member27RecordBreaker(fd),
+
     28: () => member28ButItsADryHeat(fd),
   };
 
@@ -2130,9 +2099,9 @@ async function runForecast(lat, lon, geocodedName) {
   const afterVpn = vpnLine ? 1100 : 650;
 
   setTimeout(() => {
-    logStatus('members', '> running 25-member ensemble...', 'pending');
+    logStatus('members', '> running 24-member ensemble...', 'pending');
     setTimeout(() => {
-      logStatus('members', '✓ all 25 members computed (vibes and peer-review assigned last)', 'done');
+      logStatus('members', '✓ all 24 members computed (vibes and peer-review assigned last)', 'done');
     }, 320);
   }, afterVpn);
 
