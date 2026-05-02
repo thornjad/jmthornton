@@ -1396,7 +1396,7 @@ function computeNarrative(memberResult, isUS, fd) {
     case 20: {
       const pct = tPrecip || '52%';
       if (!tHi) return "You won't BELIEVE what's coming. LIKE AND SUBSCRIBE to unlock the full forecast.";
-      return hiLo + " and " + pct + " precip tomorrow. SHARE THIS FORECAST to find out if it actually rains. Your engagement determines the weather.";
+      return hiLo + " tomorrow and " + pct + " precip. Drop a 🌧️ if you're not ready. The algorithm needs to know.";
     }
     case 21: {
       const exHi = fmtTemp(fd.extremes.temp.max, isUS);
