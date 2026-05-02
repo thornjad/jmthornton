@@ -197,7 +197,9 @@ function groupIntoDays(forecasts, startDate) {
     const maxPrecip = precips.length ? Math.max.apply(null, precips) : null;
     const avgCloud = clouds.length ? clouds.reduce((s, v) => s + v, 0) / clouds.length : null;
     const avgVibes = vibesArr.length ? Math.round(vibesArr.reduce((s, v) => s + v, 0) / vibesArr.length * 10) / 10 : null;
-    result.push({ day, hi_c, lo_c, avg_temp_c: avgTemp, avg_dewpoint_c: avgDew, rep_lead_h: repLeadH, precip_prob: maxPrecip, cloud_cover: avgCloud, vibes: avgVibes });
+    const spreads = pts.map(p => p.temp_spread).filter(v => v !== null && v !== undefined && !isNaN(v));
+    const avgSpread = spreads.length ? spreads.reduce((s, v) => s + v, 0) / spreads.length : null;
+    result.push({ day, hi_c, lo_c, avg_temp_c: avgTemp, avg_dewpoint_c: avgDew, rep_lead_h: repLeadH, precip_prob: maxPrecip, cloud_cover: avgCloud, vibes: avgVibes, avg_spread_c: avgSpread });
   }
   return result;
 }
@@ -1667,6 +1669,9 @@ function showEnsembleResults(ensemble, isUS, startDate) {
           (d.lo_c !== null ? fmtTempHtml(d.lo_c, isUS) : '—') +
           ' / ' +
           (d.hi_c !== null ? fmtTempHtml(d.hi_c, isUS) : '—') +
+          (d.avg_spread_c !== null && d.avg_spread_c !== undefined
+            ? '<span class="dr-spread"> ±' + (isUS ? Math.round(d.avg_spread_c * 9 / 5) : Math.round(d.avg_spread_c)) + '°</span>'
+            : '') +
         '</span>' +
         (rh !== null ? '<span class="dr-humidity">' + rh + '% humidity</span>' : '') +
         '<span class="dr-precip">' + (d.precip_prob !== null ? fmtPrecipHtml(d.precip_prob) + ' ' + escapeHtml(precipLabel(precipTypeForMember(null, d.avg_temp_c, d.rep_lead_h))) : '—') + '</span>';
