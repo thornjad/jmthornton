@@ -272,7 +272,10 @@ function isRetrograde(date) {
 }
 
 function isUSLocation(lat, lon) {
-  return lat >= 24 && lat <= 50 && lon >= -125 && lon <= -66;
+  if (lat >= 24 && lat <= 50 && lon >= -125 && lon <= -66) return true;  // contiguous US
+  if (lat >= 51 && lat <= 72 && lon >= -180 && lon <= -130) return true; // Alaska
+  if (lat >= 18.8 && lat <= 28.5 && lon >= -178.5 && lon <= -154.5) return true; // Hawaii
+  return false;
 }
 
 function sanitize(f) {
@@ -338,6 +341,24 @@ function escapeHtml(s) {
 
 async function geocodeText(query) {
   const isUSZip = /^\d{5}(-\d{4})?$/.test(query.trim());
+  if (isUSZip) {
+    const zip = query.trim().slice(0, 5);
+    try {
+      const res = await fetch('https://api.zippopotam.us/us/' + zip);
+      if (res.ok) {
+        const data = await res.json();
+        const place = data.places?.[0];
+        if (place) {
+          return {
+            lat: parseFloat(place.latitude),
+            lon: parseFloat(place.longitude),
+            displayName: place['place name'] + ', ' + place['state abbreviation'],
+            countryCode: 'US',
+          };
+        }
+      }
+    } catch (_) {}
+  }
   const params = isUSZip
     ? 'postalcode=' + encodeURIComponent(query.trim()) + '&countrycodes=us'
     : 'q=' + encodeURIComponent(query);
@@ -349,11 +370,11 @@ async function geocodeText(query) {
   const addr = r.address || {};
   const city = addr.city || addr.town || addr.village || addr.county || '';
   const state = addr.state || '';
-  const country = addr.country_code ? addr.country_code.toUpperCase() : '';
+  const countryCode = addr.country_code ? addr.country_code.toUpperCase() : '';
   const displayName = city && state ? city + ', ' + state
-    : city && country ? city + ', ' + country
+    : city && countryCode ? city + ', ' + countryCode
     : r.display_name.split(',').slice(0, 2).join(',').trim();
-  return { lat: parseFloat(r.lat), lon: parseFloat(r.lon), displayName };
+  return { lat: parseFloat(r.lat), lon: parseFloat(r.lon), displayName, countryCode };
 }
 
 function extractObsFields(obs) {
@@ -506,10 +527,10 @@ async function fetchHistoricalDay(lat, lon, date) {
   };
 }
 
-async function buildForecastData(lat, lon, geocodedName) {
+async function buildForecastData(lat, lon, geocodedName, countryCode) {
   const now = new Date();
   const month = now.getMonth() + 1;
-  const isUS = isUSLocation(lat, lon);
+  const isUS = countryCode ? countryCode === 'US' : isUSLocation(lat, lon);
 
   logStatus('nws', '> connecting to weather services...', 'pending');
   logStatus('climo', '> loading historical archive...', 'pending');
@@ -524,7 +545,7 @@ async function buildForecastData(lat, lon, geocodedName) {
   if (nwsResult.status === 'fulfilled') {
     useUS = true;
     const { locationLabel: label, obs } = nwsResult.value;
-    locationLabel = label;
+    locationLabel = geocodedName || label;
     current = extractObsFields(obs[0]);
     obs6h = findObsNearHoursAgo(obs, 6) || current;
     obs24h = findObsNearHoursAgo(obs, 24) || current;
@@ -1969,7 +1990,7 @@ function generateWeights(memberIds) {
 // MAIN ORCHESTRATION
 // ============================================================
 
-async function runForecast(lat, lon, geocodedName) {
+async function runForecast(lat, lon, geocodedName, countryCode) {
   membersDone = 0;
   statusLines = [];
   loadingMsgIdx = 0;
@@ -1983,7 +2004,7 @@ async function runForecast(lat, lon, geocodedName) {
 
   let fd;
   try {
-    fd = await buildForecastData(lat, lon, geocodedName);
+    fd = await buildForecastData(lat, lon, geocodedName, countryCode);
   } catch (e) {
     showPageError('Failed to load weather data: ' + e.message);
     return;
@@ -2197,9 +2218,9 @@ function init() {
   const locateBtn = el('locate-btn');
   const retryBtn = el('retry-btn');
 
-  async function startWithLocation(lat, lon, geocodedName) {
+  async function startWithLocation(lat, lon, geocodedName, countryCode) {
     try {
-      await runForecast(lat, lon, geocodedName);
+      await runForecast(lat, lon, geocodedName, countryCode);
     } catch (e) {
       showPageError(e.message);
     }
@@ -2211,10 +2232,10 @@ function init() {
     forecastBtn.disabled = true;
     forecastBtn.textContent = 'Locating...';
     try {
-      const { lat, lon, displayName } = await geocodeText(query);
+      const { lat, lon, displayName, countryCode } = await geocodeText(query);
       forecastBtn.disabled = false;
       forecastBtn.textContent = 'Get forecast';
-      await startWithLocation(lat, lon, displayName);
+      await startWithLocation(lat, lon, displayName, countryCode);
     } catch (e) {
       forecastBtn.disabled = false;
       forecastBtn.textContent = 'Get forecast';
