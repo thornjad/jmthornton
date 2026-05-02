@@ -47,7 +47,7 @@ const MONTH_NAMES = [
 ];
 
 const MEMBER_DEFS = [
-  { id: 2,  name: 'legally blind drunkard' },
+  { id: 2,  name: 'blind-drunkard' },
   { id: 3,  name: 'chaos' },
   { id: 4,  name: 'vibes' },
   { id: 5,  name: 'contrarian' },
@@ -664,7 +664,7 @@ async function buildForecastData(lat, lon, geocodedName) {
 
 function member2BlindDrunkard(d) {
   return {
-    member_id: 2, name: 'legally blind drunkard',
+    member_id: 2, name: 'blind-drunkard',
     tagline: 'Legally blind. Legally drunk.',
     forecasts: LEADS.map(lead => makeForecast(
       lead,
