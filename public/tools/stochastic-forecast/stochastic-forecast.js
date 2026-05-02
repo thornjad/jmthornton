@@ -69,7 +69,7 @@ const MEMBER_DEFS = [
   { id: 23, name: 'influencer',             icon: '📸' },
   { id: 24, name: 'panic',                  icon: '😱' },
   { id: 25, name: 'nostalgia',              icon: '📅' },
-  { id: 26, name: 'definitely-not-sponsored', icon: '🛢️' },
+  { id: 26, name: 'astroturfed',              icon: '🌱' },
   { id: 28, name: 'but-its-a-dry-heat',     icon: '🏜️' },
 ];
 
@@ -1079,19 +1079,19 @@ function member25Nostalgia(d) {
   };
 }
 
-function member26DefinitelyNotSponsored(d) {
+function member26Astroturfed(d) {
   const ref = new Date('2024-01-01');
   const months = (d.date.getFullYear() - ref.getFullYear()) * 12 + (d.date.getMonth() - ref.getMonth());
   const drift = months * 0.1;
 
   const isWinterSolstice = d.date.getMonth() === 11 && d.date.getDate() === 21;
   const isSummerSolstice = d.date.getMonth() === 5 && d.date.getDate() === 21;
-  let tagline = 'Definitely not influenced by fossil fuel interests. Definitely.';
+  let tagline = 'Very similar to climatology, for reasons we cannot disclose';
   if (isWinterSolstice) tagline = 'The drift has peaked. Allegedly.';
   if (isSummerSolstice) tagline = 'The drift continues its natural seasonal cycle. Trust the process.';
 
   return {
-    member_id: 26, name: 'definitely-not-sponsored', tagline,
+    member_id: 26, name: 'astroturfed', tagline,
     forecasts: LEADS.map(lead => makeForecast(
       lead,
       d.climo.temp_c + drift,
@@ -1675,14 +1675,14 @@ function computeNarrative(memberResult, isUS, fd) {
       ]);
     }
     case 26: {
-      if (!tHi) return randomElement([
-        "Our projections are consistent with natural baseline variability. Any warming trend you observe is completely normal. No further comment.",
-        "Conditions are entirely as expected. There is no cause for concern. No further comment.",
-      ]);
+      const refDate = new Date('2024-01-01');
+      const months = (fd.date.getFullYear() - refDate.getFullYear()) * 12 + (fd.date.getMonth() - refDate.getMonth());
+      const drift = (months * 0.1).toFixed(1);
+      if (!tHi) return 'Climatology plus ' + drift + ' degrees of gradual drift — nothing to see here.';
       return randomElement([
-        hiLo + " tomorrow, consistent with our gradual baseline projections. This is entirely natural. There is nothing unusual happening here. No further comment.",
-        hiLo + " tomorrow. Fully consistent with expected natural variability. Our projections remain on track. No further comment.",
-        "Baseline forecast: " + hiLo + ". Any apparent trend is well within historical norms. We stand by our data. No further comment.",
+        'Climatology plus ' + drift + ' of imperceptible drift yields ' + hiLo + ' tomorrow — indistinguishable from normal, which is the point.',
+        hiLo + ' tomorrow. Gradual baseline drift of ' + drift + ' degrees. Perfectly natural. No cause for concern.',
+        'Forecast: ' + hiLo + '. The ' + drift + '-degree drift since 2024 is well within the margin of nothing unusual whatsoever.',
       ]);
     }
     case 28: {
@@ -2017,7 +2017,7 @@ async function runForecast(lat, lon, geocodedName) {
     23: () => member23Influencer(fd),
     24: () => member24Panic(fd),
     25: () => member25Nostalgia(fd),
-    26: () => member26DefinitelyNotSponsored(fd),
+    26: () => member26Astroturfed(fd),
 
     28: () => member28ButItsADryHeat(fd),
   };
