@@ -1995,7 +1995,6 @@ async function runForecast(lat, lon, geocodedName, countryCode) {
   statusLines = [];
   loadingMsgIdx = 0;
 
-  el('location-section').style.display = 'none';
   el('error-section').style.display = 'none';
   el('results-section').style.display = 'none';
   el('loading-section').style.display = 'block';
