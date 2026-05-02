@@ -581,6 +581,14 @@ import Base from '../../layouts/Base.astro';
         .cond-temp { font-size: 2.75em; }
         .ensemble-headline { font-size: 2em; }
       }
+
+      @media (prefers-color-scheme: dark) {
+        #ensemble-section,
+        #status-log,
+        .log-disclosure .status-log {
+          background: var(--bg-alt-darker);
+        }
+      }
     </style>
   </Fragment>
 
