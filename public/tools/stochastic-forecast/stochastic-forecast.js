@@ -1295,166 +1295,395 @@ function computeNarrative(memberResult, isUS, fd) {
 
   switch (memberResult.member_id) {
     case 2: {
-      if (!tHi) return "I checked the thermometer. I think. It was hard to tell. Could be cold out there. Could be warm. Hard to say.";
-      return "I'm calling " + hiLo + " tomorrow. I walked outside to verify but I walked into the door frame. I'm pretty confident in those numbers though.";
+      if (!tHi) return randomElement([
+        "I checked the thermometer. I think. Hard to tell from here.",
+        "I went outside to verify. Something happened. I'm back inside. Forecast pending.",
+        "I have the numbers right here. Give me a second. Actually they're somewhere.",
+      ]);
+      return randomElement([
+        "I'm calling " + hiLo + " tomorrow. I walked outside to check but walked into the door frame. Still confident.",
+        hiLo + " tomorrow. I double-checked. Or once. Either way I'm going with it.",
+        "Pretty sure it's " + hiLo + " tomorrow. I based this on what I could make out through the window.",
+        "Numbers say " + hiLo + ". I wrote those down myself. They look right from where I'm standing.",
+      ]);
     }
     case 3: {
-      if (!tHi) return "Somewhere between absolute zero and the surface of the sun. Could go either way. I have no regrets.";
+      if (!tHi) return randomElement([
+        "Somewhere between absolute zero and the surface of the sun. Could go either way. I have no regrets.",
+        "I don't have the numbers yet but when I do they will be correct. They are always correct.",
+      ]);
       const far = f168 && f168.temp_c !== null ? fmtTemp(f168.temp_c, isUS) : null;
-      return far
-        ? hiLo + " tomorrow, then " + far + " by day 7. I stand behind every single one of these numbers."
-        : hiLo + " tomorrow. I am confident. I am very confident.";
+      if (far) return randomElement([
+        hiLo + " tomorrow, then " + far + " by day 7. I stand behind every single one of these numbers.",
+        "Calling " + hiLo + " tomorrow. Day 7: " + far + ". These numbers are correct. This is final.",
+        hiLo + " through the week, closing at " + far + ". I would bet everything on this.",
+      ]);
+      return randomElement([
+        hiLo + " tomorrow. I am confident. I am very confident.",
+        "Tomorrow: " + hiLo + ". This is not a guess. This is a fact I have decided in advance.",
+        hiLo + " and I would bet money on it. I would bet a lot of money.",
+      ]);
     }
     case 4: {
       const mv = memberResult._meanVibes;
       if (mv === undefined || mv === null) return 'The vibe is what it is.';
-      const vibeVerdict = mv >= 7 ? 'The vibes were immaculate. Ideal conditions incoming.'
-        : mv <= 3 ? 'The vibes were deeply off. Uncomfortable weather ahead.'
-        : mv >= 5 ? 'Vibes were decent. Conditions near average.'
-        : 'Vibes were rough. Below average weather expected.';
-      return 'Aggregate vibes score: ' + mv.toFixed(1) + '/10. ' + vibeVerdict;
+      if (mv >= 7) return randomElement([
+        'Aggregate vibes score: ' + mv.toFixed(1) + '/10. The vibes were immaculate. Ideal conditions incoming.',
+        'Vibes came in at ' + mv.toFixed(1) + '/10. The ensemble is feeling good about tomorrow.',
+        mv.toFixed(1) + '/10 across the board. That is an exceptional vibe reading. Go outside.',
+      ]);
+      if (mv <= 3) return randomElement([
+        'Aggregate vibes score: ' + mv.toFixed(1) + '/10. The vibes were deeply off. Uncomfortable weather ahead.',
+        'Vibes: ' + mv.toFixed(1) + '/10. The ensemble does not feel good about this. Something is wrong out there.',
+        mv.toFixed(1) + '/10. That is a deeply concerning vibe score. Prepare accordingly.',
+      ]);
+      if (mv >= 5) return randomElement([
+        'Aggregate vibes score: ' + mv.toFixed(1) + '/10. Vibes were decent. Conditions near average.',
+        'Vibes at ' + mv.toFixed(1) + '/10. Not great, not terrible. The ensemble shrugged.',
+        mv.toFixed(1) + '/10 overall. Fine vibes. Mediocre conditions expected.',
+      ]);
+      return randomElement([
+        'Aggregate vibes score: ' + mv.toFixed(1) + '/10. Vibes were rough. Below average weather expected.',
+        'Vibes: ' + mv.toFixed(1) + '/10. The ensemble is not enthusiastic about this forecast.',
+        mv.toFixed(1) + '/10. Below the vibe threshold. Conditions will reflect that.',
+      ]);
     }
     case 5: {
       const anomSign = (fd.current.temp_c ?? fd.climo.temp_c) > fd.climo.temp_c ? 'warm' : 'cold';
-      if (!tHi) return "It's running " + anomSign + " right now. A correction is obviously coming. That's just how temperature works.";
-      return "It's been too " + anomSign + ", so I put " + hiLo + " tomorrow. The overcorrection is not only inevitable, it is correct.";
+      const opp = anomSign === 'warm' ? 'cold' : 'warm';
+      if (!tHi) return randomElement([
+        "It's running " + anomSign + " right now. A correction is obviously coming. That's just how temperature works.",
+        "Too " + anomSign + " today. Nature corrects. I am ready for it.",
+      ]);
+      return randomElement([
+        "It's been too " + anomSign + ", so I put " + hiLo + " tomorrow. The overcorrection is not only inevitable, it is correct.",
+        "Running " + anomSign + " right now. Nature corrects. I am nature's instrument. " + hiLo + " tomorrow.",
+        "Too " + anomSign + " today means " + opp + "er tomorrow. That's just thermodynamics. Calling " + hiLo + ".",
+        "What goes " + anomSign + " must come back. " + hiLo + " is where it lands. I don't make the rules.",
+      ]);
     }
     case 6: {
       const trendVal = (fd.current.temp_c ?? fd.climo.temp_c) - (fd.obs_6h_ago.temp_c ?? fd.current.temp_c ?? fd.climo.temp_c);
       const dir = trendVal > 0.5 ? 'warming' : trendVal < -0.5 ? 'cooling' : 'holding steady';
-      if (!tHi) return "We're " + dir + ". I have extrapolated this to its logical conclusion. The trend has never failed.";
-      return "We're " + dir + ", so I'm calling " + tHi + " tomorrow. I have ridden this trend to its end. It has never let me down.";
+      if (!tHi) return randomElement([
+        "We're " + dir + ". I have extrapolated this to its logical conclusion. The trend has never failed.",
+        dir.charAt(0).toUpperCase() + dir.slice(1) + " and I will ride this as far as it goes.",
+      ]);
+      return randomElement([
+        "We're " + dir + ", so I'm calling " + tHi + " tomorrow. I have ridden this trend to its end. It has never let me down.",
+        "We're " + dir + ". I locked in " + tHi + " and didn't look away. This is the result.",
+        dir.charAt(0).toUpperCase() + dir.slice(1) + " hard. " + tHi + " tomorrow. The trend is the signal. Everything else is noise.",
+        "Trajectory: " + dir + ". Extrapolated to tomorrow: " + tHi + ". I don't know how to stop and I won't.",
+      ]);
     }
     case 7: {
       if (fd.is_retrograde) {
-        if (!tHi) return "Mercury is literally going backwards right now. I cannot be held responsible for any of these numbers.";
-        return "Mercury is in retrograde. I got " + hiLo + " for tomorrow. That is Mercury's fault, not mine.";
+        if (!tHi) return randomElement([
+          "Mercury is literally going backwards right now. I cannot be held responsible for any of these numbers.",
+          "In retrograde. Forecast is compromised. Filing anyway but you've been warned.",
+        ]);
+        return randomElement([
+          "Mercury is in retrograde. I got " + hiLo + " for tomorrow. That is Mercury's fault, not mine.",
+          hiLo + " tomorrow and I'm not responsible for any of it. Mercury is in retrograde.",
+          "Mercury is literally going backwards and so is this forecast. " + hiLo + ". Don't look at me.",
+        ]);
       }
-      if (!tHi) return "No retrograde today. I'm calling normal temperatures. Cautiously optimistic.";
-      return hiLo + " tomorrow. Mercury is cooperating. For now. I wouldn't get too comfortable.";
+      if (!tHi) return randomElement([
+        "No retrograde today. I'm calling normal temperatures. Cautiously optimistic.",
+        "Mercury is behaving. For now. Forecast filed. Staying alert.",
+      ]);
+      return randomElement([
+        hiLo + " tomorrow. Mercury is cooperating. For now. I wouldn't get too comfortable.",
+        "No retrograde. I'm calling " + hiLo + " and feeling cautiously okay about it.",
+        hiLo + " tomorrow. Celestial conditions are favorable. Enjoy it while it lasts.",
+      ]);
     }
     case 8: {
-      if (!tHi) return "Tonight: cloudy with a 30% chance of precipitation. Tomorrow: similar. Back to you in the studio.";
-      return "Tomorrow's high near " + tHi + ", low near " + (tLo || 'seasonal') + ". " + (tPrecip || '30%') + " chance of precipitation. Have a great night, everyone.";
+      if (!tHi) return randomElement([
+        "Tonight: cloudy with a 30% chance of precipitation. Tomorrow: similar. Back to you in the studio.",
+        "Still tracking some unsettled conditions tomorrow. We'll have your full forecast at eleven.",
+      ]);
+      return randomElement([
+        "Tomorrow's high near " + tHi + ", low near " + (tLo || 'seasonal') + ". " + (tPrecip || '30%') + " chance of precipitation. Have a great night, everyone.",
+        "Looking at tomorrow: " + hiLo + " with " + (tPrecip || 'a small chance of') + " precip. We'll keep you updated throughout the evening.",
+        "Expect a high of " + tHi + " tomorrow, low near " + (tLo || 'seasonal') + ". " + (tPrecip || '30%') + " chance of rain. Back to you at the desk.",
+        "Tomorrow brings " + tHi + " for the high. " + (tPrecip || '30%') + " chance of precipitation. Stay with us for the extended forecast.",
+      ]);
     }
     case 9: {
       const dayName = DAY_NAMES[fd.obs_random_past.weekday];
       const monthName = MONTH_NAMES[fd.obs_random_past.month];
-      if (!tHi) return "I asked a " + dayName + " in " + monthName + " what the weather would be. It answered. I'm going with that.";
-      return "I asked a " + dayName + " in " + monthName + " and it said " + tHi + ". That " + dayName + " had no reason to lie.";
+      if (!tHi) return randomElement([
+        "I asked a " + dayName + " in " + monthName + " what the weather would be. It answered. I'm going with that.",
+        "History matched today to a " + dayName + " in " + monthName + ". I trust what it did.",
+      ]);
+      return randomElement([
+        "I asked a " + dayName + " in " + monthName + " and it said " + tHi + ". That " + dayName + " knew what it was doing.",
+        "Found a " + dayName + " in " + monthName + " that matched today's setup. It called " + tHi + ". The archive speaks.",
+        "A " + dayName + " in " + monthName + " was in identical conditions and came in at " + tHi + ". I defer to history.",
+        "The " + dayName + " in " + monthName + " said " + tHi + ". It had no basis to deceive me.",
+      ]);
     }
     case 10: {
-      if (!tHi) return "Same as today. Same as tomorrow. Same as it has always been. I have made my peace with this.";
-      return hiLo + " tomorrow. Same as today. Same as yesterday. Same as next week. I find it comforting.";
+      if (!tHi) return randomElement([
+        "Same as today. Same as tomorrow. Same as it has always been. I have made my peace with this.",
+        "Whatever it is today, that's what it is tomorrow. Filed accordingly.",
+      ]);
+      return randomElement([
+        hiLo + " tomorrow. Same as today. Same as yesterday. Same as next week. I find it comforting.",
+        "Today: " + hiLo + ". Tomorrow: " + hiLo + ". The day after: " + hiLo + ". I see no reason to update.",
+        hiLo + " tomorrow, as expected. Nothing changes. I have made my peace with this and you should too.",
+        "The forecast is " + hiLo + ". The forecast will remain " + hiLo + ". This is not a bug.",
+      ]);
     }
     case 11: {
-      if (fd.current.has_lightning) return "CG!! CG!! CG!! I'm calling 100% precip all leads! Get in the car! We are going! Right now!";
-      if (!tHi) return "Nothing to chase right now. I've put in my forecast. I'll be parked near the car just in case.";
-      return hiLo + " tomorrow, " + (tPrecip || '0%') + " precip. No lightning yet. I'm staying close to the car. You never know.";
+      if (fd.current.has_lightning) return randomElement([
+        "CG!! CG!! CG!! I'm calling 100% precip all leads! Get in the car! We are going! Right now!",
+        "LIGHTNING DETECTED. ALL LEADS: 100% PRECIP. I AM ALREADY IN THE CAR. WHERE ARE YOU?",
+      ]);
+      if (!tHi) return randomElement([
+        "Nothing to chase right now. I've put in my forecast. I'll be parked near the car just in case.",
+        "No targets today. Forecast filed. I remain on standby.",
+      ]);
+      return randomElement([
+        hiLo + " tomorrow, " + (tPrecip || '0%') + " precip. No lightning yet. I'm staying close to the car. You never know.",
+        "Quiet out there. " + hiLo + " tomorrow. I filed the forecast and I'm back on watch.",
+        hiLo + " and " + (tPrecip || '0%') + " precip. Nothing to chase. Monitoring continuously.",
+        "Filed " + hiLo + " for tomorrow. " + (tPrecip || '0%') + " precip. I'll be in the parking lot if anything develops.",
+      ]);
     }
     case 12: {
       const tomorrowTmpC = tmr && tmr.avg_temp_c !== null ? tmr.avg_temp_c : null;
       const shotsWeather = tomorrowTmpC !== null && tomorrowTmpC > -5 && tomorrowTmpC < 0;
       const windNote = "It's the wind that'll get ya.";
-      if (!tHi) return 'Uff da. Real cold out there. ' + windNote;
-      if (shotsWeather) return hiLo + ' tomorrow. Shorts weather, honestly. ' + windNote;
-      const mnNarratives = [
+      if (!tHi) return randomElement([
+        'Uff da. Real cold out there. ' + windNote,
+        "Oh for sure, cold tomorrow. Bundle up. " + windNote,
+      ]);
+      if (shotsWeather) return randomElement([
+        hiLo + ' tomorrow. Shorts weather, honestly. ' + windNote,
+        hiLo + ' tomorrow. That is practically a heat wave. ' + windNote,
+      ]);
+      return randomElement([
         'Oh ya, ' + hiLo + ' tomorrow. Bundle up, for Pete\'s sake. ' + windNote,
         hiLo + ' tomorrow, you betcha. Good hotdish weather. ' + windNote,
         'Yah sure, ' + hiLo + ' tomorrow. We\'ve seen worse in February, oh for sure. ' + windNote,
         'Oh, ' + hiLo + ' tomorrow. Don\'t worry, it warms up in July. ' + windNote,
-      ];
-      return mnNarratives[Math.floor(fd.date.getDate() % mnNarratives.length)];
+      ]);
     }
     case 13: {
-      if (!tHi) return "I got here six hours early and locked in my forecast. It is locked. I am not revisiting it.";
-      return hiLo + " tomorrow. I called that six hours ago and I stand by it completely. Updates are for people with no conviction.";
+      if (!tHi) return randomElement([
+        "I got here six hours early and locked in my forecast. It is locked. I am not revisiting it.",
+        "Already filed. Already locked. No further comment until verification.",
+      ]);
+      return randomElement([
+        hiLo + " tomorrow. I called that six hours ago and I stand by it completely. Updates are for people with no conviction.",
+        "I got here early. I filed " + hiLo + " before anyone else arrived. It is done.",
+        hiLo + " tomorrow. Filed at 2 AM. Not changing it now. I don't operate that way.",
+        "My forecast was in before sunrise. " + hiLo + ". I am standing pat.",
+      ]);
     }
     case 14: {
       const dow = fd.day_of_week;
-      if (dow === 5) return "TGIF. " + (tHi ? tHi + " tomorrow. The weekend earned this." : "The forecast is good. It has to be.");
-      if (dow === 1) return (tHi ? hiLo + " tomorrow." : "Already looking rough.") + " It's Monday. Of course it is.";
-      return (tHi ? hiLo + " tomorrow. " : "") + "Still better than a Monday, technically.";
+      if (dow === 5) return randomElement([
+        "TGIF. " + (tHi ? tHi + " tomorrow. The weekend earned this." : "The forecast is good. It has to be."),
+        (tHi ? hiLo + " for the weekend. " : "") + "It's Friday. I'm choosing to be optimistic.",
+        "End of week. " + (tHi ? hiLo + " tomorrow. " : "") + "We made it.",
+      ]);
+      if (dow === 1) return randomElement([
+        (tHi ? hiLo + " tomorrow." : "Already looking rough.") + " It's Monday. Of course it is.",
+        "Monday forecast: " + (tHi || "unclear") + ". I tried to find a silver lining. I could not.",
+        "It's Monday. " + (tHi ? hiLo + " tomorrow." : "The forecast reflects that."),
+      ]);
+      return randomElement([
+        (tHi ? hiLo + " tomorrow. " : "") + "Still better than a Monday, technically.",
+        "Not Friday yet. " + (tHi ? hiLo + " tomorrow." : "Hang in there."),
+        (tHi ? hiLo + " tomorrow. " : "") + "Could be worse. Could be a Monday.",
+        "Not the best day, not the worst day. " + (tHi ? hiLo + " tomorrow." : ""),
+      ]);
     }
     case 17: {
       const nullCount = memberResult.forecasts.reduce((n, f) =>
         n + [f.temp_c, f.dewpoint_c, f.pressure_hpa, f.precip_prob, f.cloud_cover].filter(v => v === null).length, 0);
-      if (!tHi) return "The committee has reviewed the submissions. Several variables require additional funding before we can comment.";
-      return "The committee arrived at " + hiLo + " for tomorrow. " +
-        (nullCount > 5 ? nullCount + " variables are still pending peer review and continued funding." : "Methodology available upon request.");
+      if (!tHi) return randomElement([
+        "The committee has reviewed the submissions. Several variables require additional funding before we can comment.",
+        "Results are in review. Additional funding required before conclusions can be released.",
+      ]);
+      const fundingLine = nullCount > 5
+        ? nullCount + " variables are still pending peer review and continued funding."
+        : "Methodology available upon request.";
+      return randomElement([
+        "The committee arrived at " + hiLo + " for tomorrow. " + fundingLine,
+        "Consensus reached: " + hiLo + " tomorrow. " + fundingLine,
+        hiLo + " for tomorrow, subject to revision. " + fundingLine,
+      ]);
     }
     case 18: {
-      if (!tHi) return "It will be whatever temperature it is tomorrow, at 100% relative humidity. The air will be completely saturated. This is normal.";
-      return hiLo + " tomorrow at 100% relative humidity. The dew point equals the temperature. You will feel every degree of that " + tHi + ".";
+      if (!tHi) return randomElement([
+        "It will be whatever temperature it is tomorrow, at 100% relative humidity. The air will be completely saturated. This is normal.",
+        "100% relative humidity tomorrow. The temperature doesn't matter once the air is full.",
+      ]);
+      return randomElement([
+        hiLo + " tomorrow at 100% relative humidity. The dew point equals the temperature. You will feel every degree of that " + tHi + ".",
+        tHi + " tomorrow. RH: 100%. The air is completely full. There is no room for comfort.",
+        "Tomorrow: " + hiLo + " and fully saturated. The atmosphere is at capacity. This is technically within spec.",
+        "Dew point: " + tHi + ". High: " + tHi + ". These numbers match and that is normal and fine.",
+      ]);
     }
     case 19: {
       const isWarm = (fd.current.temp_c ?? fd.climo.temp_c) > fd.climo.temp_c;
-      if (!tHi) return "DEVELOPING: Unprecedented conditions inbound for your area. Stay with us for continuous coverage.";
-      return "DEVELOPING: " + (isWarm ? "Unprecedented warmth threatens region. " : "Historic cold event unfolding. ") +
-        "I'm forecasting " + tHi + " tomorrow. We will continue to update this story as it develops.";
+      if (!tHi) return randomElement([
+        "DEVELOPING: Unprecedented conditions inbound for your area. Stay with us for continuous coverage.",
+        "BREAKING: Significant weather event expected tomorrow. Details to follow. Stay tuned.",
+      ]);
+      if (isWarm) return randomElement([
+        "DEVELOPING: Unprecedented warmth threatens region. I'm forecasting " + tHi + " tomorrow. We will continue to update this story as it develops.",
+        "BREAKING: Anomalous warmth event unfolding. High of " + tHi + " forecast for tomorrow. Coverage continues.",
+        "URGENT: Above-normal temperatures persist. Calling " + tHi + " tomorrow. Stay with us.",
+      ]);
+      return randomElement([
+        "DEVELOPING: Historic cold event unfolding. I'm forecasting " + tHi + " tomorrow. We will continue to update this story as it develops.",
+        "BREAKING: Dangerous cold threatens the region. Tomorrow's high: " + tHi + ". Full coverage at eleven.",
+        "ALERT: Cold air mass advancing. Calling " + tHi + " for tomorrow. More details as this story develops.",
+      ]);
     }
     case 20: {
       const pct = tPrecip || '52%';
-      if (!tHi) return "You won't BELIEVE what's coming. LIKE AND SUBSCRIBE to unlock the full forecast.";
-      return hiLo + " tomorrow and " + pct + " precip. Drop a 🌧️ if you're not ready. The algorithm needs to know.";
+      if (!tHi) return randomElement([
+        "You won't BELIEVE what's coming. LIKE AND SUBSCRIBE to unlock the full forecast.",
+        "BREAKING forecast thread. Part 1 of 7. FOLLOW for the rest.",
+      ]);
+      return randomElement([
+        hiLo + " tomorrow and " + pct + " precip. Drop a 🌧️ if you're not ready. The algorithm needs to know.",
+        "WAIT — " + tHi + " tomorrow?? Comment your current temp below. This is important data.",
+        hiLo + " tomorrow. " + pct + " precip. SHARE this before it expires. You've been warned.",
+        "You scrolled past this forecast. It saw you. " + hiLo + " tomorrow. " + pct + " precip. Engage.",
+      ]);
     }
     case 21: {
       const exHi = fmtTemp(fd.extremes.temp.max, isUS);
       const exLo = fmtTemp(fd.extremes.temp.min, isUS);
-      return "Some data says " + exHi + ". Other data says " + exLo + ". " + (tHi ? "I gave both equal weight. Hence " + hiLo + "." : "Both deserve equal coverage.");
+      if (!tHi) return randomElement([
+        "Some data says " + exHi + ". Other data says " + exLo + ". Both deserve equal coverage.",
+        "I'm hearing " + exHi + " from one camp, " + exLo + " from another. I see merit in all perspectives.",
+      ]);
+      return randomElement([
+        "Some data says " + exHi + ". Other data says " + exLo + ". I gave both equal weight. Hence " + hiLo + ".",
+        "There are two sides here: " + exHi + " and " + exLo + ". I split the difference: " + hiLo + ".",
+        exHi + " is a valid forecast. So is " + exLo + ". I'm comfortable with " + hiLo + " and I think that's fair.",
+        "Warm data: " + exHi + ". Cold data: " + exLo + ". Both deserve a voice. I gave you " + hiLo + ".",
+      ]);
     }
     case 22: {
       const vpn = memberResult.tagline.includes('Brought to you by ')
         ? memberResult.tagline.split('Brought to you by ')[1].replace('.', '')
         : 'our sponsor';
-      if (!tHi) return "Beautiful day ahead. Zero clouds, zero precip. Brought to you by " + vpn + ".";
-      return tHi + " and sunny tomorrow. Zero clouds, zero precipitation. Brought to you by " + vpn + ". Perfect conditions to browse securely.";
+      if (!tHi) return randomElement([
+        "Beautiful day ahead. Zero clouds, zero precip. Brought to you by " + vpn + ".",
+        "Clear skies and ideal conditions tomorrow. This forecast is brought to you by " + vpn + ".",
+      ]);
+      return randomElement([
+        tHi + " and sunny tomorrow. Zero clouds, zero precipitation. Brought to you by " + vpn + ". Perfect conditions to browse securely.",
+        "Tomorrow: " + tHi + ", clear skies, zero precip. Ideal outdoor weather. Sponsored by " + vpn + ".",
+        "High of " + tHi + " tomorrow with zero precipitation. Brought to you by " + vpn + ". Stay protected out there.",
+      ]);
     }
     case 23: {
       const tl = memberResult.tagline;
-      if (tl.includes('Full moon')) {
-        return (tHi ? tHi + " tonight and " : "") + "the full moon is out. The lighting is already ethereal. Zero clouds. Zero precip. Maximum reach.";
-      }
-      if (tl.includes('Rain')) {
-        return (hiLo ? hiLo + " and " + (tPrecip || 'heavy') + " precip tomorrow. " : "") + "The storm aesthetic is unreal right now. This is incredible content.";
-      }
-      return (tHi ? tHi + " tomorrow. " : "") + "Golden hour is going to be absolutely insane. Zero clouds. You need to be outside for this.";
+      if (tl.includes('Full moon')) return randomElement([
+        (tHi ? tHi + " and " : "") + "the full moon is out. The lighting is already ethereal. Zero clouds. Zero precip. Maximum reach.",
+        "Full moon tonight. " + (tHi || "Perfect temps") + " and zero clouds. This is the content.",
+        (tHi ? tHi + " tomorrow. " : "") + "Full moon. Zero clouds. I'm not even forecasting, I'm just describing the vibe.",
+      ]);
+      if (tl.includes('Rain')) return randomElement([
+        (hiLo ? hiLo + " and " + (tPrecip || 'heavy') + " precip tomorrow. " : "") + "The storm aesthetic is unreal right now. This is incredible content.",
+        "Rain tomorrow. " + (hiLo || "Wild temps") + ". The drama is going to be immaculate. I will be filming everything.",
+        (tPrecip || 'Heavy') + " precip and " + (hiLo || "moody temps") + " tomorrow. The light through the clouds is going to be insane.",
+      ]);
+      return randomElement([
+        (tHi ? tHi + " tomorrow. " : "") + "Golden hour is going to be absolutely insane. Zero clouds. You need to be outside for this.",
+        "Tomorrow: " + (tHi || "perfect temps") + ", clear skies. The light will be unreal. I'm already planning the shoot.",
+        "Golden hour forecast: perfect. " + (tHi || "Beautiful temps") + " tomorrow. If you're not outside for this you're missing it.",
+      ]);
     }
     case 24: {
       const tl = memberResult.tagline;
-      if (tl.includes('FALLING')) {
-        return "PRESSURE IS FALLING. I am calling " + (tLo || 'dangerously cold lows') + " and " + (tPrecip || '100%') + " precip. THIS IS NOT A DRILL. EVERYONE SHOULD BE CONCERNED.";
-      }
-      if (tl.includes('RISING')) {
-        return "PRESSURE IS RISING. I got " + (tHi || 'warming') + " and clearing. I DON'T KNOW IF THIS IS GOOD OR BAD. PANICKING REGARDLESS.";
-      }
-      if (tl.includes('ALL IS DARK')) {
-        return "New moon. No light. I'm holding at " + (tHi || fmtTemp(fd.climo.temp_c, isUS)) + " until the sky clears. Something feels wrong.";
-      }
-      return (hiLo ? hiLo + " tomorrow. " : "") + "No pressure trend. Nothing is changing. I don't trust it.";
+      if (tl.includes('FALLING')) return randomElement([
+        "PRESSURE IS FALLING. I am calling " + (tLo || 'dangerously cold lows') + " and " + (tPrecip || '100%') + " precip. THIS IS NOT A DRILL. EVERYONE SHOULD BE CONCERNED.",
+        "IT IS FALLING. EVERYTHING IS FALLING. " + (tPrecip || '100%') + " PRECIP TOMORROW. LOW: " + (tLo || 'UNKNOWN') + ". I AM VERY CONCERNED.",
+        "PRESSURE DROP DETECTED. Forecasting " + (tLo || 'severe lows') + " and " + (tPrecip || '100%') + " precip. I NEED EVERYONE TO REMAIN CALM. I AM NOT CALM.",
+      ]);
+      if (tl.includes('RISING')) return randomElement([
+        "PRESSURE IS RISING. I got " + (tHi || 'warming') + " and clearing. I DON'T KNOW IF THIS IS GOOD OR BAD. PANICKING REGARDLESS.",
+        "PRESSURE UP. SKIES CLEARING. " + (tHi || 'TEMPS RISING') + ". I DON'T KNOW WHAT THIS MEANS BUT I AM ON HIGH ALERT.",
+        "IT IS RISING. FAST. Calling " + (tHi || 'warming') + " tomorrow. WHETHER THIS IS GOOD OR BAD I CANNOT SAY.",
+      ]);
+      if (tl.includes('ALL IS DARK')) return randomElement([
+        "New moon. No light. I'm holding at " + (tHi || fmtTemp(fd.climo.temp_c, isUS)) + " until the sky clears. Something feels wrong.",
+        "ALL IS DARK. Forecasting " + (tHi || fmtTemp(fd.climo.temp_c, isUS)) + " tomorrow. I don't trust the dark. I'm monitoring.",
+      ]);
+      return randomElement([
+        (hiLo ? hiLo + " tomorrow. " : "") + "No pressure trend. Nothing is changing. I don't trust it.",
+        "Forecast: " + (hiLo || "unclear") + ". Pressure steady. Suspiciously steady. I am watching.",
+        (hiLo ? hiLo + " tomorrow. " : "") + "Everything is stable. That is the most suspicious thing I've ever seen.",
+      ]);
     }
     case 25: {
       const obs = fd.obs_nostalgia;
       const wday = DAY_NAMES[obs.weekday];
       const mon = MONTH_NAMES[obs.month];
-      if (!tHi) return "I found a " + wday + " in " + mon + " " + obs.year + " that looked just like today. I'm going with what it did.";
-      return "I found a " + wday + " in " + mon + " " + obs.year + " just like this one. It came in at " + tHi + ". That " + wday + " had no reason to lie.";
+      if (!tHi) return randomElement([
+        "I found a " + wday + " in " + mon + " " + obs.year + " that looked just like today. I'm going with what it did.",
+        "The archive matched this pattern to " + mon + " " + obs.year + ". Whatever that day did, we do now.",
+      ]);
+      return randomElement([
+        "I found a " + wday + " in " + mon + " " + obs.year + " just like this one. It came in at " + tHi + ". History repeats.",
+        "A " + wday + " in " + mon + " " + obs.year + " looked exactly like today. That day called " + tHi + ". I'm following its lead.",
+        "The archive matched today to " + mon + " " + obs.year + ". A " + wday + ". It forecast " + tHi + ". I trust the archive.",
+        "Pattern match: " + wday + ", " + mon + " " + obs.year + ". That day settled at " + tHi + ". So does tomorrow.",
+      ]);
     }
     case 26: {
-      if (!tHi) return "Our projections are consistent with natural baseline variability. Any warming trend you observe is completely normal. No further comment.";
-      return hiLo + " tomorrow, consistent with our gradual baseline projections. This is entirely natural. There is nothing unusual happening here. No further comment.";
+      if (!tHi) return randomElement([
+        "Our projections are consistent with natural baseline variability. Any warming trend you observe is completely normal. No further comment.",
+        "Conditions are entirely as expected. There is no cause for concern. No further comment.",
+      ]);
+      return randomElement([
+        hiLo + " tomorrow, consistent with our gradual baseline projections. This is entirely natural. There is nothing unusual happening here. No further comment.",
+        hiLo + " tomorrow. Fully consistent with expected natural variability. Our projections remain on track. No further comment.",
+        "Baseline forecast: " + hiLo + ". Any apparent trend is well within historical norms. We stand by our data. No further comment.",
+      ]);
     }
     case 27: {
-      if (!tHi) return "Current trajectory points directly past the world record. Direction TBD. I recommend appropriate gear.";
-      return "I'm calling " + tHi + " for tomorrow. The all-time record is " + fmtTemp(isUS ? 56.7 : 56.7, isUS) + ". We are on track to exceed it.";
+      const recTemp = fmtTemp(56.7, isUS);
+      if (!tHi) return randomElement([
+        "Current trajectory points directly past the world record. Direction TBD. I recommend appropriate gear.",
+        "The record is in range. I expect it to fall tomorrow. Standby for confirmation.",
+      ]);
+      return randomElement([
+        "I'm calling " + tHi + " for tomorrow. The all-time record is " + recTemp + ". We are on track to exceed it.",
+        tHi + " tomorrow. The world record stands at " + recTemp + ". Current trajectory has us clearing it.",
+        "Forecasting " + tHi + " tomorrow. That is past the world record of " + recTemp + ". I recommend appropriate gear.",
+      ]);
     }
     case 28: {
       const climoTF = toF(fd.climo.temp_c);
       const fcTF = tmr && tmr.hi_c !== null ? toF(tmr.hi_c) : null;
       const dryCoolFront = fcTF !== null && fcTF > climoTF + 20;
-      if (!tHi) return "It's going to be extremely hot. But it's a dry heat. You're fine. Drink some water.";
-      return tHi + " tomorrow. Yes, that number looks high. But it's a dry heat. " +
-        (dryCoolFront ? "Practically a cool front by local standards." : "Air conditioning is a crutch.");
+      if (!tHi) return randomElement([
+        "It's going to be extremely hot. But it's a dry heat. You're fine. Drink some water.",
+        "Hot tomorrow. Very hot. But dry. Completely manageable.",
+      ]);
+      if (dryCoolFront) return randomElement([
+        tHi + " tomorrow. Yes, that number looks high. But it's a dry heat. Practically a cool front by local standards.",
+        "I'm calling " + tHi + " and that is a mild day around here. Dry heat. You'll be fine.",
+      ]);
+      return randomElement([
+        tHi + " tomorrow. Yes, that number looks high. But it's a dry heat. Air conditioning is a crutch.",
+        tHi + " tomorrow. Dry heat. Stay hydrated. Stop complaining.",
+        "I'm putting " + tHi + " out there. It's not 'hot,' it's warm with low humidity. The distinction matters.",
+        tHi + " tomorrow. Drink some water. It's a dry heat. You'll be fine.",
+      ]);
     }
     default:
       return '';
