@@ -1437,19 +1437,17 @@ function computeNarrative(memberResult, isUS, fd) {
       ]);
     }
     case 11: {
+      const precip = tPrecip || '0%';
       if (fd.current.has_lightning) return randomElement([
         "CG!! CG!! CG!! I'm calling 100% precip all leads! Get in the car! We are going! Right now!",
         "LIGHTNING DETECTED. ALL LEADS: 100% PRECIP. I AM ALREADY IN THE CAR. WHERE ARE YOU?",
       ]);
-      if (!tHi) return randomElement([
-        "Nothing to chase right now. I've put in my forecast. I'll be parked near the car just in case.",
-        "No targets today. Forecast filed. I remain on standby.",
-      ]);
       return randomElement([
-        hiLo + " tomorrow, " + (tPrecip || '0%') + " precip. No lightning yet. I'm staying close to the car. You never know.",
-        "Quiet out there. " + hiLo + " tomorrow. I filed the forecast and I'm back on watch.",
-        hiLo + " and " + (tPrecip || '0%') + " precip. Nothing to chase. Monitoring continuously.",
-        "Filed " + hiLo + " for tomorrow. " + (tPrecip || '0%') + " precip. I'll be in the parking lot if anything develops.",
+        precip + " precip tomorrow. No cells developing yet. I'm parked near the car just in case.",
+        "Quiet pattern. " + precip + " precip tomorrow. Nothing to chase. Still watching the environment.",
+        precip + " precip tomorrow. No lightning detected. Filed the forecast and I'm back on watch.",
+        "Environment is not supportive right now. " + precip + " precip. I'll be in the parking lot if anything fires up.",
+        precip + " precip tomorrow. No significant convection expected. I remain on standby. You never know.",
       ]);
     }
     case 12: {
