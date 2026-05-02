@@ -1674,6 +1674,7 @@ function showEnsembleResults(ensemble, isUS, startDate) {
             : '') +
         '</span>' +
         (rh !== null ? '<span class="dr-humidity">' + rh + '% humidity</span>' : '') +
+        (rh !== null && d.precip_prob !== null ? '<span class="dr-sep">·</span>' : '') +
         '<span class="dr-precip">' + (d.precip_prob !== null ? fmtPrecipHtml(d.precip_prob) + ' ' + escapeHtml(precipLabel(precipTypeForMember(null, d.avg_temp_c, d.rep_lead_h))) : '—') + '</span>';
       dailyEl.appendChild(row);
     }
