@@ -1086,7 +1086,7 @@ function member26Astroturfed(d) {
 
   const isWinterSolstice = d.date.getMonth() === 11 && d.date.getDate() === 21;
   const isSummerSolstice = d.date.getMonth() === 5 && d.date.getDate() === 21;
-  let tagline = 'Very similar to climatology, for reasons we cannot disclose';
+  let tagline = 'Definitely not influenced by fossil fuel interests. Definitely.';
   if (isWinterSolstice) tagline = 'The drift has peaked. Allegedly.';
   if (isSummerSolstice) tagline = 'The drift continues its natural seasonal cycle. Trust the process.';
 
@@ -1675,14 +1675,14 @@ function computeNarrative(memberResult, isUS, fd) {
       ]);
     }
     case 26: {
-      const refDate = new Date('2024-01-01');
-      const months = (fd.date.getFullYear() - refDate.getFullYear()) * 12 + (fd.date.getMonth() - refDate.getMonth());
-      const drift = (months * 0.1).toFixed(1);
-      if (!tHi) return 'Climatology plus ' + drift + ' degrees of gradual drift — nothing to see here.';
+      if (!tHi) return randomElement([
+        "Our projections are consistent with natural baseline variability. Any warming trend you observe is completely normal. No further comment.",
+        "Conditions are entirely as expected. There is no cause for concern. No further comment.",
+      ]);
       return randomElement([
-        'Climatology plus ' + drift + ' of imperceptible drift yields ' + hiLo + ' tomorrow — indistinguishable from normal, which is the point.',
-        hiLo + ' tomorrow. Gradual baseline drift of ' + drift + ' degrees. Perfectly natural. No cause for concern.',
-        'Forecast: ' + hiLo + '. The ' + drift + '-degree drift since 2024 is well within the margin of nothing unusual whatsoever.',
+        hiLo + " tomorrow, consistent with our gradual baseline projections. This is entirely natural. There is nothing unusual happening here. No further comment.",
+        hiLo + " tomorrow. Fully consistent with expected natural variability. Our projections remain on track. No further comment.",
+        "Baseline forecast: " + hiLo + ". Any apparent trend is well within historical norms. We stand by our data. No further comment.",
       ]);
     }
     case 28: {
