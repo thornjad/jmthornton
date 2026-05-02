@@ -2151,9 +2151,9 @@ async function runForecast(lat, lon, geocodedName) {
   const memberTemps = Object.values(all).flatMap(m =>
     m.forecasts.filter(f => f.lead_h === 24).map(f => f.temp_c).filter(v => v !== null)
   );
-  const spreadHi = memberTemps.length ? (isUS ? Math.round(toF(Math.max(...memberTemps))) : Math.round(Math.max(...memberTemps))) : null;
-  const spreadLo = memberTemps.length ? (isUS ? Math.round(toF(Math.min(...memberTemps))) : Math.round(Math.min(...memberTemps))) : null;
-  const spreadUnit = isUS ? '°F' : '°C';
+  const spreadHi = memberTemps.length ? (fd.isUS ? Math.round(toF(Math.max(...memberTemps))) : Math.round(Math.max(...memberTemps))) : null;
+  const spreadLo = memberTemps.length ? (fd.isUS ? Math.round(toF(Math.min(...memberTemps))) : Math.round(Math.min(...memberTemps))) : null;
+  const spreadUnit = fd.isUS ? '°F' : '°C';
 
   setTimeout(() => {
     logStatus('ensemble', '> computing ensemble mean and spread...', 'pending');
