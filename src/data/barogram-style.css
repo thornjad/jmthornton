@@ -4,7 +4,6 @@
     font-size: 14px;
     line-height: 1.5;
     color: #1a1a1a;
-    background: #f5f5f5;
     padding: 24px 16px;
 }
 .container { max-width: 960px; margin: 0 auto; }
@@ -12,7 +11,7 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    background: #f5f5f5;
+    background: var(--bg, #f5f5f5);
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -504,5 +503,3 @@ table.forecast-table tbody tr:last-child th { border-bottom: none; }
 .ap-dry { background: #fef3c7; color: #92400e; }
 .ap-neutral { background: #f3f4f6; color: #4b5563; }
 .ap-none { color: #bbb; font-style: italic; }
-
-.barogram-header { position: relative; top: auto; z-index: auto; }
