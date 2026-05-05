@@ -211,6 +211,15 @@ import Base from '../../layouts/Base.astro';
         margin-top: 1em;
       }
 
+      @media (prefers-color-scheme: light) {
+        .status-log,
+        #status-log,
+        .log-disclosure .status-log,
+        #ensemble-section {
+          background: var(--bg-alt);
+        }
+      }
+
       @media (max-width: 600px) {
         .location-row {
           flex-direction: column;
