@@ -317,7 +317,7 @@ table.forecast-table tbody tr:last-child th { border-bottom: none; }
 .filter-sep-left { margin-left: 8px; }
 .ap-signal-cards { display: none; }
 @media (max-width: 768px) {
-    body { padding: 12px 10px; }
+    .barogram { padding: 12px 10px; }
     .generated { font-size: 11px; }
     .conditions-grid, .charts-grid { grid-template-columns: 1fr; }
     .verification-windows { grid-template-columns: 1fr; }
@@ -524,8 +524,8 @@ table.forecast-table tbody tr:last-child th { border-bottom: none; }
 .zambretti-algo { font-size: 11px; color: #888; margin-top: 4px; }
 .mf-member-label { font-size: 11px; font-weight: 600; color: #6b3fa0; text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 4px; }
 @media (prefers-color-scheme: dark) {
-    body { color: #e0e0e0; background: #1a1a1a; }
-    header { background: #1a1a1a; border-bottom-color: #e0e0e0; }
+    .barogram { color: #e0e0e0; }
+    .barogram-header { background: var(--bg, #1a1a1a); border-bottom-color: #e0e0e0; }
     .generated { color: #888; }
     .stale-banner { background: #2a2200; border-color: #6a4800; border-left-color: #8a6000; }
     .stale-banner code { background: #3a3000; }
