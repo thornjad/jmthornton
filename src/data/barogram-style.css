@@ -520,3 +520,133 @@ table.forecast-table tbody tr:last-child th { border-bottom: none; }
 .ap-dry { background: #fef3c7; color: #92400e; }
 .ap-neutral { background: #f3f4f6; color: #4b5563; }
 .ap-none { color: #bbb; font-style: italic; }
+.zambretti-tendency { font-size: 13px; color: #555; margin-top: 4px; }
+.zambretti-algo { font-size: 11px; color: #888; margin-top: 4px; }
+.mf-member-label { font-size: 11px; font-weight: 600; color: #6b3fa0; text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 4px; }
+@media (prefers-color-scheme: dark) {
+    body { color: #e0e0e0; background: #1a1a1a; }
+    header { background: #1a1a1a; border-bottom-color: #e0e0e0; }
+    .generated { color: #888; }
+    .stale-banner { background: #2a2200; border-color: #6a4800; border-left-color: #8a6000; }
+    .stale-banner code { background: #3a3000; }
+    .stale-age-banner { background: #2a1500; border-color: #7a3500; border-left-color: #aa4500; }
+    .stale-age-banner code { background: #3a2000; }
+    .card { background: #252525; border-color: #3a3a3a; }
+    .station-id { color: #888; }
+    .obs-time { color: #888; }
+    .obs-table th { color: #888; }
+    .run-meta { color: #ccc; background: #252525; border-color: #3a3a3a; }
+    table.forecast-table { background: #252525; border-color: #3a3a3a; }
+    table.forecast-table th, table.forecast-table td { border-bottom-color: #333; }
+    table.forecast-table th { color: #888; }
+    table.forecast-table thead th { background: #2d2d2d; color: #e0e0e0; }
+    .chart-container { background: #252525; border-color: #3a3a3a; }
+    .mae-filter-btn, .fcst-filter-btn,
+    .bias-filter-btn, .lead-skill-filter-btn, .heatmap-filter-btn,
+    .diurnal-filter-btn, .error-dist-var-btn, .error-dist-lead-btn,
+    .trajectory-filter-btn, .acc-filter-btn, .acc-window-btn { background: #252525; border-color: #444; color: #ccc; }
+    .mae-filter-btn:hover, .fcst-filter-btn:hover,
+    .bias-filter-btn:hover, .lead-skill-filter-btn:hover, .heatmap-filter-btn:hover,
+    .diurnal-filter-btn:hover, .error-dist-var-btn:hover, .error-dist-lead-btn:hover,
+    .trajectory-filter-btn:hover, .acc-filter-btn:hover, .acc-window-btn:hover { background: #333; }
+    .mae-filter-btn.active, .fcst-filter-btn.active,
+    .bias-filter-btn.active, .lead-skill-filter-btn.active, .heatmap-filter-btn.active,
+    .diurnal-filter-btn.active, .error-dist-var-btn.active, .error-dist-lead-btn.active,
+    .trajectory-filter-btn.active, .acc-filter-btn.active, .acc-window-btn.active { background: #e0e0e0; color: #1a1a1a; border-color: #e0e0e0; }
+    .mae-raw-btn { background: #252525; border-color: #444; color: #aaa; }
+    .mae-raw-btn:hover { background: #333; }
+    .mae-raw-btn.active { background: #888; color: #fff; border-color: #888; }
+    .obs-history-table { background: #252525; border-color: #3a3a3a; }
+    .obs-history-table th, .obs-history-table td { border-bottom-color: #333; }
+    .obs-history-table thead th { background: #2d2d2d; color: #e0e0e0; }
+    .more-btn { background: #252525; border-color: #444; color: #ccc; }
+    .more-btn:hover { background: #333; }
+    .score-table { background: #252525; border-color: #3a3a3a; }
+    .score-table th, .score-table td { border-bottom-color: #333; }
+    .score-table th { color: #888; }
+    .score-table thead th { background: #2d2d2d; color: #e0e0e0; }
+    .score-table td small { color: #888; }
+    .window-label { color: #888; }
+    .model-header th { background: #2d2d2d; color: #aaa; }
+    .ensemble-header th { background: #1a2440; color: #7a9be0; }
+    .external-header th { background: #2a1800; color: #cc7040; }
+    .ensemble-row th, .ensemble-row td { background: #1e2440; }
+    .external-row th, .external-row td { background: #221800; }
+    .model-run-card { background: #252525; border-color: #3a3a3a; }
+    .model-run-header { background: #2d2d2d; border-bottom-color: #3a3a3a; }
+    .base-badge { background: #1a3a1a; color: #6db56d; }
+    .ensemble-badge { background: #1a2440; color: #7a9be0; }
+    .baseline-badge { background: #2d2d25; color: #888; }
+    .external-badge { background: #2a1800; color: #cc7040; }
+    .fun-badge { background: #1a3a1a; color: #6db56d; }
+    .member-badge { background: #2a1540; color: #b07de0; }
+    .run-detail { color: #888; }
+    .mae-summary-table { background: #252525; border-color: #3a3a3a; }
+    .mae-summary-table th, .mae-summary-table td { border-bottom-color: #333; }
+    .mae-summary-table th { color: #888; }
+    .mae-summary-table thead th { background: #2d2d2d; color: #e0e0e0; }
+    .model-id-cell { color: #666; }
+    .mae-better { color: #5ab55a; }
+    .mae-worse { color: #cc5555; }
+    .mae-baseline-val { color: #666; }
+    .chart-legend-note { color: #666; }
+    .score-details summary { color: #888; }
+    .score-details summary:hover { color: #e0e0e0; }
+    .member-detail-table { background: #222; border-color: #3a3a3a; }
+    .member-detail-table th, .member-detail-table td { border-bottom-color: #333; }
+    .member-detail-table th { color: #888; }
+    .member-detail-table thead th { background: #2d2d2d; color: #e0e0e0; }
+    .member-btn { background: #252525; border-color: #444; color: #ccc; }
+    .member-btn:hover { background: #333; }
+    .mf-btn { background: #2a1540; color: #b07de0; border-color: #6040a0; }
+    .mf-btn:hover { background: #351a50; }
+    .mf-member-label { color: #b07de0; }
+    .member-forecast-panel { background: #1e1e2a; border-top-color: #3a3a3a; }
+    .weight-table { background: #222; border-color: #3a3a3a; }
+    .weight-table th, .weight-table td { border-bottom-color: #333; }
+    .weight-table thead th { background: #2d2d2d; color: #e0e0e0; }
+    .weight-group-hdr th { background: #252525; color: #777; }
+    .learnings-desc { background: #252525; border-left-color: #555; color: #ccc; }
+    .learnings-status { background: #1a2a1a; border-left-color: #4a9; color: #5ca; }
+    .learnings-intro { color: #888; }
+    .no-data { color: #666; }
+    .filter-label { color: #666; }
+    .collapsible-section > summary::before { color: #666; }
+    .acc-excellent { color: #5abe5a; }
+    .acc-high { color: #4aaa4a; }
+    .acc-mid { color: #90b020; }
+    .acc-ok { color: #aaa; }
+    .acc-low { color: #cc8844; }
+    .acc-poor { color: #cc6666; }
+    .acc-lead-table .baseline-row th.model-name-cell { color: #555; }
+    .baseline-row td { color: #555; }
+    .baseline-row .model-id-cell { color: #444; }
+    .fcst-row { background: #252525; border-color: #3a3a3a; }
+    .fcst-row.now-row { border-color: #3a5070; background: #1e2a3a; }
+    .fcst-temp { color: #e0e0e0; }
+    .fcst-details { color: #aaa; }
+    .fcst-details .detail-label { color: #666; }
+    .fcst-ref { color: #666; }
+    .fcst-ref-lbl { color: #555; }
+    .fcst-ref .detail-label { color: #555; }
+    .fcst-delta { color: #666; }
+    .jump-nav a { background: #252525; border-color: #3a3a3a; color: #ccc; }
+    .jump-nav a:hover { background: #333; color: #e0e0e0; }
+    .section-dig-deeper { border-top-color: #3a3a3a; color: #666; }
+    .analysis-section { border-top-color: #3a3a3a; }
+    .analysis-section > h2 { color: #aaa; }
+    .ap-signal-table { background: #252525; border-color: #3a3a3a; }
+    .ap-signal-table th, .ap-signal-table td { border-bottom-color: #333; }
+    .ap-signal-table th { background: #2d2d2d; color: #e0e0e0; }
+    .ap-wet { background: #1a2a40; color: #6090d0; }
+    .ap-dry { background: #2a2000; color: #c09030; }
+    .ap-neutral { background: #252525; color: #aaa; }
+    .zambretti-tendency { color: #aaa; }
+    .zambretti-algo { color: #666; }
+    .tempest-obs tr, .nws-obs tr { background: #252525; border-color: #3a3a3a; }
+    .tempest-obs td:first-child, .nws-obs td:first-child { color: #aaa; border-bottom-color: #333; }
+    .tempest-obs td::before, .nws-obs td::before { color: #666; }
+    .ap-signal-card { background: #252525; border-color: #3a3a3a; }
+    .ap-card-leads { border-top-color: #333; }
+    .ap-card-lead-val { color: #ccc; }
+}
