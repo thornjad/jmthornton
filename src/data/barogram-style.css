@@ -53,6 +53,7 @@
 }
 .station-id { font-weight: 400; color: #666; }
 .obs-time { font-size: 12px; color: #666; margin-bottom: 8px; }
+.obs-fallback { font-size: 0.8em; color: #999; margin-left: 3px; }
 .obs-table { width: 100%; border-collapse: collapse; }
 .obs-table th {
     text-align: left;
@@ -534,6 +535,7 @@ table.forecast-table tbody tr:last-child th { border-bottom: none; }
     .card { background: #252525; border-color: #3a3a3a; }
     .station-id { color: #888; }
     .obs-time { color: #888; }
+    .obs-fallback { color: #666; }
     .obs-table th { color: #888; }
     .run-meta { color: #ccc; background: #252525; border-color: #3a3a3a; }
     table.forecast-table { background: #252525; border-color: #3a3a3a; }
