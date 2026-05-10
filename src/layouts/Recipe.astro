@@ -37,7 +37,10 @@ const ogUrl = `https://jmthornton.net/blog/recipes/r/${slug}`;
     <slot name="extra-head" />
   </Fragment>
 
-  <article class="post blog-content">
+  <article class="post blog-content" itemscope itemtype="https://schema.org/Recipe">
+    <meta itemprop="name" content={title} />
+    {description && <meta itemprop="description" content={description} />}
+    {publishedDate && <meta itemprop="datePublished" content={publishedDate} />}
     <slot name="meta" />
     <slot />
   </article>
