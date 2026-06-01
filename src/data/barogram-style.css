@@ -144,6 +144,8 @@ table.forecast-table tbody tr:last-child th { border-bottom: none; }
 .acc-ok { color: #555; }
 .acc-low { color: #8b4400; }
 .acc-poor { color: #8b2020; }
+.acc-cell.acc-best { background: #d7ecd7; }
+.acc-cell.acc-worst { background: #f0d8d8; }
 .acc-lead-table th.model-name-cell { text-align: left; font-weight: 500; padding-right: 16px; }
 .acc-lead-table .baseline-row th.model-name-cell { color: #bbb; }
 .acc-overall-table td { text-align: center; font-size: 15px; font-weight: 600; }
@@ -636,6 +638,8 @@ table.forecast-table tbody tr:last-child th { border-bottom: none; }
     .acc-ok { color: #aaa; }
     .acc-low { color: #cc8844; }
     .acc-poor { color: #cc6666; }
+    .acc-cell.acc-best { background: #1e3a1e; }
+    .acc-cell.acc-worst { background: #3a1e1e; }
     .acc-lead-table .baseline-row th.model-name-cell { color: #555; }
     .baseline-row td { color: #555; }
     .baseline-row .model-id-cell { color: #444; }
