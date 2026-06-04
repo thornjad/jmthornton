@@ -16,10 +16,10 @@
     "check": "astro check"
   },
   "dependencies": {
-    "astro": "^5.5.0"
+    "astro": "^6.4.4"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.6",
+    "@astrojs/check": "^0.9.9",
     "purify-css": "^1.2.5",
     "typescript": "^5.9.3"
   }
