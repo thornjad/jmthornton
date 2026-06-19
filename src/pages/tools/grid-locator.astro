@@ -379,6 +379,7 @@ import Base from '../../layouts/Base.astro';
           showGrid(grid, lat, lon, grid);
         }
         document.getElementById('grid-input').value = '';
+        setParam('q', query);
       } catch (e) {
         showError('Geocoding failed: ' + e.message);
       } finally {
@@ -406,6 +407,7 @@ import Base from '../../layouts/Base.astro';
       showResult(normalized, bounds.lat, bounds.lon, '');
       showGrid(normalized, undefined, undefined, null);
       reverseGeocode(bounds.lat, bounds.lon);
+      setParam('grid', normalized);
     }
 
     async function lookupCallsign() {
@@ -445,6 +447,7 @@ import Base from '../../layouts/Base.astro';
         }
 
         el.style.display = 'block';
+        setParam('call', call);
 
         if (data.location.gridsquare) {
           var grid = data.location.gridsquare;
@@ -504,6 +507,13 @@ import Base from '../../layouts/Base.astro';
       });
     });
 
+    function setParam(key, value) {
+      var url = new URL(window.location);
+      url.searchParams.forEach(function(_, k) { url.searchParams.delete(k); });
+      if (value) url.searchParams.set(key, value);
+      history.replaceState(null, '', url);
+    }
+
     map.on('click', function(e) {
       clearError();
       hideResults();
@@ -516,6 +526,19 @@ import Base from '../../layouts/Base.astro';
       showGrid(grid, lat, lon, grid);
       document.getElementById('grid-input').value = '';
       reverseGeocode(lat, lon);
+      setParam('grid', grid);
     });
+
+    var params = new URLSearchParams(window.location.search);
+    if (params.get('call')) {
+      document.getElementById('callsign-input').value = params.get('call');
+      lookupCallsign();
+    } else if (params.get('grid')) {
+      document.getElementById('grid-input').value = params.get('grid');
+      lookupGrid();
+    } else if (params.get('q')) {
+      document.getElementById('address-input').value = params.get('q');
+      lookupAddress();
+    }
   </script>
 </Base>
