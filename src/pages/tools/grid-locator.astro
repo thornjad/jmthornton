@@ -1,0 +1,521 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base
+  title="Grid Locator Lookup | Jade Michael Thornton"
+  description="Maidenhead grid square locator with map display, address lookup, and FCC callsign search"
+  fontStrategy="prefetch"
+>
+  <Fragment slot="head">
+    <link rel="stylesheet" href="/assets/vendor/leaflet.css" />
+    <style>
+      #map {
+        width: 100%;
+        height: 400px;
+        margin-top: 0.75em;
+        border: 1px solid var(--border, #ccc);
+        cursor: crosshair;
+      }
+
+      .search-section {
+        margin-bottom: 0.4em;
+      }
+
+      .search-section h3 {
+        margin: 0 0 0.1em;
+        font-size: 0.95em;
+      }
+
+      .search-row {
+        display: flex;
+        gap: 0.5em;
+        align-items: center;
+      }
+
+      .search-row input {
+        min-width: 0;
+      }
+
+      .search-row input.wide {
+        flex: 1;
+        min-width: 180px;
+      }
+
+      .search-row input.narrow {
+        width: 8em;
+      }
+
+      .compact-row {
+        display: flex;
+        gap: 1.5em;
+        flex-wrap: wrap;
+      }
+
+      .compact-row .search-section {
+        margin-bottom: 0.4em;
+      }
+
+      #result {
+        display: none;
+        margin-top: 1em;
+        padding: 0.75em 1em;
+        border-left: 0.25rem solid var(--accent, #0078d4);
+      }
+
+      #result p {
+        margin: 0.25em 0;
+      }
+
+      #callsign-result {
+        display: none;
+        margin-top: 1em;
+        padding: 0.75em 1em;
+        border-left: 0.25rem solid var(--accent, #0078d4);
+      }
+
+      #callsign-result p {
+        margin: 0.25em 0;
+      }
+
+      #error {
+        display: none;
+        color: var(--error, red);
+        margin-top: 0.5em;
+      }
+
+      .privacy-note {
+        color: var(--fg-muted, #888);
+        font-size: 0.85em;
+        margin: 0 0 0.75em;
+      }
+
+      .grid-label {
+        font-size: 1.4em;
+        font-weight: bold;
+        font-family: 'VictorMono', monospace;
+      }
+
+      .map-controls {
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+        font-size: 0.9em;
+        margin-left: auto;
+      }
+
+      .map-controls label {
+        cursor: pointer;
+        padding: 0.2em 0.6em;
+        border: 1px solid var(--border, #ccc);
+        border-radius: 3px;
+      }
+
+      .map-controls input[type="radio"] {
+        display: none;
+      }
+
+      .map-controls input[type="radio"]:checked + label {
+        background: var(--accent, #0078d4);
+        color: #fff;
+        border-color: var(--accent, #0078d4);
+      }
+    </style>
+  </Fragment>
+
+  <h1>Maidenhead Grid Locator</h1>
+  <p class="privacy-note">All lookups run in the browser. Geocoding via OpenStreetMap Nominatim, callsign data from callook.info (FCC ULS).</p>
+
+  <noscript>Sorry, this tool requires Javascript.</noscript>
+
+  <div class="search-section">
+    <h3>Look up by address or zip</h3>
+    <div class="search-row">
+      <input type="text" id="address-input" class="wide" placeholder="e.g. Minneapolis, MN or 55401" />
+      <button id="address-btn">Look up</button>
+    </div>
+  </div>
+
+  <div class="compact-row">
+    <div class="search-section">
+      <h3>Grid square</h3>
+      <div class="search-row">
+        <input type="text" id="grid-input" class="narrow" placeholder="e.g. EN34ks" maxlength="8" />
+        <button id="grid-btn">Show on map</button>
+      </div>
+    </div>
+
+    <div class="search-section">
+      <h3>Callsign</h3>
+      <div class="search-row">
+        <input type="text" id="callsign-input" class="narrow" placeholder="e.g. W1AW" />
+        <button id="callsign-btn">Look up</button>
+      </div>
+    </div>
+
+    <div class="map-controls">
+      <span>Grid precision:</span>
+      <input type="radio" name="precision" id="prec-4" value="4" />
+      <label for="prec-4">4-digit</label>
+      <input type="radio" name="precision" id="prec-6" value="6" checked />
+      <label for="prec-6">6-digit</label>
+    </div>
+  </div>
+
+  <div id="error"></div>
+
+  <div id="result">
+    <p>Grid square: <span id="result-grid" class="grid-label"></span> <span id="result-grid-short"></span></p>
+    <p>Coordinates: <span id="result-coords"></span></p>
+    <p id="result-location-line">Location: <span id="result-location"></span></p>
+  </div>
+
+  <div id="callsign-result">
+    <p>Callsign: <span id="cr-callsign" class="grid-label"></span></p>
+    <p>Name: <span id="cr-name"></span></p>
+    <p>Class: <span id="cr-class"></span></p>
+    <p>Grid square: <span id="cr-grid" class="grid-label"></span></p>
+    <p>Address: <span id="cr-address"></span></p>
+    <p>Expires: <span id="cr-expires"></span></p>
+    <p><a id="cr-uls-link" href="#" target="_blank">FCC ULS record</a></p>
+  </div>
+
+  <div id="map"></div>
+
+  <script is:inline src="/assets/vendor/leaflet.js"></script>
+  <script is:inline>
+    'use strict';
+
+    var map = L.map('map').setView([39.83, -98.58], 4);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    var gridRect = null;
+    var marker = null;
+    var lastGrid6 = null;
+    var lastLat = null;
+    var lastLon = null;
+    var lastLabel = null;
+
+    function getGridPrecision() {
+      return document.querySelector('input[name="precision"]:checked').value === '4' ? 4 : 6;
+    }
+
+    function truncateGrid(grid, len) {
+      return grid ? grid.slice(0, len) : grid;
+    }
+
+    function showError(msg) {
+      var el = document.getElementById('error');
+      el.textContent = msg;
+      el.style.display = 'block';
+    }
+
+    function clearError() {
+      document.getElementById('error').style.display = 'none';
+    }
+
+    function latLonToGrid(lat, lon) {
+      var adjLon = lon + 180;
+      var adjLat = lat + 90;
+
+      var field1 = String.fromCharCode(65 + Math.floor(adjLon / 20));
+      var field2 = String.fromCharCode(65 + Math.floor(adjLat / 10));
+
+      var square1 = Math.floor((adjLon % 20) / 2);
+      var square2 = Math.floor(adjLat % 10);
+
+      var sub1 = String.fromCharCode(97 + Math.floor((adjLon % 2) * 12));
+      var sub2 = String.fromCharCode(97 + Math.floor((adjLat % 1) * 24));
+
+      return field1 + field2 + square1 + square2 + sub1 + sub2;
+    }
+
+    function gridToLatLon(grid) {
+      grid = grid.trim();
+      if (grid.length < 4 || grid.length % 2 !== 0 || grid.length > 8) return null;
+
+      var field1 = grid.charCodeAt(0) - 65;
+      var field2 = grid.charCodeAt(1) - 65;
+      if (field1 < 0 || field1 > 17 || field2 < 0 || field2 > 17) return null;
+
+      var sq1 = parseInt(grid[2]);
+      var sq2 = parseInt(grid[3]);
+      if (isNaN(sq1) || isNaN(sq2) || sq1 > 9 || sq2 > 9) return null;
+
+      var lonMin = field1 * 20 + sq1 * 2 - 180;
+      var latMin = field2 * 10 + sq2 - 90;
+      var lonSize = 2;
+      var latSize = 1;
+
+      if (grid.length >= 6) {
+        var sub1 = grid.charCodeAt(4);
+        var sub2 = grid.charCodeAt(5);
+        if (sub1 >= 65 && sub1 <= 90) sub1 -= 65;
+        else if (sub1 >= 97 && sub1 <= 122) sub1 -= 97;
+        else return null;
+        if (sub2 >= 65 && sub2 <= 90) sub2 -= 65;
+        else if (sub2 >= 97 && sub2 <= 122) sub2 -= 97;
+        else return null;
+        if (sub1 > 23 || sub2 > 23) return null;
+
+        lonMin += sub1 * (2 / 24);
+        latMin += sub2 * (1 / 24);
+        lonSize = 2 / 24;
+        latSize = 1 / 24;
+      }
+
+      if (grid.length === 8) {
+        var ext1 = parseInt(grid[6]);
+        var ext2 = parseInt(grid[7]);
+        if (isNaN(ext1) || isNaN(ext2) || ext1 > 9 || ext2 > 9) return null;
+
+        lonMin += ext1 * (lonSize / 10);
+        latMin += ext2 * (latSize / 10);
+        lonSize /= 10;
+        latSize /= 10;
+      }
+
+      return {
+        latMin: latMin,
+        latMax: latMin + latSize,
+        lonMin: lonMin,
+        lonMax: lonMin + lonSize,
+        lat: latMin + latSize / 2,
+        lon: lonMin + lonSize / 2
+      };
+    }
+
+    function drawGrid(grid, centerLat, centerLon, label) {
+      var prec = getGridPrecision();
+      var displayGrid = truncateGrid(grid, prec);
+      var bounds = gridToLatLon(displayGrid);
+      if (!bounds) return;
+
+      if (gridRect) map.removeLayer(gridRect);
+      if (marker) map.removeLayer(marker);
+
+      gridRect = L.rectangle(
+        [[bounds.latMin, bounds.lonMin], [bounds.latMax, bounds.lonMax]],
+        { color: '#0078d4', weight: 2, fillOpacity: 0.15 }
+      ).addTo(map);
+
+      if (centerLat !== undefined && centerLon !== undefined) {
+        marker = L.marker([centerLat, centerLon]).addTo(map);
+        var popupText = label || displayGrid;
+        marker.bindPopup(popupText).openPopup();
+      }
+
+      map.fitBounds(gridRect.getBounds(), { padding: [40, 40], maxZoom: 12 });
+    }
+
+    function showGrid(grid6, centerLat, centerLon, label) {
+      lastGrid6 = grid6;
+      lastLat = centerLat;
+      lastLon = centerLon;
+      lastLabel = label;
+      drawGrid(grid6, centerLat, centerLon, label);
+    }
+
+    function showResult(grid, lat, lon, locationName) {
+      var el = document.getElementById('result');
+      document.getElementById('result-grid').textContent = grid;
+      var short = grid.slice(0, 4);
+      document.getElementById('result-grid-short').textContent =
+        grid.length > 4 ? '(' + short + ')' : '';
+      document.getElementById('result-coords').textContent =
+        lat.toFixed(6) + ', ' + lon.toFixed(6);
+      var locLine = document.getElementById('result-location-line');
+      if (locationName) {
+        document.getElementById('result-location').textContent = locationName;
+        locLine.style.display = '';
+      } else {
+        locLine.style.display = 'none';
+      }
+      el.style.display = 'block';
+    }
+
+    function hideResults() {
+      document.getElementById('result').style.display = 'none';
+      document.getElementById('callsign-result').style.display = 'none';
+    }
+
+    async function lookupAddress() {
+      clearError();
+      hideResults();
+      var query = document.getElementById('address-input').value.trim();
+      if (!query) return;
+
+      var btn = document.getElementById('address-btn');
+      btn.textContent = 'Looking up...';
+      btn.disabled = true;
+
+      try {
+        var url = 'https://nominatim.openstreetmap.org/search?q=' +
+          encodeURIComponent(query) + '&format=json&limit=1';
+        if (/^\d{5}(-\d{4})?$/.test(query)) url += '&countrycodes=us';
+        var resp = await fetch(url,
+          { headers: { 'User-Agent': 'jmthornton-grid-locator' } }
+        );
+        var data = await resp.json();
+        if (!data.length) {
+          showError('Location not found: ' + query);
+          return;
+        }
+
+        var lat = parseFloat(data[0].lat);
+        var lon = parseFloat(data[0].lon);
+        var grid = latLonToGrid(lat, lon);
+        var bounds = gridToLatLon(grid);
+        var displayName = data[0].display_name;
+
+        var isZip = /^\d{5}(-\d{4})?$/.test(query);
+        showResult(grid, lat, lon, displayName);
+        if (isZip) {
+          showGrid(grid, undefined, undefined, null);
+        } else {
+          showGrid(grid, lat, lon, grid);
+        }
+        document.getElementById('grid-input').value = '';
+      } catch (e) {
+        showError('Geocoding failed: ' + e.message);
+      } finally {
+        btn.textContent = 'Look up';
+        btn.disabled = false;
+      }
+    }
+
+    function lookupGrid() {
+      clearError();
+      hideResults();
+      var raw = document.getElementById('grid-input').value.trim();
+      if (!raw) return;
+
+      var normalized = raw.length >= 2
+        ? raw[0].toUpperCase() + raw[1].toUpperCase() + raw.slice(2)
+        : raw.toUpperCase();
+
+      var bounds = gridToLatLon(normalized);
+      if (!bounds) {
+        showError('Invalid grid square: ' + raw);
+        return;
+      }
+
+      showResult(normalized, bounds.lat, bounds.lon, '');
+      showGrid(normalized, undefined, undefined, null);
+      reverseGeocode(bounds.lat, bounds.lon);
+    }
+
+    async function lookupCallsign() {
+      clearError();
+      hideResults();
+      var call = document.getElementById('callsign-input').value.trim().toUpperCase();
+      if (!call) return;
+
+      var btn = document.getElementById('callsign-btn');
+      btn.textContent = 'Looking up...';
+      btn.disabled = true;
+
+      try {
+        var resp = await fetch('https://callook.info/' + encodeURIComponent(call) + '/json');
+        var data = await resp.json();
+
+        if (data.status !== 'VALID') {
+          showError('Callsign not found: ' + call);
+          return;
+        }
+
+        var el = document.getElementById('callsign-result');
+        document.getElementById('cr-callsign').textContent = data.current.callsign;
+        document.getElementById('cr-name').textContent = data.name || '';
+        document.getElementById('cr-class').textContent = data.current.operClass || data.type || '';
+        document.getElementById('cr-grid').textContent = data.location.gridsquare || '';
+        document.getElementById('cr-address').textContent =
+          [data.address.line1, data.address.line2].filter(Boolean).join(', ');
+        document.getElementById('cr-expires').textContent = data.otherInfo.expiryDate || '';
+
+        var ulsLink = document.getElementById('cr-uls-link');
+        if (data.otherInfo.ulsUrl) {
+          ulsLink.href = data.otherInfo.ulsUrl;
+          ulsLink.style.display = 'inline';
+        } else {
+          ulsLink.style.display = 'none';
+        }
+
+        el.style.display = 'block';
+
+        if (data.location.gridsquare) {
+          var grid = data.location.gridsquare;
+          var bounds = gridToLatLon(grid);
+          if (bounds) {
+            var lat = parseFloat(data.location.latitude);
+            var lon = parseFloat(data.location.longitude);
+            if (isNaN(lat) || isNaN(lon)) {
+              lat = bounds.lat;
+              lon = bounds.lon;
+            }
+            showGrid(grid, lat, lon, call + ' — ' + grid);
+            document.getElementById('grid-input').value = '';
+          }
+        }
+      } catch (e) {
+        showError('Callsign lookup failed: ' + e.message);
+      } finally {
+        btn.textContent = 'Look up';
+        btn.disabled = false;
+      }
+    }
+
+    document.getElementById('address-btn').addEventListener('click', lookupAddress);
+    document.getElementById('address-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') lookupAddress();
+    });
+
+    document.getElementById('grid-btn').addEventListener('click', lookupGrid);
+    document.getElementById('grid-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') lookupGrid();
+    });
+
+    document.getElementById('callsign-btn').addEventListener('click', lookupCallsign);
+    document.getElementById('callsign-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') lookupCallsign();
+    });
+
+    async function reverseGeocode(lat, lon) {
+      try {
+        var resp = await fetch(
+          'https://nominatim.openstreetmap.org/reverse?lat=' + lat +
+          '&lon=' + lon + '&format=json&zoom=10',
+          { headers: { 'User-Agent': 'jmthornton-grid-locator' } }
+        );
+        var data = await resp.json();
+        if (data.display_name) {
+          document.getElementById('result-location').textContent = data.display_name;
+          document.getElementById('result-location-line').style.display = '';
+        }
+      } catch (_) {}
+    }
+
+    document.querySelectorAll('input[name="precision"]').forEach(function(r) {
+      r.addEventListener('change', function() {
+        if (lastGrid6) drawGrid(lastGrid6, lastLat, lastLon, lastLabel);
+      });
+    });
+
+    map.on('click', function(e) {
+      clearError();
+      hideResults();
+      var lat = e.latlng.lat;
+      var lon = e.latlng.lng;
+      var grid = latLonToGrid(lat, lon);
+      var bounds = gridToLatLon(grid);
+
+      showResult(grid, lat, lon, '');
+      showGrid(grid, lat, lon, grid);
+      document.getElementById('grid-input').value = '';
+      reverseGeocode(lat, lon);
+    });
+  </script>
+</Base>
