@@ -133,6 +133,7 @@ import Base from '../../layouts/Base.astro';
     <div class="search-row">
       <input type="text" id="address-input" class="wide" placeholder="e.g. Minneapolis, MN or 55401" />
       <button id="address-btn">Look up</button>
+      <button id="locate-btn">Use my location</button>
     </div>
   </div>
 
@@ -304,7 +305,7 @@ import Base from '../../layouts/Base.astro';
 
       if (centerLat !== undefined && centerLon !== undefined) {
         marker = L.marker([centerLat, centerLon]).addTo(map);
-        var popupText = label || displayGrid;
+        var popupText = label ? label + ' — ' + displayGrid : displayGrid;
         marker.bindPopup(popupText).openPopup();
       }
 
@@ -319,12 +320,16 @@ import Base from '../../layouts/Base.astro';
       drawGrid(grid6, centerLat, centerLon, label);
     }
 
+    function renderGridLabel(grid) {
+      var displayGrid = truncateGrid(grid, getGridPrecision());
+      document.getElementById('result-grid').textContent = displayGrid;
+      document.getElementById('result-grid-short').textContent =
+        displayGrid.length > 4 ? '(' + displayGrid.slice(0, 4) + ')' : '';
+    }
+
     function showResult(grid, lat, lon, locationName) {
       var el = document.getElementById('result');
-      document.getElementById('result-grid').textContent = grid;
-      var short = grid.slice(0, 4);
-      document.getElementById('result-grid-short').textContent =
-        grid.length > 4 ? '(' + short + ')' : '';
+      renderGridLabel(grid);
       document.getElementById('result-coords').textContent =
         lat.toFixed(6) + ', ' + lon.toFixed(6);
       var locLine = document.getElementById('result-location-line');
@@ -376,7 +381,7 @@ import Base from '../../layouts/Base.astro';
         if (isZip) {
           showGrid(grid, undefined, undefined, null);
         } else {
-          showGrid(grid, lat, lon, grid);
+          showGrid(grid, lat, lon, null);
         }
         document.getElementById('grid-input').value = '';
         setParam('q', query);
@@ -459,7 +464,7 @@ import Base from '../../layouts/Base.astro';
               lat = bounds.lat;
               lon = bounds.lon;
             }
-            showGrid(grid, lat, lon, call + ' — ' + grid);
+            showGrid(grid, lat, lon, call);
             document.getElementById('grid-input').value = '';
           }
         }
@@ -475,6 +480,44 @@ import Base from '../../layouts/Base.astro';
     document.getElementById('address-input').addEventListener('keydown', function(e) {
       if (e.key === 'Enter') lookupAddress();
     });
+
+    function locateMe() {
+      clearError();
+      hideResults();
+
+      if (!navigator.geolocation) {
+        showError('Geolocation is not supported by this browser.');
+        return;
+      }
+
+      var btn = document.getElementById('locate-btn');
+      btn.textContent = 'Locating...';
+      btn.disabled = true;
+
+      navigator.geolocation.getCurrentPosition(
+        function(pos) {
+          var lat = pos.coords.latitude;
+          var lon = pos.coords.longitude;
+          var grid = latLonToGrid(lat, lon);
+
+          showResult(grid, lat, lon, '');
+          showGrid(grid, lat, lon, null);
+          document.getElementById('grid-input').value = '';
+          reverseGeocode(lat, lon);
+          setParam('grid', grid);
+
+          btn.textContent = 'Use my location';
+          btn.disabled = false;
+        },
+        function(err) {
+          showError('Location lookup failed: ' + err.message);
+          btn.textContent = 'Use my location';
+          btn.disabled = false;
+        }
+      );
+    }
+
+    document.getElementById('locate-btn').addEventListener('click', locateMe);
 
     document.getElementById('grid-btn').addEventListener('click', lookupGrid);
     document.getElementById('grid-input').addEventListener('keydown', function(e) {
@@ -503,7 +546,11 @@ import Base from '../../layouts/Base.astro';
 
     document.querySelectorAll('input[name="precision"]').forEach(function(r) {
       r.addEventListener('change', function() {
-        if (lastGrid6) drawGrid(lastGrid6, lastLat, lastLon, lastLabel);
+        if (!lastGrid6) return;
+        drawGrid(lastGrid6, lastLat, lastLon, lastLabel);
+        if (document.getElementById('result').style.display !== 'none') {
+          renderGridLabel(lastGrid6);
+        }
       });
     });
 
@@ -523,7 +570,7 @@ import Base from '../../layouts/Base.astro';
       var bounds = gridToLatLon(grid);
 
       showResult(grid, lat, lon, '');
-      showGrid(grid, lat, lon, grid);
+      showGrid(grid, lat, lon, null);
       document.getElementById('grid-input').value = '';
       reverseGeocode(lat, lon);
       setParam('grid', grid);
