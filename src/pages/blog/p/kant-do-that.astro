@@ -1,0 +1,82 @@
+---
+import BlogPost from '../../../layouts/BlogPost.astro';
+---
+
+<BlogPost
+  title="Responsibility Without Informed Agency: Kant do That"
+  description="Responsibility for AI systems means little without informed agency, and the AI industry's pattern of opacity around training data, environmental costs, and system prompts is a structural failure to sustain it."
+  slug="kant-do-that"
+  publishedDate="2026-08-08"
+>
+
+  <Fragment slot="extra-head">
+    <style>
+     .references p {
+       margin: 0.75em 0;
+     }
+    </style>
+  </Fragment>
+
+  <h1 class="post-title">Responsibility Without Informed Agency: Kant do That</h1>
+  <time datetime="2026-08-08">August 8, 2026</time>
+
+  <div class="post-main">
+    <div class="blog-body">
+      <p><em>This started as a final paper for a course on technology and ethics. I've adapted it lightly for the blog.</em></p>
+
+      <p>When an AI system denies someone a loan or generates medical advice that influences a doctor's decision, someone bears responsibility for that output. Responsibility in this context is the obligation to answer for and justify the consequences of using a system. Laws like the EU AI Act and company terms of service usually assign this responsibility to human actors, correctly, but responsibility means little without informed agency, the capacity to make decisions grounded in real knowledge of how a system functions and operates. Those who control the conditions of that agency have a duty to sustain it. Through the lens of Kantian ethics, utilitarian reasoning, and care ethics, the industry's pattern of opacity reveals a structural failure to honor that obligation. By hiding training data and system behavior while masking environmental costs, developers steadily undermine informed agency, turning responsibility into a mechanism for shifting blame to users while keeping real power for themselves.</p>
+
+      <p>A large language model (LLM) that produces an ethical analysis has not engaged in ethical reasoning any more than a calculator that displays the number 42 has grasped the question posed to it, and since AI systems are incapable of moral reasoning or accountability, responsibility remains with humans. Yet as AI increasingly mediates decisions about employment, credit, health, and the information that shapes daily life for billions, responsible use cannot rest on good intentions alone. It requires informed agency, which is the knowledge to assess what a tool does and how it fails, and the freedom to choose real alternatives. This is not a call for every user to audit training data personally. Our society already manages complexity through distributed expertise (no one inspects the engineering of every bridge they cross, but blueprints are available to those charged with oversight and inspection reports are public). Informed agency then means that the necessary public information exists and is accessible to researchers and qualified users who act on behalf of the broader public.</p>
+
+      <h3>The exoskeleton you can't inspect</h3>
+      <p>Software engineer <a href="https://www.kasava.dev/blog/ai-as-exoskeleton">Ben Gregory</a> argues that AI tools should "make the seams visible" so users can identify where failures occur. The strongest objection to this type of transparency is that it might enable misuse, but security through obscurity has long been discredited in security engineering. Linux, for example, is the world's most widely used operating system and is fully open source. If safety measures collapse under scrutiny, the engineering is what failed. The demand, framed in Kantian deontological ethics, rests on moral obligation rather than engineering pragmatics. Immanuel Kant's Formula of Humanity demands that a rational agent be treated as an end in themselves, never merely as an instrument for someone else's purpose. Withholding necessary information while assigning responsibility treats users as instruments of liability deflection. It reduces them to shields rather than autonomous agents capable of moral choice. Kant also asks whether a rule can be universalized, meaning whether everyone following it would produce coherent results rather than self-defeating contradiction. The AI industry's implied rule of "assign responsibility while withholding informed agency" cannot be universalized. If every toolmaker followed suit, the concept of responsibility for tool use would collapse entirely; the metaphorical buck would never stop being passed. Gregory uses the idea of an exoskeleton as his central metaphor. The wearer who cannot inspect the mechanism of the exoskeleton is wholly dependent on the developer who built it.</p>
+
+      <h3>Hidden data, hidden costs</h3>
+      <p>In practice, making training data opaque is routine in the industry. OpenAI's Whisper model, for instance, is distributed under a permissive MIT license with public code and model weights, yet its 680,000 hours of training audio are kept undisclosed. Generative models for images and text have been built on the creative labor of millions of artists who were given neither meaningful opportunity to consent nor compensation. <a href="https://www.bloodinthemachine.com/p/ai-is-not-democratizing-creativity">Brian Merchant</a> argues that the industry's marketing of "democratizing creativity" deliberately obscures this extraction, and using creative work without consent treats creators as instruments for profit, a direct violation of Kant's Formula of Humanity. The environmental costs of training these systems are also almost entirely hidden. Economist <a href="https://www.piie.com/blogs/realtime-economics/2024/ais-carbon-footprint-appears-likely-be-alarming">Monica de Bolle</a> notes that "we are in the dark since AI companies don't provide that information" about the carbon costs of training and running most models. <a href="https://doi.org/10.1038/d41586-024-00478-x">Kate Crawford</a> describes these costs as "soaring and mostly secret," and <a href="https://hbr.org/2024/07/the-uneven-distribution-of-ais-environmental-impacts">Ren and Wierman</a> show that the burden falls most heavily on communities that absorb the costs of data centers without sharing in the benefits.</p>
+
+      <p>Together, these undisclosed costs make honest utilitarian accounting impossible. Researchers and affected communities have no basis for a cost-benefit assessment when the costs are withheld by design. Utilitarianism holds that the right action produces the greatest good for the greatest number of affected parties, and that calculation requires honest inputs. The reach of these systems makes such a calculus consequential, but a utilitarian defense cannot be made by the party controlling both the costs and their disclosure. The opacity is a deontological violation, and utilitarianism independently demands the transparency that opacity denies.</p>
+
+      <h3>Hidden rules</h3>
+      <p>Beyond the costs of training, the rules governing AI behavior are themselves hidden. Every generative AI model runs with a system prompt (a set of hidden instructions that define the rules of interaction with the user). Users are never shown these rules. A <a href="https://www.reuters.com/investigates/special-report/meta-ai-chatbot-death/">Reuters investigation</a> by Jeff Horwitz revealed Meta's system prompt guidelines, including "no policy requirement for information to be accurate." When a platform hides the rules governing its side of the conversation, the user cannot reason about whether the tool serves their interests or the platform's. Care ethics holds that dependency and power asymmetry generate obligations toward the more vulnerable party, and that builders bear specific responsibility for what their machines do. When one party controls all the information while the other must trust without the ability to verify, the relationship cannot support the mutual accountability that healthy dependency requires. <a href="https://www.scu.edu/ethics-in-technology-practice/best-ethical-practices-in-technology/">Vallor and Green</a> conclude that agreements with parties who are "in the dark" with respect to the nature of their interaction are not, in general, ethically legitimate. Senator <a href="https://www.youtube.com/watch?v=h3AtWdeu_G0">Bernie Sanders</a> prompted an AI system to assess these industry practices, and the response acknowledged that this shaping of information happens "in the background, invisible and largely unregulated."</p>
+
+      <h3>Why the market rewards opacity</h3>
+      <p>The opacity is structural and systemic, the AI industry appeals to human responsibility in its terms of service and regulatory structures even as it dismantles the conditions that make such responsibility meaningful, and the market rewards them handsomely. Transparency about training data would expose companies to copyright claims and disclosing environmental costs would invite regulatory scrutiny. Revealing system prompts would expose the risk of behavioral manipulation. Market incentives alone explain much of this, but deliberate choice is also documented. Horwitz reports that Mark Zuckerberg scolded product managers for making AI chatbots "boring" by enforcing safety restrictions, and that Meta has lobbied for federal laws to block state-level AI regulation. Sanders describes companies "pouring hundreds of millions into the political process to make sure that safeguards... do not take place." If human responsibility for AI output is already embedded in binding terms of service and legislation like the EU AI Act, the informed agency it requires is mature enough to demand.</p>
+
+      <h3>What informed agency demands</h3>
+      <p>Responsible use of AI is inseparable from informed agency, but the evidence shows that the capacity to evaluate tools and the existence of real alternatives is being eroded, and the market rewards that erosion. The provenance of training data and the rules governing system behavior must be made public. Environmental costs must be independently auditable. These demands follow from principles the industry already claims to accept. Kantian ethics, utilitarian reasoning, and care ethics reach the same obligation for transparency independently. When responsibility is invoked without the substance of informed agency, the user becomes an instrument of liability. The developers shift accountability from themselves to those who do not control the information. The industry markets an exoskeleton but delivers dependency on corporations. This dependency, in which one party determines what another can know while extracting value from the resulting asymmetry, is a well-established pattern of concentrated power, newly clothed in AI sparkle branding. The obligation to maintain informed agency is proportional to the reach of the systems in question. The industry has demonstrated it will not provide this voluntarily, and thus regulation must compel it.</p>
+
+      <h3>References</h3>
+      <div class="references">
+        <p>Andersen v. Stability AI Ltd. No. 23-cv-00201-WHO. N.D. Cal., August 12, 2024.</p>
+
+        <p>Aylett, Ruth, and Patricia A. Vargas. <em>Living with Robots: What Every Anxious Human Needs to Know</em>. Cambridge, MA: MIT Press, 2021.</p>
+
+        <p>CrashCourse. "Kant & Categorical Imperatives: Crash Course Philosophy #35." YouTube video, November 14, 2016. <a href="https://www.youtube.com/watch?v=8bIys6JoEDw">https://www.youtube.com/watch?v=8bIys6JoEDw</a>.</p>
+
+        <p>Crawford, Kate. "Generative AI's Environmental Costs Are Soaring and Mostly Secret." <em>Nature</em> 626, no. 8000 (February 20, 2024). <a href="https://doi.org/10.1038/d41586-024-00478-x">https://doi.org/10.1038/d41586-024-00478-x</a>.</p>
+
+        <p>de Bolle, Monica. "AI's Carbon Footprint Appears Likely to Be Alarming." Peterson Institute for International Economics, February 29, 2024. <a href="https://www.piie.com/blogs/realtime-economics/2024/ais-carbon-footprint-appears-likely-be-alarming">https://www.piie.com/blogs/realtime-economics/2024/ais-carbon-footprint-appears-likely-be-alarming</a>.</p>
+
+        <p>Gregory, Ben. "Stop Thinking of AI as a Coworker. It's an Exoskeleton." <em>Kasava</em>, February 19, 2026. <a href="https://www.kasava.dev/blog/ai-as-exoskeleton">https://www.kasava.dev/blog/ai-as-exoskeleton</a>.</p>
+
+        <p>Horwitz, Jeff. "A Flirty Meta AI Bot Invited a Retiree to Meet. He Never Made It Home." <em>Reuters</em>, August 14, 2025. <a href="https://www.reuters.com/investigates/special-report/meta-ai-chatbot-death/">https://www.reuters.com/investigates/special-report/meta-ai-chatbot-death/</a>.</p>
+
+        <p>Kant, Immanuel. <em>Groundwork of the Metaphysics of Morals</em>. Translated by Mary Gregor and Jens Timmermann. Rev. ed. Cambridge: Cambridge University Press, 2013. Originally published 1785.</p>
+
+        <p>Merchant, Brian. "AI Is Not 'Democratizing Creativity.' It's Doing the Opposite." <em>Blood in the Machine</em>, July 11, 2024. <a href="https://www.bloodinthemachine.com/p/ai-is-not-democratizing-creativity">https://www.bloodinthemachine.com/p/ai-is-not-democratizing-creativity</a>.</p>
+
+        <p>Penn State Department of Agricultural Economics, Sociology, and Education. "What Are Ethical Frameworks?" N.d. <a href="https://aese.psu.edu/teachag/curriculum/modules/bioethics-1/what-are-ethical-frameworks">https://aese.psu.edu/teachag/curriculum/modules/bioethics-1/what-are-ethical-frameworks</a>.</p>
+
+        <p>Radford, Alec, Jong Wook Kim, Tao Xu, Greg Brockman, Christine McLeavey, and Ilya Sutskever. "Robust Speech Recognition via Large-Scale Weak Supervision." arXiv preprint arXiv:2212.04356, 2022. <a href="https://arxiv.org/abs/2212.04356">https://arxiv.org/abs/2212.04356</a>.</p>
+
+        <p>Ren, Shaolei, and Adam Wierman. "The Uneven Distribution of AI's Environmental Impacts." <em>Harvard Business Review</em>, July 15, 2024. <a href="https://hbr.org/2024/07/the-uneven-distribution-of-ais-environmental-impacts">https://hbr.org/2024/07/the-uneven-distribution-of-ais-environmental-impacts</a>.</p>
+
+        <p>Sanders, Bernie. "Bernie vs. Claude." YouTube video, March 19, 2026. <a href="https://www.youtube.com/watch?v=h3AtWdeu_G0">https://www.youtube.com/watch?v=h3AtWdeu_G0</a>.</p>
+
+        <p>Schor, Z. "Andersen v. Stability AI: The Landmark Case Unpacking the Copyright Risks of AI Image Generators." <em>NYU Journal of Intellectual Property &amp; Entertainment Law</em>, December 2, 2024. <a href="https://jipel.law.nyu.edu/andersen-v-stability-ai-the-landmark-case-unpacking-the-copyright-risks-of-ai-image-generators/">https://jipel.law.nyu.edu/andersen-v-stability-ai-the-landmark-case-unpacking-the-copyright-risks-of-ai-image-generators/</a>.</p>
+
+        <p>Vallor, Shannon, and Brian Green. "Best Ethical Practices in Technology." Markkula Center for Applied Ethics, Santa Clara University, 2018. <a href="https://www.scu.edu/ethics-in-technology-practice/best-ethical-practices-in-technology/">https://www.scu.edu/ethics-in-technology-practice/best-ethical-practices-in-technology/</a>.</p>
+      </div>
+    </div>
+  </div>
+</BlogPost>
