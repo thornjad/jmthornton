@@ -1,11 +1,6 @@
 /*
-  Link: </assets/style/main.css>; rel=preload; as=style
-  Link: </assets/fonts/MetroNova-Regular.woff2>; rel=preload; as=font
-  Link: </assets/fonts/MetroNova-Italic.woff2>; rel=preload; as=font
-  Link: </assets/fonts/MetroNova-Bold.woff2>; rel=preload; as=font
-  Link: </assets/fonts/MetroNova-BoldItalic.woff2>; rel=preload; as=font
   Strict-Transport-Security: max-age=31536000; includeSubDomains
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com; style-src 'self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com; img-src 'self' data: https://apm-badges.herokuapp.com; font-src 'self' https://maxcdn.bootstrapcdn.com; connect-src 'self' https://nominatim.openstreetmap.org https://callook.info https://api.weather.gov https://api.websitecarbon.com; frame-src https://www.google.com https://www.youtube.com https://www.youtube-nocookie.com https://embed.windy.com; base-uri 'self'; form-action 'self'; object-src 'none'; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com; img-src 'self' data: https://apm-badges.herokuapp.com; font-src 'self' https://maxcdn.bootstrapcdn.com; connect-src 'self' https://nominatim.openstreetmap.org https://callook.info https://api.weather.gov https://api.websitecarbon.com https://cloudflareinsights.com; frame-src https://www.google.com https://www.youtube.com https://www.youtube-nocookie.com https://embed.windy.com; base-uri 'self'; form-action 'self'; object-src 'none'; frame-ancestors 'none'
 
 /*.pdf
   x-robots-tag: noindex
