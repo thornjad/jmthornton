@@ -1,5 +1,9 @@
 ---
+import { Image } from 'astro:assets';
 import BlogPost from '../../../layouts/BlogPost.astro';
+import bdote from '../../../assets/images/bdote.jpg';
+import upperSiouxTepee from '../../../assets/images/upper-sioux-tepee.jpg';
+import littleCrow from '../../../assets/images/LittleCrow.png';
 ---
 
 <BlogPost
@@ -61,7 +65,7 @@ import BlogPost from '../../../layouts/BlogPost.astro';
       <p>One year later, that dissatisfaction erupted into a war that ended in a mass hanging and the near-total removal of the Dakota people from Minnesota. The roots of the war ran back more than a decade, chiefly to two treaties signed in 1851 at Traverse des Sioux and Mendota, which fundamentally altered Dakota life. On paper, these agreements ceded nearly all Dakota land in exchange for reservation strips along the Minnesota River and sizable annual payments. But the Dakota who made their marks on those documents didn't understand what they were agreeing to.</p>
 
       <figure>
-        <img loading="lazy" alt="Aerial view of the confluence of rivers" src="/assets/images/bdote.jpg" />
+        <Image loading="lazy" alt="Aerial view of the confluence of rivers" src={bdote} />
         <figcaption>Bdote, also called Mdote or Mendota: the confluence of the Mississippi (right) and Minnesota (left) rivers, the center of the world and the place where the Dakota were first created. Today part of Fort Snelling State Park, south of Minneapolis.</figcaption>
       </figure>
 
@@ -80,7 +84,7 @@ import BlogPost from '../../../layouts/BlogPost.astro';
       <p>By the summer of 1862, patience had worn to nothing. A failed harvest in 1861, followed by an unusually brutal winter, left Dakota families starving. Sarah Wakefield, a white woman living at the Upper Sioux Agency, later wrote about what she saw, "These poor creatures subsisted on a tall grass which they find in the marshes, chewing the roots, and eating the wild turnip... I know that many died from starvation or disease... It made my heart ache."</p>
 
       <figure>
-        <img loading="lazy" alt="A colorful tepee stands in tall prairie grass at sunset, with a stone Agency building in the far background" src="/assets/images/upper-sioux-tepee.jpg" />
+        <Image loading="lazy" alt="A colorful tepee stands in tall prairie grass at sunset, with a stone Agency building in the far background" src={upperSiouxTepee} />
         <figcaption>A modern replica Dakota tepee stands at the Upper Sioux Agency, the agency building is visible in the background.</figcaption>
       </figure>
 
@@ -99,7 +103,7 @@ import BlogPost from '../../../layouts/BlogPost.astro';
       <h2>The Breaking Point</h2>
 
       <figure>
-        <img src="/assets/images/LittleCrow.png" alt="Portrait photo of Little Crow (Taoyateduta) in Washington, D.C. 1858 (Wikimedia Commons)" loading="lazy" />
+        <Image src={littleCrow} alt="Portrait photo of Little Crow (Taoyateduta) in Washington, D.C. 1858 (Wikimedia Commons)" loading="lazy" />
         <figcaption>Portrait photo of Little Crow (Taoyateduta) in Washington, D.C. 1858 (Wikimedia Commons)</figcaption>
       </figure>
 

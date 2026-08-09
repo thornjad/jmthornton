@@ -1,5 +1,10 @@
 ---
+import { Image } from 'astro:assets';
 import BlogPost from '../../../layouts/BlogPost.astro';
+import snelling from '../../../assets/images/Snelling.jpg';
+import walden from '../../../assets/images/Walden.jpg';
+import littleCrow from '../../../assets/images/LittleCrow.png';
+import mankato from '../../../assets/images/Mankato.jpg';
 ---
 
 <BlogPost
@@ -65,7 +70,7 @@ import BlogPost from '../../../layouts/BlogPost.astro';
       <p>&emsp;The Dakota, who gave Mni Sota Makoċe its name—"land where the waters reflect the skies"—live in a world where land, origin, kinship, and spirit are inseparable.<sup>14 19</sup> Their understanding of land begins at Bdote, the confluence of the Minnesota and Mississippi rivers,<sup>20</sup> from which traditions say the Dakota people first arrived, formed from the clay at Maka Ċokaya Kiŋ, the Center of the Earth.<sup>14 16 19</sup> Here, stories and obligations to the land are passed through language, ceremony, and place-names that mark ancient belonging and ongoing return, even in exile. Identity is rooted in caring for land as a living relation; the Dakota word for "mother" and "earth" are the same, "Ina."<sup>19</sup> This equivalence is no metaphor, Dakota identity is rooted in caring for land and returning—even after exile.<sup>14 19 21</sup></p>
 
       <figure>
-        <img src="/assets/images/Snelling.jpg" alt="1844 Watercolor of Fort Snelling above Bdote, by John Caspar Wild (Wikimedia Commons)" loading="lazy" />
+        <Image src={snelling} alt="1844 Watercolor of Fort Snelling above Bdote, by John Caspar Wild (Wikimedia Commons)" loading="lazy" />
         <figcaption>1844 Watercolor of Fort Snelling above Bdote, by John Caspar Wild (Wikimedia Commons)</figcaption>
       </figure>
 
@@ -74,7 +79,7 @@ import BlogPost from '../../../layouts/BlogPost.astro';
       <p>&emsp;Thoreau's relationship with land emerges out of a different heritage, though it is marked by its own deep yearning and critique of his culture's trajectory. Troubled by a society in which "men have become the tools of their tools," he sought refuge at Walden to discover a truer, more vital existence.<sup>1</sup> His famous retreat was not an escape into wilderness but an effort to "live deliberately, to front only the essential facts of life," and to let the land teach him what civilization obscures.<sup>1 13</sup> Walden Pond, for Thoreau, was "earth's eye, looking into which the beholder measures the depth of his own nature."<sup>1</sup> In passages that border on reverence, Thoreau imagines the pond as a living interlocutor, a mirror for self-examination, and a source of moral renewal and insight.</p>
 
       <figure>
-        <img src="/assets/images/Walden.jpg" loading="lazy" alt="View of Thoreau's Walden Pond, 2018, photo by Ashok Boghani (CC BY-NC 2.0)" />
+        <Image src={walden} loading="lazy" alt="View of Thoreau's Walden Pond, 2018, photo by Ashok Boghani (CC BY-NC 2.0)" />
         <figcaption>View of Thoreau's Walden Pond, 2018, photo by Ashok Boghani (CC BY-NC 2.0)</figcaption>
       </figure>
 
@@ -101,7 +106,7 @@ import BlogPost from '../../../layouts/BlogPost.astro';
       <p>&emsp;Denial of recognition shaped the war's tragic ignition. In August 1862, following years of deprivation, an argument among four young Dakota men about stealing eggs escalated to the murder of five settlers in Acton, Minnesota.<sup>2 8 30</sup> Though this act was indefensible, those responsible knew it would doom their people: state violence would make no distinction between guilty individuals and the fate of an entire people. Big Eagle recalled, "It began to be whispered about that now would be a good time to go to war with the whites and get back the lands. It was believed that the men who had enlisted [for the Civil War] had all left the state, and that before help could be sent the Indians could clean out the country, and that the Winnebagoes, and even the Chippewas, would assist the Sioux."<sup>2</sup> Anticipating collective punishment, Dakota leaders called a council to debate whether any future remained in patience or restraint.</p>
 
       <figure>
-        <img src="/assets/images/LittleCrow.png" alt="Portrait photo of Little Crow (Taoyateduta) in Washington, D.C. 1858 (Wikimedia Commons)" loading="lazy" />
+        <Image src={littleCrow} alt="Portrait photo of Little Crow (Taoyateduta) in Washington, D.C. 1858 (Wikimedia Commons)" loading="lazy" />
         <figcaption>Portrait photo of Little Crow (Taoyateduta) in Washington, D.C. 1858 (Wikimedia Commons)</figcaption>
       </figure>
 
@@ -136,7 +141,7 @@ import BlogPost from '../../../layouts/BlogPost.astro';
       <p>&emsp;In Washington, President Lincoln confronted a settler populace demanding vengeance. He reviewed the court records to commute as many sentences as possible. The president ordered a stay of all executions until he personally reviewed the trial transcripts. Sick at heart by the ongoing slaughter in the South, Lincoln had no appetite for mass hangings. He agreed with Commissioner of Indian Affairs William Dole that such actions would be "a stain on the national character." The president was also troubled by a recent meeting with [missionary] Bishop Whipple, who had eloquently laid out the history of abuses that finally culminated in violence. Lincoln was so moved that he pledged, "If we get through this war, and I live, this Indian system shall be reformed!"<sup>10</sup></p>
 
       <figure>
-        <img src="/assets/images/Mankato.jpg" loading="lazy" alt="Print of a drawing depicting the 1862 execution of 38 Dakota men at Mankato, Minnesota, by John C. Wise (public domain)">
+        <Image src={mankato} loading="lazy" alt="Print of a drawing depicting the 1862 execution of 38 Dakota men at Mankato, Minnesota, by John C. Wise (public domain)" />
         <figcaption>Print of a drawing depicting the 1862 execution of 38 Dakota men at Mankato, Minnesota, by John C. Wise (public domain)</figcaption>
       </figure>
 

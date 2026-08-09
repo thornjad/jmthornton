@@ -1,5 +1,12 @@
 ---
+import { Image } from 'astro:assets';
 import BlogPost from '../../../layouts/BlogPost.astro';
+import johnOtherDay from '../../../assets/images/john-other-day.jpg';
+import mankato from '../../../assets/images/Mankato.jpg';
+import snellingConcentrationCamp from '../../../assets/images/snelling-concentration-camp.jpg';
+import newUlmButton from '../../../assets/images/new-ulm-button.jpg';
+import oldMinnesotaFlag from '../../../assets/images/old-minnesota-flag.png';
+import sealMinnesota from '../../../assets/images/seal-minnesota.png';
 ---
 
 <BlogPost
@@ -47,7 +54,7 @@ import BlogPost from '../../../layouts/BlogPost.astro';
         <p>Unfamiliar with American legal proceedings and believing they had fought a legitimate war, they freely admitted to participating in battles. They answered honestly about fighting soldiers, not realizing that American law would treat these as acts of murder rather than combat. As soon as a prisoner admitted firing at whites, no matter where, the commission sentenced him to hang. By November the commission had condemned 307 men, though the list was pared to 303 before it left the state. The one name Sibley struck himself belonged to the brother of John Other Day, a Dakota who had led dozens of white settlers to safety the morning the war broke out, and the sentence was set aside for thin evidence and on Other Day's own appeal.</p>
 
       <figure>
-        <img loading="lazy" alt="Postcard showing John Other Day and the text: 'ANPETU-TOKEKA John Other Day, Who Rescued 62 Persons from the Massacre in 1862. New Ulm, Minn., 1912.'" src="/assets/images/john-other-day.jpg" />
+        <Image loading="lazy" alt="Postcard showing John Other Day and the text: 'ANPETU-TOKEKA John Other Day, Who Rescued 62 Persons from the Massacre in 1862. New Ulm, Minn., 1912.'" src={johnOtherDay} />
         <figcaption>John Other Day (Anpetutokeca), appearing on a 1912 postcard. The original photograph was probably taken in early 1862</figcaption>
       </figure>
 
@@ -59,7 +66,7 @@ import BlogPost from '../../../layouts/BlogPost.astro';
 
 
       <figure>
-        <img src="/assets/images/Mankato.jpg" loading="lazy" alt="A print shows a massive gallows with Mankato buildings in the background. The gallows faces an American flag, and is surrounded on three sides by soldiers, with many public onlookers beyond them">
+        <Image src={mankato} loading="lazy" alt="A print shows a massive gallows with Mankato buildings in the background. The gallows faces an American flag, and is surrounded on three sides by soldiers, with many public onlookers beyond them" />
         <figcaption>Print of a drawing depicting the 1862 execution of 38 Dakota men at Mankato, Minnesota, by John C. Wise</figcaption>
       </figure>
 
@@ -68,7 +75,7 @@ import BlogPost from '../../../layouts/BlogPost.astro';
       <p>The punishment had only begun at the gallows. In November the army marched more than 1,700 Dakota, most of them women, children, and old men who had taken no part in the fighting, 150 miles east toward Fort Snelling. The column of wagons ran four miles long, guarded by a few hundred soldiers who feared the settlers along the road more than they feared the prisoners. At Henderson a mob swarmed the wagons, throwing rocks and scalding water, and one woman snatched a nursing infant from its mother's arms and dashed it to the ground, killing it. The survivors reached Fort Snelling and were crowded into an enclosure too small for their numbers, without adequate shelter or sanitation, and held there through the winter. Measles spread through the camp. Then dysentery. Hundreds died of disease and exposure before spring. The roughly 300 men convicted by the commission but spared the gallows were sent by boat to a prison at Davenport, Iowa. When the ice melted, the 1,300 survivors at Fort Snelling were loaded onto steamboats and forced out of Minnesota. Crowds gathered along the riverbank to jeer and curse as the people were carried away from their own land. Ramsey had already said exactly what the state intended, and now it was being carried out.</p>
 
       <figure>
-        <img alt="A photograph shows dozens of tepees fenced in by a tall stockade. The ground appears to be frozen mud. Smoke rises from several tepees, the result of warming fires within" src="/assets/images/snelling-concentration-camp.jpg" loading="lazy" />
+        <Image alt="A photograph shows dozens of tepees fenced in by a tall stockade. The ground appears to be frozen mud. Smoke rises from several tepees, the result of warming fires within" src={snellingConcentrationCamp} loading="lazy" />
         <figcaption>The internment camp at Fort Snelling, in winter of 1862-1863. The camp lies on sacred ground, only about a mile from Bdote. That's the Mississippi in the background.</figcaption>
       </figure>
 
@@ -89,7 +96,7 @@ import BlogPost from '../../../layouts/BlogPost.astro';
       <p>The town of New Ulm held several celebrations of anniversary of the war, most notably the 40th and 50th anniversaries in 1902 and 1912, respectively, with decorations and a parade, and reunions of settlers and soldiers who had been there.</p>
 
       <figure>
-        <img loading="lazy" alt="A grainy image of a button, depicting a Dakota warrior sneaking through bushes, with the text: '40th Anniversary Indian Massacre Celebration; 1862; 1902; New Ulm, Minn., Aug. 23, 1902.'" src="/assets/images/new-ulm-button.jpg" />
+        <Image loading="lazy" alt="A grainy image of a button, depicting a Dakota warrior sneaking through bushes, with the text: '40th Anniversary Indian Massacre Celebration; 1862; 1902; New Ulm, Minn., Aug. 23, 1902.'" src={newUlmButton} />
         <figcaption>New Ulm 40th Anniversary Celebration button, 1902</figcaption>
       </figure>
 
@@ -98,12 +105,12 @@ import BlogPost from '../../../layouts/BlogPost.astro';
       <p>Small tracts have been returned in recent decades, the language is being taught again, and memorials stand where the agencies and the gallows once were. But most of us who grew up here learned the name but never the cost behind it. Little Crow saw exactly how the war would end and chose to walk into it beside his people. The Minnesota I live in was built on the ground they lost, and we were never taught how.</p>
 
       <figure>
-        <img loading="lazy" alt="The former flag of Minnesota, comprised of the circular state seal on a blue background. The seal is full of symbolism, most notably showing a farmer plowing a field, looking at a red Indian (literally the color red) on horseback as he rides away. The indian carries a slender spear, while the farmer keeps a rifle nearby leaning on a stump. In the background, the sun is setting near St. Anthony Falls. The state motto, L'Etoile Du Nord, appears above." src="/assets/images/old-minnesota-flag.png" />
+        <Image loading="lazy" alt="The former flag of Minnesota, comprised of the circular state seal on a blue background. The seal is full of symbolism, most notably showing a farmer plowing a field, looking at a red Indian (literally the color red) on horseback as he rides away. The indian carries a slender spear, while the farmer keeps a rifle nearby leaning on a stump. In the background, the sun is setting near St. Anthony Falls. The state motto, L'Etoile Du Nord, appears above." src={oldMinnesotaFlag} />
         <figcaption>Though it saw a few variations, the Flag of Minnesota, from 1893 to 2024, depicted a white farmer with a gun watching an Indian on horseback, carrying a spear, leaving the farmer's land. The flag was simply the state seal on a blue background, and like many other state seals from the 19th century, the central theme was Manifest Destinye</figcaption>
       </figure>
 
       <figure>
-        <img loading="lazy" alt="The seal is round, prominently featuring a stylized Common Loon rising out of water, with trees and wild rice. Above the loon is 'Mni Sóta Makoce'" src="/assets/images/seal-minnesota.png" />
+        <Image loading="lazy" alt="The seal is round, prominently featuring a stylized Common Loon rising out of water, with trees and wild rice. Above the loon is 'Mni Sóta Makoce'" src={sealMinnesota} />
         <figcaption>The Seal of the State of Minnesota, since 2024, is considerably symbolically different, including the Dakota name for the land from which the state's name derives.</figcaption>
       </figure>
 

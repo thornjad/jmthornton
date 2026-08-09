@@ -1,5 +1,8 @@
 ---
+import { Image } from 'astro:assets';
 import BlogPost from '../../../layouts/BlogPost.astro';
+import fortRidgely from '../../../assets/images/fort-ridgely.jpg';
+import attackOnNewUlm from '../../../assets/images/attack-on-new-ulm.webp';
 ---
 
 <BlogPost
@@ -51,14 +54,14 @@ import BlogPost from '../../../layouts/BlogPost.astro';
       <p>That same day, Captain John Marsh led 46 soldiers from Fort Ridgely to the Redwood Ferry crossing, just across the Minnesota River from the Lower Sioux Agency, responding to reports of an attack. It was a trap. Marsh was killed along with half his men before survivors could retreat. The fort's garrison had been cut before the siege even began.</p>
 
       <figure>
-        <img alt="Print of Fort Ridgely in 1862, showing a parade ground with a tall flag in the centered, surrounded by simple buildings" src="/assets/images/fort-ridgely.jpg" loading="lazy" />
+        <Image alt="Print of Fort Ridgely in 1862, showing a parade ground with a tall flag in the centered, surrounded by simple buildings" src={fortRidgely} loading="lazy" />
         <figcaption>Print of Fort Ridgely in 1862, featuring Seargent Jones directing defense of the fort</figcaption>
       </figure>
 
       <p>Fort Ridgely had no stockade. It was a collection of detached, unfortified buildings grouped around a parade ground, with ammunition magazines 200 yards away on the open prairie. The Dakota attacked it on August 20 and returned on August 22, both times hitting hard enough that if they had pressed their attack further, before refugee settlers crowded inside the walls, the fort almost certainly would have fallen and opened a clear route east to the Mississippi. But the warriors celebrated their victories, and the opportunity passed and did not come again.</p>
 
       <figure>
-        <img loading="lazy" alt="Aerial view of New Ulm, a simple collection of buildings, clustered around a main street, with many building on fire" src="/assets/images/attack-on-new-ulm.jpg" />
+        <Image loading="lazy" alt="Aerial view of New Ulm, a simple collection of buildings, clustered around a main street, with many building on fire" src={attackOnNewUlm} />
         <figcaption>Paiting of the First Battle of New Ulm, by Michael Eischen</figcaption>
       </figure>
 
