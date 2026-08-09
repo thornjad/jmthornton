@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
+import stephandjade from '../assets/images/stephandjade.webp';
 import pkg from '../../package.json';
 ---
 
@@ -86,10 +88,10 @@ import pkg from '../../package.json';
         >
       </div>
       <div class="right">
-        <img
+        <Image
           class="stephpic"
           loading="lazy"
-          src="/assets/images/stephandjade.webp"
+          src={stephandjade}
           alt="Jade Thornton and his partner, Stevie"
         />
       </div>
