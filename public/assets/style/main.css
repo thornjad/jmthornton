@@ -634,6 +634,23 @@ div.sponsor {
   justify-content: center;
 }
 
+.carbon-badge-row {
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+@media (prefers-color-scheme: dark) {
+  #wcb #wcb_a {
+    color: var(--b1) !important;
+    background: var(--b2) !important;
+    border-color: var(--b2) !important;
+  }
+
+  #wcb #wcb_2 {
+    color: #fff !important;
+  }
+}
+
 div.split {
   display: flex;
   justify-content: space-between;
