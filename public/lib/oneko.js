@@ -207,5 +207,9 @@ function oneko() {
 
 const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)') === true || window.matchMedia('(prefers-reduced-motion: reduce)').matches === true;
 if (!isReduced) {
-  oneko();
+  if (document.readyState === 'complete') {
+    oneko();
+  } else {
+    window.addEventListener('load', oneko, { once: true });
+  }
 }
