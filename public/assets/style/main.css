@@ -611,6 +611,11 @@ div.shield-links {
     }
   }
 
+  img.badge-border {
+    border: 1px solid #000;
+    box-shadow: 2px 2px 0 #000;
+  }
+
   a {
     text-decoration: none;
     background: none; /* clears hover animation */
