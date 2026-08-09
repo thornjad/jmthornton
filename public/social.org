@@ -1,0 +1,12 @@
+#+TITLE: Jade Michael Thornton's journal
+#+NICK: thornjad
+#+DESCRIPTION: Engineering manager and software engineer. Emacs, Angular, Python, weather nerd.
+#+LINK: https://jmthornton.net
+#+LANGUAGE: en
+
+* Posts
+** 2026-08-09T13:20:00-0500
+:PROPERTIES:
+:END:
+
+Hello, org-social. First post from jmthornton.net. I love this idea.
