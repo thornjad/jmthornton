@@ -1,0 +1,304 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base
+  title="Antipode Explorer | Jade Michael Thornton"
+  description="See the exact opposite side of the planet from any location, with two synced maps"
+  fontStrategy="prefetch"
+>
+  <Fragment slot="head">
+    <link rel="stylesheet" href="/assets/vendor/leaflet.css" />
+    <style>
+      .search-section {
+        margin-bottom: 0.4em;
+      }
+
+      .search-section h3 {
+        margin: 0 0 0.1em;
+        font-size: 0.95em;
+      }
+
+      .search-row {
+        display: flex;
+        gap: 0.5em;
+        align-items: center;
+      }
+
+      .search-row input {
+        min-width: 0;
+      }
+
+      .search-row input.wide {
+        flex: 1;
+        min-width: 180px;
+      }
+
+      #error {
+        display: none;
+        color: var(--error, red);
+        margin-top: 0.5em;
+      }
+
+      .privacy-note {
+        color: var(--fg-muted, #888);
+        font-size: 0.85em;
+        margin: 0 0 0.75em;
+      }
+
+      .maps-row {
+        display: flex;
+        gap: 1em;
+        margin-top: 1em;
+        flex-wrap: wrap;
+      }
+
+      .map-panel {
+        flex: 1 1 480px;
+        min-width: 280px;
+      }
+
+      .map-panel h3 {
+        margin: 0 0 0.25em;
+        font-size: 0.95em;
+      }
+
+      .map-panel .coords-line {
+        margin: 0.3em 0 0;
+        font-size: 0.85em;
+        color: var(--fg-muted, #888);
+      }
+
+      .map-panel .location-line {
+        margin: 0.1em 0 0;
+        font-size: 0.85em;
+      }
+
+      .map {
+        width: 100%;
+        height: 400px;
+        border: 1px solid var(--border, #ccc);
+        cursor: crosshair;
+      }
+
+      @media (max-width: 700px) {
+        .maps-row {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </Fragment>
+
+  <h1>Antipode Explorer</h1>
+  <p class="privacy-note">All lookups run in the browser. Geocoding via OpenStreetMap Nominatim.</p>
+
+  <noscript>Sorry, this tool requires Javascript.</noscript>
+
+  <div class="search-section">
+    <h3>Look up by address or zip</h3>
+    <div class="search-row">
+      <input type="text" id="address-input" class="wide" placeholder="e.g. Minneapolis, MN or 55401" />
+      <button id="address-btn">Look up</button>
+      <button id="locate-btn">Use my location</button>
+    </div>
+  </div>
+
+  <div id="error"></div>
+
+  <div class="maps-row">
+    <div class="map-panel">
+      <h3>Your location</h3>
+      <div id="map-a" class="map"></div>
+      <p class="coords-line" id="coords-a"></p>
+      <p class="location-line" id="location-a"></p>
+    </div>
+    <div class="map-panel">
+      <h3>Opposite side of the world</h3>
+      <div id="map-b" class="map"></div>
+      <p class="coords-line" id="coords-b"></p>
+      <p class="location-line" id="location-b"></p>
+    </div>
+  </div>
+
+  <script is:inline src="/assets/vendor/leaflet.js"></script>
+  <script is:inline>
+    'use strict';
+
+    var mapA = L.map('map-a').setView([20, 0], 2);
+    var mapB = L.map('map-b').setView([-20, 180], 2);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(mapA);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(mapB);
+
+    var markerA = null;
+    var markerB = null;
+    var syncing = false;
+
+    function antipode(lat, lon) {
+      var aLat = -lat;
+      var aLon = lon + 180;
+      if (aLon > 180) aLon -= 360;
+      if (aLon < -180) aLon += 360;
+      return { lat: aLat, lon: aLon };
+    }
+
+    function showError(msg) {
+      var el = document.getElementById('error');
+      el.textContent = msg;
+      el.style.display = 'block';
+    }
+
+    function clearError() {
+      document.getElementById('error').style.display = 'none';
+    }
+
+    function fmtCoords(lat, lon) {
+      return lat.toFixed(4) + ', ' + lon.toFixed(4);
+    }
+
+    async function reverseGeocode(lat, lon, elId) {
+      var el = document.getElementById(elId);
+      el.textContent = '';
+      try {
+        var resp = await fetch(
+          'https://nominatim.openstreetmap.org/reverse?lat=' + lat +
+          '&lon=' + lon + '&format=json&zoom=6',
+          { headers: { 'User-Agent': 'jmthornton-antipode-explorer' } }
+        );
+        var data = await resp.json();
+        el.textContent = data.display_name || 'Open ocean or unnamed area';
+      } catch (_) {
+        el.textContent = '';
+      }
+    }
+
+    function setPrimary(lat, lon) {
+      var opp = antipode(lat, lon);
+
+      if (markerA) mapA.removeLayer(markerA);
+      if (markerB) mapB.removeLayer(markerB);
+      markerA = L.marker([lat, lon]).addTo(mapA);
+      markerB = L.marker([opp.lat, opp.lon]).addTo(mapB);
+
+      syncing = true;
+      mapA.setView([lat, lon], 10, { animate: false });
+      mapB.setView([opp.lat, opp.lon], 10, { animate: false });
+      syncing = false;
+
+      document.getElementById('coords-a').textContent = fmtCoords(lat, lon);
+      document.getElementById('coords-b').textContent = fmtCoords(opp.lat, opp.lon);
+      reverseGeocode(lat, lon, 'location-a');
+      reverseGeocode(opp.lat, opp.lon, 'location-b');
+
+      setParam(lat, lon);
+    }
+
+    function mirrorFrom(source, target) {
+      if (syncing) return;
+      syncing = true;
+      var c = source.getCenter();
+      var opp = antipode(c.lat, c.lng);
+      target.setView([opp.lat, opp.lon], source.getZoom(), { animate: false });
+      syncing = false;
+    }
+
+    mapA.on('move zoom', function() { mirrorFrom(mapA, mapB); });
+    mapB.on('move zoom', function() { mirrorFrom(mapB, mapA); });
+
+    mapA.on('click', function(e) {
+      clearError();
+      setPrimary(e.latlng.lat, e.latlng.lng);
+    });
+
+    mapB.on('click', function(e) {
+      clearError();
+      var opp = antipode(e.latlng.lat, e.latlng.lng);
+      setPrimary(opp.lat, opp.lon);
+    });
+
+    async function lookupAddress() {
+      clearError();
+      var query = document.getElementById('address-input').value.trim();
+      if (!query) return;
+
+      var btn = document.getElementById('address-btn');
+      btn.textContent = 'Looking up...';
+      btn.disabled = true;
+
+      try {
+        var url = 'https://nominatim.openstreetmap.org/search?q=' +
+          encodeURIComponent(query) + '&format=json&limit=1';
+        if (/^\d{5}(-\d{4})?$/.test(query)) url += '&countrycodes=us';
+        var resp = await fetch(url,
+          { headers: { 'User-Agent': 'jmthornton-antipode-explorer' } }
+        );
+        var data = await resp.json();
+        if (!data.length) {
+          showError('Location not found: ' + query);
+          return;
+        }
+
+        setPrimary(parseFloat(data[0].lat), parseFloat(data[0].lon));
+      } catch (e) {
+        showError('Geocoding failed: ' + e.message);
+      } finally {
+        btn.textContent = 'Look up';
+        btn.disabled = false;
+      }
+    }
+
+    document.getElementById('address-btn').addEventListener('click', lookupAddress);
+    document.getElementById('address-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') lookupAddress();
+    });
+
+    function locateMe() {
+      clearError();
+
+      if (!navigator.geolocation) {
+        showError('Geolocation is not supported by this browser.');
+        return;
+      }
+
+      var btn = document.getElementById('locate-btn');
+      btn.textContent = 'Locating...';
+      btn.disabled = true;
+
+      navigator.geolocation.getCurrentPosition(
+        function(pos) {
+          setPrimary(pos.coords.latitude, pos.coords.longitude);
+          btn.textContent = 'Use my location';
+          btn.disabled = false;
+        },
+        function(err) {
+          showError('Location lookup failed: ' + err.message);
+          btn.textContent = 'Use my location';
+          btn.disabled = false;
+        }
+      );
+    }
+
+    document.getElementById('locate-btn').addEventListener('click', locateMe);
+
+    function setParam(lat, lon) {
+      var url = new URL(window.location);
+      url.searchParams.forEach(function(_, k) { url.searchParams.delete(k); });
+      url.searchParams.set('lat', lat.toFixed(6));
+      url.searchParams.set('lon', lon.toFixed(6));
+      history.replaceState(null, '', url);
+    }
+
+    var params = new URLSearchParams(window.location.search);
+    var pLat = parseFloat(params.get('lat'));
+    var pLon = parseFloat(params.get('lon'));
+    if (!isNaN(pLat) && !isNaN(pLon)) {
+      setPrimary(pLat, pLon);
+    }
+  </script>
+</Base>
