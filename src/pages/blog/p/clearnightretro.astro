@@ -1,5 +1,12 @@
 ---
+import { Image } from 'astro:assets';
 import BlogPost from '../../../layouts/BlogPost.astro';
+import retroTitle from '../../../assets/images/retro-title.png';
+import jsPreview from '../../../assets/images/clearnightretro-preview.png';
+import cljPreview from '../../../assets/images/clj-preview.png';
+import groovyPreview from '../../../assets/images/groovy-preview.png';
+import previewOverlay from '../../../assets/images/preview-overlay.png';
+import previewSettingsView from '../../../assets/images/preview-settings-view.png';
 ---
 
 <BlogPost
@@ -25,7 +32,7 @@ import BlogPost from '../../../layouts/BlogPost.astro';
 
   <div class="post-main">
     <div class="blog-body">
-      <p><img alt="ClearNight Retro" src="../assets/images/retro-title.png"/></p>
+      <p><Image alt="ClearNight Retro" src={retroTitle} /></p>
 
       <p>After a bit of work, I&#39;m proud to introduce <a href="https://atom.io/packages/clearnight-retro-ui">ClearNight Retro</a>, a new dark, relaxed retro theme for Atom! The set is a UI theme with matching syntax theme, but both can work separately with other dark themes like Atom&#39;s own One Dark.</p>
 
@@ -34,15 +41,15 @@ import BlogPost from '../../../layouts/BlogPost.astro';
       <h2>Take a look</h2>
 
       <div class="no-md-a">
-        <p><a target="_blank" href="../assets/images/preview.png"><img class="retro-preview-img" src="../assets/images/preview.png" alt="Javascript preview"> </a> </p>
+        <p><a target="_blank" href={jsPreview.src}><Image class="retro-preview-img" src={jsPreview} alt="Javascript preview" /> </a> </p>
 
-        <p><a target="_blank" href="../assets/images/clj-preview.png"><img class="retro-preview-img" src="../assets/images/clj-preview.png" alt="Clojure preview"> </a> </p>
+        <p><a target="_blank" href={cljPreview.src}><Image class="retro-preview-img" src={cljPreview} alt="Clojure preview" /> </a> </p>
 
-        <p><a target="_blank" href="../assets/images/groovy-preview.png"><img class="retro-preview-img" src="../assets/images/groovy-preview.png" alt="Groovy preview"> </a> </p>
+        <p><a target="_blank" href={groovyPreview.src}><Image class="retro-preview-img" src={groovyPreview} alt="Groovy preview" /> </a> </p>
 
-        <p><a target="_blank" href="../assets/images/preview-overlay.png"><img class="retro-preview-img" src="../assets/images/preview-overlay.png" alt="Modal overly preview"> </a> </p>
+        <p><a target="_blank" href={previewOverlay.src}><Image class="retro-preview-img" src={previewOverlay} alt="Modal overly preview" /> </a> </p>
 
-        <p><a target="_blank" href="../assets/images/preview-settings-view.png"><img class="retro-preview-img" src="../assets/images/preview-settings-view.png" alt="Settings view preview"> </a> </p>
+        <p><a target="_blank" href={previewSettingsView.src}><Image class="retro-preview-img" src={previewSettingsView} alt="Settings view preview" /> </a> </p>
       </div>
 
       <h2>Try it out</h2>
