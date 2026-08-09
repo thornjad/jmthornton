@@ -9,15 +9,12 @@ import Base from '../../layouts/Base.astro';
   <Fragment slot="head">
     <link type="text/plain" rel="author" href="https://jmthornton.net/humans.txt" />
     <meta name="googlebot" content="noindex" />
+    <link rel="alternate" type="application/atom+xml" title="Blog by Jade Michael Thornton (Atom)" href="/blog/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Blog by Jade Michael Thornton (RSS)" href="/blog/feed-rss.xml" />
     <style>
-      .subscribe-btn {
-        margin-top: 2.1em;
-      }
-
-      @media (min-width: 768px) {
-        .subscribe-btn {
-          text-align: right;
-        }
+      .link-row {
+        display: flex;
+        justify-content: space-between;
       }
 
       h1 .glitch {
@@ -62,9 +59,12 @@ import Base from '../../layouts/Base.astro';
           ></small
         >
       </p>
-      <p>
-        <a href="/blog/recipes/">Family Recipes</a> |
-        <a href="/blog/feed.xml">Subscribe</a>
+      <p class="link-row">
+        <span>
+          <a href="/blog/feed.xml">Subscribe</a> |
+          <a href="https://iheartrss.com/">I ♥ RSS</a>
+        </span>
+        <a href="/blog/recipes/">Family Recipes</a>
       </p>
       <br />
     </div>

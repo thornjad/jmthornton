@@ -1,6 +1,8 @@
-.PHONY: all prism style dev build feed
+.PHONY: all cloudflare-build prism style dev build feed
 
-all: style feed build
+all: cloudflare-build
+
+cloudflare-build: style feed build
 
 prism:
 	npx purify-css --min --info public/assets/vendor/prism.css public/assets/vendor/prism.js --out public/assets/vendor/prism.min.css

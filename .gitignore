@@ -40,6 +40,7 @@ public/assets/style/out.css.map
 public/assets/style/main.css.map
 public/blog/draft/
 public/blog/feed.xml
+public/blog/feed-rss.xml
 
 # Development Directories #
 ###########################

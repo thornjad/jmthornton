@@ -117,7 +117,7 @@ def main():
     # Initialize feed generator
     fg = FeedGenerator()
     fg.title('Blog by Jade Michael Thornton')
-    fg.link(href='https://jmthornton.net/blog/feed.xml', rel='self')
+    fg.description('Blog by Jade Michael Thornton')
     fg.link(href='https://jmthornton.net/blog/', rel='alternate', type='text/html')
     fg.id('https://jmthornton.net/blog/')
     fg.language('en-US')
@@ -164,8 +164,19 @@ def main():
     if most_recent_date:
         fg.updated(most_recent_date)
 
-    # Write feed to file
+    # Write feed to files (self link swapped per format so each file
+    # points at its own URL)
+    fg.link([
+        {'href': 'https://jmthornton.net/blog/feed.xml', 'rel': 'self'},
+        {'href': 'https://jmthornton.net/blog/', 'rel': 'alternate', 'type': 'text/html'},
+    ], replace=True)
     fg.atom_file('public/blog/feed.xml', pretty=True)
+
+    fg.link([
+        {'href': 'https://jmthornton.net/blog/feed-rss.xml', 'rel': 'self'},
+        {'href': 'https://jmthornton.net/blog/', 'rel': 'alternate', 'type': 'text/html'},
+    ], replace=True)
+    fg.rss_file('public/blog/feed-rss.xml', pretty=True)
 
 
 if __name__ == '__main__':
