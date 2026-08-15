@@ -1,0 +1,54 @@
+---
+import BlogPost from '../../../layouts/BlogPost.astro';
+---
+
+<BlogPost
+  title="Getting RailDriver to work on Linux"
+  description="Getting my RailDriver train sim console working through Proton on Linux so that Train Sim World 6 can read it as a native controller"
+  slug="raildriver-linux"
+  publishedDate="2026-08-15"
+  hasPrism={true}
+>
+  <h1 class="post-title">Getting RailDriver to work on Linux</h1>
+  <time datetime="2026-08-15">August 15, 2026</time>
+
+  <div class="post-main">
+    <div class="blog-body">
+      <p>Getting a <a href="https://piengineering.com/pages/raildriver">RailDriver</a> console recognized by Train Sim World 6 on Linux, running through Proton, takes a few steps that aren't obvious anywhere in one place. Here's what worked for me, on Ubuntu 26.04.</p>
+
+      <ol>
+        <li>
+          <p>Find the device ID with <code>lsusb</code> after plugging in the RailDriver. It's probably <code>05f3:00d2</code>, but it may be different depending on your exact controller.</p>
+        </li>
+        <li>
+          <p>Add a udev rule, <code>/etc/udev/rules.d/90-raildriver.rules</code>:</p>
+          <pre is:raw><code class="language-conf">SUBSYSTEM=="usb", ATTRS&#123;idVendor&#125;=="05f3", MODE="0666", GROUP="plugdev"
+KERNEL=="hidraw*", ATTRS&#123;idVendor&#125;=="05f3", MODE="0666", TAG+="uaccess"</code></pre>
+          <p>Substitute your own vendor ID from step 1.</p>
+        </li>
+
+        <li><p>Add yourself to <code>plugdev</code> if you aren't already (<code>sudo usermod -aG plugdev $USER</code>), then reboot. There's probably some way to cause this to take effect without rebooting, but I'd bet rebooting is easier.</p></li>
+        <li>
+          <p>In Steam, set TSW6's launch options (in the game's properties) to this, making sure to match the same device ID you found in step 1, prefixed with <code>0x</code>:</p>
+          <pre><code class="language-shell">PROTON_ENABLE_HIDRAW="0x05f3/0x00d2" %command%</code></pre>
+        </li>
+        <li>
+          <p>This launch option won't take effect until Proton's prefix registry is rebuilt, which can be forced by switching Proton versions. First, back up and remove <code>system.reg</code> from TSW6's Proton prefix (with 3656800 being TSW6's Steam app ID)</p>
+          <pre><code class="language-shell">mv ~/.local/share/Steam/steamapps/compatdata/3656800/pfx/system.&#123;reg,reg.bak&#125;</code></pre>
+        </li>
+        <li>
+          <p>
+            Then, in the game's compatibility options, choose a different Proton version. If no specific version was selected, then select one now, going two versions before the latest should be plenty safe.</p>
+        </li>
+        <li><p>Launch the game once. This is important, otherwise the new version won't fully take. TSW <em>loves</em> compiling Vulkan shaders for a thousand years, so you may find yourself with surprise meditation time, especially if you have many DLCs. You should probably be able to skip compiling, since you're not going to play the game in this state, but when I tried this, the game simply wouldn't launch.</p></li>
+        <li><p>Now close the game, and switch back to your default Proton version, or latest (I switched to Proton 9 when this post was written).</p></li>
+        <li>
+          <p>Launch, then in the game settings: Controls &gt; Advanced Controls, click Calibrate (or press E), run through calibration. Calibration is per-train, and while some trains work without it, most need it. I wish calibration were game-level instead, but there's a lot of things I wish about Train Sim World working differently.</p>
+        </li>
+      </ol>
+
+      <p>If calibration works at all, then that's it! RailDriver reads as a native controller in TSW6 on Linux from there. In the future you can simply plug and play.</p>
+      <p>If calibration doesn't register controller movement at all, try rerunning these steps, making sure to actually launch the game on a different Proton version. And maybe try picking another different Proton version. If nothing works, then I wish you luck in further research getting your rather expensive controller working &#x2665;.</p>
+    </div>
+  </div>
+</BlogPost>
