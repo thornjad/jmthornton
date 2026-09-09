@@ -1,8 +1,8 @@
 ---
-import { Image } from 'astro:assets';
-import Base from '../layouts/Base.astro';
-import stephandjade from '../assets/images/stephandjade.webp';
-import pkg from '../../package.json';
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import stephandjade from "../assets/images/stephandjade.webp";
+import pkg from "../../package.json";
 ---
 
 <Base
@@ -13,21 +13,24 @@ import pkg from '../../package.json';
   includeOneko
 >
   <Fragment slot="head">
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Jade Michael Thornton",
-      "alternateName": "Jade Thornton",
-      "url": "https://jmthornton.net",
-      "sameAs": [
-        "https://linkedin.com/in/jademichael",
-        "https://github.com/thornjad",
-        "https://gitlab.com/thornjad",
-        "https://www.youtube.com/@jmichaelthornton",
-        "https://mspsocial.net/@thornjad",
-        "https://wellfound.com/u/jade-thornton-1"
-      ]
-    })} />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        name: "Jade Michael Thornton",
+        alternateName: "Jade Thornton",
+        url: "https://jmthornton.net",
+        sameAs: [
+          "https://linkedin.com/in/jademichael",
+          "https://github.com/thornjad",
+          "https://gitlab.com/thornjad",
+          "https://www.youtube.com/@jmichaelthornton",
+          "https://mspsocial.net/@thornjad",
+          "https://wellfound.com/u/jade-thornton-1",
+        ],
+      })}
+    ></script>
   </Fragment>
 
   <h1 class="rgb-color" style="text-align: center">
@@ -38,54 +41,62 @@ import pkg from '../../package.json';
     <div class="split">
       <div class="left">
         <p>
-          I'm Jade Michael Thornton, an engineering manager, software engineer and weather enthusiast (and trained <a href="https://www.weather.gov/skywarn/">Skywarn</a> spotter) in the
-          Twin Cities, Minnesota<span id="weather-snippet"></span>. You can call me Jade or Michael. I know some things about some
-          software, and a lot about taking care of house rabbits. My favorite language is Clojure,
-          but I never get to work in it. I work as a manager of software engineering at
-          <a href="https://dronedeploy.com">DroneDeploy</a>, leading our Enterprise Growth engineering
-          team. Learn more about <a href="/now">what I'm doing now</a>.
+          I'm Jade Michael Thornton, an engineering manager, software engineer
+          and weather enthusiast (and trained{" "}
+          <a href="https://www.weather.gov/skywarn/">Skywarn</a> spotter) in the
+          Twin Cities, Minnesota<span id="weather-snippet"></span>. You can call
+          me Jade or Michael. I know some things about some software, and a lot
+          about taking care of house rabbits. My favorite language is Clojure,
+          but I never get to work in it. I work as a manager of software
+          engineering at
+          <a href="https://procore.com">Procore</a>, leading the Enterprise
+          Growth engineering team for the{" "}
+          <a href="https://dronedeploy.com">DroneDeploy</a> product. Learn more
+          about <a href="/now">what I'm doing now</a>.
         </p>
         <p>
-          I have about <span id="exp-years">10+</span> years of experience
-          in software and I've previously worked at
+          I have about <span id="exp-years">10+</span> years of experience in
+          software and I've previously worked at
           <a href="https://flightaware.com">FlightAware</a> (acquired by
           <a href="https://www.collinsaerospace.com">Collins Aerospace</a>),
           <a href="https://www.thomsonreuters.com">Thomson Reuters</a>,
-          <a href="https://www.mavericksoftware.com">Maverick Software</a>,
-          and the
-          <a href="https://www.hhh.umn.edu"
-            >Humphrey School of Public Affairs</a
-          >. I've previously studied computer science at the
+          <a href="https://www.mavericksoftware.com">Maverick Software</a>, and
+          the
+          <a href="https://www.hhh.umn.edu">
+            Humphrey School of Public Affairs
+          </a>
+          . I've previously studied computer science at the
           <a href="https://www.umn.edu">University of Minnesota</a> and
-          <a href="https://www.saintpaul.edu">Saint Paul College</a>, and
-          I'm currently furthering my computer science and philosophy
-          education through part-time study at the University of Minnesota.
+          <a href="https://www.saintpaul.edu">Saint Paul College</a>, and I'm
+          currently furthering my computer science and philosophy education
+          through part-time study at the University of Minnesota.
         </p>
         <p>
           Some other links include: my
           <a href="https://github.com/thornjad">GitHub</a> and
-          <a href="https://gitlab.com/thornjad">GitLab</a> profiles, my <a href="/social-org">Org-Social file</a>, my
-          <a href="https://www.youtube.com/@jmichaelthornton"
-            >miniscule YouTube channel</a
-          >, my <a href="https://jmthornton.net/blog">blog posts</a>, some
+          <a href="https://gitlab.com/thornjad">GitLab</a> profiles, my
+          <a href="/social-org">Org-Social file</a>, my
+          <a href="https://www.youtube.com/@jmichaelthornton">
+            miniscule YouTube channel
+          </a>
+          , my <a href="https://jmthornton.net/blog">blog posts</a>, some
           <a href="/tools">online tools</a>, my
-          <a href="https://linkedin.com/in/jademichael"
-            >LinkedIn profile</a
-          >, and some
+          <a href="https://linkedin.com/in/jademichael">LinkedIn profile</a>,
+          and some
           <a href="https://photos.jmthornton.net">photos I took</a>.
         </p>
         <p>Memento mori.</p>
 
-        <noscript
-          ><p>
+        <noscript>
+          <p>
             Javascript disabled? Dope, I like you. The only JS on this page
             animates a little cat sprite that follows your cursor, fetches
             current weather conditions, and looks up the current site version
-            number from a <code>package.json</code>. So you're not missing much. Blog posts also use JS for code block
-            syntax highlighting. Some tools pages need JS to work, but those
-            should be pretty obvious.
-          </p></noscript
-        >
+            number from a <code>package.json</code>. So you're not missing much.
+            Blog posts also use JS for code block syntax highlighting. Some
+            tools pages need JS to work, but those should be pretty obvious.
+          </p>
+        </noscript>
       </div>
       <div class="right">
         <Image
@@ -102,7 +113,8 @@ import pkg from '../../package.json';
   <section>
     <h2>My Projects</h2>
     <p>
-      All open source on <a href="https://github.com/thornjad">GitHub</a> and/or <a href="https://gitlab.com/thornjad">GitLab</a>
+      All open source on <a href="https://github.com/thornjad">GitHub</a> and/or{" "}
+      <a href="https://gitlab.com/thornjad">GitLab</a>
     </p>
 
     <p>
@@ -116,8 +128,11 @@ import pkg from '../../package.json';
     <p>
       <em>Weather:</em>
       <a href="https://github.com/thornjad/stormscope">StormScope MCP</a>,
-      <a href="https://weather.jmthornton.net">WeatherStar4k</a> (<a href="https://github.com/thornjad/weatherstar4k">GitHub</a>),
-      <a href="https://github.com/thornjad/CloudflareTempestStationForwarder">CloudflareTempestStationForwarder</a>
+      <a href="https://weather.jmthornton.net">WeatherStar4k</a> (
+      <a href="https://github.com/thornjad/weatherstar4k">GitHub</a>),
+      <a href="https://github.com/thornjad/CloudflareTempestStationForwarder">
+        CloudflareTempestStationForwarder
+      </a>
     </p>
     <p>
       <em>Theming & Shell:</em>
@@ -293,10 +308,10 @@ import pkg from '../../package.json';
       <div id="wcb" class="carbonbadge"></div>
       <script src="https://unpkg.com/website-carbon-badges@1.1.3/b.min.js" defer></script>
       <script is:inline>
-        document.addEventListener('DOMContentLoaded', function () {
-          document.getElementById('wcb_a')?.setAttribute(
-            'href',
-            'https://www.websitecarbon.com/website/jmthornton-net/'
+        document.addEventListener("DOMContentLoaded", function () {
+          document.getElementById("wcb_a")?.setAttribute(
+            "href",
+            "https://www.websitecarbon.com/website/jmthornton-net/",
           );
         });
       </script>
@@ -305,19 +320,19 @@ import pkg from '../../package.json';
   </section>
 
   <script is:inline type="module">
-    const el = document.getElementById('weather-snippet');
+    const el = document.getElementById("weather-snippet");
     if (el) {
-      const res = await fetch('/api/weather').catch(() => null);
+      const res = await fetch("/api/weather").catch(() => null);
       const d = res?.ok ? await res.json() : null;
       if (d?.temp_f != null && d.conditions) {
-        const emoji = d.emoji ? `${d.emoji} ` : '';
+        const emoji = d.emoji ? `${d.emoji} ` : "";
         el.textContent = `, where it\u2019s currently ${d.temp_f}\u00b0F and ${emoji}${d.conditions}`;
       }
     }
 
     const expStart = new Date("2015-09-01T00:00:00-05:00");
     const expYears = (new Date() - expStart) / 1000 / 60 / 60 / 24 / 365.25;
-    const expEl = document.getElementById('exp-years');
+    const expEl = document.getElementById("exp-years");
     if (expEl) expEl.textContent = expYears.toFixed(1);
   </script>
 </Base>
